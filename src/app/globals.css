@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+
+  --slide-background-color: #160910;
+  --slide-primary-color: #e7d8c7;
+  --slide-secondary-color: #ef922d;
+  --slide-extra-color: #000000;
+
+  --slide-content-z-index: 999;
+  --slide-padding: 3.75em;
+  --slide-branding-height: 5.625em;
+  --slide-title-font-size: 5.625em;
+  --slide-subtitle-font-size: 2.25em;
+  --slide-description-font-size: 3.625em;
+  --slide-description-opacity: 0.9;
+  --slide-text-content-gap-size: 1.25em;
+  --slide-branding-profile-text-gap-size: 1em;
+  --slide-branding-profile-size: 6em;
+  --slide-branding-profile-border-radius: 5em;
+  --slide-branding-name-font-size: 2em;
+  --slide-branding-handle-font-size: 1.75em;
+  --intro-slide-swipe-button-height: 4em;
+  --intro-slide-swipe-button-font-size: 2em;
+  --intro-slide-swipe-button-icon-font-size: 1.5em;
+  --intro-slide-swipe-button-padding: 3em 1.5em;
+  --intro-slide-swipe-button-text-gap: 1em;
+  --slide-object-border-radius: 99em;
+  --slide-number-indicator-padding: 3em;
+  --slide-number-indicator-font-size: 2.5em;
+  --slide-number-indicator-size: 2em;
+  --outro-slide-cta-button-height: 5em;
+  --outro-slide-cta-button-font-size: 2.5em;
+  --outro-slide-cta-button-padding-x: 1.5em;
+  --outro-slide-cta-button-padding-y: 0.5em;
+  --outro-slide-cta-button-border-radius: 99em;
+  --slide-image-placeholder-color: #dedede;
+  --slide-image-border-radius: 1em;
+}
+:root {
+  --range-thumb-size: 36px;
+}
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 222.2 84% 4.9%;
+  --radius: 0.5rem;
+}
+
+:after,
+:before {
+  --tw-content: "";
+}
+
+*,
+:after,
+:before {
+  box-sizing: border-box;
+  border: 0 solid #e5e7eb;
+}
+
+.text-primary-foreground {
+  color: hsl(var(--primary-foreground));
+}
+
+.bg-primary {
+  background-color: hsl(var(--primary));
+}
+
+.bg-muted {
+  background-color: hsl(var(--muted));
+}
+
+.bg-accent {
+  background-color: hsl(var(--accent));
+}
+
+.text-accent-foreground {
+  color: hsl(var(--accent-foreground));
+}
+
+audio,
+canvas,
+embed,
+iframe,
+img,
+object,
+svg,
+video {
+  display: block;
+  /* vertical-align: middle; */
+}
