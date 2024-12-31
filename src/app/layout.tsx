@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+// import "alpinejs";
 import "./globals.css";
 import ConfigureStore from "@/store";
+import { Footer, Navbar } from "@/components";
+import { Toaster } from "@/components/ui";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,12 +29,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-gray-900 w-full min-h-screen flex flex-col transition duration-300`}
       >
         <ConfigureStore>
-          <div className="min-h-screen flex flex-col w-full">
+          <Navbar />
             <main className="flex-1 flex-shrink-0">{children}</main>
-          </div>
+            <Toaster />
+          <Footer />
         </ConfigureStore>
       </body>
     </html>

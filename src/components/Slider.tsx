@@ -1,6 +1,6 @@
 import React from "react";
 import { LeftArrow, RightArrow } from "@/icons";
-import "./slider.css";
+import "@/css/slider.css";
 import { useDispatch } from "react-redux";
 import {
   setActiveIndex,
@@ -9,14 +9,14 @@ import {
   zoomIn,
   zoomOut,
 } from "@/store";
-import SlideContainer from "../Slide/Slide";
+import Slide from "./Slide";
 import {
   useSliderActiveIndex,
   useSliderSlides,
   useSliderZoomValue,
 } from "@/hooks";
 
-const Slider1: React.FC = () => {
+const Slider: React.FC = () => {
   const dispatch = useDispatch();
 
   const slides = useSliderSlides();
@@ -73,7 +73,7 @@ const Slider1: React.FC = () => {
                   }}
                 >
                   {slides.map((slide, index) => (
-                    <SlideContainer
+                    <Slide
                       key={slide.title?.text}
                       index={index}
                       slideClass={slide.slideClass}
@@ -176,4 +176,4 @@ const Slider1: React.FC = () => {
   );
 };
 
-export default Slider1;
+export default Slider;

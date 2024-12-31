@@ -1,10 +1,10 @@
-import useSliderState from "./useSliderState";
-
 export {
+  useSliderState,
   useSliderSlides,
   useSliderFontFamily,
   useSliderActiveIndex,
   useSliderZoomValue,
+  useSliderBrand,
 } from "./useSliderState";
 
-export default useSliderState;
+export { useToast, toast } from "./use-toast";

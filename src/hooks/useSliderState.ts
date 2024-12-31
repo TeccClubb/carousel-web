@@ -1,7 +1,7 @@
 import { RootState } from "@/store";
 import { useSelector } from "react-redux";
 
-const useSliderState = () => {
+export const useSliderState = () => {
   return useSelector((state: RootState) => state.slider);
 };
 
@@ -24,5 +24,3 @@ export const useSliderZoomValue = () => {
 export const useSliderBrand = () => {
   return useSelector((state: RootState) => state.slider.brand);
 };
-
-export default useSliderState;

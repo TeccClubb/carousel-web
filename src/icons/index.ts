@@ -1,20 +1,57 @@
-// import { Icon } from "@/types";
-import SVGIcon from "./SVGIcon";
+import LogoIcon from "./LogoIcon";
 import LeftArrow from "./LeftArrow";
 import RightArrow from "./RightArrow";
+import LongRightArrow from "./LongRightArrow";
+import TickIcon from "./TickIcon";
+import MenuIcon from "./MenuIcon";
+import CloseIcon from "./CloseIcon";
+import LanguagesIcon from "./LanguagesIcon";
+import ChevronsUpDownIcon from "./ChevronsUpDownIcon";
+import FeatureIcon1 from "./FeatureIcon1";
+import FeatureIcon2 from "./FeatureIcon2";
+import FeatureIcon3 from "./FeatureIcon3";
+import FeatureIcon4 from "./FeatureIcon4";
+import TemplateIcon1 from "./TemplateIcon1";
+import TemplateIcon2 from "./TemplateIcon2";
+import TemplateIcon3 from "./TemplateIcon3";
+import BrandIcon1 from "./BrandIcon1";
+import BrandIcon2 from "./BrandIcon2";
+import BrandIcon3 from "./BrandIcon3";
+import ToolIcon1 from "./ToolIcon1";
+import ToolIcon2 from "./ToolIcon2";
+import ToolIcon3 from "./ToolIcon3";
+import ToolIcon4 from "./ToolIcon4";
+import FacebookIcon from "./FacebookIcon";
+import XTwitterIcon from "./XTwitterIcon";
+import InstagramIcon from "./InstagramIcon";
+import LinkedInIcon from "./LinkedInIcon";
 
-export {LeftArrow, RightArrow}
-
-// export const leftArrow: Icon = {
-//   viewBox: "0 0 448 512",
-//   pathData:
-//     "M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z",
-// };
-
-// export const rightArrow: Icon = {
-//   viewBox: "0 0 448 512",
-//   pathData:
-//     "M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z",
-// };
-
-export default SVGIcon;
+export {
+  LogoIcon,
+  LeftArrow,
+  RightArrow,
+  LongRightArrow,
+  TickIcon,
+  CloseIcon,
+  MenuIcon,
+  LanguagesIcon,
+  ChevronsUpDownIcon,
+  FeatureIcon1,
+  FeatureIcon2,
+  FeatureIcon3,
+  FeatureIcon4,
+  TemplateIcon1,
+  TemplateIcon2,
+  TemplateIcon3,
+  BrandIcon1,
+  BrandIcon2,
+  BrandIcon3,
+  ToolIcon1,
+  ToolIcon2,
+  ToolIcon3,
+  ToolIcon4,
+  FacebookIcon,
+  XTwitterIcon,
+  InstagramIcon,
+  LinkedInIcon
+};

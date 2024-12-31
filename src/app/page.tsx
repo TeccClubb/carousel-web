@@ -1,9 +1,30 @@
-"use client"
-// import Slider from "@/components/Slider/Slider";
-import Slider1 from "@/components/Slider/Slider";
+"use client";
+import React, { FC } from "react";
 
-export default function Home() {
+import {
+  BlogSection,
+  BrandSection,
+  DesignToolsSection,
+  FAQSection,
+  FeaturesSection,
+  HomeSection,
+  PriceSection,
+  TemplatesSection,
+} from "@/components/sections";
+
+const HomePage: FC = () => {
   return (
-    <Slider1 />
+    <>
+      <HomeSection />
+      <FeaturesSection />
+      <TemplatesSection />
+      <BrandSection />
+      <DesignToolsSection />
+      <PriceSection />
+      <BlogSection />
+      <FAQSection />
+    </>
   );
-}
+};
+
+export default HomePage;

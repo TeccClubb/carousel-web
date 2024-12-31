@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import "./slide.css";
+import "@/css/slide.css";
 import { SlideType } from "@/types";
 import { useSliderFontFamily } from "@/hooks";
-import { useSliderActiveIndex, useSliderBrand } from "@/hooks/useSliderState";
+import { useSliderActiveIndex, useSliderBrand } from "@/hooks";
 
 const Slide: FC<SlideType & { index: number }> = ({
   index,
