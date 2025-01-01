@@ -25,6 +25,8 @@ import FacebookIcon from "./FacebookIcon";
 import XTwitterIcon from "./XTwitterIcon";
 import InstagramIcon from "./InstagramIcon";
 import LinkedInIcon from "./LinkedInIcon";
+import WelcomeIcon from "./WelcomeIcon";
+import GoogleIcon from "./GoogleIcon";
 
 export {
   LogoIcon,
@@ -53,5 +55,7 @@ export {
   FacebookIcon,
   XTwitterIcon,
   InstagramIcon,
-  LinkedInIcon
+  LinkedInIcon,
+  WelcomeIcon,
+  GoogleIcon
 };

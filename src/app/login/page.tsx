@@ -1,7 +1,3 @@
-import React, { FC } from "react";
+import { Login } from "@/components";
 
-const LoginPage: FC = () => {
-  return <div>LoginPage</div>;
-};
-
-export default LoginPage;
+export default Login;

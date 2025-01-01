@@ -23,12 +23,15 @@ import {
   HOME_PAGE_PATH,
   LOGIN_PAGE_PATH,
   PRICING_PAGE_PATH,
+  SIGNUP_PAGE_PATH,
 } from "@/pathNames";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const Navbar: FC = () => {
   const [activePath, setActivePath] = useState<string>(HOME_PAGE_PATH);
   const [selectedLanguage, setSelectedLanguage] = useState<string>("en");
+
+  const pathname = usePathname();
 
   const router = useRouter();
 
@@ -119,7 +122,17 @@ const Navbar: FC = () => {
               <LongRightArrow className="hidden sm:inline" />
             </Button>
 
-            <Button onClick={() => router.push(LOGIN_PAGE_PATH)}>Login</Button>
+            <Button
+              onClick={() =>
+                router.push(
+                  pathname !== LOGIN_PAGE_PATH
+                    ? LOGIN_PAGE_PATH
+                    : SIGNUP_PAGE_PATH
+                )
+              }
+            >
+              {pathname !== LOGIN_PAGE_PATH ? "Login" : "Signup"}
+            </Button>
           </div>
         </div>
       </div>
