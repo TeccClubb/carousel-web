@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import {
   ChevronsUpDownIcon,
   DownloadIcon,
-  InstagramGradientIcon,
+  // InstagramGradientIcon,
   LockIcon,
   LogoIcon,
 } from "@/icons";

@@ -26,7 +26,9 @@ const Section: FC<{
       </div>
       {cornerGradient && (
         <div
-          className={`absolute top-0 -${cornerGradient}-12 w-80 h-80 bg-[#0F73F6] opacity-10 blur-3xl rounded-full`}
+          className={`absolute top-0 ${
+            cornerGradient === "left" ? "-left-12" : "-right-12"
+          } w-80 h-80 bg-[#0F73F6] opacity-10 blur-3xl rounded-full`}
         ></div>
       )}
     </section>

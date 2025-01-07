@@ -4,6 +4,7 @@ import { SlideType } from "@/types";
 import { useSliderFontFamily } from "@/hooks";
 import { useSliderActiveIndex, useSliderBrand } from "@/hooks";
 import Watermark from "./Watermark";
+import Image from "next/image";
 
 const Slide: FC<SlideType & { index: number }> = ({
   index,
@@ -23,7 +24,7 @@ const Slide: FC<SlideType & { index: number }> = ({
 
   const isOddSlide = (index + 1) % 2 !== 0;
 
-  const domainName = "TechClub";
+  // const domainName = "TechClub";
 
   const brand = useSliderBrand();
 
@@ -307,7 +308,7 @@ const Slide: FC<SlideType & { index: number }> = ({
                 </div>
                 {/* Watermark */}
                 <Watermark />
-                
+
                 {/* Branding */}
                 <div
                   className="slide_branding"
@@ -317,12 +318,14 @@ const Slide: FC<SlideType & { index: number }> = ({
                 >
                   <div className="flex items-center">
                     <span className="branding_profile relative flex shrink-0">
-                      <img
-                        alt="Profile Pic"
+                      <Image
                         className="aspect-square h-full w-full object-cover rounded-full"
-                        width="120"
-                        height="120"
                         src={brand.profileImage}
+                        alt="Image not founded"
+                        width={120}
+                        height={120}
+                        sizes="100vw"
+                        priority
                       />
                     </span>
                     <div
