@@ -11,7 +11,7 @@ import {
 const Login: FC = () => {
   return (
     <section className="bg-gradient-to-r from-[#F0F6FD] to-[#FFFFFF] dark:bg-gradient-to-r dark:from-[#1E1E2F] dark:to-[#2D2D44] flex flex-wrap items-center justify-start bg-cover bg-center w-full min-h-[calc(100vh-4rem)]">
-      <div className="w-full lg:w-5/12 lg:min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center px-4 lg:px-8 xl:px-14 gap-y-8 bg-gradient-to-b from-[#18BCEC] to-[#0139FF] pt-16">
+      <div className="w-full lg:w-7/12 lg:h-[calc(100vh-4rem)] flex flex-col items-center justify-center px-4 lg:px-8 xl:px-14 gap-y-8 bg-gradient-to-b from-[#18BCEC] to-[#0139FF] pt-16">
         <h1 className="text-white text-5xl xl:text-6xl font-semibold ml-5 2xl:ml-8 2xl:mr-10">
           Welcome Back to Pixmart
         </h1>
@@ -20,7 +20,7 @@ const Login: FC = () => {
 
       <div className="lg:w-1/12 lg:block hidden"></div>
 
-      <div className="w-full lg:w-5/12 h-auto lg:min-h-[calc(100vh-4rem)] py-12 lg:py-0 flex flex-col items-center justify-center gap-y-4 lg:pt-16">
+      <div className="w-full lg:w-3/12 h-auto lg:min-h-[calc(100vh-4rem)] py-12 lg:py-0 flex flex-col items-center justify-center gap-y-4 lg:pt-16">
         <h2 className="text-gray-900 dark:text-white text-3xl font-semibold">
           Login Your Account
         </h2>
@@ -28,7 +28,7 @@ const Login: FC = () => {
           Select your google account to login to your account
         </span>
 
-        <Button className="bg-white text-black hover:text-white dark:bg-black dark:text-white dark:hover:bg-white dark:hover:text-black">
+        <Button className="w-full bg-slate-300 text-black hover:text-white dark:bg-black dark:text-white dark:hover:bg-white dark:hover:text-black">
           <GoogleIcon /> Login with Google
         </Button>
         <Link
