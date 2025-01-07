@@ -3,6 +3,7 @@ import "@/css/slide.css";
 import { SlideType } from "@/types";
 import { useSliderFontFamily } from "@/hooks";
 import { useSliderActiveIndex, useSliderBrand } from "@/hooks";
+import Watermark from "./Watermark";
 
 const Slide: FC<SlideType & { index: number }> = ({
   index,
@@ -305,14 +306,8 @@ const Slide: FC<SlideType & { index: number }> = ({
                   )}
                 </div>
                 {/* Watermark */}
-                <div
-                  className="slide_watermark"
-                  style={{ backgroundColor: "#FFFFFF", color: "#160910" }}
-                >
-                  <div className="slide_watermark_text">
-                    Created with {domainName}
-                  </div>
-                </div>
+                <Watermark />
+                
                 {/* Branding */}
                 <div
                   className="slide_branding"

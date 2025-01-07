@@ -42,7 +42,7 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
       >
         <Provider store={store}>
           <AiNavbar />
-          <main className="flex-1 flex-shrink-0 min-h-screen">{children}</main>
+          <main className="flex-1 flex-shrink-0 min-h-[calc(100vh-4rem)]">{children}</main>
           <Toaster />
         </Provider>
       </body>

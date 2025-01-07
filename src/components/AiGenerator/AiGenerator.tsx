@@ -22,7 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui";
-// import Slider from "./Slider";
+import Slider from "../AiSlider/Slider";
 import Ai from "./Ai";
 import Content from "./Content";
 import Text from "./Text";
@@ -76,8 +76,8 @@ const AiGenerator = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-start gap-0 overflow-hidden">
-      <div className="w-auto border-r overflow-auto min-h-screen pt-16">
+    <div className="min-h-[calc(100vh-4rem)] flex items-start gap-0 overflow-hidden">
+      <div className="w-auto min-h-[calc(100vh-4rem)] border-r overflow-auto">
         <div className="flex flex-col gap-4 py-2">
           <nav className="grid gap-1 px-2 justify-center">
             {navItems.map((item) => (
@@ -110,10 +110,15 @@ const AiGenerator = () => {
         </div>
       </div>
 
-      <div className="w-80 hidden md:flex border-r min-h-screen pt-16">
+      <div className="w-80 min-h-[calc(100vh-4rem)] hidden md:flex border-r">
         {items[activeItem].container && items[activeItem].container}
       </div>
-      <div className="flex-1 min-h-screen pt-16">{/* <Slider /> */}</div>
+      <div
+        className="min-h-[calc(100vh-4rem)] flex-1 lg:border-x relative"
+        style={{ backgroundImage: "url('/background.png')" }}
+      >
+        <Slider />
+      </div>
     </div>
   );
 };

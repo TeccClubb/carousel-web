@@ -138,7 +138,7 @@ const SelectItem = React.forwardRef<
     // icon?:React.ReactNode;
     tickSide?: "right" | "left";
   }
->(({ tickSide = "left", className, children, ...props }, ref) => (
+>(({ tickSide = "right", className, children, ...props }, ref) => (
   <SelectPrimitive.Item
     ref={ref}
     className={cn(

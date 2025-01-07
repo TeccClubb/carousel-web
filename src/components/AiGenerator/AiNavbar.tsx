@@ -38,7 +38,7 @@ const AiNavbar: FC = () => {
   const handleDownload = () => {};
 
   return (
-    <nav className="bg-slate-50 dark:bg-gray-800 absolute top-0 left-0 right-0">
+    <nav className="bg-slate-50 dark:bg-gray-800">
       <div className="px-2 sm:px-4 lg:px-6">
         <div className="flex h-16 items-center justify-between">
           <Link href={HOME_PAGE_PATH} className="px-3 py-2" aria-current="page">

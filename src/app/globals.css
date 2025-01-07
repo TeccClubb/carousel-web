@@ -13,7 +13,7 @@
   grid-template-columns: 50px minmax(0, 1fr);
 }
 
-/* :root {
+:root {
   --black: rgba(34, 34, 34, 1);
   --black-15: rgba(34, 34, 34, 0.15);
   --blue-1: rgba(15, 115, 246, 1);
@@ -46,10 +46,10 @@
   --white: rgba(255, 255, 255, 1);
 
   
-} */
+}
 
 
-/* :root {
+:root {
 
   --slide-background-color: #160910;
   --slide-primary-color: #e7d8c7;
@@ -85,7 +85,7 @@
   --outro-slide-cta-button-border-radius: 99em;
   --slide-image-placeholder-color: #dedede;
   --slide-image-border-radius: 1em;
-} */
+}
 :root {
   --range-thumb-size: 36px;
 }
