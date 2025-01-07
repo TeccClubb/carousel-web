@@ -3,16 +3,17 @@ import React, { FC, ReactNode } from "react";
 const Section: FC<{
   isHeroSection?: boolean;
   showGradient?: boolean;
+  cornerGradient?: "left" | "right";
   className?: string;
   children: ReactNode;
-}> = ({ isHeroSection, showGradient, className, children }) => {
+}> = ({ isHeroSection, showGradient, cornerGradient, className, children }) => {
   return (
     <section
-      className={`flex items-center justify-center bg-cover bg-center w-full ${
-        isHeroSection ? "min-h-screen lg:pt-16" : "h-auto"
+      className={`flex items-center justify-center bg-cover bg-center w-full overflow-hidden relative ${
+        isHeroSection ? "min-h-[calc(100vh-4rem)]" : "h-auto"
       } ${
         showGradient
-          ? "bg-gradient-to-r from-[#F0F6FD] to-[#FFFFFF] bg-transparent"
+          ? "bg-gradient-to-r from-[#F0F6FD] to-[#FFFFFF] dark:bg-gradient-to-r dark:from-[#1E1E2F] dark:to-[#2D2D44]"
           : ""
       }`}
     >
@@ -23,6 +24,11 @@ const Section: FC<{
       >
         {children}
       </div>
+      {cornerGradient && (
+        <div
+          className={`absolute top-0 -${cornerGradient}-12 w-80 h-80 bg-[#0F73F6] opacity-10 blur-3xl rounded-full`}
+        ></div>
+      )}
     </section>
   );
 };

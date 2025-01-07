@@ -2,10 +2,11 @@ import React, { FC } from "react";
 import BlogCard from "./BlogCard";
 import Section from "./Section";
 
-const BlogSection: FC<{ isHeroSection?: boolean; showGradient?: boolean }> = ({
-  isHeroSection,
-  showGradient,
-}) => {
+const BlogSection: FC<{
+  isHeroSection?: boolean;
+  showGradient?: boolean;
+  cornerGradient?: "left" | "right";
+}> = ({ isHeroSection, showGradient, cornerGradient }) => {
   const blogs = [
     {
       link: "/blog-link",
@@ -31,7 +32,11 @@ const BlogSection: FC<{ isHeroSection?: boolean; showGradient?: boolean }> = ({
   ];
 
   return (
-    <Section isHeroSection={isHeroSection} showGradient={showGradient}>
+    <Section
+      isHeroSection={isHeroSection}
+      showGradient={showGradient}
+      cornerGradient={cornerGradient}
+    >
       <div className="flex flex-col gap-y-8">
         <div className="text-center">
           <span className="text-[#0F73F6] text-base font-medium">BLOG</span>
@@ -40,7 +45,8 @@ const BlogSection: FC<{ isHeroSection?: boolean; showGradient?: boolean }> = ({
           </h1>
         </div>
 
-        <div className="flex flex-wrap w-full">
+        <div className="flex flex-wrap w-full relative">
+      <div className="absolute left-1/2 top-[6%] right-1/2 transform -translate-x-1/2 w-full h-[25em] bg-[#0F73F6] opacity-10 blur-3xl rounded-full"></div>
           {blogs.map((blog, index) => (
             <BlogCard
               key={`${blog.link} ${index}`}

@@ -22,10 +22,11 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-const FAQSection: FC<{ isHeroSection?: boolean; showGradient?: boolean }> = ({
-  isHeroSection,
-  showGradient,
-}) => {
+const FAQSection: FC<{
+  isHeroSection?: boolean;
+  showGradient?: boolean;
+  cornerGradient?: "left" | "right";
+}> = ({ isHeroSection, showGradient, cornerGradient }) => {
   const faqs: FAQ[] = [
     {
       question: "Can I request a refund?",
@@ -92,6 +93,7 @@ const FAQSection: FC<{ isHeroSection?: boolean; showGradient?: boolean }> = ({
     <Section
       isHeroSection={isHeroSection}
       showGradient={showGradient}
+      cornerGradient={cornerGradient}
       className="flex-col lg:flex-row gap-y-8"
     >
       <div className="w-full lg:w-1/2 px-4 lg:pr-16 self-start">

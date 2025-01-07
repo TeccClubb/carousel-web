@@ -11,7 +11,8 @@ import {
 const FeaturesSection: FC<{
   isHeroSection?: boolean;
   showGradient?: boolean;
-}> = ({ isHeroSection, showGradient }) => {
+  cornerGradient?: "left" | "right";
+}> = ({ isHeroSection, showGradient, cornerGradient }) => {
   const Feature: FC<{
     title: string;
     description: string;
@@ -37,6 +38,7 @@ const FeaturesSection: FC<{
     <Section
       isHeroSection={isHeroSection}
       showGradient={showGradient}
+      cornerGradient={cornerGradient}
       className="flex-col gap-y-6"
     >
       <h1 className="text-gray-900 dark:text-white text-center text-6xl font-bold">

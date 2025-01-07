@@ -2,12 +2,17 @@ import React, { FC } from "react";
 import PriceCard from "./PriceCard";
 import Section from "./Section";
 
-const PriceSection: FC<{ isHeroSection?: boolean; showGradient?: boolean }> = ({
-  isHeroSection,
-  showGradient,
-}) => {
+const PriceSection: FC<{
+  isHeroSection?: boolean;
+  showGradient?: boolean;
+  cornerGradient?: "left" | "right";
+}> = ({ isHeroSection, showGradient, cornerGradient }) => {
   return (
-    <Section isHeroSection={isHeroSection} showGradient={showGradient}>
+    <Section
+      isHeroSection={isHeroSection}
+      showGradient={showGradient}
+      cornerGradient={cornerGradient}
+    >
       <div className="flex flex-col gap-y-8 w-full">
         <div className="text-center">
           <span className="text-[#0F73F6] text-base font-medium">

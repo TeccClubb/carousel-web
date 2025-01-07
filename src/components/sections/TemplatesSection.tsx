@@ -5,7 +5,8 @@ import { TemplateIcon1, TemplateIcon2, TemplateIcon3 } from "@/icons";
 const TemplatesSection: FC<{
   isHeroSection?: boolean;
   showGradient?: boolean;
-}> = ({ isHeroSection, showGradient }) => {
+  cornerGradient?: "left" | "right";
+}> = ({ isHeroSection, showGradient, cornerGradient }) => {
   const TemplateCard: FC<{
     title: string;
     description: string;
@@ -30,9 +31,11 @@ const TemplatesSection: FC<{
     <Section
       isHeroSection={isHeroSection}
       showGradient={showGradient}
+      cornerGradient={cornerGradient}
       className="flex-col-reverse lg:flex-row gap-y-4"
     >
-      <div className="lg:w-1/2 px-4 flex flex-col xl:gap-y-8 gap-y-4 lg:pr-16">
+      <div className="lg:w-1/2 px-4 flex flex-col xl:gap-y-8 gap-y-4 lg:pr-16 relative">
+      <div className="absolute left-1/2 top-[6%] right-1/2 transform -translate-x-1/2 w-[25em] h-[25em] bg-[#0F73F6] opacity-10 blur-3xl rounded-full"></div>
         <TemplateCard
           title="Background Patterns & Designs"
           description="Enhance your slides with a selection of stunning background patterns and designs, adding depth."

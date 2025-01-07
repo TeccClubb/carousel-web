@@ -15,14 +15,14 @@ import {
 const HomePage: FC = () => {
   return (
     <>
-      <HomeSection />
+      <HomeSection showGradient />
       <FeaturesSection />
-      <TemplatesSection />
-      <BrandSection />
+      <TemplatesSection cornerGradient="right" />
+      <BrandSection cornerGradient="left" />
       <DesignToolsSection />
-      <PriceSection />
+      <PriceSection showGradient />
       <BlogSection />
-      <FAQSection />
+      <FAQSection showGradient />
     </>
   );
 };

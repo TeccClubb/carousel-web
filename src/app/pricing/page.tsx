@@ -5,7 +5,7 @@ const PricingPage: FC = () => {
   return (
     <>
       <PriceSection isHeroSection showGradient />
-      <FAQSection />
+      <FAQSection showGradient cornerGradient="left" />
     </>
   );
 };

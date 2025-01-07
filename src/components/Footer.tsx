@@ -94,7 +94,7 @@ const Footer: FC = () => {
   );
 
   return (
-    <footer className="bg-white dark:bg-gray-900">
+    <footer className="bg-gradient-to-t from-[#F0F6FD] dark:from-[#2D2D44] to-transparent"> {/*bg-white dark:bg-gray-900*/} 
       <div className="max-w-7xl mx-auto pb-8 pt-16 sm:pt-24 md:pt-32 sm:px-6 md:px-8 px-4">
         <div className="flex flex-wrap flex-col lg:flex-row gap-y-4">
           <div className="w-full lg:w-3/5 flex flex-wrap mt-16 lg:mt-0 px-4 lg:px-0 order-2 lg:order-1">
@@ -184,16 +184,16 @@ const Footer: FC = () => {
           </div>
         </div>
       </div>
-      <div className="bg-black dark:bg-slate-400">
+      <div className="bg-black dark:bg-gray-800">
         <div className="w-full max-w-7xl mx-auto p-4 flex items-center justify-center md:justify-between flex-col md:flex-row gap-y-4">
-          <nav className="text-white dark:text-gray-900 text-sm font-normal space-x-6">
+          <nav className="text-white  text-sm font-normal space-x-6">
             <Link href={PRIVACY_POLICY_PAGE_PATH}>Privacy Policy</Link>
             <span>|</span>
             <Link href={TERMS_AND_CONDITIONS_PAGE_PATH}>Terms and Condition</Link>
             <span>|</span>
             <Link href={SITE_MAP_PAGE_PATH}>Site Map</Link>
           </nav>
-          <span className="text-white dark:text-gray-900 text-sm font-normal">
+          <span className="text-white text-sm font-normal">
             Copyright &copy; 2024 Pixmart. All rights reserved.
           </span>
         </div>

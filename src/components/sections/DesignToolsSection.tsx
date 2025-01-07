@@ -6,7 +6,8 @@ import Image from "next/image";
 const DesignToolsSection: FC<{
   isHeroSection?: boolean;
   showGradient?: boolean;
-}> = ({ isHeroSection, showGradient }) => {
+  cornerGradient?: "left" | "right";
+}> = ({ isHeroSection, showGradient, cornerGradient }) => {
   const imageSrc = "/design-tools-section-image.png";
   const ToolCard: FC<{
     title: string;
@@ -37,6 +38,7 @@ const DesignToolsSection: FC<{
     <Section
       isHeroSection={isHeroSection}
       showGradient={showGradient}
+      cornerGradient={cornerGradient}
       className="flex-col lg:flex-row gap-y-4"
     >
       <div className="lg:w-1/2 px-4 pr-16 flex flex-col gap-y-4">
