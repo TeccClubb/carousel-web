@@ -10,8 +10,8 @@ const BlogCard: FC<{
   date: string;
 }> = ({ link, imageSrc, category, title, date }) => {
   return (
-    <Link href={link} className="p-4 w-full lg:w-1/3 sm:w-1/2">
-      <div className="bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 w-full flex flex-col items-start gap-8 p-5 flex-shrink-0 mx-auto rounded-2xl shadow-lg transition duration-300">
+    <div className="p-4 w-full lg:w-1/3 sm:w-1/2">
+      <Link href={link} className="bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 w-full flex flex-col items-start gap-8 p-5 flex-shrink-0 mx-auto rounded-2xl shadow-lg transition duration-300">
         <div className="w-full relative">
           <Image
             className="rounded-xl w-full h-auto"
@@ -32,8 +32,8 @@ const BlogCard: FC<{
         <span className="text-gray-900 dark:text-white text-base font-normal opacity-50">
           {date}
         </span>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 

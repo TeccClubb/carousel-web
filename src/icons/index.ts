@@ -27,6 +27,26 @@ import InstagramIcon from "./InstagramIcon";
 import LinkedInIcon from "./LinkedInIcon";
 import WelcomeIcon from "./WelcomeIcon";
 import GoogleIcon from "./GoogleIcon";
+import ToggleIcon from "./ToggleIcon";
+import BarsIcon from "./BarsIcon";
+import AiIcon from "./AiIcon";
+import ContentIcon from "./ContentIcon";
+import TextIcon from "./TextIcon";
+import ColorsIcon from "./ColorsIcon";
+import BackgroundIcon from "./BackgroundIcon";
+import BrandingIcon from "./BrandingIcon";
+import SwipeIcon from "./SwipeIcon";
+import OrderIcon from "./OrderIcon";
+import SettingsIcon from "./SettingsIcon";
+import ArrowsShuffleIcon from "./ArrowsShuffleIcon";
+import MyCarouselsIcon from "./MyCarouselsIcon";
+import DownloadIcon from "./DownloadIcon";
+import LockIcon from "./LockIcon";
+import InstagramGradientIcon from "./InstagramGradientIcon";
+import LinkedInGradientIcon from "./LinkedInGradientIcon";
+import TikTokGradientIcon from "./TikTokGradientIcon";
+import DragHandleIcon from "./DragHandleIcon";
+import AddIcon from "./AddIcon";
 
 export {
   LogoIcon,
@@ -57,5 +77,25 @@ export {
   InstagramIcon,
   LinkedInIcon,
   WelcomeIcon,
-  GoogleIcon
+  GoogleIcon,
+  ToggleIcon,
+  BarsIcon,
+  AiIcon,
+  ContentIcon,
+  TextIcon,
+  ColorsIcon,
+  BackgroundIcon,
+  BrandingIcon,
+  SwipeIcon,
+  OrderIcon,
+  SettingsIcon,
+  ArrowsShuffleIcon,
+  MyCarouselsIcon,
+  DownloadIcon,
+  LockIcon,
+  InstagramGradientIcon,
+  LinkedInGradientIcon,
+  TikTokGradientIcon,
+  DragHandleIcon,
+  AddIcon,
 };

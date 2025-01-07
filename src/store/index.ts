@@ -1,7 +1,17 @@
-import ConfigureStore from "./ConfigureStore";
+import store from "./store";
 
-export type { RootState } from "./store";
+export type { RootState, StoreDispatch } from "./store";
 
-export { setActiveIndex, setNextIndex, setPrevIndex, zoomIn, zoomOut } from "./sliderSlice";
+export {
+  setActiveIndex,
+  setNextIndex,
+  setPrevIndex,
+  zoomIn,
+  zoomOut,
+} from "./slider.slice";
 
-export default ConfigureStore;
+export { setActiveRatioId } from "./slide.slice";
+
+export { setActiveItem } from "./nav.slice";
+
+export default store;

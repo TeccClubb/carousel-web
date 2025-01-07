@@ -94,8 +94,8 @@ const FAQSection: FC<{ isHeroSection?: boolean; showGradient?: boolean }> = ({
       showGradient={showGradient}
       className="flex-col lg:flex-row gap-y-8"
     >
-      <div className="w-full lg:w-1/2 px-4">
-        <Accordion type="multiple" className="w-full lg:w-max">
+      <div className="w-full lg:w-1/2 px-4 lg:pr-16 self-start">
+        <Accordion type="multiple" className="w-full">
           {faqs.map((faq, index) => (
             <AccordionItem key={`item-${index}`} value={`item-${index}`}>
               <AccordionTrigger>{faq.question}</AccordionTrigger>
