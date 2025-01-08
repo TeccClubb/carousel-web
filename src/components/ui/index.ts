@@ -57,8 +57,6 @@ export {
   TooltipProvider,
 } from "./tooltip";
 
-export { RadioButton } from "./radio-button";
-
 export { Slider } from "./slider";
 
 export { BottomPanel } from "./bottom-panel";

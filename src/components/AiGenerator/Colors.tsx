@@ -1,15 +1,23 @@
 import React, { FC, useState } from "react";
 import { InputColor, Switch } from "../ui";
 import { darkColors, lightColors } from "@/assets/slide-colors";
+import { useColors } from "@/hooks";
+import { useDispatch } from "react-redux";
+import {
+  setAccentColor,
+  setBackgroundColor,
+  setColors,
+  setTextColor,
+} from "@/store";
 
 const Colors: FC = () => {
+  const dispatch = useDispatch();
+
   const [isUseCustomColors, setIsUseCustomColors] = useState<boolean>(true);
   const [isAlternateSlideColors, setIsAlternateSlideColors] =
     useState<boolean>(true);
 
-  const [backgroundColor, setBackgroundColor] = useState<string>("#160910");
-  const [textColor, setTextColor] = useState<string>("#e7d8c7");
-  const [accentColor, setAccentColor] = useState<string>("#ef922d");
+  const { backgroundColor, textColor, accentColor } = useColors();
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
@@ -26,21 +34,21 @@ const Colors: FC = () => {
             <div>
               <InputColor
                 color={backgroundColor}
-                setColor={setBackgroundColor}
+                setColor={(color) => dispatch(setBackgroundColor(color))}
                 label="Background Color"
               />
             </div>
             <div>
               <InputColor
                 color={textColor}
-                setColor={setTextColor}
+                setColor={(color) => dispatch(setTextColor(color))}
                 label="Text Color"
               />
             </div>
             <div>
               <InputColor
                 color={accentColor}
-                setColor={setAccentColor}
+                setColor={(color) => dispatch(setAccentColor(color))}
                 label="Accent Color"
               />
             </div>
@@ -62,36 +70,40 @@ const Colors: FC = () => {
             Dark
           </h3>
           <div className="flex space-between flex-wrap gap-2">
-            {darkColors.map((color) => {
+            {darkColors.map((colors) => {
               const isActiveColors =
-                textColor === color.textColor &&
-                accentColor === color.accentColor &&
-                backgroundColor === color.backgroundColor;
+                textColor === colors.textColor &&
+                accentColor === colors.accentColor &&
+                backgroundColor === colors.backgroundColor;
               return (
                 <div
-                  key={color.id}
-                  onClick={() => {
-                    setTextColor(color.textColor);
-                    setAccentColor(color.accentColor);
-                    setBackgroundColor(color.backgroundColor);
-                  }}
+                  key={colors.id}
+                  onClick={() =>
+                    dispatch(
+                      setColors({
+                        backgroundColor: colors.backgroundColor,
+                        textColor: colors.textColor,
+                        accentColor: colors.accentColor,
+                      })
+                    )
+                  }
                   className={`flex flex-col gap-0.5 justify-center items-center border-2 overflow-hidden rounded-xl ${
                     isActiveColors ? "border-primary" : ""
                   }`}
                 >
                   <div className="flex gap-0.5">
                     <div
-                      style={{ background: color.textColor }}
+                      style={{ background: colors.textColor }}
                       className="h-5 w-7"
                     ></div>
                     <div
                       className="h-5 w-7"
-                      style={{ background: color.accentColor }}
+                      style={{ background: colors.accentColor }}
                     ></div>
                   </div>
                   <div
                     className="h-5 w-full"
-                    style={{ background: color.backgroundColor }}
+                    style={{ background: colors.backgroundColor }}
                   ></div>
                 </div>
               );
@@ -104,36 +116,40 @@ const Colors: FC = () => {
             Light
           </h3>
           <div className="flex space-between flex-wrap gap-2">
-            {lightColors.map((color) => {
+            {lightColors.map((colors) => {
               const isActiveColors =
-                textColor === color.textColor &&
-                accentColor === color.accentColor &&
-                backgroundColor === color.backgroundColor;
+                textColor === colors.textColor &&
+                accentColor === colors.accentColor &&
+                backgroundColor === colors.backgroundColor;
               return (
                 <div
-                  key={color.id}
-                  onClick={() => {
-                    setTextColor(color.textColor);
-                    setAccentColor(color.accentColor);
-                    setBackgroundColor(color.backgroundColor);
-                  }}
+                  key={colors.id}
+                  onClick={() =>
+                    dispatch(
+                      setColors({
+                        backgroundColor: colors.backgroundColor,
+                        textColor: colors.textColor,
+                        accentColor: colors.accentColor,
+                      })
+                    )
+                  }
                   className={`flex flex-col gap-0.5 justify-center items-center border-2 overflow-hidden rounded-xl ${
                     isActiveColors ? "border-primary" : ""
                   }`}
                 >
                   <div className="flex gap-0.5">
                     <div
-                      style={{ background: color.textColor }}
+                      style={{ background: colors.textColor }}
                       className="h-5 w-7"
                     ></div>
                     <div
                       className="h-5 w-7"
-                      style={{ background: color.accentColor }}
+                      style={{ background: colors.accentColor }}
                     ></div>
                   </div>
                   <div
                     className="h-5 w-full"
-                    style={{ background: color.backgroundColor }}
+                    style={{ background: colors.backgroundColor }}
                   ></div>
                 </div>
               );

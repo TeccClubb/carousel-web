@@ -12,6 +12,6 @@ export {
 
 export { setActiveRatioId } from "./slide.slice";
 
-export { setActiveItem } from "./nav.slice";
+export { setActiveItem, setBackgroundColor, setTextColor, setAccentColor, setColors } from "./nav.slice";
 
 export default store;

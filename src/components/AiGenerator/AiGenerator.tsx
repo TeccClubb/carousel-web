@@ -13,7 +13,7 @@ import {
   SwipeIcon,
   TextIcon,
 } from "@/icons";
-import { useActiveNavItem, useNavItems } from "@/hooks";
+import { useActiveNavItem } from "@/hooks";
 import { useDispatch } from "react-redux";
 import { setActiveItem } from "@/store";
 import {
@@ -34,12 +34,26 @@ import Order from "./Order";
 import Settings from "./Settings";
 import MyCarousels from "./MyCarousels";
 import Randomize from "./Randomize";
+import { NavItem } from "@/types";
 
 const AiGenerator = () => {
   const dispatch = useDispatch();
 
   const activeItem = useActiveNavItem();
-  const navItems = useNavItems();
+
+  const navItems: NavItem[] = [
+    "ai",
+    "content",
+    "text",
+    "colors",
+    "background",
+    "branding",
+    "swipe",
+    "order",
+    "settings",
+    "randomize",
+    "my_carousels",
+  ];
 
   const items = {
     ai: { name: "AI", icon: <AiIcon />, container: <Ai /> },

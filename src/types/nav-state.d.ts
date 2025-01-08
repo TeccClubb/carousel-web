@@ -13,5 +13,5 @@ export type NavItem =
 
 export type NavState = {
   activeNavItem: NavItem;
-  navItems: NavItem[];
+  colors: {backgroundColor: string; textColor: string; accentColor: string}
 };

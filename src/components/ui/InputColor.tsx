@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction, useId } from "react";
+import React, { FC, useId } from "react";
 import { Label } from "./label";
 import { Input } from "./input";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
@@ -6,7 +6,7 @@ import { HexColorPicker } from "react-colorful";
 
 const InputColor: FC<{
   color: string;
-  setColor: Dispatch<SetStateAction<string>>;
+  setColor: (color: string) => void;
   label: string;
 }> = ({ color, setColor, label }) => {
   const id = useId();
