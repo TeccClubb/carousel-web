@@ -47,6 +47,7 @@ import LinkedInGradientIcon from "./LinkedInGradientIcon";
 import TikTokGradientIcon from "./TikTokGradientIcon";
 import DragHandleIcon from "./DragHandleIcon";
 import AddIcon from "./AddIcon";
+import ProjectIcon from "./ProjectIcon";
 
 export {
   LogoIcon,
@@ -98,4 +99,5 @@ export {
   TikTokGradientIcon,
   DragHandleIcon,
   AddIcon,
+  ProjectIcon,
 };

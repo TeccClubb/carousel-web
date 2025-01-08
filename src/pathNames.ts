@@ -25,3 +25,5 @@ export const PRIVACY_POLICY_PAGE_PATH = "/privacy-policy";
 export const TERMS_AND_CONDITIONS_PAGE_PATH = "/terms-and-conditions";
 
 export const SITE_MAP_PAGE_PATH = "/site-map";
+
+export const DASHBOARD_PAGE_PATH = "/dashboard";
