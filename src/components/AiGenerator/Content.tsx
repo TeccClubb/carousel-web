@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Input, RadioButton, Textarea } from "../ui";
+import { Input, Switch, Textarea } from "../ui";
 
 const Content: FC = () => {
   const [isSubTitleActive, setIsSubTitleActive] = useState<boolean>(true);
@@ -10,9 +10,9 @@ const Content: FC = () => {
       <div className="space-y-6">
         <div className="grid gap-2">
           <div className="flex items-center gap-2">
-            <RadioButton
+            <Switch
               checked={isSubTitleActive}
-              setChecked={setIsSubTitleActive}
+              onCheckedChange={(value) => setIsSubTitleActive(value)}
               label="Sub Title"
             />
           </div>
@@ -21,9 +21,9 @@ const Content: FC = () => {
 
         <div className="grid gap-2">
           <div className="flex items-center gap-2">
-            <RadioButton
+            <Switch
               checked={isTitleActive}
-              setChecked={setIsTitleActive}
+              onCheckedChange={(value) => setIsTitleActive(value)}
               label="Title"
             />
           </div>
@@ -32,9 +32,9 @@ const Content: FC = () => {
 
         <div className="grid gap-2">
           <div className="flex items-center gap-2">
-            <RadioButton
+            <Switch
               checked={isDescriptionActive}
-              setChecked={setIsDescriptionActive}
+              onCheckedChange={(value) => setIsDescriptionActive(value)}
               label="Description"
             />
           </div>

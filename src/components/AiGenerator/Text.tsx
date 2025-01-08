@@ -2,7 +2,6 @@ import React, { FC, useState } from "react";
 import {
   Button,
   Label,
-  RadioButton,
   Select,
   SelectContent,
   SelectGroup,
@@ -10,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
   Slider,
+  Switch,
 } from "../ui";
 import { ChevronsUpDownIcon } from "@/icons";
 
@@ -21,16 +21,16 @@ const Text: FC = () => {
 
   const [activeTextAlignment, setActiveTextAlignment] = useState("Left");
 
-  const [fontSize, setFontSize] = useState<number>(0.8)
+  const [fontSize, setFontSize] = useState<number>(0.8);
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
       <div className="space-y-4">
         <div>
           <div className="flex items-center gap-2 pb-2">
-            <RadioButton
+            <Switch
               checked={isCustomFontsEnabled}
-              setChecked={setIsCustomFontsEnabled}
+              onCheckedChange={(value) => setIsCustomFontsEnabled(value)}
               label="Use Custom Fonts"
             />
           </div>
@@ -100,10 +100,16 @@ const Text: FC = () => {
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between align-top">
               <Label>Font Size</Label>
-              <p className="text-sm text-muted-foreground">{(fontSize)}</p>
+              <p className="text-sm text-muted-foreground">{fontSize}</p>
             </div>
 
-            <Slider defaultValue={[fontSize * 100]} min={10} max={100} step={5} onValueChange={(value)=>setFontSize(value[0] / 100)} />
+            <Slider
+              defaultValue={[fontSize * 100]}
+              min={10}
+              max={100}
+              step={5}
+              onValueChange={(value) => setFontSize(value[0] / 100)}
+            />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -114,7 +120,7 @@ const Text: FC = () => {
                   key={textAlignment}
                   variant={"outline"}
                   size="sm"
-                  onClick={()=>setActiveTextAlignment(textAlignment)}
+                  onClick={() => setActiveTextAlignment(textAlignment)}
                   className={`border-2 ${
                     activeTextAlignment === textAlignment
                       ? "border-primary"

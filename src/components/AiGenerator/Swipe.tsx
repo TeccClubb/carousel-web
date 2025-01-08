@@ -1,12 +1,5 @@
 import React, { FC, useState } from "react";
-import {
-  Input,
-  RadioButton,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "../ui";
+import { Input, Switch, Tabs, TabsContent, TabsList, TabsTrigger } from "../ui";
 import { getArrow } from "@/icons/arrows";
 
 const Swipe: FC = () => {
@@ -60,9 +53,9 @@ const Swipe: FC = () => {
         <TabsContent value="text_and_arrow" className="space-y-6">
           <div className="grid gap-2">
             <div className="flex items-center gap-2">
-              <RadioButton
+              <Switch
                 checked={isIntroSlideArrowEnabled}
-                setChecked={setIsIntroSlideArrowEnabled}
+                onCheckedChange={(value) => setIsIntroSlideArrowEnabled(value)}
                 label="Intro Slide Arrow"
               />
             </div>
@@ -71,9 +64,11 @@ const Swipe: FC = () => {
 
           <div className="grid gap-2">
             <div className="flex items-center gap-2">
-              <RadioButton
+              <Switch
                 checked={isRegularSlideArrowEnabled}
-                setChecked={setIsRegularSlideArrowEnabled}
+                onCheckedChange={(value) =>
+                  setIsRegularSlideArrowEnabled(value)
+                }
                 label="Regular Slide Arrow"
               />
             </div>

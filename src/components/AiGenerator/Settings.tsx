@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { RadioButton } from "../ui";
+import { Switch } from "../ui";
 import { LockIcon } from "@/icons";
 
 const Settings: FC = () => {
@@ -13,9 +13,9 @@ const Settings: FC = () => {
       <div className="space-y-6">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <RadioButton
+            <Switch
               checked={isShowWaterMark}
-              setChecked={setIsShowWaterMark}
+              onCheckedChange={(value) => setIsShowWaterMark(value)}
               label="Show Watermark"
               labelIcon={<LockIcon />}
             />
@@ -26,25 +26,25 @@ const Settings: FC = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <RadioButton
+          <Switch
             checked={isHideIntroSlide}
-            setChecked={setIsHideIntroSlide}
+            onCheckedChange={(value) => setIsHideIntroSlide(value)}
             label="Hide Intro Slide"
           />
         </div>
 
         <div className="flex items-center gap-2">
-          <RadioButton
+          <Switch
             checked={isHideOutroSlide}
-            setChecked={setIsHideOutroSlide}
+            onCheckedChange={(value) => setIsHideOutroSlide(value)}
             label="Hide Outro Slide"
           />
         </div>
 
         <div className="flex items-center gap-2">
-          <RadioButton
+          <Switch
             checked={isHideCounter}
-            setChecked={setIsHideCounter}
+            onCheckedChange={(value) => setIsHideCounter(value)}
             label="Hide Counter"
           />
         </div>

@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Input, RadioButton } from "../ui";
+import { Input, Switch } from "../ui";
 import Image from "next/image";
 
 const Branding: FC = () => {
@@ -16,9 +16,9 @@ const Branding: FC = () => {
       <div className="space-y-6">
         <div className="grid gap-2">
           <div className="flex items-center gap-2">
-            <RadioButton
+            <Switch
               checked={isNameEnabled}
-              setChecked={setIsNameEnabled}
+              onCheckedChange={(value) => setIsNameEnabled(value)}
               label="Name"
             />
           </div>
@@ -27,9 +27,9 @@ const Branding: FC = () => {
 
         <div className="grid gap-2">
           <div className="flex items-center gap-2">
-            <RadioButton
+            <Switch
               checked={isHandleEnabled}
-              setChecked={setIsHandleEnabled}
+              onCheckedChange={(value) => setIsHandleEnabled(value)}
               label="Handle"
             />
           </div>
@@ -38,9 +38,9 @@ const Branding: FC = () => {
 
         <div className="grid gap-2">
           <div className="flex items-center gap-2">
-            <RadioButton
+            <Switch
               checked={isProfilePicEnabled}
-              setChecked={setIsProfilePicEnabled}
+              onCheckedChange={(value) => setIsProfilePicEnabled(value)}
               label="Profile Picture"
             />
           </div>
@@ -58,25 +58,25 @@ const Branding: FC = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <RadioButton
+          <Switch
             checked={isShowInIntroSlide}
-            setChecked={setIsShowInIntroSlide}
+            onCheckedChange={(value) => setIsShowInIntroSlide(value)}
             label="Show in Intro Slide"
           />
         </div>
 
         <div className="flex items-center gap-2">
-          <RadioButton
+          <Switch
             checked={isShowInOutroSlide}
-            setChecked={setIsShowInOutroSlide}
+            onCheckedChange={(value) => setIsShowInOutroSlide(value)}
             label="Show in Outro Slide"
           />
         </div>
 
         <div className="flex items-center gap-2">
-          <RadioButton
+          <Switch
             checked={isShowInRegularSlide}
-            setChecked={setIsShowInRegularSlide}
+            onCheckedChange={(value) => setIsShowInRegularSlide(value)}
             label="Show in Regular Slides"
           />
         </div>

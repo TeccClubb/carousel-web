@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { InputColor, RadioButton } from "../ui";
+import { InputColor, Switch } from "../ui";
 import { darkColors, lightColors } from "@/assets/slide-colors";
 
 const Colors: FC = () => {
@@ -16,9 +16,9 @@ const Colors: FC = () => {
       <div className="space-y-6">
         <div>
           <div className="flex items-center gap-2 pb-1">
-            <RadioButton
+            <Switch
               checked={isUseCustomColors}
-              setChecked={setIsUseCustomColors}
+              onCheckedChange={(value) => setIsUseCustomColors(value)}
               label="Use Custom Colors"
             />
           </div>
@@ -48,9 +48,9 @@ const Colors: FC = () => {
         </div>
 
         <div className="flex items-center gap-2 pb-1">
-          <RadioButton
+          <Switch
             checked={isAlternateSlideColors}
-            setChecked={setIsAlternateSlideColors}
+            onCheckedChange={(value) => setIsAlternateSlideColors(value)}
             label="Alternate Slide Colors"
           />
         </div>
