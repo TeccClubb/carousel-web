@@ -48,6 +48,7 @@ import TikTokGradientIcon from "./TikTokGradientIcon";
 import DragHandleIcon from "./DragHandleIcon";
 import AddIcon from "./AddIcon";
 import ProjectIcon from "./ProjectIcon";
+import DashboardIcon from "./DashboardIcon";
 
 export {
   LogoIcon,
@@ -100,4 +101,5 @@ export {
   DragHandleIcon,
   AddIcon,
   ProjectIcon,
+  DashboardIcon,
 };
