@@ -49,6 +49,10 @@ import DragHandleIcon from "./DragHandleIcon";
 import AddIcon from "./AddIcon";
 import ProjectIcon from "./ProjectIcon";
 import DashboardIcon from "./DashboardIcon";
+import SearchIcon from "./SearchIcon";
+import ProfileIcon from "./ProfileIcon";
+import PowerOffIcon from "./PowerOffIcon";
+import PlanIcon from "./PlanIcon";
 
 export {
   LogoIcon,
@@ -102,4 +106,8 @@ export {
   AddIcon,
   ProjectIcon,
   DashboardIcon,
+  SearchIcon,
+  ProfileIcon,
+  PowerOffIcon,
+  PlanIcon,
 };

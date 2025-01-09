@@ -1,88 +1,97 @@
 import React, { FC } from "react";
-import { DashboardIcon, LogoIcon, SettingsIcon } from "@/icons";
-import Link from "next/link";
+import { BarsIcon, LogoIcon, ProjectIcon } from "@/icons";
+import ReportCard from "./ReportCard";
+import ProjectCard from "./ProjectCard";
+import SideBar from "./SideBar";
+import Image from "next/image";
 
 const Dashboard: FC = () => {
   return (
-    // <Section className="flex-col space-y-8">
-    //   {/* <div className="xl:self-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"> */}
-    //   <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-    //     <ReportCard title="Total" value={0} icon={<ProjectIcon />} />
-    //     <ReportCard title="Total" value={0} icon={<ProjectIcon />} />
-    //     <ReportCard title="Total" value={0} icon={<ProjectIcon />} />
-    //     <ReportCard title="Total" value={0} icon={<ProjectIcon />} />
-    //     {/* <ReportCard title="Total" value={0} icon={<ProjectIcon />} /> */}
-    //   </div>
-
-    //   <div className="w-full">
-    //     <h2 className="w-full text-2xl font-bold text-gray-900 dark:text-white mb-6">
-    //       Your Projects
-    //     </h2>
-    //     <div className="w-full grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-6">
-    //       <ProjectCard
-    //         link="https://google.com"
-    //         imageSrc="/apple-watches.jpg"
-    //         title="This image is not found"
-    //       />
-    //       <ProjectCard
-    //         link="https://google.com"
-    //         imageSrc="/apple-watches.jpg"
-    //         title="This image is not found"
-    //       />
-    //       <ProjectCard
-    //         link="https://google.com"
-    //         imageSrc="/apple-watches.jpg"
-    //         title="This image is not found"
-    //       />
-    //       <ProjectCard
-    //         link="https://google.com"
-    //         imageSrc="/apple-watches.jpg"
-    //         title="This image is not found"
-    //       />
-    //       <ProjectCard
-    //         link="https://google.com"
-    //         imageSrc="/apple-watches.jpg"
-    //         title="This image is not found"
-    //       />
-    //     </div>
-    //   </div>
-    // </Section>
-
     <div className="bg-white">
-      <div className="hidden lg:flex lg:flex-col lg:w-72 lg:z-50 lg:inset-y-0 lg:fixed">
-        <div className="flex pb-4 px-6 bg-blue-600 overflow-y-auto gap-y-5 flex-col flex-grow">
-          <div className="flex shrink-0 items-center h-16">
-            <LogoIcon className="w-auto h-8" />
-          </div>
-          <nav className="flex flex-col flex-1">
-            <ul role="list" className="flex flex-col flex-1 gap-y-7">
-              <li>
-                <ul className="-mx-2 space-y-1">
-                  <li>
-                    <Link
-                      href={"/df"}
-                      className="text-white bg-blue-700 flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3"
-                    >
-                      <DashboardIcon />
-                      Dashboard
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-              <li className="mt-auto">
-                    <Link
-                      href={"/df"}
-                      className="text-white bg-blue-700 flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3"
-                    >
-                      <SettingsIcon />
-                      Settings
-                    </Link>
-                  </li>
-            </ul>
-          </nav>
+      <div className="bg-[#0139FF] border-gray-200 sticky top-0 z-40 flex items-center h-16 px-4 sm:px-6 md:px-8 gap-4 border-b shadow-sm">
+        <button className="lg:hidden text-white p-2.5 -m-2.5">
+          <BarsIcon className="w-5 h-5" />
+        </button>
+        <div className="w-px h-6 lg:hidden bg-white" aria-hidden="true"></div>
+        <LogoIcon className="w-36 h-auto text-white" />
+
+        <div className="flex flex-1 lg:gap-6 gap-4 self-stretch">
+          {/* <form className="grid grid-cols-1 flex-1 relative">
+              <Input
+                name="search"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                className="pl-10 pr-4 self-center row-start-1 col-start-1"
+              />
+              <SearchIcon
+                className="text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+
+              />
+
+            </form> */}
         </div>
+        <Image
+          className="rounded-full w-12 h-12"
+          src="/profile_pic.png"
+          alt="Image not founded"
+          width={0}
+          height={0}
+          sizes="100vw"
+          priority
+        />
       </div>
-      <div className="lg:pl-72"></div>
+      <div className="flex min-h-[calc(100vh-4rem)]">
+        <SideBar />
+        <main className="py-10 min-h-[calc(100vh-4rem)] flex-1">
+          <div className="lg:px-8 md:px-6 px-4 flex flex-col space-y-8">
+            <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
+              <ReportCard
+                title="Total Projects"
+                value={0}
+                icon={<ProjectIcon />}
+              />
+              <ReportCard title="Total" value={0} icon={<ProjectIcon />} />
+              <ReportCard title="Total" value={0} icon={<ProjectIcon />} />
+              <ReportCard title="Total" value={0} icon={<ProjectIcon />} />
+              {/* <ReportCard title="Total" value={0} icon={<ProjectIcon />} /> */}
+            </div>
+
+            <div className="w-full">
+              <h2 className="w-full text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                Your Projects
+              </h2>
+              <div className="w-full grid grid-cols-1 sm:grid-cols-2  xl:grid-cols-3  gap-6">
+                <ProjectCard
+                  link="https://google.com"
+                  imageSrc="/apple-watches.jpg"
+                  title="This image is not found"
+                />
+                <ProjectCard
+                  link="https://google.com"
+                  imageSrc="/apple-watches.jpg"
+                  title="This image is not found"
+                />
+                <ProjectCard
+                  link="https://google.com"
+                  imageSrc="/apple-watches.jpg"
+                  title="This image is not found"
+                />
+                <ProjectCard
+                  link="https://google.com"
+                  imageSrc="/apple-watches.jpg"
+                  title="This image is not found"
+                />
+                <ProjectCard
+                  link="https://google.com"
+                  imageSrc="/apple-watches.jpg"
+                  title="This image is not found"
+                />
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
   );
 };

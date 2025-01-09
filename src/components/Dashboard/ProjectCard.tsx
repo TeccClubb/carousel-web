@@ -2,17 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { FC } from "react";
 
-const BlogCard: FC<{
+const ProjectCard: FC<{
   link: string;
   imageSrc: string;
   title: string;
 }> = ({ link, imageSrc, title }) => {
   return (
     // <div className="p-4 w-full lg:w-1/3 sm:w-1/2">
-    <div className="p-4 w-full sm:w-72">
+    <div className="p-4 flex justify-center items-center">
       <Link
         href={link}
-        className="bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 w-full flex flex-col items-start mx-auto rounded-2xl shadow-lg transition duration-300"
+        className="bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 w-full sm:w-72 flex flex-col items-start mx-auto rounded-2xl shadow-lg transition duration-300"
       >
         <Image
           className="rounded-t-2xl w-full h-auto"
@@ -31,7 +31,7 @@ const BlogCard: FC<{
   );
 };
 
-export default BlogCard;
+export default ProjectCard;
 
 // import Image from "next/image";
 // import Link from "next/link";

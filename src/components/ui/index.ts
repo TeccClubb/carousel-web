@@ -70,3 +70,5 @@ export { Checkbox } from "./checkbox";
 export { Tabs, TabsList, TabsTrigger, TabsContent } from "./tabs";
 
 export { Switch } from "./switch";
+
+export { ScrollArea, ScrollBar } from "./scroll-area";
