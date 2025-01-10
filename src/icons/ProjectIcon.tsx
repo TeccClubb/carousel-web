@@ -9,7 +9,7 @@ const ProjectIcon: FC = () => (
     stroke="currentColor"
     aria-hidden="true"
     data-slot="icon"
-    className="w-10 h10"
+    className="w-10 h-10"
   >
     <path
       strokeLinecap="round"

@@ -2,7 +2,7 @@
 import { DashboardIcon, PlanIcon, PowerOffIcon, ProfileIcon } from "@/icons";
 import {
   DASHBOARD_PAGE_PATH,
-  PLAN_PAGE_PATH,
+  PRICING_PAGE_PATH,
   PROFILE_PAGE_PATH,
 } from "@/pathNames";
 import Link from "next/link";
@@ -19,7 +19,7 @@ const SideBar: FC = () => {
       icon: <ProfileIcon />,
     },
     {
-      href: PLAN_PAGE_PATH,
+      href: PRICING_PAGE_PATH,
       text: "Plan",
       icon: <PlanIcon />,
     },

@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { BarsIcon, LogoIcon, ProjectIcon } from "@/icons";
+import { BarsIcon, LogoIcon, PlanIcon, ProjectIcon } from "@/icons";
 import ReportCard from "./ReportCard";
 import ProjectCard from "./ProjectCard";
 import SideBar from "./SideBar";
@@ -16,11 +16,7 @@ const Dashboard: FC = () => {
           <BarsIcon className="w-5 h-5" />
         </button>
         <div className="w-px h-6 lg:hidden bg-white" aria-hidden="true"></div>
-        <Link
-          href={HOME_PAGE_PATH}
-          className="px-3 py-2"
-          aria-current="page"
-        >
+        <Link href={HOME_PAGE_PATH} className="px-3 py-2" aria-current="page">
           <LogoIcon className="w-24 h-auto text-white" />
         </Link>
 
@@ -53,54 +49,59 @@ const Dashboard: FC = () => {
       <div className="flex min-h-[calc(100vh-4rem)]">
         <SideBar />
         <ScrollArea className="h-[calc(100vh-4rem)] flex-1">
-        <main className="py-10">
-        <div className="lg:px-8 md:px-6 px-4 flex flex-col space-y-8">
-            <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
-              <ReportCard
-                title="Total Projects"
-                value={0}
-                icon={<ProjectIcon />}
-              />
-              <ReportCard title="Total" value={0} icon={<ProjectIcon />} />
-              <ReportCard title="Total" value={0} icon={<ProjectIcon />} />
-              <ReportCard title="Total" value={0} icon={<ProjectIcon />} />
-              {/* <ReportCard title="Total" value={0} icon={<ProjectIcon />} /> */}
-            </div>
+          <main className="py-10">
+            <div className="lg:px-8 md:px-6 px-4 flex flex-col space-y-8">
+              <div className="w-full">
+                <h2 className="w-full text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                  Dashboard
+                </h2>
+                <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
+                  <ReportCard
+                    title="Total Projects"
+                    value={0}
+                    icon={<ProjectIcon />}
+                  />
+                  <ReportCard
+                    title="Subscription"
+                    value="3 days left"
+                    icon={<PlanIcon className="w-10 h-10" />}
+                  />
+                </div>
+              </div>
 
-            <div className="w-full">
-              <h2 className="w-full text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                Your Projects
-              </h2>
-              <div className="w-full grid grid-cols-1 sm:grid-cols-2  xl:grid-cols-3  gap-6">
-                <ProjectCard
-                  link="https://google.com"
-                  imageSrc="/apple-watches.jpg"
-                  title="This image is not found"
-                />
-                <ProjectCard
-                  link="https://google.com"
-                  imageSrc="/apple-watches.jpg"
-                  title="This image is not found"
-                />
-                <ProjectCard
-                  link="https://google.com"
-                  imageSrc="/apple-watches.jpg"
-                  title="This image is not found"
-                />
-                <ProjectCard
-                  link="https://google.com"
-                  imageSrc="/apple-watches.jpg"
-                  title="This image is not found"
-                />
-                <ProjectCard
-                  link="https://google.com"
-                  imageSrc="/apple-watches.jpg"
-                  title="This image is not found"
-                />
+              <div className="w-full">
+                <h2 className="w-full text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                  Your Projects
+                </h2>
+                <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
+                  <ProjectCard
+                    link="https://google.com"
+                    imageSrc="/apple-watches.jpg"
+                    title="This image is not found"
+                  />
+                  <ProjectCard
+                    link="https://google.com"
+                    imageSrc="/apple-watches.jpg"
+                    title="This image is not found"
+                  />
+                  <ProjectCard
+                    link="https://google.com"
+                    imageSrc="/apple-watches.jpg"
+                    title="This image is not found"
+                  />
+                  <ProjectCard
+                    link="https://google.com"
+                    imageSrc="/apple-watches.jpg"
+                    title="This image is not found"
+                  />
+                  <ProjectCard
+                    link="https://google.com"
+                    imageSrc="/apple-watches.jpg"
+                    title="This image is not found"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-            
           </main>
         </ScrollArea>
       </div>
