@@ -17,6 +17,7 @@ import { useActiveNavItem } from "@/hooks";
 import { useDispatch } from "react-redux";
 import { setActiveItem } from "@/store";
 import {
+  ScrollArea,
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -124,9 +125,9 @@ const AiGenerator = () => {
         </div>
       </div>
 
-      <div className="w-80 min-h-[calc(100vh-4rem)] hidden md:flex border-r">
+      <ScrollArea className="w-80 h-[calc(100vh-4rem)] hidden md:flex border-r">
         {items[activeItem].container && items[activeItem].container}
-      </div>
+      </ScrollArea>
       <div
         className="min-h-[calc(100vh-4rem)] flex-1 lg:border-x relative"
         style={{ backgroundImage: "url('/background.png')" }}
