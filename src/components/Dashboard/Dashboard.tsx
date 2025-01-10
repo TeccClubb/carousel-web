@@ -4,6 +4,9 @@ import ReportCard from "./ReportCard";
 import ProjectCard from "./ProjectCard";
 import SideBar from "./SideBar";
 import Image from "next/image";
+import Link from "next/link";
+import { HOME_PAGE_PATH } from "@/pathNames";
+import { ScrollArea } from "../ui";
 
 const Dashboard: FC = () => {
   return (
@@ -13,7 +16,13 @@ const Dashboard: FC = () => {
           <BarsIcon className="w-5 h-5" />
         </button>
         <div className="w-px h-6 lg:hidden bg-white" aria-hidden="true"></div>
-        <LogoIcon className="w-36 h-auto text-white" />
+        <Link
+          href={HOME_PAGE_PATH}
+          className="px-3 py-2"
+          aria-current="page"
+        >
+          <LogoIcon className="w-24 h-auto text-white" />
+        </Link>
 
         <div className="flex flex-1 lg:gap-6 gap-4 self-stretch">
           {/* <form className="grid grid-cols-1 flex-1 relative">
@@ -43,8 +52,9 @@ const Dashboard: FC = () => {
       </div>
       <div className="flex min-h-[calc(100vh-4rem)]">
         <SideBar />
-        <main className="py-10 min-h-[calc(100vh-4rem)] flex-1">
-          <div className="lg:px-8 md:px-6 px-4 flex flex-col space-y-8">
+        <ScrollArea className="h-[calc(100vh-4rem)] flex-1">
+        <main className="py-10">
+        <div className="lg:px-8 md:px-6 px-4 flex flex-col space-y-8">
             <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
               <ReportCard
                 title="Total Projects"
@@ -90,7 +100,9 @@ const Dashboard: FC = () => {
               </div>
             </div>
           </div>
-        </main>
+            
+          </main>
+        </ScrollArea>
       </div>
     </div>
   );

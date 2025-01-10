@@ -20,6 +20,7 @@ import {
 import {
   BLOG_PAGE_PATH,
   CAROUSEL_GENERATOR_PATH,
+  DASHBOARD_PAGE_PATH,
   HOME_PAGE_PATH,
   LOGIN_PAGE_PATH,
   PRICING_PAGE_PATH,
@@ -44,6 +45,10 @@ const Navbar: FC = () => {
       name: "Blog",
       href: BLOG_PAGE_PATH,
     },
+    {
+      name: "Dashboard",
+      href: DASHBOARD_PAGE_PATH
+    }
   ];
 
   return (
