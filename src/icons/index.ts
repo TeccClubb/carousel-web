@@ -1,6 +1,4 @@
 import LogoIcon from "./LogoIcon";
-import LeftArrow from "./LeftArrow";
-import RightArrow from "./RightArrow";
 import LongRightArrow from "./LongRightArrow";
 import TickIcon from "./TickIcon";
 import MenuIcon from "./MenuIcon";
@@ -53,11 +51,11 @@ import SearchIcon from "./SearchIcon";
 import ProfileIcon from "./ProfileIcon";
 import PowerOffIcon from "./PowerOffIcon";
 import PlanIcon from "./PlanIcon";
+import MinusIcon from "./MinusIcon";
+import PlusIcon from "./PlusIcon";
 
 export {
   LogoIcon,
-  LeftArrow,
-  RightArrow,
   LongRightArrow,
   TickIcon,
   CloseIcon,
@@ -110,4 +108,6 @@ export {
   ProfileIcon,
   PowerOffIcon,
   PlanIcon,
+  MinusIcon,
+  PlusIcon,
 };

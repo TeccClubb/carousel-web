@@ -72,3 +72,21 @@ export { Tabs, TabsList, TabsTrigger, TabsContent } from "./tabs";
 export { Switch } from "./switch";
 
 export { ScrollArea, ScrollBar } from "./scroll-area";
+
+export {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "./card";
+
+export {
+  type CarouselApi,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "./carousel";
