@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import "@/css/slide.css";
 import { SlideType } from "@/types";
 import { useSliderFontFamily } from "@/hooks";
-import { useSliderActiveIndex, useSliderBrand } from "@/hooks";
+import { useSliderCurrentIndex, useSliderBrand } from "@/hooks";
 import Watermark from "./Watermark";
 import Image from "next/image";
 
@@ -16,7 +16,7 @@ const Slide: FC<SlideType & { index: number }> = ({
   ctaButton,
   image,
 }) => {
-  const activeIndex = useSliderActiveIndex();
+  const activeIndex = useSliderCurrentIndex();
 
   const isActive = index === activeIndex;
 
@@ -36,7 +36,8 @@ const Slide: FC<SlideType & { index: number }> = ({
         isActive ? " slick-active slick-center slick-current" : ""
       }`}
       tabIndex={-1}
-      aria-hidden={!isActive}
+      // aria-hidden={!isActive}
+      // aria-hidden={!isActive}
     >
       <div>
         <div className="py-1 flex justify-between">

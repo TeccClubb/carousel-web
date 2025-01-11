@@ -23,7 +23,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui";
-import Slider from "../AiSlider/Slider";
 import Ai from "./Ai";
 import Content from "./Content";
 import Text from "./Text";
@@ -36,6 +35,7 @@ import Settings from "./Settings";
 import MyCarousels from "./MyCarousels";
 import Randomize from "./Randomize";
 import { NavItem } from "@/types";
+import CarouselSlider from "./CarouselSlider";
 
 const AiGenerator = () => {
   const dispatch = useDispatch();
@@ -132,7 +132,7 @@ const AiGenerator = () => {
         className="min-h-[calc(100vh-4rem)] flex-1 lg:border-x relative"
         style={{ backgroundImage: "url('/background.png')" }}
       >
-        <Slider />
+        <CarouselSlider />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { SliderState } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: SliderState = {
-  activeIndex: 0,
+  currentIndex: 0,
   zoomValue: 39,
   fontFamily: "DM Sans",
   brand: {
@@ -81,18 +81,18 @@ const sliderSlice = createSlice({
   name: "slider",
   initialState,
   reducers: {
-    setActiveIndex: (state, action: PayloadAction<number>) => {
-      state.activeIndex = action.payload;
+    setCurrentIndex: (state, action: PayloadAction<number>) => {
+      state.currentIndex = action.payload;
     },
 
     setNextIndex: (state, action: PayloadAction<number>) => {
       const totalIndexes = action.payload;
-      state.activeIndex = (state.activeIndex + 1) % totalIndexes;
+      state.currentIndex = (state.currentIndex + 1) % totalIndexes;
     },
 
     setPrevIndex: (state, action: PayloadAction<number>) => {
       const totalIndexes = action.payload;
-      state.activeIndex = (state.activeIndex - 1 + totalIndexes) % totalIndexes;
+      state.currentIndex = (state.currentIndex - 1 + totalIndexes) % totalIndexes;
     },
 
     setZoomValue: (state, action: PayloadAction<number>) => {
@@ -110,7 +110,7 @@ const sliderSlice = createSlice({
 });
 
 export const {
-  setActiveIndex,
+  setCurrentIndex,
   setNextIndex,
   setPrevIndex,
   setZoomValue,

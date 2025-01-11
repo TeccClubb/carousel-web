@@ -13,8 +13,8 @@ export const useSliderFontFamily = () => {
   return useSelector((state: RootState) => state.slider.fontFamily);
 };
 
-export const useSliderActiveIndex = () => {
-  return useSelector((state: RootState) => state.slider.activeIndex);
+export const useSliderCurrentIndex = () => {
+  return useSelector((state: RootState) => state.slider.currentIndex);
 };
 
 export const useSliderZoomValue = () => {

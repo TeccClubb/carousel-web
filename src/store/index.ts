@@ -3,7 +3,7 @@ import store from "./store";
 export type { RootState, StoreDispatch } from "./store";
 
 export {
-  setActiveIndex,
+  setCurrentIndex,
   setNextIndex,
   setPrevIndex,
   zoomIn,

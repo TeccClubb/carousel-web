@@ -15,7 +15,7 @@ export type Brand = {
 };
 
 export type SliderState = {
-  activeIndex: number;
+  currentIndex: number;
   zoomValue: number;
   fontFamily: string;
   brand: Brand;

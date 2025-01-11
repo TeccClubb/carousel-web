@@ -2,7 +2,7 @@ export {
   useSliderState,
   useSliderSlides,
   useSliderFontFamily,
-  useSliderActiveIndex,
+  useSliderCurrentIndex,
   useSliderZoomValue,
   useSliderBrand,
 } from "./use-slider-state";
