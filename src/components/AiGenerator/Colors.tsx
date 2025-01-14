@@ -8,16 +8,16 @@ import {
   setBackgroundColor,
   setColors,
   setTextColor,
+  toggleAlternateSlideColors,
 } from "@/store";
 
 const Colors: FC = () => {
   const dispatch = useDispatch();
 
   const [isUseCustomColors, setIsUseCustomColors] = useState<boolean>(true);
-  const [isAlternateSlideColors, setIsAlternateSlideColors] =
-    useState<boolean>(true);
 
-  const { backgroundColor, textColor, accentColor } = useColors();
+  const { isAlternateSlideColors, backgroundColor, textColor, accentColor } =
+    useColors();
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
@@ -58,7 +58,7 @@ const Colors: FC = () => {
         <div className="flex items-center gap-2 pb-1">
           <Switch
             checked={isAlternateSlideColors}
-            onCheckedChange={(value) => setIsAlternateSlideColors(value)}
+            onCheckedChange={() => dispatch(toggleAlternateSlideColors())}
             label="Alternate Slide Colors"
           />
         </div>

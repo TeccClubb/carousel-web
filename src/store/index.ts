@@ -4,14 +4,24 @@ export type { RootState, StoreDispatch } from "./store";
 
 export {
   setCurrentIndex,
-  setNextIndex,
-  setPrevIndex,
+  setSlideRatio,
   zoomIn,
   zoomOut,
-} from "./slider.slice";
-
-export { setActiveRatioId } from "./slide.slice";
-
-export { setActiveItem, setBackgroundColor, setTextColor, setAccentColor, setColors } from "./nav.slice";
+  setBackgroundColor,
+  setTextColor,
+  setAccentColor,
+  setColors,
+  toggleAlternateSlideColors,
+  setBackgroundId,
+  setOverlayColor,
+  setOverlayOpacity,
+  toggleOverlayFadeCorner,
+  setCornerElementId,
+  setCornerElementOpacity,
+  toggleShowWaterMark,
+  toggleHideIntroSlide,
+  toggleHideOutroSlide,
+  toggleHideCounter,
+} from "./carousels.slice";
 
 export default store;

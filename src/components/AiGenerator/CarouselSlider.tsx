@@ -9,11 +9,7 @@ import {
   CarouselPrevious,
 } from "../ui";
 import Slide from "./Slide/Slide";
-import {
-  useSliderCurrentIndex,
-  useSliderSlides,
-  useSliderZoomValue,
-} from "@/hooks";
+import { useCarouselsState } from "@/hooks";
 import { useDispatch } from "react-redux";
 import { setCurrentIndex, zoomIn, zoomOut } from "@/store";
 import { MinusIcon, PlusIcon } from "@/icons";
@@ -23,9 +19,7 @@ const CarouselSlider: FC = () => {
 
   const [api, setApi] = React.useState<CarouselApi>();
 
-  const slides = useSliderSlides();
-  const currentIndex = useSliderCurrentIndex();
-  const zoomValue = useSliderZoomValue();
+  const { currentIndex, slides, zoomValue } = useCarouselsState();
 
   const handleCurrentIndex = useCallback(() => {
     api?.on("select", () => {

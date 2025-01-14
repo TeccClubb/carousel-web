@@ -1,21 +1,30 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Checkbox, Label, Slider } from "../ui";
 import { backgroundPattern } from "@/assets/slide-backgrounds";
+import {
+  setBackgroundId,
+  setOverlayColor,
+  setOverlayOpacity,
+  toggleOverlayFadeCorner,
+  setCornerElementId,
+  setCornerElementOpacity,
+} from "@/store";
+import { useDispatch } from "react-redux";
+import { useBackgroundOverlay } from "@/hooks";
 
 const Background: FC = () => {
-  const [activeOverlayColor, setActiveOverlayColor] =
-    useState<string>("#FFFFFF");
+  const dispatch = useDispatch();
 
-  const [isFadeCorner, setIsFadeCorner] = useState<boolean>(true);
+  const {
+    backgroundId,
+    overlayColor,
+    overlayOpacity,
+    isOverlayFadeCorner,
+    cornerElementId,
+    cornerElementOpacity,
+  } = useBackgroundOverlay();
 
   const overlayColors = ["#FFFFFF", "#000000", "#808080"];
-
-  const [overlayOpacity, setOverlayOpacity] = useState<number>(0.08);
-
-  const [elementOpacity, setElementOpacity] = useState<number>(0.2);
-
-  const [activeBackgroundId, setActiveBackgroundId] =
-    useState<string>("background_1");
 
   const backgroundIds = [
     "background_0",
@@ -43,8 +52,6 @@ const Background: FC = () => {
     "background_22",
     "background_23",
   ];
-
-  const [activeElementId, setActiveElementId] = useState<string>("element_3");
 
   const elements = [
     {
@@ -80,13 +87,13 @@ const Background: FC = () => {
 
           <div className="flex justify-between">
             <div className="flex gap-1">
-              {overlayColors.map((overlayColor) => (
+              {overlayColors.map((color) => (
                 <div
-                  key={overlayColor}
-                  onClick={() => setActiveOverlayColor(overlayColor)}
-                  style={{ backgroundColor: overlayColor }}
+                  key={color}
+                  onClick={() => dispatch(setOverlayColor(color))}
+                  style={{ backgroundColor: color }}
                   className={`w-6 h-6 rounded-full border-2 ${
-                    overlayColor === activeOverlayColor ? "border-primary" : ""
+                    color === overlayColor ? "border-primary" : ""
                   }`}
                 />
               ))}
@@ -96,27 +103,27 @@ const Background: FC = () => {
               <Label htmlFor="fadeCornerActive">Fade Corner</Label>
               <Checkbox
                 id="fadeCornerActive"
-                checked={isFadeCorner}
-                onCheckedChange={() => setIsFadeCorner((prev) => !prev)}
+                checked={isOverlayFadeCorner}
+                onCheckedChange={() => dispatch(toggleOverlayFadeCorner())}
               />
             </div>
           </div>
 
           <div className="grid grid-cols-5 gap-2">
-            {backgroundIds.map((backgroundId) => (
+            {backgroundIds.map((bgId) => (
               <div
-                key={backgroundId}
-                style={backgroundPattern({ backgroundId })}
-                onClick={() => setActiveBackgroundId(backgroundId)}
+                key={bgId}
+                style={backgroundPattern({ backgroundId: bgId })}
+                onClick={() => dispatch(setBackgroundId(bgId))}
                 className={`w-12 h-12 cursor-pointer rounded-lg border-2 ${
-                  activeBackgroundId === backgroundId ? "border-primary" : ""
+                  backgroundId === bgId ? "border-primary" : ""
                 } ${
-                  backgroundId === "background_0"
+                  bgId === "background_0"
                     ? "text-primary text-xs flex justify-center items-center font-semibold"
                     : ""
                 }`}
               >
-                {backgroundId === "background_0" && "None"}
+                {bgId === "background_0" && "None"}
               </div>
             ))}
           </div>
@@ -124,14 +131,18 @@ const Background: FC = () => {
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between align-top">
               <Label>Overlay Opacity</Label>
-              <p className="text-sm text-muted-foreground">{overlayOpacity * 100}</p>
+              <p className="text-sm text-muted-foreground">
+                {overlayOpacity * 100}
+              </p>
             </div>
 
             <Slider
               defaultValue={[overlayOpacity * 100]}
               max={100}
               step={1}
-              onValueChange={(value) => setOverlayOpacity(value[0] / 100)}
+              onValueChange={(value) =>
+                dispatch(setOverlayOpacity(value[0] / 100))
+              }
             />
           </div>
         </fieldset>
@@ -148,9 +159,11 @@ const Background: FC = () => {
               <div
                 key={element.id}
                 className={`w-12 h-12 cursor-pointer rounded-lg border-2 ${
-                  element.id === "element_0" ? "text-primary text-xs flex justify-center items-center font-semibold" : ""
-                } ${activeElementId === element.id ? "border-primary" : ""}`}
-                onClick={() => setActiveElementId(element.id)}
+                  element.id === "element_0"
+                    ? "text-primary text-xs flex justify-center items-center font-semibold"
+                    : ""
+                } ${cornerElementId === element.id ? "border-primary" : ""}`}
+                onClick={() => dispatch(setCornerElementId(element.id))}
                 style={{
                   backgroundImage: `url('data:image/svg+xml;base64,${btoa(
                     element.icon
@@ -167,14 +180,18 @@ const Background: FC = () => {
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between align-top">
               <Label>Element Opacity</Label>
-              <p className="text-sm text-muted-foreground">{elementOpacity * 100}</p>
+              <p className="text-sm text-muted-foreground">
+                {cornerElementOpacity * 100}
+              </p>
             </div>
 
             <Slider
-              defaultValue={[elementOpacity * 100]}
+              defaultValue={[cornerElementOpacity * 100]}
               max={100}
               step={1}
-              onValueChange={(value) => setElementOpacity(value[0] / 100)}
+              onValueChange={(value) =>
+                dispatch(setCornerElementOpacity(value[0] / 100))
+              }
             />
           </div>
         </fieldset>

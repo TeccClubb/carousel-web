@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   AiIcon,
   BackgroundIcon,
@@ -13,9 +13,6 @@ import {
   SwipeIcon,
   TextIcon,
 } from "@/icons";
-import { useActiveNavItem } from "@/hooks";
-import { useDispatch } from "react-redux";
-import { setActiveItem } from "@/store";
 import {
   ScrollArea,
   Tooltip,
@@ -34,13 +31,24 @@ import Order from "./Order";
 import Settings from "./Settings";
 import MyCarousels from "./MyCarousels";
 import Randomize from "./Randomize";
-import { NavItem } from "@/types";
 import CarouselSlider from "./CarouselSlider";
 
 const AiGenerator = () => {
-  const dispatch = useDispatch();
 
-  const activeItem = useActiveNavItem();
+  type NavItem =
+    | "ai"
+    | "content"
+    | "text"
+    | "colors"
+    | "background"
+    | "branding"
+    | "swipe"
+    | "order"
+    | "settings"
+    | "randomize"
+    | "my_carousels";
+
+  const [activeNavItem, setActiveNavItem] = useState<NavItem>("ai");
 
   const navItems: NavItem[] = [
     "ai",
@@ -101,9 +109,9 @@ const AiGenerator = () => {
                   <TooltipTrigger>
                     <div
                       key={item}
-                      onClick={() => dispatch(setActiveItem(item))}
+                      onClick={() => setActiveNavItem(item)}
                       className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 w-9 cursor-pointer ${
-                        activeItem === item
+                        activeNavItem === item
                           ? `${
                               item === "ai"
                                 ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0"
@@ -126,7 +134,7 @@ const AiGenerator = () => {
       </div>
 
       <ScrollArea className="w-80 h-[calc(100vh-4rem)] hidden md:flex border-r">
-        {items[activeItem].container && items[activeItem].container}
+        {items[activeNavItem].container && items[activeNavItem].container}
       </ScrollArea>
       <div
         className="min-h-[calc(100vh-4rem)] flex-1 lg:border-x relative"

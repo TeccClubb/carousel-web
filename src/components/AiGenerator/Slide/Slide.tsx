@@ -1,14 +1,16 @@
 import React, { FC } from "react";
 import "@/css/slide.css";
 import { SlideType } from "@/types";
-import { useSliderFontFamily } from "@/hooks";
-import { useSliderCurrentIndex, useSliderBrand } from "@/hooks";
 import Watermark from "./Watermark";
-import Image from "next/image";
+// import Image from "next/image";
+import { useCarouselsState } from "@/hooks";
+import Brand from "./Brand";
+import BgOverlay from "./BgOverlay";
+import { isColorDark } from "@/lib/utils";
 
 const Slide: FC<SlideType & { index: number }> = ({
   index,
-  slideClass,
+  // slideClass,
   isSlideNumber,
   subTitle,
   title,
@@ -16,17 +18,33 @@ const Slide: FC<SlideType & { index: number }> = ({
   ctaButton,
   image,
 }) => {
-  const activeIndex = useSliderCurrentIndex();
+  const {
+    currentIndex,
+    fontFamily,
+    colors: { isAlternateSlideColors, backgroundColor, textColor, accentColor },
+    settings: {
+      isShowWaterMark,
+      // isHideIntroSlide,
+      // isHideOutroSlide,
+      // isHideCounter,
+    },
+  } = useCarouselsState();
 
-  const isActive = index === activeIndex;
-
-  const fontFamily = useSliderFontFamily();
+  const isActive = index === currentIndex;
 
   const isOddSlide = (index + 1) % 2 !== 0;
 
-  // const domainName = "TechClub";
+  const color = isAlternateSlideColors
+    ? isOddSlide
+      ? textColor
+      : backgroundColor
+    : textColor;
 
-  const brand = useSliderBrand();
+  const bgColor = isAlternateSlideColors
+    ? isOddSlide
+      ? backgroundColor
+      : textColor
+    : backgroundColor;
 
   return (
     <div
@@ -142,103 +160,41 @@ const Slide: FC<SlideType & { index: number }> = ({
               }}
             >
               <div
-                className={`slide ${slideClass}`}
+                className="w-full h-full p-[3.75em] flex flex-col relative justify-center"
                 style={{
                   fontFamily: fontFamily,
-                  backgroundColor: isOddSlide
-                    ? "#160910"
-                    : "rgb(231, 216, 199)",
+                  backgroundColor: bgColor,
                 }}
               >
-                {/* Corner Circles */}
-                {!isOddSlide ? (
-                  <div
-                    className="slide_background_design"
-                    style={{ opacity: "0.2" }}
-                  >
-                    <div
-                      className="left-circle-without-blur"
-                      style={{
-                        right: "0",
-                        bottom: "0",
-                        transform: "translate(50%, 40%)",
-                      }}
-                    ></div>
-                    <div
-                      className="right-circle-without-blur"
-                      style={{ left: "0", transform: "translateX(-50%)" }}
-                    ></div>
-                  </div>
-                ) : (
-                  <div
-                    className="slide_background_design"
-                    style={{ opacity: "0.2" }}
-                  >
-                    <div
-                      className="right-circle-without-blur"
-                      style={{ right: "0", transform: "translateX(50%)" }}
-                    ></div>
-                    <div
-                      className="left-circle-without-blur"
-                      style={{
-                        left: "0",
-                        bottom: "0",
-                        transform: "translate(-50%, 40%)",
-                      }}
-                    ></div>
-                  </div>
-                )}
+                <BgOverlay
+                  color={color}
+                  bgColor={bgColor}
+                  isOddSlide={isOddSlide}
+                />
 
-                {/* Background Overlay */}
-                <div
-                  className="slide_background_overlay"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'><path fill='%23808080' fill-opacity='0.08' d='M192 15v2a11 11 0 0 0-11 11c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H145v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11 13 13 0 1 1 .02 26 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43a6.1 6.1 0 0 0-3.03 4.87V143h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 181 164a11 11 0 0 0 11 11v2a13 13 0 0 1-13-13 12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84a6.1 6.1 0 0 0-4.87-3.03H145v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 124 181a11 11 0 0 0-11 11h-2a13 13 0 0 1 13-13c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43a6.1 6.1 0 0 0 3.03-4.87V145h-35.02a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 107 124a11 11 0 0 0-22 0c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H49v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11A13 13 0 0 1 81 192h-2a11 11 0 0 0-11-11c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V145H11.98a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 0 1 0 177v-2a11 11 0 0 0 11-11c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H47v-35.02a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 28 109a13 13 0 1 1 0-26c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43A6.1 6.1 0 0 0 47 84.02V49H11.98a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 11 28 11 11 0 0 0 0 17v-2a13 13 0 0 1 13 13c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84A6.1 6.1 0 0 0 11.98 47H47V11.98a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 68 11 11 11 0 0 0 79 0h2a13 13 0 0 1-13 13 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43A6.1 6.1 0 0 0 49 11.98V47h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 85 68a11 11 0 0 0 22 0c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H143V11.98a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 124 13a13 13 0 0 1-13-13h2a11 11 0 0 0 11 11c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V47h35.02a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 179 28a13 13 0 0 1 13-13zM84.02 143a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 83 124a13 13 0 1 1 26 0c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84a6.1 6.1 0 0 0 4.87 3.03H143v-35.02a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 164 107a11 11 0 0 0 0-22c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V49h-35.02a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 1 1 83 68a12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84A6.1 6.1 0 0 0 84.02 49H49v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 28 85a11 11 0 0 0 0 22c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V143h35.02z' /></svg>")`,
-                    backgroundSize: "37.4px",
-                    backgroundRepeat: "repeat",
-                  }}
-                />
-                {/* Background Overlay Fade */}
-                <div
-                  className="slide_background_overlay_fade"
-                  style={{
-                    backgroundImage: isOddSlide
-                      ? "radial-gradient(circle, rgba(22, 9, 16, 0) 0%, rgba(22, 9, 16, 1) 100%)"
-                      : "radial-gradient(circle, rgba(231, 216, 199, 0) 0%, rgba(231, 216, 199, 1) 100%)",
-                  }}
-                />
                 {/* Slide Content */}
-                <div
-                  className="slide_content"
-                  style={{ flexDirection: "column", paddingBottom: "8em" }}
-                >
-                  <div
-                    className="text_content"
-                    style={{
-                      fontSize: "0.8em",
-                      textAlign: "left",
-                      alignItems: "start",
-                    }}
-                  >
+                <div className="h-full pb-[8em] flex flex-col gap-[2em] z-[999]">
+                  <div className="text-[0.8em] flex-1 flex flex-col items-start justify-center gap-[1.25em] text-left relative transition-all duration-300 z-[999]">
                     {isSlideNumber && (
                       <div
-                        className="slide-number-container"
+                        className="w-[2em] h-[2em] p-[3em] flex justify-center items-center rounded-[99em] z-[999]"
                         style={{
-                          backgroundColor: "rgb(239, 146, 45)",
-                          color: "rgb(0, 0, 0)",
+                          backgroundColor: accentColor,
+                          color: isColorDark(accentColor)
+                            ? "#FFFFFF"
+                            : "#000000",
                         }}
                       >
-                        <div className="number">{index}</div>
+                        <div className="text-[2.5em] text-semibold">
+                          {index}
+                        </div>
                       </div>
                     )}
 
                     {subTitle && subTitle.isEnabled && (
                       <div
-                        className="sub-title"
-                        style={{
-                          marginBottom: "0.195rem",
-                          color: "rgb(239, 146, 45)",
-                        }}
+                        className="text-[2.25em] leading-[1.1] mb-[0.195rem]"
+                        style={{ color: accentColor }}
                       >
                         {subTitle.text}
                       </div>
@@ -246,38 +202,35 @@ const Slide: FC<SlideType & { index: number }> = ({
 
                     {title && title.isEnabled && (
                       <div
-                        className="title"
-                        style={{
-                          fontFamily: "DM Serif Display",
-                          marginBottom: "0.196296rem",
-                          color: isOddSlide
-                            ? "rgb(231, 216, 199)"
-                            : "rgb(22, 9, 16)",
+                        className="text-[5.625em] mb-[0.196296rem] break-words font-semibold whitespace-pre-wrap leading-[1.3]"
+                        style={{color}}
+                        dangerouslySetInnerHTML={{
+                          __html: title.text
+                            .replace(/<c>/g, "<span>")
+                            .replace(/<\/c>/g, "</span>")
+                            .replace(
+                              /<span>/g,
+                              `<span style="color:${accentColor};">`
+                            ),
                         }}
-                        dangerouslySetInnerHTML={{ __html: title.text }}
                       ></div>
                     )}
 
                     {description && description.isEnabled && (
-                      <div
-                        className="description"
-                        style={{
-                          color: isOddSlide
-                            ? "rgb(231, 216, 199)"
-                            : "rgb(22, 9, 16)",
-                        }}
-                      >
+                      <div className="m-0 text-[3.625em] leading-tight opacity-90" style={{ color }}>
                         <p>{description.text}</p>
                       </div>
                     )}
 
                     {ctaButton && ctaButton.isEnabled && (
-                      <div className="slide_cta_btn">
+                      <div className="text-[2.5em] w-fit h-auto flex items-center justify-center text-left mt-[1em] z-[999]">
                         <div
-                          className="slide_cta_btn_text"
+                          className="px-[1.5em] py-[0.5em] rounded-[99em]"
                           style={{
-                            backgroundColor: "rgb(239, 146, 45)",
-                            color: "rgb(0, 0, 0)",
+                            backgroundColor: accentColor,
+                            color: isColorDark(accentColor)
+                              ? "#FFFFFF"
+                              : "#000000",
                           }}
                         >
                           {ctaButton.text}
@@ -288,63 +241,22 @@ const Slide: FC<SlideType & { index: number }> = ({
 
                   {image && image.isEnabled && (
                     <div
-                      className="image_content relative"
+                      className="flex-1 overflow-hidden relative"
                       style={{
-                        borderColor: isOddSlide ? "#e7d8c7" : "rgb(22, 9, 16)",
+                        borderColor: bgColor,
                       }}
                     >
                       <div
-                        className="slide_image"
-                        style={{
-                          backgroundImage: `url(${image.src})`,
-                          backgroundPosition: "center",
-                          backgroundSize: "cover",
-                          opacity: "1",
-                          overflow: "hidden",
-                          borderRadius: "1em",
-                        }}
+                        className="w-full h-full bg-center bg-cover bg-no-repeat rounded-[1em] opacity-100 overflow-hidden z-[999]"
+                        style={{backgroundImage: `url(${image.src})`}}
                       ></div>
                     </div>
                   )}
                 </div>
-                {/* Watermark */}
-                <Watermark />
 
-                {/* Branding */}
-                <div
-                  className="slide_branding"
-                  style={{
-                    color: isOddSlide ? "#e7d8c7" : "rgb(22, 9, 16)",
-                  }}
-                >
-                  <div className="flex items-center">
-                    <span className="branding_profile relative flex shrink-0">
-                      <Image
-                        className="aspect-square h-full w-full object-cover rounded-full"
-                        src={brand.profileImage}
-                        alt="Image not founded"
-                        width={120}
-                        height={120}
-                        sizes="100vw"
-                        priority
-                      />
-                    </span>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-start",
-                        justifyContent: "center",
-                        zIndex: "1",
-                        position: "relative",
-                      }}
-                    >
-                      <div className="branding_name">{brand.name}</div>
-                      <div className="branding_handle">{brand.handle}</div>
-                    </div>
-                  </div>
-                </div>
-                {/* END of Branding */}
+                {isShowWaterMark && <Watermark />}
+
+                <Brand color={color} />
               </div>
             </div>
           </div>

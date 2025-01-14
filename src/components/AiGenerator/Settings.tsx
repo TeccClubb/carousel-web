@@ -1,12 +1,13 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Switch } from "../ui";
 import { LockIcon } from "@/icons";
+import { useSettings } from "@/hooks";
+import { useDispatch } from "react-redux";
+import { toggleHideCounter, toggleHideIntroSlide, toggleHideOutroSlide, toggleShowWaterMark } from "@/store";
 
 const Settings: FC = () => {
-  const [isShowWaterMark, setIsShowWaterMark] = useState<boolean>(true);
-  const [isHideIntroSlide, setIsHideIntroSlide] = useState<boolean>(false);
-  const [isHideOutroSlide, setIsHideOutroSlide] = useState<boolean>(false);
-  const [isHideCounter, setIsHideCounter] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const {isShowWaterMark, isHideIntroSlide, isHideOutroSlide, isHideCounter} = useSettings();
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
@@ -15,7 +16,7 @@ const Settings: FC = () => {
           <div className="flex items-center gap-2">
             <Switch
               checked={isShowWaterMark}
-              onCheckedChange={(value) => setIsShowWaterMark(value)}
+              onCheckedChange={() => dispatch(toggleShowWaterMark())}
               label="Show Watermark"
               labelIcon={<LockIcon />}
             />
@@ -28,7 +29,7 @@ const Settings: FC = () => {
         <div className="flex items-center gap-2">
           <Switch
             checked={isHideIntroSlide}
-            onCheckedChange={(value) => setIsHideIntroSlide(value)}
+            onCheckedChange={() => dispatch(toggleHideIntroSlide())}
             label="Hide Intro Slide"
           />
         </div>
@@ -36,7 +37,7 @@ const Settings: FC = () => {
         <div className="flex items-center gap-2">
           <Switch
             checked={isHideOutroSlide}
-            onCheckedChange={(value) => setIsHideOutroSlide(value)}
+            onCheckedChange={() => dispatch(toggleHideOutroSlide())}
             label="Hide Outro Slide"
           />
         </div>
@@ -44,7 +45,7 @@ const Settings: FC = () => {
         <div className="flex items-center gap-2">
           <Switch
             checked={isHideCounter}
-            onCheckedChange={(value) => setIsHideCounter(value)}
+            onCheckedChange={() => dispatch(toggleHideCounter())}
             label="Hide Counter"
           />
         </div>

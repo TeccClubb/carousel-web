@@ -1,5 +1,5 @@
 "use client";
-import React, { FC } from "react";
+import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import {
   ChevronsUpDownIcon,
   DownloadIcon,
@@ -19,10 +19,8 @@ import {
 import { HOME_PAGE_PATH, LOGIN_PAGE_PATH, SIGNUP_PAGE_PATH } from "@/pathNames";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import { useActiveRatioId, useRatios } from "@/hooks";
-import { setActiveRatioId } from "@/store";
 import { useDispatch } from "react-redux";
-import { RatioId } from "@/types";
+import { setSlideRatio } from "@/store";
 
 const AiNavbar: FC = () => {
   const dispatch = useDispatch();
@@ -30,12 +28,65 @@ const AiNavbar: FC = () => {
 
   const router = useRouter();
 
-  const activeRatioId = useActiveRatioId();
-  const ratios = useRatios();
+  const [activeRatioId, setActiveRatioId] = useState<string>("linkedIn1");
+
+  const ratios = useMemo(
+    () => [
+      {
+        id: "linkedIn1",
+        name: "LinkedIn (4:5)",
+        width: 4,
+        height: 5,
+      },
+      {
+        id: "linkedIn2",
+        name: "LinkedIn (1:1)",
+        width: 1,
+        height: 1,
+      },
+      {
+        id: "InstaFeed1",
+        name: "Insta Feed (4:5)",
+        width: 4,
+        height: 5,
+      },
+
+      {
+        id: "InstaFeed2",
+        name: "Insta Feed (1:1)",
+        width: 1,
+        height: 1,
+      },
+      {
+        id: "InstaStories",
+        name: "Insta Stories (9:16)",
+        width: 9,
+        height: 16,
+      },
+      {
+        id: "tikTok",
+        name: "TikTok (9:16)",
+        width: 9,
+        height: 16,
+      },
+    ],
+    []
+  );
 
   const handleSave = () => {};
 
   const handleDownload = () => {};
+
+  const handleSlideRatio = useCallback(() => {
+    const ratio = ratios.find((ratio) => ratio.id === activeRatioId);
+    dispatch(
+      setSlideRatio({ slideWidth: ratio!.width, slideHeight: ratio!.height })
+    );
+  }, [activeRatioId, dispatch, ratios]);
+
+  useEffect(() => {
+    handleSlideRatio();
+  }, [handleSlideRatio]);
 
   return (
     <nav className="bg-slate-50 dark:bg-gray-800">
@@ -54,9 +105,7 @@ const AiNavbar: FC = () => {
             <Select
               name="ratio"
               value={activeRatioId}
-              onValueChange={(value: RatioId) =>
-                dispatch(setActiveRatioId(value))
-              }
+              onValueChange={(value) => setActiveRatioId(value)}
             >
               <SelectTrigger className="h-9 px-4 py-2 rounded-md text-sm font-medium">
                 <SelectValue placeholder="Carousel Type" />
