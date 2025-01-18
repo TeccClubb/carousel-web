@@ -1,17 +1,17 @@
 import { backgroundPattern } from "@/assets/slide-backgrounds";
 import { useBackgroundOverlay, useColors } from "@/hooks";
+import { getBrightness } from "@/lib/utils";
 import React, { CSSProperties, FC, memo } from "react";
 
 const BgOverlay: FC<{
-  color: string;
   bgColor: string;
   isOddSlide: boolean;
-}> = ({ color, bgColor, isOddSlide }) => {
+}> = ({ bgColor, isOddSlide }) => {
   const {
     backgroundId,
-    overlayOpacity,
+    overlayOpacity = 8,
     cornerElementId,
-    cornerElementOpacity,
+    cornerElementOpacity = 20,
     isOverlayFadeCorner,
   } = useBackgroundOverlay();
   const { backgroundColor, accentColor } = useColors();
@@ -46,7 +46,7 @@ const BgOverlay: FC<{
     <>
       <div
         className="w-full h-full absolute left-0 top-0 overflow-hidden inline-block z-[4]"
-        style={{ opacity: cornerElementOpacity }}
+        style={{ opacity: cornerElementOpacity / 100 }}
       >
         {cornerElementId === "element_1" && (
           <>
@@ -91,8 +91,13 @@ const BgOverlay: FC<{
         className="w-full h-full absolute left-0 top-0 z-[2]"
         style={backgroundPattern({
           backgroundId,
-          fillColor: color,
-          opacity: overlayOpacity,
+          fillColor:
+            getBrightness(bgColor) > 200
+              ? "#000000"
+              : getBrightness(bgColor) < 80
+              ? "#FFFFFF"
+              : "#808080",
+          opacity: overlayOpacity / 100,
         })}
       />
       {isOverlayFadeCorner && (

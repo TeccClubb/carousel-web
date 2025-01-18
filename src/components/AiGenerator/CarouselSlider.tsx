@@ -9,7 +9,7 @@ import {
   CarouselPrevious,
 } from "../ui";
 import Slide from "./Slide/Slide";
-import { useCarouselsState } from "@/hooks";
+import { useCarouselsState, useLastIndex } from "@/hooks";
 import { useDispatch } from "react-redux";
 import { setCurrentIndex, zoomIn, zoomOut } from "@/store";
 import { MinusIcon, PlusIcon } from "@/icons";
@@ -19,7 +19,13 @@ const CarouselSlider: FC = () => {
 
   const [api, setApi] = React.useState<CarouselApi>();
 
-  const { currentIndex, slides, zoomValue } = useCarouselsState();
+  const {
+    currentIndex,
+    slides,
+    zoomValue,
+    settings: { isHideIntroSlide, isHideOutroSlide },
+  } = useCarouselsState();
+  const lastIndex = useLastIndex();
 
   const handleCurrentIndex = useCallback(() => {
     api?.on("select", () => {
@@ -29,7 +35,23 @@ const CarouselSlider: FC = () => {
 
   useEffect(() => {
     handleCurrentIndex();
-  }, [api, handleCurrentIndex]);
+  }, [handleCurrentIndex]);
+
+  const handleHideSlides = useCallback(() => {
+    if (isHideIntroSlide && isHideOutroSlide) {
+      if (currentIndex === lastIndex - 1) {
+        api?.scrollPrev();
+      }
+    } else if (isHideIntroSlide || isHideOutroSlide) {
+      if (currentIndex === lastIndex) {
+        api?.scrollPrev();
+      }
+    }
+  }, [api, currentIndex, lastIndex, isHideIntroSlide, isHideOutroSlide]);
+
+  useEffect(() => {
+    handleHideSlides();
+  }, [handleHideSlides]);
 
   return (
     <div
@@ -39,21 +61,34 @@ const CarouselSlider: FC = () => {
       <Carousel setApi={setApi} opts={{ align: "start" }} className="w-full">
         <div className="overflow-hidden w-full flex items-center justify-center">
           <CarouselContent className="w-[68em]">
-            {slides.map((slide, index) => (
-              <CarouselItem key={index}>
-                <Slide
-                  key={slide.title?.text}
-                  index={index}
-                  slideClass={slide.slideClass}
-                  isSlideNumber={slide.isSlideNumber}
-                  subTitle={slide.subTitle}
-                  title={slide.title}
-                  description={slide.description}
-                  ctaButton={slide.ctaButton}
-                  image={slide.image}
-                />
-              </CarouselItem>
-            ))}
+            {slides.map((slide, index) =>
+              index === 0 ? (
+                !isHideIntroSlide && (
+                  <CarouselItem key={index}>
+                    <Slide
+                      key={slide.title?.text}
+                      index={index}
+                    />
+                  </CarouselItem>
+                )
+              ) : index === lastIndex ? (
+                !isHideOutroSlide && (
+                  <CarouselItem key={index}>
+                    <Slide
+                      key={slide.title?.text}
+                      index={index}
+                    />
+                  </CarouselItem>
+                )
+              ) : (
+                <CarouselItem key={index}>
+                  <Slide
+                    key={slide.title?.text}
+                    index={index}
+                  />
+                </CarouselItem>
+              )
+            )}
           </CarouselContent>
         </div>
 
@@ -69,9 +104,20 @@ const CarouselSlider: FC = () => {
             className="w-5 h-5"
           >
             <Button
+              variant={currentIndex === index ? "default" : "outline"}
               className={`py-0 px-0 h-6 w-6 cursor-pointer ${
-                currentIndex !== index
-                  ? "border border-input text-primary bg-background hover:bg-accent hover:text-accent-foreground"
+                isHideIntroSlide &&
+                isHideOutroSlide &&
+                (index === slides.length - 1 || index === slides.length - 2)
+                  ? "hidden"
+                  : isHideIntroSlide &&
+                    !isHideOutroSlide &&
+                    index === slides.length - 1
+                  ? "hidden"
+                  : !isHideIntroSlide &&
+                    isHideOutroSlide &&
+                    index === slides.length - 1
+                  ? "hidden"
                   : ""
               }`}
             >

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import {
   Button,
   Label,
@@ -12,16 +12,21 @@ import {
   Switch,
 } from "../ui";
 import { ChevronsUpDownIcon } from "@/icons";
+import { useContentText } from "@/hooks";
+import { setContentFontSize, setContentFontTextAlignment, toggleCustomFontsEnabled } from "@/store";
+import { useDispatch } from "react-redux";
 
 const Text: FC = () => {
-  const [isCustomFontsEnabled, setIsCustomFontsEnabled] =
-    useState<boolean>(false);
+  const dispatch = useDispatch();
 
-  const textAlignments = ["Left", "Center", "Right"];
+  const textAlignments: ("left" | "center" | "right")[] = [
+    "left",
+    "center",
+    "right",
+  ];
 
-  const [activeTextAlignment, setActiveTextAlignment] = useState("Left");
-
-  const [fontSize, setFontSize] = useState<number>(0.8);
+  // const { primaryFont, secondaryFont, fontSize, fontTextAlignment } =
+  const { isCustomFontsEnabled, fontSize, fontTextAlignment } = useContentText();
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
@@ -30,7 +35,7 @@ const Text: FC = () => {
           <div className="flex items-center gap-2 pb-2">
             <Switch
               checked={isCustomFontsEnabled}
-              onCheckedChange={(value) => setIsCustomFontsEnabled(value)}
+              onCheckedChange={() => dispatch(toggleCustomFontsEnabled())}
               label="Use Custom Fonts"
             />
           </div>
@@ -99,7 +104,7 @@ const Text: FC = () => {
         <div className="space-y-4">
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between align-top">
-              <Label>Font Size</Label>
+              <Label asSpan>Font Size</Label>
               <p className="text-sm text-muted-foreground">{fontSize}</p>
             </div>
 
@@ -108,23 +113,25 @@ const Text: FC = () => {
               min={10}
               max={100}
               step={5}
-              onValueChange={(value) => setFontSize(value[0] / 100)}
+              onValueChange={(value) =>
+                dispatch(setContentFontSize(value[0] / 100))
+              }
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label>Text Alignment</Label>
+            <Label asSpan>Text Alignment</Label>
             <div className="grid grid-cols-3 gap-4">
               {textAlignments.map((textAlignment) => (
                 <Button
                   key={textAlignment}
                   variant={"outline"}
                   size="sm"
-                  onClick={() => setActiveTextAlignment(textAlignment)}
-                  className={`border-2 ${
-                    activeTextAlignment === textAlignment
-                      ? "border-primary"
-                      : ""
+                  onClick={() =>
+                    dispatch(setContentFontTextAlignment(textAlignment))
+                  }
+                  className={`capitalize border-2 ${
+                    fontTextAlignment === textAlignment ? "border-primary" : ""
                   }`}
                 >
                   {textAlignment}

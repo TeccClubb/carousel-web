@@ -53,6 +53,10 @@ import PowerOffIcon from "./PowerOffIcon";
 import PlanIcon from "./PlanIcon";
 import MinusIcon from "./MinusIcon";
 import PlusIcon from "./PlusIcon";
+import HorizontalIcon from "./HorizontalIcon";
+import HorizontalReverseIcon from "./HorizontalReverseIcon";
+import VerticalIcon from "./VerticalIcon";
+import VerticalReverseIcon from "./VerticalReverseIcon";
 
 export {
   LogoIcon,
@@ -110,4 +114,8 @@ export {
   PlanIcon,
   MinusIcon,
   PlusIcon,
+  HorizontalIcon,
+  HorizontalReverseIcon,
+  VerticalIcon,
+  VerticalReverseIcon,
 };

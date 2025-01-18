@@ -1,45 +1,27 @@
-import React, { Dispatch, FC, ReactNode, SetStateAction } from "react";
+import React, { FC, ReactNode, useId } from "react";
 
 const ToggleIcon: FC<{
-  checked: boolean;
-  setChecked: Dispatch<SetStateAction<boolean>>;
+  isOn: boolean;
+  onSwitchChange?: (value: boolean) => void;
   offIcon: ReactNode;
   onIcon: ReactNode;
-}> = ({ checked, setChecked, offIcon, onIcon }) => {
-  const handleToggle = () => setChecked(!checked);
+}> = ({ isOn, onSwitchChange, offIcon, onIcon }) => (
+  <div
+    className="transition-all duration-300 ease-in-out cursor-pointer"
+    onClick={() => onSwitchChange && onSwitchChange(!isOn)}
+  >
+    <input
+      id={useId()}
+      type="checkbox"
+      className="hidden appearance-none"
+      checked={isOn}
+      onChange={() => {}}
+    />
 
-  return (
-    <div
-      className="relative inline-grid place-content-center cursor-pointer"
-      onClick={handleToggle}
-    >
-      {/* Hidden checkbox for accessibility */}
-      <input
-        type="checkbox"
-        className="appearance-none absolute inset-0 w-full h-full"
-        checked={checked}
-        onChange={() => {}}
-      />
+    {isOn && onIcon}
 
-      {/* Off Icon */}
-      <div
-        className={`transition-transform duration-300 ease-[cubic-bezier(0, 0, 0.2, 1)] ${
-          checked ? "opacity-0 scale-50" : "opacity-100 scale-100"
-        }`}
-      >
-        {offIcon}
-      </div>
-
-      {/* On Icon */}
-      <div
-        className={`absolute transition-transform duration-300 ease-[cubic-bezier(0, 0, 0.2, 1)] ${
-          checked ? "opacity-100 scale-100" : "opacity-0 scale-50"
-        }`}
-      >
-        {onIcon}
-      </div>
-    </div>
-  );
-};
+    {!isOn && offIcon}
+  </div>
+);
 
 export default ToggleIcon;

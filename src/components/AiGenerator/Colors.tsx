@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { InputColor, Switch } from "../ui";
 import { darkColors, lightColors } from "@/assets/slide-colors";
 import { useColors } from "@/hooks";
@@ -9,14 +9,13 @@ import {
   setColors,
   setTextColor,
   toggleAlternateSlideColors,
+  toggleCustomColors,
 } from "@/store";
 
 const Colors: FC = () => {
   const dispatch = useDispatch();
 
-  const [isUseCustomColors, setIsUseCustomColors] = useState<boolean>(true);
-
-  const { isAlternateSlideColors, backgroundColor, textColor, accentColor } =
+  const { isUseCustomColors, isAlternateSlideColors, backgroundColor, textColor, accentColor } =
     useColors();
 
   return (
@@ -26,33 +25,35 @@ const Colors: FC = () => {
           <div className="flex items-center gap-2 pb-1">
             <Switch
               checked={isUseCustomColors}
-              onCheckedChange={(value) => setIsUseCustomColors(value)}
+              onCheckedChange={() => dispatch(toggleCustomColors())}
               label="Use Custom Colors"
             />
           </div>
-          <div className="flex flex-wrap gap-2 border rounded-lg p-2">
-            <div>
-              <InputColor
-                color={backgroundColor}
-                setColor={(color) => dispatch(setBackgroundColor(color))}
-                label="Background Color"
-              />
+          {isUseCustomColors && (
+            <div className="flex flex-wrap gap-2 border rounded-lg p-2">
+              <div>
+                <InputColor
+                  color={backgroundColor}
+                  setColor={(color) => dispatch(setBackgroundColor(color))}
+                  label="Background Color"
+                />
+              </div>
+              <div>
+                <InputColor
+                  color={textColor}
+                  setColor={(color) => dispatch(setTextColor(color))}
+                  label="Text Color"
+                />
+              </div>
+              <div>
+                <InputColor
+                  color={accentColor}
+                  setColor={(color) => dispatch(setAccentColor(color))}
+                  label="Accent Color"
+                />
+              </div>
             </div>
-            <div>
-              <InputColor
-                color={textColor}
-                setColor={(color) => dispatch(setTextColor(color))}
-                label="Text Color"
-              />
-            </div>
-            <div>
-              <InputColor
-                color={accentColor}
-                setColor={(color) => dispatch(setAccentColor(color))}
-                label="Accent Color"
-              />
-            </div>
-          </div>
+          )}
         </div>
 
         <div className="flex items-center gap-2 pb-1">

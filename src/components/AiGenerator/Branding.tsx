@@ -1,15 +1,42 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Input, Switch } from "../ui";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { useBrand } from "@/hooks";
+import {
+  setBrandHandle,
+  setBrandName,
+  setBrandProfileSrc,
+  toggleBrandHandle,
+  toggleBrandName,
+  toggleBrandProfile,
+  toggleBrandShowInIntroSlide,
+  toggleBrandShowInOutroSlide,
+  toggleBrandShowInRegularSlide,
+} from "@/store";
 
 const Branding: FC = () => {
-  const [isNameEnabled, setIsNameEnabled] = useState<boolean>(true);
-  const [isHandleEnabled, setIsHandleEnabled] = useState<boolean>(true);
-  const [isProfilePicEnabled, setIsProfilePicEnabled] = useState<boolean>(true);
-  const [isShowInIntroSlide, setIsShowInIntroSlide] = useState<boolean>(true);
-  const [isShowInOutroSlide, setIsShowInOutroSlide] = useState<boolean>(true);
-  const [isShowInRegularSlide, setIsShowInRegularSlide] =
-    useState<boolean>(true);
+  const dispatch = useDispatch();
+  const {
+    isShowInIntroSlide,
+    isShowInOutroSlide,
+    isShowInRegularSlide,
+    name,
+    handle,
+    profileImage,
+  } = useBrand();
+
+  const handleImageChoose = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]; // Get the first selected file
+
+    if (file && file.type.startsWith("image/")) {
+      const fileURL = URL.createObjectURL(file);
+
+      dispatch(setBrandProfileSrc(fileURL));
+    } else {
+      alert("Please select a valid image file.");
+    }
+  };
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
@@ -17,50 +44,60 @@ const Branding: FC = () => {
         <div className="grid gap-2">
           <div className="flex items-center gap-2">
             <Switch
-              checked={isNameEnabled}
-              onCheckedChange={(value) => setIsNameEnabled(value)}
+              checked={name.isEnabled}
+              onCheckedChange={() => dispatch(toggleBrandName())}
               label="Name"
             />
           </div>
-          <Input type="text" placeholder="Name" />
+          <Input
+            value={name.text}
+            onChange={(e) => dispatch(setBrandName(e.target.value.trim()))}
+            type="text"
+            placeholder="Name"
+          />
         </div>
 
         <div className="grid gap-2">
           <div className="flex items-center gap-2">
             <Switch
-              checked={isHandleEnabled}
-              onCheckedChange={(value) => setIsHandleEnabled(value)}
+              checked={handle.isEnabled}
+              onCheckedChange={() => dispatch(toggleBrandHandle())}
               label="Handle"
             />
           </div>
-          <Input type="text" placeholder="Handle" />
+          <Input
+            value={handle.text}
+            onChange={(e) => dispatch(setBrandHandle(e.target.value.trim()))}
+            type="text"
+            placeholder="Handle"
+          />
         </div>
 
         <div className="grid gap-2">
           <div className="flex items-center gap-2">
             <Switch
-              checked={isProfilePicEnabled}
-              onCheckedChange={(value) => setIsProfilePicEnabled(value)}
+              checked={profileImage.isEnabled}
+              onCheckedChange={() => dispatch(toggleBrandProfile())}
               label="Profile Picture"
             />
           </div>
-          <Input type="file" />
+          <Input onChange={handleImageChoose} type="file" accept="image/*" />
 
           <Image
-            src="/john.jpg"
+            src={profileImage.src}
             alt="Image not founded"
             width={64}
             height={64}
             sizes="100vw"
             priority
-            className="rounded-full h-auto w-auto object-cover transition-all hover:scale-105 aspect-square border"
+            className="rounded-full h-auto w-16 object-cover transition-all hover:scale-105 aspect-square border"
           />
         </div>
 
         <div className="flex items-center gap-2">
           <Switch
             checked={isShowInIntroSlide}
-            onCheckedChange={(value) => setIsShowInIntroSlide(value)}
+            onCheckedChange={() => dispatch(toggleBrandShowInIntroSlide())}
             label="Show in Intro Slide"
           />
         </div>
@@ -68,7 +105,7 @@ const Branding: FC = () => {
         <div className="flex items-center gap-2">
           <Switch
             checked={isShowInOutroSlide}
-            onCheckedChange={(value) => setIsShowInOutroSlide(value)}
+            onCheckedChange={() => dispatch(toggleBrandShowInOutroSlide())}
             label="Show in Outro Slide"
           />
         </div>
@@ -76,7 +113,7 @@ const Branding: FC = () => {
         <div className="flex items-center gap-2">
           <Switch
             checked={isShowInRegularSlide}
-            onCheckedChange={(value) => setIsShowInRegularSlide(value)}
+            onCheckedChange={() => dispatch(toggleBrandShowInRegularSlide())}
             label="Show in Regular Slides"
           />
         </div>

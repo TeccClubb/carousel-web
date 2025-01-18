@@ -18,10 +18,10 @@ const Background: FC = () => {
   const {
     backgroundId,
     overlayColor,
-    overlayOpacity,
+    overlayOpacity = 8,
     isOverlayFadeCorner,
     cornerElementId,
-    cornerElementOpacity,
+    cornerElementOpacity = 20,
   } = useBackgroundOverlay();
 
   const overlayColors = ["#FFFFFF", "#000000", "#808080"];
@@ -130,18 +130,19 @@ const Background: FC = () => {
 
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between align-top">
-              <Label>Overlay Opacity</Label>
+              <Label asSpan>Overlay Opacity</Label>
               <p className="text-sm text-muted-foreground">
-                {overlayOpacity * 100}
+                {overlayOpacity}
               </p>
             </div>
 
             <Slider
-              defaultValue={[overlayOpacity * 100]}
+              defaultValue={[overlayOpacity]}
+              min={0}
               max={100}
               step={1}
               onValueChange={(value) =>
-                dispatch(setOverlayOpacity(value[0] / 100))
+                dispatch(setOverlayOpacity(value[0]))
               }
             />
           </div>
@@ -179,18 +180,19 @@ const Background: FC = () => {
 
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between align-top">
-              <Label>Element Opacity</Label>
+              <Label asSpan>Element Opacity</Label>
               <p className="text-sm text-muted-foreground">
-                {cornerElementOpacity * 100}
+                {cornerElementOpacity}
               </p>
             </div>
 
             <Slider
-              defaultValue={[cornerElementOpacity * 100]}
+              defaultValue={[cornerElementOpacity]}
+              min={0}
               max={100}
               step={1}
               onValueChange={(value) =>
-                dispatch(setCornerElementOpacity(value[0] / 100))
+                dispatch(setCornerElementOpacity(value[0]))
               }
             />
           </div>

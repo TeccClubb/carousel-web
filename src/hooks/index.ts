@@ -1,3 +1,15 @@
 export { useToast, toast } from "./use-toast";
 
-export { useCarouselsState, useColors, useBrand, useBackgroundOverlay, useSettings } from "./use-carousels-state";
+export {
+  useCarouselsState,
+  useLastIndex,
+  useCurrentIndex,
+  useSlides,
+  useCurrentSlide,
+  useContentText,
+  useColors,
+  useBrand,
+  useBackgroundOverlay,
+  useSettings,
+  useArrowText,
+} from "./use-carousels-state";

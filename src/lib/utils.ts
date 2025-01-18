@@ -1,14 +1,14 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 // const hexToRgb = (hex: string): { r: number; g: number; b: number } | null => {
 //   // Remove '#' if it exists
 //   hex = hex.replace(/^#/, '');
-  
+
 //   // If the length is 3, convert to 6-digit hex
 //   if (hex.length === 3) {
 //     hex = hex.split('').map((char) => char + char).join('');
@@ -29,7 +29,7 @@ export function cn(...inputs: ClassValue[]) {
 
 // export const isColorDark = (hex: string): boolean => {
 //   const rgb = hexToRgb(hex);
-  
+
 //   if (!rgb) {
 //     throw new Error("Invalid hex color");
 //   }
@@ -40,7 +40,6 @@ export function cn(...inputs: ClassValue[]) {
 //   // Return true if the color is dark, false if it's light
 //   return luminance < 0.5;
 // }
-
 
 // const lightOrDark = (color: string) => {
 
@@ -71,41 +70,89 @@ export function cn(...inputs: ClassValue[]) {
 //   }
 // }
 
-const lightOrDark = (color: string): string => {
-    let r: number, g: number, b: number;
-  
-    if (color.match(/^rgb/)) {
-      const colorMatch = color.match(
-        /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/
-      );
-      
-      if (colorMatch) {
-        r = parseInt(colorMatch[1], 10);
-        g = parseInt(colorMatch[2], 10);
-        b = parseInt(colorMatch[3], 10);
-      } else {
-        throw new Error('Invalid RGB or RGBA color format');
-      }
+export const getBrightness = (color: string) => {
+  let r: number, g: number, b: number;
+
+  if (color.match(/^rgb/)) {
+    const colorMatch = color.match(
+      /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/
+    );
+
+    if (colorMatch) {
+      r = parseInt(colorMatch[1], 10);
+      g = parseInt(colorMatch[2], 10);
+      b = parseInt(colorMatch[3], 10);
     } else {
-        const hexColor = color.length === 4
-        ? parseInt("0x" + color.slice(1).split('').map((x) => x + x).join(''), 16)
-        : parseInt("0x" + color.slice(1), 16);
-          
-      r = (hexColor >> 16) & 255;
-      g = (hexColor >> 8) & 255;
-      b = hexColor & 255;
+      throw new Error("Invalid RGB or RGBA color format");
     }
-  
-    const brightness = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  
-    return brightness > 128 ? "light" : "dark";
+  } else {
+    const hexColor =
+      color.length === 4
+        ? parseInt(
+            "0x" +
+              color
+                .slice(1)
+                .split("")
+                .map((x) => x + x)
+                .join(""),
+            16
+          )
+        : parseInt("0x" + color.slice(1), 16);
+
+    r = (hexColor >> 16) & 255;
+    g = (hexColor >> 8) & 255;
+    b = hexColor & 255;
   }
-  
 
-export const isColorDark = (color: string) => {
-return lightOrDark(color) === "dark";
-}
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
 
-export const isColorLight = (color: string) => {
-return lightOrDark(color) === "light";
-}
+//   
+//   color: string
+// ): "light" | "dark" | "intermediate" => {
+//   let r: number, g: number, b: number;
+
+//   if (color.match(/^rgb/)) {
+//     const colorMatch = color.match(
+//       /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/
+//     );
+
+//     if (colorMatch) {
+//       r = parseInt(colorMatch[1], 10);
+//       g = parseInt(colorMatch[2], 10);
+//       b = parseInt(colorMatch[3], 10);
+//     } else {
+//       throw new Error("Invalid RGB or RGBA color format");
+//     }
+//   } else {
+//     const hexColor =
+//       color.length === 4
+//         ? parseInt(
+//             "0x" +
+//               color
+//                 .slice(1)
+//                 .split("")
+//                 .map((x) => x + x)
+//                 .join(""),
+//             16
+//           )
+//         : parseInt("0x" + color.slice(1), 16);
+
+//     r = (hexColor >> 16) & 255;
+//     g = (hexColor >> 8) & 255;
+//     b = hexColor & 255;
+//   }
+
+//   const brightness = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+//   // return brightness > 128 ? "light" : "dark";
+//   return brightness > 200 ? "light" : brightness < 80 ? "dark" : "intermediate";
+// };
+
+// export const isColorDark = (color: string) => {
+// return lightOrDark(color) === "dark";
+// }
+
+// export const isColorLight = (color: string) => {
+// return lightOrDark(color) === "light";
+// }

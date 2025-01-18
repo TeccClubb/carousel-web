@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-const BackgroundIcon: FC = () => (
+const BackgroundIcon: FC<{ size?: number }> = ({ size }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -11,7 +11,7 @@ const BackgroundIcon: FC = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="h-5 w-5"
+    className={size ? "h-" + size + " w-" + size : "h-5 w-5"}
   >
     <path d="M4 8l4 -4" />
     <path d="M14 4l-10 10" />
