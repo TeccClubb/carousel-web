@@ -4,10 +4,16 @@ import { PlusCircleIcon, Trash2Icon } from "lucide-react";
 import { Button } from "@/components/ui";
 
 const SlideHeader: FC<{
+  type: "intro" | "regular" | "outro";
   handleChangeBackground: () => void;
   handleAddSlide: () => void;
   handleDeleteSlide: () => void;
-}> = ({ handleChangeBackground, handleAddSlide, handleDeleteSlide }) => {
+}> = ({
+  type,
+  handleChangeBackground,
+  handleAddSlide,
+  handleDeleteSlide,
+}) => {
   return (
     <div className="py-1 flex justify-between">
       <Button
@@ -27,15 +33,16 @@ const SlideHeader: FC<{
         >
           <PlusCircleIcon className="h-4 w-4" />
         </Button>
-
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={handleDeleteSlide}
-          className="border-none bg-transparent"
-        >
-          <Trash2Icon className="w-4 h-4 text-red-500" />
-        </Button>
+        {type === "regular" && (
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={handleDeleteSlide}
+            className="border-none bg-transparent"
+          >
+            <Trash2Icon className="w-4 h-4 text-red-500" />
+          </Button>
+        )}
       </div>
     </div>
   );

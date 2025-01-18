@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import {
   Button,
   Carousel,
@@ -21,37 +21,47 @@ const CarouselSlider: FC = () => {
 
   const {
     currentIndex,
-    slides,
+    slides: slidesData,
     zoomValue,
     settings: { isHideIntroSlide, isHideOutroSlide },
   } = useCarouselsState();
   const lastIndex = useLastIndex();
 
-  const handleCurrentIndex = useCallback(() => {
-    api?.on("select", () => {
+  const slides = Array.from(slidesData);
+
+  if (isHideIntroSlide) {
+    const introSlideIndex = slides.findIndex((slide) => slide.type === "intro");
+    slides.splice(introSlideIndex, 1);
+  }
+
+  if (isHideOutroSlide) {
+    const outroSlideIndex = slides.findIndex((slide) => slide.type === "outro");
+    slides.splice(outroSlideIndex, 1);
+  }
+
+  useEffect(() => {
+    if (!api) return;
+    const handleSelect = () => {
       dispatch(setCurrentIndex(api.selectedScrollSnap()));
-    });
+    };
+
+    api.on("select", handleSelect);
+
+    return () => {
+      api.off("select", handleSelect);
+    };
   }, [api, dispatch]);
 
   useEffect(() => {
-    handleCurrentIndex();
-  }, [handleCurrentIndex]);
-
-  const handleHideSlides = useCallback(() => {
-    if (isHideIntroSlide && isHideOutroSlide) {
-      if (currentIndex === lastIndex - 1) {
-        api?.scrollPrev();
-      }
-    } else if (isHideIntroSlide || isHideOutroSlide) {
-      if (currentIndex === lastIndex) {
-        api?.scrollPrev();
-      }
+    if (
+      (isHideIntroSlide &&
+        isHideOutroSlide &&
+        currentIndex === lastIndex - 1) ||
+      ((isHideIntroSlide || isHideOutroSlide) && currentIndex === lastIndex)
+    ) {
+      api?.scrollPrev();
     }
   }, [api, currentIndex, lastIndex, isHideIntroSlide, isHideOutroSlide]);
-
-  useEffect(() => {
-    handleHideSlides();
-  }, [handleHideSlides]);
 
   return (
     <div
@@ -61,34 +71,11 @@ const CarouselSlider: FC = () => {
       <Carousel setApi={setApi} opts={{ align: "start" }} className="w-full">
         <div className="overflow-hidden w-full flex items-center justify-center">
           <CarouselContent className="w-[68em]">
-            {slides.map((slide, index) =>
-              index === 0 ? (
-                !isHideIntroSlide && (
-                  <CarouselItem key={index}>
-                    <Slide
-                      key={slide.title?.text}
-                      index={index}
-                    />
-                  </CarouselItem>
-                )
-              ) : index === lastIndex ? (
-                !isHideOutroSlide && (
-                  <CarouselItem key={index}>
-                    <Slide
-                      key={slide.title?.text}
-                      index={index}
-                    />
-                  </CarouselItem>
-                )
-              ) : (
-                <CarouselItem key={index}>
-                  <Slide
-                    key={slide.title?.text}
-                    index={index}
-                  />
-                </CarouselItem>
-              )
-            )}
+            {slides.map((slide, index) => (
+              <CarouselItem key={index}>
+                <Slide key={slide.title.text} slide={slide} index={index} />
+              </CarouselItem>
+            ))}
           </CarouselContent>
         </div>
 
@@ -105,21 +92,7 @@ const CarouselSlider: FC = () => {
           >
             <Button
               variant={currentIndex === index ? "default" : "outline"}
-              className={`py-0 px-0 h-6 w-6 cursor-pointer ${
-                isHideIntroSlide &&
-                isHideOutroSlide &&
-                (index === slides.length - 1 || index === slides.length - 2)
-                  ? "hidden"
-                  : isHideIntroSlide &&
-                    !isHideOutroSlide &&
-                    index === slides.length - 1
-                  ? "hidden"
-                  : !isHideIntroSlide &&
-                    isHideOutroSlide &&
-                    index === slides.length - 1
-                  ? "hidden"
-                  : ""
-              }`}
+              className={`py-0 px-0 h-6 w-6 cursor-pointer`}
             >
               {index + 1}
             </Button>

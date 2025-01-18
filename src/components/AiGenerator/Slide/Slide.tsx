@@ -1,30 +1,27 @@
 import React, { FC } from "react";
 import Watermark from "./Watermark";
-import { useCarouselsState, useLastIndex } from "@/hooks";
+import { useCarouselsState } from "@/hooks";
 import Brand from "./Brand";
 import BgOverlay from "./BgOverlay";
 import SlideHeader from "./SlideHeader";
 import SlideContent from "./SlideContent";
 import ArrowText from "./ArrowText";
+import { SlideContent as SlideContentType } from "@/types";
 
-const Slide: FC<{ index: number }> = ({
+const Slide: FC<{ slide: SlideContentType; index: number }> = ({
+  slide,
   index,
 }) => {
   const {
     fontFamily,
     colors: { isAlternateSlideColors, backgroundColor, textColor, accentColor },
-    brand: {isShowInIntroSlide, isShowInOutroSlide, isShowInRegularSlide},
-    settings: {
-      isShowWaterMark,
-      isHideCounter,
-    },
+    brand: { isShowInIntroSlide, isShowInOutroSlide, isShowInRegularSlide },
+    settings: { isShowWaterMark, isHideCounter },
     arrowText: { arrowId, isOnlyArrow, introSlideArrow, regularSlideArrow },
   } = useCarouselsState();
 
-  const lastIndex = useLastIndex();
-
-  const isIntroSlide = index === 0;
-  const isOutroSlide = index === lastIndex;
+  const isIntroSlide = slide.type === "intro";
+  const isOutroSlide = slide.type === "outro";
 
   const isOddSlide = (index + 1) % 2 !== 0;
 
@@ -49,6 +46,7 @@ const Slide: FC<{ index: number }> = ({
   return (
     <div className="h-full mx-[2px] float-left outline-none">
       <SlideHeader
+        type={slide.type || "regular"}
         handleChangeBackground={handleChangeBackground}
         handleAddSlide={handleAddSlide}
         handleDeleteSlide={handleDeleteSlide}
@@ -67,6 +65,7 @@ const Slide: FC<{ index: number }> = ({
               <BgOverlay bgColor={bgColor} isOddSlide={isOddSlide} />
 
               <SlideContent
+                slide={slide}
                 index={index}
                 isHideCounter={isHideCounter}
                 color={color}
@@ -97,13 +96,11 @@ const Slide: FC<{ index: number }> = ({
                       />
                     ))}
 
-              {isIntroSlide ? (
-                isShowInIntroSlide && <Brand color={color} />
-              ) : isOutroSlide ? (
-                isShowInOutroSlide && <Brand color={color} />
-              ) : (
-                isShowInRegularSlide && <Brand color={color} />
-              )}
+              {isIntroSlide
+                ? isShowInIntroSlide && <Brand color={color} />
+                : isOutroSlide
+                ? isShowInOutroSlide && <Brand color={color} />
+                : isShowInRegularSlide && <Brand color={color} />}
             </div>
           </div>
         </div>

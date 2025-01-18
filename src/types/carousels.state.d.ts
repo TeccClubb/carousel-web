@@ -1,24 +1,25 @@
-type SlideContent = {
+export type SlideContent = {
+  type?: "intro" | "regular" | "outro";
   selectedTab?: string;
-  contentOrientation: "row" | "row-reverse" | "column" | "column-reverse";
-  subTitle: { text: string; isEnabled: boolean };
+  contentOrientation?: "row" | "row-reverse" | "column" | "column-reverse";
+  subTitle: { text: string; isEnabled?: boolean };
   title: {
     text: string;
-    isEnabled: boolean;
-    fontSize: number;
+    isEnabled?: boolean;
+    fontSize?: number;
   };
-  ctaButton: { text: string; isEnabled: boolean };
+  ctaButton: { text: string; isEnabled?: boolean };
   description: {
     text: string;
-    isEnabled: boolean;
-    fontSize: number;
+    isEnabled?: boolean;
+    fontSize?: number;
   };
   image: {
     src: string;
-    isEnabled: boolean;
-    opacity: number;
-    backgroundPosition: string;
-    backgroundSize: "cover" | "contain";
+    isEnabled?: boolean;
+    opacity?: number;
+    backgroundPosition?: string;
+    isBgCover?: boolean;
   };
 };
 

@@ -18,7 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui";
-import { useCurrentIndex, useCurrentSlide, useLastIndex } from "@/hooks";
+import { useCurrentSlide } from "@/hooks";
 import { useDispatch } from "react-redux";
 import {
   setTitle,
@@ -35,7 +35,7 @@ import {
   setTitleFontSize,
   setImageOpacity,
   setImageBackgroundPosition,
-  setImageBackgroundSize,
+  toggleImageBackgroundCover,
   setContentOrientation,
   setContentSelectedTab,
 } from "@/store";
@@ -119,20 +119,32 @@ FontSizeSlider.displayName = "FontSizeSlider";
 const TextSettings: FC = memo(() => {
   const dispatch = useDispatch();
 
-  const { subTitle, title, description } = useCurrentSlide();
+  const {
+    subTitle: { text: subTitle = "", isEnabled: isSubTitleEnabled = true },
+    title: {
+      text: title = "",
+      isEnabled: isTitleEnabled = true,
+      fontSize: titleFontSize = 100,
+    },
+    description: {
+      text: description = "",
+      isEnabled: isDescriptionEnabled = true,
+      fontSize: descriptionFontSize = 100,
+    },
+  } = useCurrentSlide();
 
   return (
     <>
       <div className="grid gap-2">
         <div className="flex items-center gap-2">
           <Switch
-            checked={subTitle.isEnabled}
+            checked={isSubTitleEnabled}
             onCheckedChange={() => dispatch(toggleSubTitle())}
             label="Sub Title"
           />
         </div>
         <Input
-          value={subTitle.text}
+          value={subTitle}
           onChange={(e) => dispatch(setSubTitle(e.target.value.trim()))}
           type="text"
           placeholder="Enter your sub title"
@@ -143,21 +155,21 @@ const TextSettings: FC = memo(() => {
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Switch
-              checked={title.isEnabled}
+              checked={isTitleEnabled}
               onCheckedChange={() => dispatch(toggleTitle())}
               label="Title"
             />
           </div>
           <FontSizeSlider
             toolTipText="Title Settings"
-            fontSize={title.fontSize}
+            fontSize={titleFontSize || 100}
             onResetClick={() => dispatch(setTitleFontSize(100))}
             setFontSize={(value) => dispatch(setTitleFontSize(value))}
           />
         </div>
 
         <Input
-          value={title.text}
+          value={title}
           onChange={(e) => dispatch(setTitle(e.target.value.trim()))}
           type="text"
           placeholder="Enter your title"
@@ -168,20 +180,20 @@ const TextSettings: FC = memo(() => {
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Switch
-              checked={description.isEnabled}
+              checked={isDescriptionEnabled}
               onCheckedChange={() => dispatch(toggleDescription())}
               label="Description"
             />
           </div>
           <FontSizeSlider
             toolTipText="Description Settings"
-            fontSize={description.fontSize}
+            fontSize={descriptionFontSize || 100}
             onResetClick={() => dispatch(setDescriptionFontSize(100))}
             setFontSize={(value) => dispatch(setDescriptionFontSize(value))}
           />
         </div>
         <Textarea
-          value={description.text}
+          value={description}
           rows={5}
           onChange={(e) => dispatch(setDescription(e.target.value.trim()))}
           placeholder="Enter your description"
@@ -196,7 +208,16 @@ TextSettings.displayName = "TextSettings";
 const ImageSettings: FC = memo(() => {
   const dispatch = useDispatch();
 
-  const { contentOrientation, image } = useCurrentSlide();
+  const {
+    contentOrientation = "column",
+    image: {
+      src: imageSrc = "",
+      isEnabled: isImageEnabled = true,
+      opacity: imageOpacity = 100,
+      backgroundPosition: imageBackgroundPosition = "center center",
+      isBgCover: isImageBackgroundCover = true,
+    },
+  } = useCurrentSlide();
 
   const bgPositions = [
     "left top",
@@ -243,7 +264,7 @@ const ImageSettings: FC = memo(() => {
       <div className="grid gap-2">
         <div className="flex items-center gap-2">
           <Switch
-            checked={image.isEnabled}
+            checked={isImageEnabled}
             onCheckedChange={() => dispatch(toggleImage())}
             label="Image"
           />
@@ -254,7 +275,7 @@ const ImageSettings: FC = memo(() => {
       <div className="flex gap-2">
         <div className="w-[100px] h-[100px] flex justify-center items-center overflow-hidden">
           <Image
-            src={image.src}
+            src={imageSrc}
             alt="Image not founded"
             width={100}
             height={100}
@@ -276,7 +297,7 @@ const ImageSettings: FC = memo(() => {
                         dispatch(setImageBackgroundPosition(backgroundPosition))
                       }
                       className={`w-[10px] h-[10px] cursor-pointer rounded-[50%] ${
-                        backgroundPosition === image.backgroundPosition
+                        backgroundPosition === imageBackgroundPosition
                           ? "bg-primary"
                           : "bg-slate-200"
                       }`}
@@ -291,16 +312,10 @@ const ImageSettings: FC = memo(() => {
                   <Label asSpan>Image Fit</Label>
                   <Button
                     variant="outline"
-                    onClick={() =>
-                      dispatch(
-                        setImageBackgroundSize(
-                          image.backgroundSize === "cover" ? "contain" : "cover"
-                        )
-                      )
-                    }
+                    onClick={() => dispatch(toggleImageBackgroundCover())}
                     className="h-9"
                   >
-                    {image.backgroundSize === "cover" ? (
+                    {isImageBackgroundCover ? (
                       <Minimize2Icon />
                     ) : (
                       <Maximize2Icon />
@@ -311,11 +326,11 @@ const ImageSettings: FC = memo(() => {
                   <div className="flex items-center justify-between align-top">
                     <Label asSpan>Opacity</Label>
                     <p className="text-xs text-muted-foreground">
-                      {image.opacity}
+                      {imageOpacity}
                     </p>
                   </div>
                   <Slider
-                    defaultValue={[image.opacity]}
+                    defaultValue={[imageOpacity]}
                     min={0}
                     max={100}
                     step={1}
@@ -358,18 +373,23 @@ ImageSettings.displayName = "ImageSettings";
 
 const Content: FC = memo(() => {
   const dispatch = useDispatch();
-  const index = useCurrentIndex();
-  const lastIndex = useLastIndex();
 
-  const { selectedTab, ctaButton } = useCurrentSlide();
+  const {
+    type = "regular",
+    selectedTab = "text_&_image",
+    ctaButton: {
+      text: ctaButtonText = "",
+      isEnabled: isCtaButtonEnabled = true,
+    },
+  } = useCurrentSlide();
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
-      {0 < index && index < lastIndex && (
+      {type === "regular" && (
         <div className="bg-background/95 pb-2 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <Tabs
             className="space-y-6"
-            defaultValue={selectedTab || "text_&_image"}
+            defaultValue={selectedTab}
             onValueChange={(value) => dispatch(setContentSelectedTab(value))}
           >
             <TabsList>
@@ -391,21 +411,21 @@ const Content: FC = memo(() => {
         </div>
       )}
 
-      {(index === 0 || index === lastIndex) && (
+      {(type === "intro" || type === "outro") && (
         <div className="space-y-6">
           <TextSettings />
 
-          {index === lastIndex && (
+          {type === "outro" && (
             <div className="grid gap-2">
               <div className="flex items-center gap-2">
                 <Switch
-                  checked={ctaButton.isEnabled}
+                  checked={isCtaButtonEnabled}
                   onCheckedChange={() => dispatch(toggleCTAButton())}
                   label="CTA Text"
                 />
               </div>
               <Input
-                value={ctaButton.text}
+                value={ctaButtonText}
                 onChange={(e) => dispatch(setCTAText(e.target.value.trim()))}
                 type="text"
                 placeholder="Enter your title"

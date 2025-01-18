@@ -1,5 +1,5 @@
-import { CarouselsState } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { CarouselsState, SlideContent,  } from "@/types";
 
 const initialState: CarouselsState = {
   currentIndex: 0,
@@ -9,136 +9,60 @@ const initialState: CarouselsState = {
   fontFamily: "DM Sans",
   slides: [
     {
-      contentOrientation: "column",
-      subTitle: { text: "Empower Your Inner Journey", isEnabled: true },
-      title: {
-        text: "Mental Health and <c>Self-Care</c>",
-        isEnabled: true,
-        fontSize: 100,
-      },
+      type: "intro",
+      subTitle: { text: "Empower Your Inner Journey" },
+      title: { text: "Mental Health and <c>Self-Care</c>" },
       description: {
         text: "Nurturing Your Mind, Body, and Soul for Inner Peace",
-        isEnabled: true,
-        fontSize: 100,
       },
-      ctaButton: { text: "", isEnabled: false },
-      image: {
-        src: "",
-        isEnabled: false,
-        opacity: 100,
-        backgroundPosition: "center center",
-        backgroundSize: "cover",
-      },
+      ctaButton: { text: "" },
+      image: { src: "" },
     },
     {
-      contentOrientation: "column",
-      subTitle: { text: "", isEnabled: true },
-      title: {
-        text: "<c>Mindfulness</c> Meditation",
-        isEnabled: true,
-        fontSize: 100,
-      },
+      subTitle: { text: "" },
+      title: { text: "<c>Mindfulness</c> Meditation" },
       description: {
         text: "Incorporate mindfulness meditation into your daily routine to reduce stress, increase self-awareness, and cultivate inner peace.",
-        isEnabled: true,
-        fontSize: 100,
       },
-      ctaButton: { text: "", isEnabled: false },
-      image: {
-        src: "/slide2-image.jpg",
-        isEnabled: true,
-        opacity: 100,
-        backgroundPosition: "center center",
-        backgroundSize: "cover",
-      },
+      ctaButton: { text: "" },
+      image: { src: "/slide2-image.jpg" },
     },
     {
-      contentOrientation: "column",
-      subTitle: { text: "", isEnabled: true },
-      title: {
-        text: "Daily Affirmations",
-        isEnabled: true,
-        fontSize: 100,
-      },
+      subTitle: { text: "" },
+      title: { text: "Daily Affirmations" },
       description: {
         text: "Start each day with positive affirmations to boost self-confidence and promote a healthy mindset. Believe in yourself and your ability to overcome challenges.",
-        isEnabled: true,
-        fontSize: 100,
       },
-      ctaButton: { text: "", isEnabled: false },
-      image: {
-        src: "/slide3-image.jpg",
-        isEnabled: true,
-        opacity: 100,
-        backgroundPosition: "center center",
-        backgroundSize: "cover",
-      },
+      ctaButton: { text: "" },
+      image: { src: "/slide3-image.jpg" },
     },
     {
-      contentOrientation: "column",
-      subTitle: { text: "", isEnabled: true },
-      title: {
-        text: "Creative Expression",
-        isEnabled: true,
-        fontSize: 100,
-      },
+      subTitle: { text: "" },
+      title: { text: "Creative Expression" },
       description: {
         text: "Engage in creative activities like painting, writing, or crafting to express yourself and channel your emotions in a positive way. Creativity is a powerful tool for self-discovery and healing.",
-        isEnabled: true,
-        fontSize: 100,
       },
-      ctaButton: { text: "", isEnabled: false },
-      image: {
-        src: "/slide4-image.jpg",
-        isEnabled: true,
-        opacity: 100,
-        backgroundPosition: "center center",
-        backgroundSize: "cover",
-      },
+      ctaButton: { text: "" },
+      image: { src: "/slide4-image.jpg" },
     },
     {
-      contentOrientation: "column",
-      subTitle: { text: "", isEnabled: true },
-      title: {
-        text: "Self-Care Rituals",
-        isEnabled: true,
-        fontSize: 100,
-      },
+      subTitle: { text: "" },
+      title: { text: "Self-Care Rituals" },
       description: {
         text: "Prioritize self-care by indulging in activities that nourish your body, mind, and soul. Whether it's a soothing bath, a leisurely walk, or a cozy night in, make time for self-love and relaxation.",
-        isEnabled: true,
-        fontSize: 100,
       },
-      ctaButton: { text: "", isEnabled: false },
-      image: {
-        src: "/slide5-image.jpg",
-        isEnabled: true,
-        opacity: 100,
-        backgroundPosition: "center center",
-        backgroundSize: "cover",
-      },
+      ctaButton: { text: "" },
+      image: { src: "/slide5-image.jpg" },
     },
     {
-      contentOrientation: "column",
-      subTitle: { text: "Stay Connected", isEnabled: true },
+      type: "outro",
+      subTitle: { text: "Stay Connected" },
       title: {
         text: "Join us for daily inspiration and support on your journey to thrive!",
-        isEnabled: true,
-        fontSize: 100,
       },
-      description: {
-        text: "",
-        isEnabled: false,
-        fontSize: 100,
-      },
-      ctaButton: { text: "Follow for More Inspiration", isEnabled: true },
-      image: {
-        src: "",
-        isEnabled: false,
-        opacity: 100,
-        backgroundPosition: "center center",
-        backgroundSize: "cover",
-      },
+      description: { text: "" },
+      ctaButton: { text: "Follow for More Inspiration" },
+      image: { src: "" },
     },
   ],
 
@@ -211,6 +135,21 @@ const carouselsSlice = createSlice({
 
     zoomOut: (state) => {
       state.zoomValue -= 3;
+    },
+
+    addNewSlide: (state, action: PayloadAction<{index: number, slide: SlideContent}>) => {
+      state.slides.splice(action.payload.index, 0, action.payload.slide);
+    },
+
+    removeSlide: (state, action: PayloadAction<number>) => {
+      state.slides.splice(action.payload, 1);
+    },
+
+    reorderSlides: (state, action: PayloadAction<{sourceIndex: number, destinationIndex: number | undefined}>) => {
+      if(action.payload.destinationIndex === undefined) return;
+      const slides = state.slides;
+      const [removed] = slides.splice(action.payload.sourceIndex, 1);
+      slides.splice(action.payload.destinationIndex, 0, removed);
     },
 
     setContentSelectedTab: (state, action: PayloadAction<string>) => {
@@ -316,14 +255,11 @@ const carouselsSlice = createSlice({
       );
       slide!.image.backgroundPosition = action.payload;
     },
-    setImageBackgroundSize: (
-      state,
-      action: PayloadAction<"cover" | "contain">
-    ) => {
+    toggleImageBackgroundCover: (state) => {
       const slide = state.slides.find(
         (_, index) => index === state.currentIndex
       );
-      slide!.image.backgroundSize = action.payload;
+      slide!.image.isBgCover = !slide!.image.isBgCover;
     },
 
     toggleCustomFontsEnabled: (state) => {
@@ -475,6 +411,9 @@ export const {
   setSlideRatio,
   zoomIn,
   zoomOut,
+  addNewSlide,
+  removeSlide,
+  reorderSlides,
   setContentSelectedTab,
   setContentOrientation,
   setTitle,
@@ -491,7 +430,7 @@ export const {
   toggleImage,
   setImageOpacity,
   setImageBackgroundPosition,
-  setImageBackgroundSize,
+  toggleImageBackgroundCover,
   toggleCustomFontsEnabled,
   setPrimaryFont,
   setSecondaryFont,
