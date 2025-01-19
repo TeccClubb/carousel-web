@@ -2,21 +2,16 @@ import React, { FC, useState } from "react";
 import {
   Button,
   Input,
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
   Textarea,
 } from "../ui";
-import { ChevronsUpDownIcon } from "@/icons";
+import SelectLanguage from "../elements/SelectLanguage";
 
 const Ai: FC = () => {
+  const [language, setLanguage] = useState<string>("en");
   const [text, setText] = useState<string>("");
   const textMaxLength = 8000;
   return (
@@ -66,23 +61,12 @@ const Ai: FC = () => {
           </div>
           <div className="flex-1">
             <div className="space-y-2">
-              <Select
-                //   value={selectedLanguage}
-                //   onValueChange={setSelectedLanguage}
-                name="language"
-              >
-                <SelectTrigger label="Language" className="gap-1">
-                  <SelectValue placeholder="Language" />
-                  <ChevronsUpDownIcon className="dark:text-white" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="en">English</SelectItem>
-                    <SelectItem value="sp">Spanish</SelectItem>
-                    <SelectItem value="fr">French</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <SelectLanguage
+                label="Language"
+                className="h-9"
+                language={language}
+                setLanguage={setLanguage}
+              />
             </div>
           </div>
         </div>

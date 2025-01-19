@@ -3,6 +3,7 @@ import store from "./store";
 export type { RootState, StoreDispatch } from "./store";
 
 export {
+  setLanguage,
   setCurrentIndex,
   setSlideRatio,
   zoomIn,
@@ -30,6 +31,7 @@ export {
   toggleCustomFontsEnabled,
   setPrimaryFont,
   setSecondaryFont,
+  setFontPair,
   setContentFontSize,
   setContentFontTextAlignment,
   toggleCustomColors,

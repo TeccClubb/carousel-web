@@ -3,8 +3,6 @@ import LongRightArrow from "./LongRightArrow";
 import TickIcon from "./TickIcon";
 import MenuIcon from "./MenuIcon";
 import CloseIcon from "./CloseIcon";
-import LanguagesIcon from "./LanguagesIcon";
-import ChevronsUpDownIcon from "./ChevronsUpDownIcon";
 import FeatureIcon1 from "./FeatureIcon1";
 import FeatureIcon2 from "./FeatureIcon2";
 import FeatureIcon3 from "./FeatureIcon3";
@@ -25,7 +23,6 @@ import InstagramIcon from "./InstagramIcon";
 import LinkedInIcon from "./LinkedInIcon";
 import WelcomeIcon from "./WelcomeIcon";
 import GoogleIcon from "./GoogleIcon";
-import ToggleIcon from "./ToggleIcon";
 import BarsIcon from "./BarsIcon";
 import AiIcon from "./AiIcon";
 import ContentIcon from "./ContentIcon";
@@ -64,8 +61,6 @@ export {
   TickIcon,
   CloseIcon,
   MenuIcon,
-  LanguagesIcon,
-  ChevronsUpDownIcon,
   FeatureIcon1,
   FeatureIcon2,
   FeatureIcon3,
@@ -86,7 +81,6 @@ export {
   LinkedInIcon,
   WelcomeIcon,
   GoogleIcon,
-  ToggleIcon,
   BarsIcon,
   AiIcon,
   ContentIcon,

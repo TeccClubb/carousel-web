@@ -1,9 +1,10 @@
 "use client";
-import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
+import React, { FC, useMemo } from "react";
 import {
-  ChevronsUpDownIcon,
   DownloadIcon,
-  // InstagramGradientIcon,
+  InstagramGradientIcon,
+  LinkedInGradientIcon,
+  TikTokGradientIcon,
   LockIcon,
   LogoIcon,
 } from "@/icons";
@@ -12,7 +13,9 @@ import {
   Button,
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "../ui";
@@ -20,7 +23,7 @@ import { HOME_PAGE_PATH, LOGIN_PAGE_PATH, SIGNUP_PAGE_PATH } from "@/pathNames";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
-import { setSlideRatio } from "@/store";
+import { useSlideRatio } from "@/hooks";
 
 const AiNavbar: FC = () => {
   const dispatch = useDispatch();
@@ -28,7 +31,7 @@ const AiNavbar: FC = () => {
 
   const router = useRouter();
 
-  const [activeRatioId, setActiveRatioId] = useState<string>("linkedIn1");
+  const {ratio, setSlideRatio} = useSlideRatio();
 
   const ratios = useMemo(
     () => [
@@ -37,18 +40,21 @@ const AiNavbar: FC = () => {
         name: "LinkedIn (4:5)",
         width: 4,
         height: 5,
+        icon: <LinkedInGradientIcon className="aspect-square h-4 w-4" />,
       },
       {
         id: "linkedIn2",
         name: "LinkedIn (1:1)",
         width: 1,
         height: 1,
+        icon: <LinkedInGradientIcon className="aspect-square h-4 w-4" />,
       },
       {
         id: "InstaFeed1",
         name: "Insta Feed (4:5)",
         width: 4,
         height: 5,
+        icon: <InstagramGradientIcon className="aspect-square h-4 w-4" />,
       },
 
       {
@@ -56,18 +62,21 @@ const AiNavbar: FC = () => {
         name: "Insta Feed (1:1)",
         width: 1,
         height: 1,
+        icon: <InstagramGradientIcon className="aspect-square h-4 w-4" />,
       },
       {
         id: "InstaStories",
         name: "Insta Stories (9:16)",
         width: 9,
         height: 16,
+        icon: <InstagramGradientIcon className="aspect-square h-4 w-4" />,
       },
       {
         id: "tikTok",
         name: "TikTok (9:16)",
         width: 9,
         height: 16,
+        icon: <TikTokGradientIcon className="aspect-square h-4 w-4" />,
       },
     ],
     []
@@ -77,16 +86,19 @@ const AiNavbar: FC = () => {
 
   const handleDownload = () => {};
 
-  const handleSlideRatio = useCallback(() => {
-    const ratio = ratios.find((ratio) => ratio.id === activeRatioId);
-    dispatch(
-      setSlideRatio({ slideWidth: ratio!.width, slideHeight: ratio!.height })
-    );
-  }, [activeRatioId, dispatch, ratios]);
+  const handleSlideRatioChange = (id: string) => {
+    const {width, height} = ratios.find((ratio) => ratio.id === id)!;
+    dispatch(setSlideRatio({id, width, height}));
+  };
 
-  useEffect(() => {
-    handleSlideRatio();
-  }, [handleSlideRatio]);
+  // useEffect(() => {
+  //   const ratio = ratios.find((ratio) => ratio.id === activeRatioId);
+  //   if (ratio) {
+  //     dispatch(
+  //       setSlideRatio({ id: ratio.id, width: ratio.width, height: ratio.height })
+  //     );
+  //   }
+  // }, [activeRatioId, dispatch, ratios]);  
 
   return (
     <nav className="bg-slate-50 dark:bg-gray-800">
@@ -103,28 +115,31 @@ const AiNavbar: FC = () => {
             </Button>
 
             <Select
-              name="ratio"
-              value={activeRatioId}
-              onValueChange={(value) => setActiveRatioId(value)}
+              name="select_ratio"
+              value={ratio.id}
+              onValueChange={handleSlideRatioChange}
             >
-              <SelectTrigger className="h-9 px-4 py-2 rounded-md text-sm font-medium">
+              <SelectTrigger>
                 <SelectValue placeholder="Carousel Type" />
-                <ChevronsUpDownIcon className="dark:text-white" />
               </SelectTrigger>
               <SelectContent>
-                {ratios.map((ratio) => (
-                  <SelectItem
-                    key={ratio.id}
-                    value={ratio.id}
-                    // icon={
-                    //   <InstagramGradientIcon className="aspect-square h-4 w-4" />
-                    // }
-                    tickSide="right"
-                    className="rounded-sm px-2 py-1.5 outline-none text-xs"
-                  >
-                    {ratio.name}
-                  </SelectItem>
-                ))}
+                <SelectGroup>
+                  <SelectLabel className="text-muted-foreground font-medium text-xs py-[0.375rem] px-2">
+                    Carousel Type
+                  </SelectLabel>
+                  {ratios.map((ratio) => (
+                    <SelectItem
+                      key={ratio.id}
+                      value={ratio.id}
+                      className="rounded-sm px-2 py-1.5 outline-none text-xs"
+                    >
+                      <span className="flex items-center justify-center gap-2">
+                        {ratio.icon}
+                        {ratio.name}
+                      </span>
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
               </SelectContent>
             </Select>
 

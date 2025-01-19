@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import Watermark from "./Watermark";
-import { useCarouselsState } from "@/hooks";
+import { useCarouselsState, useSlideRatio } from "@/hooks";
 import Brand from "./Brand";
 import BgOverlay from "./BgOverlay";
 import SlideHeader from "./SlideHeader";
@@ -19,6 +19,10 @@ const Slide: FC<{ slide: SlideContentType; index: number }> = ({
     settings: { isShowWaterMark, isHideCounter },
     arrowText: { arrowId, isOnlyArrow, introSlideArrow, regularSlideArrow },
   } = useCarouselsState();
+
+  const {
+    ratio: { width, height },
+  } = useSlideRatio();
 
   const isIntroSlide = slide.type === "intro";
   const isOutroSlide = slide.type === "outro";
@@ -52,8 +56,14 @@ const Slide: FC<{ slide: SlideContentType; index: number }> = ({
         handleDeleteSlide={handleDeleteSlide}
       />
 
-      <div className="w-[67.5em] h-[84.375em] shadow-md">
-        <div className="relative w-full pb-[125%]">
+      <div
+        className="shadow-md"
+        style={{ width: `67.5em`, height: `${(height / width) * 67.5}em` }}
+      >
+        <div
+          className="relative w-full h-full"
+          style={{ paddingBottom: `${(height / width) * 100}%` }}
+        >
           <div className="bg-muted absolute top-0 bottom-0 right-0 left-0">
             <div
               className="w-full h-full p-[3.75em] flex flex-col relative justify-center"
@@ -78,29 +88,25 @@ const Slide: FC<{ slide: SlideContentType; index: number }> = ({
               )}
 
               {!isOutroSlide &&
-                (isIntroSlide
-                  ? introSlideArrow.isEnabled && (
-                      <ArrowText
-                        accentColor={accentColor}
-                        arrowId={arrowId}
-                        text={introSlideArrow.text}
-                        isOnlyArrow={isOnlyArrow}
-                      />
-                    )
-                  : regularSlideArrow.isEnabled && (
-                      <ArrowText
-                        accentColor={accentColor}
-                        arrowId={arrowId}
-                        text={regularSlideArrow.text}
-                        isOnlyArrow={isOnlyArrow}
-                      />
-                    ))}
+                ((isIntroSlide && introSlideArrow.isEnabled) ||
+                regularSlideArrow.isEnabled ? (
+                  <ArrowText
+                    accentColor={accentColor}
+                    arrowId={arrowId}
+                    text={
+                      isIntroSlide
+                        ? introSlideArrow.text
+                        : regularSlideArrow.text
+                    }
+                    isOnlyArrow={isOnlyArrow}
+                  />
+                ) : null)}
 
-              {isIntroSlide
-                ? isShowInIntroSlide && <Brand color={color} />
-                : isOutroSlide
-                ? isShowInOutroSlide && <Brand color={color} />
-                : isShowInRegularSlide && <Brand color={color} />}
+              {(isIntroSlide && isShowInIntroSlide) ||
+              (isOutroSlide && isShowInOutroSlide) ||
+              (isShowInRegularSlide && !isIntroSlide && !isOutroSlide) ? (
+                <Brand color={color} />
+              ) : null}
             </div>
           </div>
         </div>

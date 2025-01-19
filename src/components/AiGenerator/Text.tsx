@@ -1,20 +1,16 @@
 import React, { FC } from "react";
-import {
-  Button,
-  Label,
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Slider,
-  Switch,
-} from "../ui";
-import { ChevronsUpDownIcon } from "@/icons";
+import { Button, Combobox, Label, Slider, Switch } from "../ui";
 import { useContentText } from "@/hooks";
-import { setContentFontSize, setContentFontTextAlignment, toggleCustomFontsEnabled } from "@/store";
+import {
+  setContentFontSize,
+  setContentFontTextAlignment,
+  // setFontPair,
+  setPrimaryFont,
+  setSecondaryFont,
+  toggleCustomFontsEnabled,
+} from "@/store";
 import { useDispatch } from "react-redux";
+import { ComboboxOption } from "../ui/combobox";
 
 const Text: FC = () => {
   const dispatch = useDispatch();
@@ -25,8 +21,55 @@ const Text: FC = () => {
     "right",
   ];
 
-  // const { primaryFont, secondaryFont, fontSize, fontTextAlignment } =
-  const { isCustomFontsEnabled, fontSize, fontTextAlignment } = useContentText();
+  const {
+    primaryFont,
+    secondaryFont,
+    isCustomFontsEnabled,
+    fontSize,
+    fontTextAlignment,
+  } = useContentText();
+
+  // const fontPair = {
+  //   label: `${primaryFont.label} & ${secondaryFont.label}`,
+  //   value: `${primaryFont.value} & ${secondaryFont.value}`,
+  // };
+
+  const primaryFonts: ComboboxOption[] = [
+    { value: "alegreya", label: "Alegreya" },
+    { value: "arial", label: "Arial" },
+    { value: "roboto", label: "Roboto" },
+    { value: "times", label: "Times" },
+    { value: "verdana", label: "Verdana" },
+    { value: "georgia", label: "Georgia" },
+    { value: "courier", label: "Courier" },
+    { value: "helvetica", label: "Helvetica" },
+    { value: "tahoma", label: "Tahoma" },
+    { value: "trebuchet", label: "Trebuchet" },
+    { value: "impact", label: "Impact" },
+    { value: "comic-sans", label: "Comic Sans" },
+  ];
+
+  const secondaryFonts: ComboboxOption[] = [
+    { value: "source Sans pro", label: "Source Sans Pro" },
+    { value: "roboto", label: "Roboto" },
+    { value: "times", label: "Times" },
+    { value: "verdana", label: "Verdana" },
+    { value: "georgia", label: "Georgia" },
+    { value: "courier", label: "Courier" },
+    { value: "helvetica", label: "Helvetica" },
+    { value: "tahoma", label: "Tahoma" },
+    { value: "trebuchet", label: "Trebuchet" },
+    { value: "impact", label: "Impact" },
+    { value: "comic-sans", label: "Comic Sans" },
+  ];
+
+  // const fontPairs = primaryFonts.map((primaryFont, index) => {
+  //   const secondaryFont = secondaryFonts[index];
+  //   return {
+  //     value: `${primaryFont.value} & ${secondaryFont.value}`,
+  //     label: `${primaryFont.label} & ${secondaryFont.label}`,
+  //   };
+  // });
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
@@ -42,64 +85,103 @@ const Text: FC = () => {
 
           {isCustomFontsEnabled && (
             <div className="space-y-4 p-2 border rounded-lg">
-              <div>
-                <Select
-                //   value={selectedLanguage}
-                //   onValueChange={setSelectedLanguage}
-                >
-                  <SelectTrigger label="Primary Font" className="gap-1">
-                    <SelectValue placeholder="Primary Font" />
-                    <ChevronsUpDownIcon className="dark:text-white" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="en">Primary Font 1</SelectItem>
-                      <SelectItem value="sp">Primary Font 2</SelectItem>
-                      <SelectItem value="fr">Primary Font 3</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+              <div className="flex flex-col space-y-1">
+                <Combobox
+                  options={primaryFonts}
+                  label={"Primary Font"}
+                  value={primaryFont.value!}
+                  onSelect={(_, object) =>
+                    dispatch(
+                      setPrimaryFont({
+                        value: object.value,
+                        label: object.label,
+                      })
+                    )
+                  }
+                  emptyMessage="No font found."
+                  placeholder="Select Primary Font"
+                  className="w-full"
+                  itemClassName="w-72"
+                  size="sm"
+                />
               </div>
-              <div>
-                <Select
-                //   value={selectedLanguage}
-                //   onValueChange={setSelectedLanguage}
-                >
-                  <SelectTrigger label="Secondary Font" className="gap-1">
-                    <SelectValue placeholder="Secondary Font" />
-                    <ChevronsUpDownIcon className="dark:text-white" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="en">Secondary Font 1</SelectItem>
-                      <SelectItem value="sp">Secondary Font 2</SelectItem>
-                      <SelectItem value="fr">Secondary Font 3</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+
+              <div className="flex flex-col space-y-1">
+                <Combobox
+                  options={secondaryFonts}
+                  label={"Secondary Font"}
+                  value={secondaryFont.value}
+                  onSelect={(_, object) =>
+                    dispatch(
+                      setSecondaryFont({
+                        value: object.value,
+                        label: object.label,
+                      })
+                    )
+                  }
+                  emptyMessage="No font found."
+                  placeholder="Select Secondary Font"
+                  className="w-full"
+                  itemClassName="w-72"
+                  size="sm"
+                />
               </div>
             </div>
           )}
         </div>
 
-        <div>
-          <Select
-          //   value={selectedLanguage}
-          //   onValueChange={setSelectedLanguage}
-          >
-            <SelectTrigger label="Font Pair" className="gap-1">
-              <SelectValue placeholder="Font Pair" />
-              <ChevronsUpDownIcon className="dark:text-white" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="en">Font 1</SelectItem>
-                <SelectItem value="sp">Font 2</SelectItem>
-                <SelectItem value="fr">Font 3</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+        <div className="flex flex-col space-y-1">
+                <Combobox
+                  options={primaryFonts}
+                  label={"Primary Font"}
+                  value={primaryFont.value!}
+                  onSelect={(_, object) =>
+                    dispatch(
+                      setPrimaryFont({
+                        value: object.value,
+                        label: object.label,
+                      })
+                    )
+                  }
+                  emptyMessage="No font found."
+                  placeholder="Select Primary Font"
+                  className="w-full"
+                  itemClassName="w-72"
+                  size="sm"
+                />
+              </div>
+
+        {/* <div className="flex flex-col space-y-1">
+          <Combobox
+            options={fontPairs}
+            label={"Font Pair"}
+            value={fontPair.value}
+            onSelect={(_, object) => {
+              const [primaryFontLabel, secondaryFontLabel] =
+                object.label.split(" & ");
+              const [primaryFontValue, secondaryFontValue] =
+                object.value.split(" & ");
+
+              dispatch(
+                setFontPair({
+                  primaryFont: {
+                    value: primaryFontValue,
+                    label: primaryFontLabel,
+                  },
+                  secondaryFont: {
+                    value: secondaryFontValue,
+                    label: secondaryFontLabel,
+                  },
+                })
+              );
+            }}
+            emptyMessage="No font found."
+            placeholder="Select Font Pair"
+            className="w-full"
+            itemClassName="w-72"
+            size="sm"
+          />
+        </div> */}
 
         <div className="space-y-4">
           <div className="flex flex-col gap-2">

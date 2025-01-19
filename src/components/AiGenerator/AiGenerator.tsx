@@ -136,12 +136,12 @@ const AiGenerator = () => {
       <ScrollArea className="w-80 h-[calc(100vh-4rem)] hidden md:flex border-r">
         {items[activeNavItem].container && items[activeNavItem].container}
       </ScrollArea>
-      <div
-        className="min-h-[calc(100vh-4rem)] flex-1 lg:border-x relative"
+      <ScrollArea
+        className="h-[calc(100vh-4rem)] flex-1 lg:border-x relative"
         style={{ backgroundImage: "url('/background.png')" }}
       >
         <CarouselSlider />
-      </div>
+      </ScrollArea>
     </div>
   );
 };

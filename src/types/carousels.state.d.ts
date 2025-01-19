@@ -25,8 +25,8 @@ export type SlideContent = {
 
 type ContentText = {
   isCustomFontsEnabled: boolean;
-  primaryFont: string;
-  secondaryFont: string;
+  primaryFont: {value: string; label: string};
+  secondaryFont: {value: string; label: string};
   fontSize: number;
   fontTextAlignment: "center" | "left" | "right";
 };
@@ -72,9 +72,9 @@ type Settings = {
 };
 
 export type CarouselsState = {
+  language: string;
   currentIndex: number;
-  slideWidth: number;
-  slideHeight: number;
+  slideRatio: {id: string, width: number, height: number},
   zoomValue: number;
   fontFamily: string;
   slides: SlideContent[];

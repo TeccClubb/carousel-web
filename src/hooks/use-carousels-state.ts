@@ -1,5 +1,10 @@
-import { RootState } from "@/store";
+import { RootState, setLanguage, setSlideRatio } from "@/store";
 import { useSelector } from "react-redux";
+
+export const useLanguage = () => ({
+  language: useSelector((state: RootState) => state.carousels.language),
+  setLanguage,
+});
 
 export const useCarouselsState = () =>
   useSelector((state: RootState) => state.carousels);
@@ -9,6 +14,8 @@ export const useCurrentIndex = () =>
 
 export const useLastIndex = () =>
   useSelector((state: RootState) => state.carousels.slides.length - 1);
+
+export const useSlideRatio = () => ({ratio: useSelector((state: RootState) => state.carousels.slideRatio), setSlideRatio});
 
 export const useSlides = () =>
   useSelector((state: RootState) => state.carousels.slides);

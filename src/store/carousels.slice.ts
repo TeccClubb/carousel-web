@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CarouselsState, SlideContent,  } from "@/types";
+import { CarouselsState, SlideContent } from "@/types";
 
 const initialState: CarouselsState = {
+  language: "en",
   currentIndex: 0,
-  slideWidth: 4,
-  slideHeight: 5,
+  slideRatio: { id: "linkedIn1", width: 4, height: 5 },
   zoomValue: 39,
   fontFamily: "DM Sans",
   slides: [
@@ -68,8 +68,8 @@ const initialState: CarouselsState = {
 
   contentText: {
     isCustomFontsEnabled: false,
-    primaryFont: "",
-    secondaryFont: "",
+    primaryFont: { value: "alegreya", label: "Alegreya" },
+    secondaryFont: { value: "source Sans pro", label: "Source Sans Pro" },
     fontSize: 0.8,
     fontTextAlignment: "left",
   },
@@ -117,16 +117,21 @@ const carouselsSlice = createSlice({
   initialState,
   name: "carousels",
   reducers: {
+    setLanguage: (state, action: PayloadAction<string>) => {
+      state.language = action.payload;
+    },
+
     setCurrentIndex: (state, action: PayloadAction<number>) => {
       state.currentIndex = action.payload;
     },
 
     setSlideRatio: (
       state,
-      action: PayloadAction<{ slideWidth: number; slideHeight: number }>
+      action: PayloadAction<{ id: string; width: number; height: number }>
     ) => {
-      state.slideWidth = action.payload.slideWidth;
-      state.slideHeight = action.payload.slideHeight;
+      state.slideRatio.id = action.payload.id;
+      state.slideRatio.width = action.payload.width;
+      state.slideRatio.height = action.payload.height;
     },
 
     zoomIn: (state) => {
@@ -137,7 +142,10 @@ const carouselsSlice = createSlice({
       state.zoomValue -= 3;
     },
 
-    addNewSlide: (state, action: PayloadAction<{index: number, slide: SlideContent}>) => {
+    addNewSlide: (
+      state,
+      action: PayloadAction<{ index: number; slide: SlideContent }>
+    ) => {
       state.slides.splice(action.payload.index, 0, action.payload.slide);
     },
 
@@ -145,8 +153,14 @@ const carouselsSlice = createSlice({
       state.slides.splice(action.payload, 1);
     },
 
-    reorderSlides: (state, action: PayloadAction<{sourceIndex: number, destinationIndex: number | undefined}>) => {
-      if(action.payload.destinationIndex === undefined) return;
+    reorderSlides: (
+      state,
+      action: PayloadAction<{
+        sourceIndex: number;
+        destinationIndex: number | undefined;
+      }>
+    ) => {
+      if (action.payload.destinationIndex === undefined) return;
       const slides = state.slides;
       const [removed] = slides.splice(action.payload.sourceIndex, 1);
       slides.splice(action.payload.destinationIndex, 0, removed);
@@ -266,11 +280,27 @@ const carouselsSlice = createSlice({
       state.contentText.isCustomFontsEnabled =
         !state.contentText.isCustomFontsEnabled;
     },
-    setPrimaryFont: (state, action: PayloadAction<string>) => {
+    setPrimaryFont: (
+      state,
+      action: PayloadAction<{ value: string; label: string }>
+    ) => {
       state.contentText.primaryFont = action.payload;
     },
-    setSecondaryFont: (state, action: PayloadAction<string>) => {
+    setSecondaryFont: (
+      state,
+      action: PayloadAction<{ value: string; label: string }>
+    ) => {
       state.contentText.secondaryFont = action.payload;
+    },
+    setFontPair: (
+      state,
+      action: PayloadAction<{
+        primaryFont: { value: string; label: string };
+        secondaryFont: { value: string; label: string };
+      }>
+    ) => {
+      state.contentText.primaryFont = action.payload.primaryFont;
+      state.contentText.secondaryFont = action.payload.secondaryFont;
     },
     setContentFontSize: (state, action: PayloadAction<number>) => {
       state.contentText.fontSize = action.payload;
@@ -407,6 +437,7 @@ const carouselsSlice = createSlice({
 });
 
 export const {
+  setLanguage,
   setCurrentIndex,
   setSlideRatio,
   zoomIn,
@@ -434,6 +465,7 @@ export const {
   toggleCustomFontsEnabled,
   setPrimaryFont,
   setSecondaryFont,
+  setFontPair,
   setContentFontSize,
   setContentFontTextAlignment,
   toggleCustomColors,

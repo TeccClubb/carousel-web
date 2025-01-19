@@ -1,9 +1,7 @@
 "use client";
 import React, { FC, useState } from "react";
 import {
-  ChevronsUpDownIcon,
   CloseIcon,
-  LanguagesIcon,
   LogoIcon,
   LongRightArrow,
   MenuIcon,
@@ -11,11 +9,6 @@ import {
 import Link from "next/link";
 import {
   Button,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
 } from "./ui";
 import {
   BLOG_PAGE_PATH,
@@ -27,10 +20,14 @@ import {
   SIGNUP_PAGE_PATH,
 } from "@/pathNames";
 import { usePathname, useRouter } from "next/navigation";
+import SelectLanguage from "./elements/SelectLanguage";
+import { useDispatch } from "react-redux";
+import { useLanguage } from "@/hooks";
 
 const Navbar: FC = () => {
+  const dispatch = useDispatch();
+    const { language, setLanguage } = useLanguage();
   const [activePath, setActivePath] = useState<string>(HOME_PAGE_PATH);
-  const [selectedLanguage, setSelectedLanguage] = useState<string>("en");
 
   const pathname = usePathname();
 
@@ -101,22 +98,8 @@ const Navbar: FC = () => {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-1 sm:gap-4">
-            <Select
-              name="language"
-              value={selectedLanguage}
-              onValueChange={setSelectedLanguage}
-            >
-              <SelectTrigger className="gap-1">
-                <LanguagesIcon />
-                <SelectValue placeholder="Language" />
-                <ChevronsUpDownIcon className="dark:text-white" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="en">English</SelectItem>
-                <SelectItem value="sp">Spanish</SelectItem>
-                <SelectItem value="fr">French</SelectItem>
-              </SelectContent>
-            </Select>
+
+            <SelectLanguage language={language} setLanguage={(language) => dispatch(setLanguage(language))} showIcon size="sm" />
 
             <Button
               className="bg-blue dark:text-white"

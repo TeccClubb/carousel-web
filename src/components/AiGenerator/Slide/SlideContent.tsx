@@ -49,7 +49,7 @@ const SlideContent: FC<{
     >
       {selectedTab !== "image" && (
         <div
-          className="text-[0.8em] flex-1 flex flex-col flex-wrap justify-center gap-[1.25em] text-left relative transition-all duration-300 z-[999]"
+          className="flex-1 flex flex-col flex-wrap justify-center gap-[1.25em] text-left relative transition-all duration-300 z-[999]"
           style={{
             fontSize: `${fontSize}em`,
             textAlign: fontTextAlignment,
