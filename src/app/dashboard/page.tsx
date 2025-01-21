@@ -1,3 +1,10 @@
-import { Dashboard } from "@/components";
+import React, { FC } from "react";
+import { AuthLayout, Dashboard } from "@/components";
 
-export default Dashboard;
+const DashboardPage: FC = () => (
+  <AuthLayout authentication>
+    <Dashboard />
+  </AuthLayout>
+);
+
+export default DashboardPage;

@@ -6,6 +6,7 @@ import Signup from "./Signup";
 import AiGenerator from "./AiGenerator/AiGenerator";
 import AiNavbar from "./AiGenerator/AiNavbar";
 import Dashboard from "./Dashboard/Dashboard";
+import AuthLayout from "./AuthLayout";
 
 export {
   RootLayout,
@@ -16,4 +17,5 @@ export {
   AiGenerator,
   AiNavbar,
   Dashboard,
+  AuthLayout,
 };

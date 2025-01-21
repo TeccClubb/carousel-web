@@ -1,3 +1,10 @@
-import { Login } from "@/components";
+import React, { FC } from "react";
+import { AuthLayout, Login } from "@/components";
 
-export default Login;
+const LoginPage: FC = () => (
+  <AuthLayout authentication={false}>
+    <Login />
+  </AuthLayout>
+);
+
+export default LoginPage;

@@ -7,7 +7,7 @@ import {
   SIGNUP_PAGE_PATH,
   TERMS_AND_CONDITIONS_PAGE_PATH,
 } from "@/pathNames";
-import AuthWithGoogle from "./AuthWithGoogle";
+import { AuthWithGoogle } from "./elements";
 
 const Login: FC = () => (
   <section className="bg-gradient-to-r from-[#F0F6FD] to-[#FFFFFF] dark:bg-gradient-to-r dark:from-[#1E1E2F] dark:to-[#2D2D44] flex flex-wrap items-center justify-start bg-cover bg-center w-full min-h-[calc(100vh-4rem)]">

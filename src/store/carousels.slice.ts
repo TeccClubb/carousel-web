@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CarouselsState, GoogleUser, SlideContent } from "@/types";
 
 const initialState: CarouselsState = {
+  isOnceAppLoaded: false,
+  loginStatus: false,
   userData: null,
   language: "en",
   currentIndex: 0,
@@ -118,7 +120,18 @@ const carouselsSlice = createSlice({
   initialState,
   name: "carousels",
   reducers: {
-    setUserData: (state, action: PayloadAction<GoogleUser>) => {
+    setOnceAppLoaded: (state) => {
+      state.isOnceAppLoaded = true;
+    },
+
+    setLoginStatus: (state, action: PayloadAction<boolean>) => {
+      state.isOnceAppLoaded = true;
+      state.loginStatus = action.payload;
+    },
+
+    setUserData: (state, action: PayloadAction<GoogleUser | null>) => {
+      state.isOnceAppLoaded = true;
+      state.loginStatus = action.payload !== null;
       state.userData = action.payload;
     },
 
@@ -442,6 +455,8 @@ const carouselsSlice = createSlice({
 });
 
 export const {
+  setOnceAppLoaded,
+  setLoginStatus,
   setUserData,
   setLanguage,
   setCurrentIndex,

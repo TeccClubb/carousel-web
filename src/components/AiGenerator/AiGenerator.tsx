@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import {
   AiIcon,
   BackgroundIcon,
@@ -33,7 +33,7 @@ import MyCarousels from "./MyCarousels";
 import Randomize from "./Randomize";
 import CarouselSlider from "./CarouselSlider";
 
-const AiGenerator = () => {
+const AiGenerator: FC = () => {
 
   type NavItem =
     | "ai"

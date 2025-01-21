@@ -1,3 +1,10 @@
-import { Signup } from "@/components";
+import React, { FC } from "react";
+import { AuthLayout, Signup } from "@/components";
 
-export default Signup;
+const SignupPage: FC = () => (
+  <AuthLayout authentication={false}>
+    <Signup />
+  </AuthLayout>
+);
+
+export default SignupPage;

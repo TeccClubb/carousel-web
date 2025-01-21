@@ -1,8 +1,14 @@
 import { RootState, setLanguage, setSlideRatio } from "@/store";
 import { useSelector } from "react-redux";
 
-export const useUserData = () => 
-  useSelector((state: RootState) => state.carousels.userData)
+export const useIsOnceAppLoaded = () =>
+  useSelector((state: RootState) => state.carousels.isOnceAppLoaded);
+
+export const useLoginStatus = () =>
+  useSelector((state: RootState) => state.carousels.loginStatus);
+
+export const useUserData = () =>
+  useSelector((state: RootState) => state.carousels.userData);
 
 export const useLanguage = () => ({
   language: useSelector((state: RootState) => state.carousels.language),
@@ -18,7 +24,10 @@ export const useCurrentIndex = () =>
 export const useLastIndex = () =>
   useSelector((state: RootState) => state.carousels.slides.length - 1);
 
-export const useSlideRatio = () => ({ratio: useSelector((state: RootState) => state.carousels.slideRatio), setSlideRatio});
+export const useSlideRatio = () => ({
+  ratio: useSelector((state: RootState) => state.carousels.slideRatio),
+  setSlideRatio,
+});
 
 export const useSlides = () =>
   useSelector((state: RootState) => state.carousels.slides);

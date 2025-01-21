@@ -74,6 +74,8 @@ type Settings = {
 };
 
 export type CarouselsState = {
+  isOnceAppLoaded: boolean;
+  loginStatus: boolean;
   userData: GoogleUser | null;
   language: string;
   currentIndex: number;

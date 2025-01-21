@@ -21,9 +21,9 @@ import {
 } from "../ui";
 import { HOME_PAGE_PATH, LOGIN_PAGE_PATH, SIGNUP_PAGE_PATH } from "@/pathNames";
 import { usePathname, useRouter } from "next/navigation";
-import Image from "next/image";
 import { useDispatch } from "react-redux";
-import { useSlideRatio } from "@/hooks";
+import { useAuthStatus, useSlideRatio } from "@/hooks";
+import { Avatar } from "../elements";
 
 const AiNavbar: FC = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,9 @@ const AiNavbar: FC = () => {
 
   const router = useRouter();
 
-  const {ratio, setSlideRatio} = useSlideRatio();
+  const { isLoading, isLoggedIn } = useAuthStatus();
+
+  const { ratio, setSlideRatio } = useSlideRatio();
 
   const ratios = useMemo(
     () => [
@@ -87,18 +89,9 @@ const AiNavbar: FC = () => {
   const handleDownload = () => {};
 
   const handleSlideRatioChange = (id: string) => {
-    const {width, height} = ratios.find((ratio) => ratio.id === id)!;
-    dispatch(setSlideRatio({id, width, height}));
+    const { width, height } = ratios.find((ratio) => ratio.id === id)!;
+    dispatch(setSlideRatio({ id, width, height }));
   };
-
-  // useEffect(() => {
-  //   const ratio = ratios.find((ratio) => ratio.id === activeRatioId);
-  //   if (ratio) {
-  //     dispatch(
-  //       setSlideRatio({ id: ratio.id, width: ratio.width, height: ratio.height })
-  //     );
-  //   }
-  // }, [activeRatioId, dispatch, ratios]);  
 
   return (
     <nav className="bg-slate-50 dark:bg-gray-800">
@@ -154,27 +147,21 @@ const AiNavbar: FC = () => {
               className="shrink-0 bg-border w-[1px] mx-1 sm:mx-2 h-6"
             ></div>
 
-            <Image
-              className="rounded-full w-12 h-12"
-              src="/profile_pic.png"
-              alt="Image not founded"
-              width={0}
-              height={0}
-              sizes="100vw"
-              priority
-            />
+            {!isLoading && isLoggedIn && <Avatar />}
 
-            <Button
-              onClick={() =>
-                router.push(
-                  pathname !== LOGIN_PAGE_PATH
-                    ? LOGIN_PAGE_PATH
-                    : SIGNUP_PAGE_PATH
-                )
-              }
-            >
-              {pathname !== LOGIN_PAGE_PATH ? "Login" : "Signup"}
-            </Button>
+            {!isLoading && !isLoggedIn && (
+              <Button
+                onClick={() =>
+                  router.push(
+                    pathname !== LOGIN_PAGE_PATH
+                      ? LOGIN_PAGE_PATH
+                      : SIGNUP_PAGE_PATH
+                  )
+                }
+              >
+                {pathname !== LOGIN_PAGE_PATH ? "Login" : "Signup"}
+              </Button>
+            )}
           </div>
         </div>
       </div>

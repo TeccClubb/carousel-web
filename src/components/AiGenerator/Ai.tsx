@@ -8,7 +8,7 @@ import {
   TabsTrigger,
   Textarea,
 } from "../ui";
-import SelectLanguage from "../elements/SelectLanguage";
+import { SelectLanguage } from "../elements";
 
 const Ai: FC = () => {
   const [language, setLanguage] = useState<string>("en");
