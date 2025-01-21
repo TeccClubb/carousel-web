@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CarouselsState, SlideContent } from "@/types";
+import { CarouselsState, GoogleUser, SlideContent } from "@/types";
 
 const initialState: CarouselsState = {
+  userData: null,
   language: "en",
   currentIndex: 0,
   slideRatio: { id: "linkedIn1", width: 4, height: 5 },
@@ -117,6 +118,10 @@ const carouselsSlice = createSlice({
   initialState,
   name: "carousels",
   reducers: {
+    setUserData: (state, action: PayloadAction<GoogleUser>) => {
+      state.userData = action.payload;
+    },
+
     setLanguage: (state, action: PayloadAction<string>) => {
       state.language = action.payload;
     },
@@ -437,6 +442,7 @@ const carouselsSlice = createSlice({
 });
 
 export const {
+  setUserData,
   setLanguage,
   setCurrentIndex,
   setSlideRatio,

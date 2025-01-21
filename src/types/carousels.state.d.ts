@@ -1,3 +1,5 @@
+import { GoogleUser } from "./google.user";
+
 export type SlideContent = {
   type?: "intro" | "regular" | "outro";
   selectedTab?: string;
@@ -72,6 +74,7 @@ type Settings = {
 };
 
 export type CarouselsState = {
+  userData: GoogleUser | null;
   language: string;
   currentIndex: number;
   slideRatio: {id: string, width: number, height: number},

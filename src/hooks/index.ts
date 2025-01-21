@@ -1,6 +1,7 @@
 export { useToast, toast } from "./use-toast";
 
 export {
+  useUserData,
   useLanguage,
   useCarouselsState,
   useLastIndex,

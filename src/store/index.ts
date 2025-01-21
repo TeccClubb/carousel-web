@@ -3,6 +3,7 @@ import store from "./store";
 export type { RootState, StoreDispatch } from "./store";
 
 export {
+  setUserData,
   setLanguage,
   setCurrentIndex,
   setSlideRatio,
