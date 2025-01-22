@@ -1,3 +1,4 @@
+"use client"
 import { useState, useEffect } from "react";
 import { useIsOnceAppLoaded, useLoginStatus } from "./use-carousels-state";
 import axios from "axios";

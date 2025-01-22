@@ -1,8 +1,7 @@
 import React, { FC } from "react";
-import { Input, Switch } from "../ui";
-import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage, Input, Switch } from "../ui";
 import { useDispatch } from "react-redux";
-import { useBrand } from "@/hooks";
+import { useBrand, useUserData } from "@/hooks";
 import {
   setBrandHandle,
   setBrandName,
@@ -25,6 +24,14 @@ const Branding: FC = () => {
     handle,
     profileImage,
   } = useBrand();
+
+  const userData = useUserData();
+
+  const brandName = userData === null ? "John Doe" : name.text ?? userData.name;
+  const brandHandle =
+    userData === null ? "@carouselmakerco" : handle.text ?? userData.email;
+  const brandImageSrc =
+    userData === null ? "/john.jpg" : profileImage.src || userData.picture;
 
   const handleImageChoose = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]; // Get the first selected file
@@ -50,10 +57,10 @@ const Branding: FC = () => {
             />
           </div>
           <Input
-            value={name.text}
+            value={brandName}
             onChange={(e) => dispatch(setBrandName(e.target.value.trim()))}
             type="text"
-            placeholder="Name"
+            placeholder={userData !== null ? userData.name : "Name"}
           />
         </div>
 
@@ -66,10 +73,10 @@ const Branding: FC = () => {
             />
           </div>
           <Input
-            value={handle.text}
+            value={brandHandle}
             onChange={(e) => dispatch(setBrandHandle(e.target.value.trim()))}
             type="text"
-            placeholder="Handle"
+            placeholder={userData !== null ? userData.name : "Handle"}
           />
         </div>
 
@@ -83,15 +90,10 @@ const Branding: FC = () => {
           </div>
           <Input onChange={handleImageChoose} type="file" accept="image/*" />
 
-          <Image
-            src={profileImage.src}
-            alt="Image not founded"
-            width={64}
-            height={64}
-            sizes="100vw"
-            priority
-            className="rounded-full h-auto w-16 object-cover transition-all hover:scale-105 aspect-square border"
-          />
+          <Avatar className="size-16 transition-all hover:scale-105">
+            <AvatarImage src={brandImageSrc} />
+            <AvatarFallback>{brandName}</AvatarFallback>
+          </Avatar>
         </div>
 
         <div className="flex items-center gap-2">

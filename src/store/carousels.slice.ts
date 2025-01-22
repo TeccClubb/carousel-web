@@ -89,9 +89,9 @@ const initialState: CarouselsState = {
     isShowInIntroSlide: true,
     isShowInOutroSlide: true,
     isShowInRegularSlide: true,
-    name: { text: "John Doe", isEnabled: true },
-    handle: { text: "@carouselmakerco", isEnabled: true },
-    profileImage: { src: "/john.jpg", isEnabled: true },
+    name: { text: "", isEnabled: true },
+    handle: { text: "", isEnabled: true },
+    profileImage: { src: "", isEnabled: true },
   },
 
   backgroundOverlay: {

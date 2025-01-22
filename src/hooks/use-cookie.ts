@@ -1,3 +1,4 @@
+"use client"
 import { useCookies } from "react-cookie";
 import { LOGIN_TOKEN_COOKIE_KEY } from "@/constant";
 
