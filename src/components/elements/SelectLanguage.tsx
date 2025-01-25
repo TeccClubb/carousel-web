@@ -1,6 +1,5 @@
 import React, { FC } from "react";
-import { Combobox } from "../ui";
-import { ComboboxOption } from "../ui/combobox";
+import { Combobox, ComboboxItem } from "../ui";
 import { Languages } from "lucide-react";
 
 const SelectLanguage: FC<{
@@ -12,7 +11,7 @@ const SelectLanguage: FC<{
   className?: string;
 }> = ({ label, showIcon = false, language, setLanguage, size, className }) => {
   const icon = <Languages className="h-5 w-5" />;
-  const options: ComboboxOption[] = [
+  const options = [
     {
       value: "en",
       label: "English",
@@ -91,18 +90,28 @@ const SelectLanguage: FC<{
   ];
   return (
     <Combobox
-      options={options}
-      value={language}
       label={label}
-      onSelect={setLanguage}
+      value={language}
+      onValueChange={setLanguage}
+      text={options.find((lang) => lang.value === language)!.description}
       tickSide="left"
       icon={showIcon ? icon : undefined}
       emptyMessage="No language found"
       placeholder="Select Language"
-      showDescription
       size={size}
       className={className}
-    />
+    >
+      {options.map((lang) => (
+        <ComboboxItem key={lang.value} value={lang.value}>
+          <span className="w-full">
+            {lang.label}
+            <span className="text-xs text-gray-500">
+              &nbsp;({lang.description})
+            </span>
+          </span>
+        </ComboboxItem>
+      ))}
+    </Combobox>
   );
 };
 

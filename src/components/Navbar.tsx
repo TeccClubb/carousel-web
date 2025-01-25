@@ -101,7 +101,7 @@ const Navbar: FC = () => {
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-1 sm:gap-4">
             <SelectLanguage
               language={language}
-              setLanguage={(language) => dispatch(setLanguage(language))}
+              setLanguage={(lang) => dispatch(setLanguage(lang))}
               showIcon
               size="sm"
             />
@@ -157,53 +157,5 @@ const Navbar: FC = () => {
     </nav>
   );
 };
-
-// const Navbar: FC = () => {
-//   return (
-//     <div className="navigation" id="navbar">
-//       <div className="logo-menu">
-//         <div className="logo">Pixmart.</div>
-
-//         <div className="menu">
-//           <div className="menu-item">Pricing</div>
-
-//           <div className="menu-item">Blog</div>
-//         </div>
-//       </div>
-
-//       <div className="navbar">
-//         <div className="overlap-group">
-//           <div className="text-wrapper-2">Login</div>
-//         </div>
-
-//         <div className="group">
-//           <div className="group-2">
-//             {/* <img
-//               className="svgrepo-iconcarrier"
-//               alt="Svgrepo iconcarrier"
-//               src={svgrepoIconcarrier}
-//             /> */}
-
-//             <div className="text-wrapper-3">English</div>
-
-//             {/* <img className="vector" alt="Vector" src={vector} /> */}
-//           </div>
-//         </div>
-
-//         <div className="group-wrapper">
-//           <div className="group-3">
-//             <div className="text-wrapper-4">Generate Carousel</div>
-
-//             {/* <img
-//               className="img"
-//               alt="Svgrepo iconcarrier"
-//               src={svgrepoIconcarrier1}
-//             /> */}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
 
 export default Navbar;

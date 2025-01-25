@@ -116,6 +116,6 @@ export {
   DialogDescription,
 } from "./dialog";
 
-export { Combobox } from "./combobox";
+export { Combobox, ComboboxItem } from "./combobox";
 
 export { Avatar, AvatarImage, AvatarFallback } from "./avatar";

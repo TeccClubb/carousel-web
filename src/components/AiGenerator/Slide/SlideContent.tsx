@@ -39,8 +39,11 @@ const SlideContent: FC<{
     },
   } = slide;
 
-  //   const {primaryFont, secondaryFont, fontSize, fontTextAlignment} = useContentText();
-  const { fontSize = 0.8, fontTextAlignment = "left" } = useContentText();
+  const {
+    primaryFont: {name: primaryFont},
+    fontSize = 0.8,
+    fontTextAlignment = "left",
+  } = useContentText();
 
   return (
     <div
@@ -85,7 +88,11 @@ const SlideContent: FC<{
           {isTitleEnabled && (
             <div
               className="mb-[0.196296rem] break-words font-semibold whitespace-pre-wrap leading-[1.3]"
-              style={{ color, fontSize: `${titleFontSize * 0.05625}em` }}
+              style={{
+                color,
+                fontSize: `${titleFontSize * 0.05625}em`,
+                fontFamily: `${primaryFont}, sans-serif`,
+              }}
               dangerouslySetInnerHTML={{
                 __html: title.replace(
                   /<c>/g,

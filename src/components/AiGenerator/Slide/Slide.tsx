@@ -1,3 +1,4 @@
+"use client";
 import React, { FC } from "react";
 import Watermark from "./Watermark";
 import { useCarouselsState, useSlideRatio } from "@/hooks";
@@ -13,11 +14,13 @@ const Slide: FC<{ slide: SlideContentType; index: number }> = ({
   index,
 }) => {
   const {
-    fontFamily,
     colors: { isAlternateSlideColors, backgroundColor, textColor, accentColor },
     brand: { isShowInIntroSlide, isShowInOutroSlide, isShowInRegularSlide },
     settings: { isShowWaterMark, isHideCounter },
     arrowText: { arrowId, isOnlyArrow, introSlideArrow, regularSlideArrow },
+    contentText: {
+      secondaryFont: { name: secondaryFont },
+    },
   } = useCarouselsState();
 
   const {
@@ -68,7 +71,7 @@ const Slide: FC<{ slide: SlideContentType; index: number }> = ({
             <div
               className="w-full h-full p-[3.75em] flex flex-col relative justify-center"
               style={{
-                fontFamily: fontFamily,
+                fontFamily: `${secondaryFont}, sans-serif`,
                 backgroundColor: bgColor,
               }}
             >

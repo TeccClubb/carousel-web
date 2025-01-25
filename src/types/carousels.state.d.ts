@@ -27,8 +27,8 @@ export type SlideContent = {
 
 type ContentText = {
   isCustomFontsEnabled: boolean;
-  primaryFont: {value: string; label: string};
-  secondaryFont: {value: string; label: string};
+  primaryFont: { name: string; href: string };
+  secondaryFont: { name: string; href: string };
   fontSize: number;
   fontTextAlignment: "center" | "left" | "right";
 };
@@ -79,9 +79,8 @@ export type CarouselsState = {
   userData: GoogleUser | null;
   language: string;
   currentIndex: number;
-  slideRatio: {id: string, width: number, height: number},
+  slideRatio: { id: string; width: number; height: number };
   zoomValue: number;
-  fontFamily: string;
   slides: SlideContent[];
   contentText: ContentText;
   colors: Colors;

@@ -9,7 +9,6 @@ const initialState: CarouselsState = {
   currentIndex: 0,
   slideRatio: { id: "linkedIn1", width: 4, height: 5 },
   zoomValue: 39,
-  fontFamily: "DM Sans",
   slides: [
     {
       type: "intro",
@@ -71,8 +70,14 @@ const initialState: CarouselsState = {
 
   contentText: {
     isCustomFontsEnabled: false,
-    primaryFont: { value: "alegreya", label: "Alegreya" },
-    secondaryFont: { value: "source Sans pro", label: "Source Sans Pro" },
+    primaryFont: {
+      name: "DM Serif Display",
+      href: "https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400&display=auto&subset=latin,latin-ext",
+    },
+    secondaryFont: {
+      name: "DM Sans",
+      href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900;1000&display=auto&subset=latin,latin-ext&axes=opsz",
+    },
     fontSize: 0.8,
     fontTextAlignment: "left",
   },
@@ -300,21 +305,21 @@ const carouselsSlice = createSlice({
     },
     setPrimaryFont: (
       state,
-      action: PayloadAction<{ value: string; label: string }>
+      action: PayloadAction<{ name: string; href: string }>
     ) => {
       state.contentText.primaryFont = action.payload;
     },
     setSecondaryFont: (
       state,
-      action: PayloadAction<{ value: string; label: string }>
+      action: PayloadAction<{ name: string; href: string }>
     ) => {
       state.contentText.secondaryFont = action.payload;
     },
     setFontPair: (
       state,
       action: PayloadAction<{
-        primaryFont: { value: string; label: string };
-        secondaryFont: { value: string; label: string };
+        primaryFont: { name: string; href: string };
+        secondaryFont: { name: string; href: string };
       }>
     ) => {
       state.contentText.primaryFont = action.payload.primaryFont;
