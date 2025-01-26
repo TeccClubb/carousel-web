@@ -6,11 +6,11 @@ import {
   setContentFontTextAlignment,
   setPrimaryFont,
   setSecondaryFont,
-  // setFontPair,
+  setFontPair,
   toggleCustomFontsEnabled,
 } from "@/store";
 import { useDispatch } from "react-redux";
-import { googleFonts } from "@/assets/fonts";
+import { googleFonts, fontPairs } from "@/assets/fonts";
 
 const Text: FC = () => {
   const dispatch = useDispatch();
@@ -28,48 +28,6 @@ const Text: FC = () => {
     fontSize,
     fontTextAlignment,
   } = useContentText();
-
-  // const fontPair = {
-  //   label: `${primaryFont.label} & ${secondaryFont.label}`,
-  //   value: `${primaryFont.value} & ${secondaryFont.value}`,
-  // };
-
-  // const primaryFonts: ComboboxOption[] = [
-  //   { value: "alegreya", label: "Alegreya" },
-  //   { value: "arial", label: "Arial" },
-  //   { value: "roboto", label: "Roboto" },
-  //   { value: "times", label: "Times" },
-  //   { value: "verdana", label: "Verdana" },
-  //   { value: "georgia", label: "Georgia" },
-  //   { value: "courier", label: "Courier" },
-  //   { value: "helvetica", label: "Helvetica" },
-  //   { value: "tahoma", label: "Tahoma" },
-  //   { value: "trebuchet", label: "Trebuchet" },
-  //   { value: "impact", label: "Impact" },
-  //   { value: "comic-sans", label: "Comic Sans" },
-  // ];
-
-  // const fontPairs: ComboboxOption[] = [
-  //   { value: "source Sans pro", label: "Source Sans Pro" },
-  //   { value: "roboto", label: "Roboto" },
-  //   { value: "times", label: "Times" },
-  //   { value: "verdana", label: "Verdana" },
-  //   { value: "georgia", label: "Georgia" },
-  //   { value: "courier", label: "Courier" },
-  //   { value: "helvetica", label: "Helvetica" },
-  //   { value: "tahoma", label: "Tahoma" },
-  //   { value: "trebuchet", label: "Trebuchet" },
-  //   { value: "impact", label: "Impact" },
-  //   { value: "comic-sans", label: "Comic Sans" },
-  // ];
-
-  // const fontPairs = primaryFonts.map((primaryFont, index) => {
-  //   const secondaryFont = secondaryFonts[index];
-  //   return {
-  //     value: `${primaryFont.value} & ${secondaryFont.value}`,
-  //     label: `${primaryFont.label} & ${secondaryFont.label}`,
-  //   };
-  // });
 
   useEffect(() => {
     const link = document.createElement("link");
@@ -152,58 +110,27 @@ const Text: FC = () => {
           )}
         </div>
 
-        {/* <div className="flex flex-col space-y-1">
-                <Combobox
-                  options={primaryFonts}
-                  label={"Primary Font"}
-                  value={primaryFont.value!}
-                  onSelect={(_, object) =>
-                    dispatch(
-                      setPrimaryFont({
-                        value: object.value,
-                        label: object.label,
-                      })
-                    )
-                  }
-                  emptyMessage="No font found."
-                  placeholder="Select Primary Font"
-                  className="w-full"
-                  itemClassName="w-72"
-                  size="sm"
-                />
-              </div> */}
-
-        {/* <div className="flex flex-col space-y-1">
+        <div className="flex flex-col space-y-1">
           <Combobox
-            options={fontPairs}
             label={"Font Pair"}
-            value={fontPair.value}
-            onSelect={(_, object) => {
-              const [primaryFontLabel, secondaryFontLabel] =
-                object.label.split(" & ");
-              const [primaryFontValue, secondaryFontValue] =
-                object.value.split(" & ");
-
-              dispatch(
-                setFontPair({
-                  primaryFont: {
-                    value: primaryFontValue,
-                    label: primaryFontLabel,
-                  },
-                  secondaryFont: {
-                    value: secondaryFontValue,
-                    label: secondaryFontLabel,
-                  },
-                })
-              );
-            }}
+            value={`${primaryFont.href} & ${secondaryFont.href}`}
+            text={`${primaryFont.name} & ${secondaryFont.name}`}
             emptyMessage="No font found."
             placeholder="Select Font Pair"
             className="w-full"
-            itemClassName="w-72"
             size="sm"
-          />
-        </div> */}
+          >
+            {fontPairs.map((fontPair) => (
+              <ComboboxItem
+                key={`${fontPair.primaryFont.href} & ${fontPair.secondaryFont.href}`}
+                value={`${fontPair.primaryFont.href} & ${fontPair.secondaryFont.href}`}
+                onSelect={() => dispatch(setFontPair(fontPair))}
+              >
+                {`${fontPair.primaryFont.name} & ${fontPair.secondaryFont.name}`}
+              </ComboboxItem>
+            ))}
+          </Combobox>
+        </div>
 
         <div className="space-y-4">
           <div className="flex flex-col gap-2">

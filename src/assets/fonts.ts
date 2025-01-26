@@ -6729,4 +6729,907 @@ const googleFonts = [
   },
 ];
 
-export { googleFonts };
+const fontPairs = [
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Abril+Fatface:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Abril Fatface",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=latin,latin-ext",
+      name: "Poppins",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese",
+      name: "Alegreya",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese",
+      name: "Source Code Pro",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Alfa+Slab+One:wght@400&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Alfa Slab One",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:wght@400;700&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese",
+      name: "Gentium Book Plus",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=auto&subset=cyrillic,hebrew,latin,latin-ext,vietnamese",
+      name: "Amatic SC",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Andika:wght@400;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Andika",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Anton:wght@400&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Anton",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese",
+      name: "Roboto",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Archivo:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=latin,latin-ext,vietnamese&axes=wdth",
+      name: "Archivo",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Tenor+Sans:wght@400&display=auto&subset=cyrillic,latin,latin-ext",
+      name: "Tenor Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Archivo+Black:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Archivo Black",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Archivo:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=latin,latin-ext,vietnamese&axes=wdth",
+      name: "Archivo",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Barlow Condensed",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Montserrat",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Bitter:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Bitter",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Raleway",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Bubblegum+Sans:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Bubblegum Sans",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,hebrew,latin,latin-ext,math,symbols,vietnamese&axes=wdth",
+      name: "Open Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&display=auto&subset=greek,greek-ext,latin,latin-ext",
+      name: "Cardo",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=auto&subset=devanagari,latin,latin-ext",
+      name: "Hind",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=auto&subset=latin,latin-ext",
+      name: "Cinzel",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Fauna+One:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Fauna One",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500;600;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Cormorant",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,hebrew,latin,latin-ext,math,symbols,vietnamese&axes=wdth",
+      name: "Open Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Cormorant Garamond",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Proza+Libre:wght@400;500;600;700;800&display=auto&subset=latin,latin-ext",
+      name: "Proza Libre",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900;1000&display=auto&subset=latin,latin-ext&axes=opsz",
+      name: "DM Sans",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700;800;900&display=auto&subset=latin,latin-ext",
+      name: "Red Hat Display",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400&display=auto&subset=latin,latin-ext",
+      name: "DM Serif Display",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900;1000&display=auto&subset=latin,latin-ext&axes=opsz",
+      name: "DM Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Della+Respira:wght@400&display=auto&subset=latin",
+      name: "Della Respira",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,hebrew,latin,latin-ext,math,symbols,vietnamese&axes=wdth",
+      name: "Open Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese",
+      name: "EB Garamond",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Montserrat",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Expletus+Sans:wght@400;500;600;700&display=auto&subset=latin,latin-ext",
+      name: "Expletus Sans",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=auto&subset=devanagari,latin,latin-ext",
+      name: "Hind",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Fanwood+Text:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Fanwood Text",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Quattrocento:wght@400;700&display=auto&subset=latin,latin-ext",
+      name: "Quattrocento",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Fjalla+One:wght@400&display=auto&subset=cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Fjalla One",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Cantarell:wght@400;700&display=auto&subset=latin,latin-ext",
+      name: "Cantarell",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Forum:wght@400&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext",
+      name: "Forum",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Work Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:wght@400;700&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese",
+      name: "Gentium Book Plus",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Crimson Text",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=auto&subset=devanagari,latin,latin-ext",
+      name: "Hind",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,hebrew,latin,latin-ext,math,symbols,vietnamese&axes=wdth",
+      name: "Open Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@100;200;300;400;500;600;700&display=auto&subset=cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "IBM Plex Sans Condensed",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700&display=auto&subset=cyrillic,cyrillic-ext,greek,latin,latin-ext,vietnamese",
+      name: "IBM Plex Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&display=auto&subset=latin,latin-ext,vietnamese&axes=wdth",
+      name: "Inconsolata",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400;500;600;700;800&display=auto&subset=latin,latin-ext",
+      name: "Karla",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese&axes=opsz",
+      name: "Inter",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Josefin Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Josefin Sans",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,hebrew,latin,latin-ext,math,symbols,vietnamese&axes=wdth",
+      name: "Open Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Josefin Sans",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese&axes=opsz",
+      name: "Inter",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400;500;600;700;800&display=auto&subset=latin,latin-ext",
+      name: "Karla",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Merriweather",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Kreon:wght@300;400;500;600;700&display=auto&subset=latin,latin-ext",
+      name: "Kreon",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext",
+      name: "Ubuntu",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=auto&subset=latin,latin-ext",
+      name: "Lato",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900;1000&display=auto&subset=latin,latin-ext&axes=opsz",
+      name: "DM Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=League+Gothic:wght@400&display=auto&subset=latin,latin-ext,vietnamese&axes=wdth",
+      name: "League Gothic",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=latin,latin-ext",
+      name: "Poppins",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=auto&subset=latin,latin-ext",
+      name: "Libre Baskerville",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Raleway",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=auto&subset=latin,latin-ext",
+      name: "Libre Baskerville",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese",
+      name: "Source Code Pro",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,math,symbols,vietnamese",
+      name: "Lora",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900;1000&display=auto&subset=latin,latin-ext&axes=opsz",
+      name: "DM Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,math,symbols,vietnamese",
+      name: "Lora",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Merriweather",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Lustria:wght@400&display=auto&subset=latin",
+      name: "Lustria",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=auto&subset=latin,latin-ext",
+      name: "Lato",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Merriweather",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese",
+      name: "Source Code Pro",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Montserrat",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=auto&subset=devanagari,latin,latin-ext",
+      name: "Hind",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Montserrat",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=auto&subset=latin,latin-ext",
+      name: "Lato",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Montserrat",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,hebrew,latin,latin-ext,math,symbols,vietnamese&axes=wdth",
+      name: "Open Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900;1000&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Mulish",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Space Mono",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Nixie+One:wght@400&display=auto&subset=latin",
+      name: "Nixie One",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Ledger:wght@400&display=auto&subset=cyrillic,latin,latin-ext",
+      name: "Ledger",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,devanagari,greek,greek-ext,latin,latin-ext,vietnamese&axes=wdth",
+      name: "Noto Sans",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Noto+Serif:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese&axes=wdth",
+      name: "Noto Serif",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900;1000&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Nunito",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext",
+      name: "PT Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;500;600;700;800;900;1000&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese&axes=YTLC,opsz,wdth",
+      name: "Nunito Sans",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext",
+      name: "PT Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Old Standard TT",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900;1000&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Mulish",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,hebrew,latin,latin-ext,math,symbols,vietnamese&axes=wdth",
+      name: "Open Sans",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Average+Sans:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Average Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,hebrew,latin,latin-ext,math,symbols,vietnamese&axes=wdth",
+      name: "Open Sans",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Oranienbaum:wght@400&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext",
+      name: "Oranienbaum",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Orelega+One:wght@400&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext",
+      name: "Orelega One",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Montserrat",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Oswald",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,math,symbols,vietnamese",
+      name: "Lora",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Oswald",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Merriweather",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Oswald",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Quicksand",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=latin,latin-ext",
+      name: "Poppins",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese&axes=opsz",
+      name: "Inter",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=latin,latin-ext",
+      name: "Poppins",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=auto&subset=latin,latin-ext",
+      name: "Lato",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Poiret+One:wght@400&display=auto&subset=cyrillic,latin,latin-ext",
+      name: "Poiret One",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=auto&subset=latin,latin-ext",
+      name: "Lato",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Proza+Libre:wght@400;500;600;700;800&display=auto&subset=latin,latin-ext",
+      name: "Proza Libre",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Crimson Text",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext",
+      name: "PT Serif",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=auto&subset=latin,latin-ext,vietnamese&axes=wdth",
+      name: "Cabin",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Questrial:wght@400&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Questrial",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Rozha+One:wght@400&display=auto&subset=devanagari,latin,latin-ext",
+      name: "Rozha One",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Quattrocento:wght@400;700&display=auto&subset=latin,latin-ext",
+      name: "Quattrocento",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Quattrocento+Sans:wght@400;700&display=auto&subset=latin,latin-ext",
+      name: "Quattrocento Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Quattrocento:wght@400;700&display=auto&subset=latin,latin-ext",
+      name: "Quattrocento",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Fanwood+Text:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Fanwood Text",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Quicksand",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Quicksand",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700;800;900&display=auto&subset=latin,latin-ext",
+      name: "Red Hat Display",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900;1000&display=auto&subset=latin,latin-ext&axes=opsz",
+      name: "DM Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese",
+      name: "Roboto",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,math,symbols,vietnamese",
+      name: "Lora",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese",
+      name: "Roboto",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900;1000&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Nunito",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese",
+      name: "Roboto Condensed",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=auto&subset=latin,latin-ext,vietnamese&axes=wdth",
+      name: "Cabin",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;200;300;400;500;600;700&display=auto&subset=cyrillic,cyrillic-ext,greek,latin,latin-ext,vietnamese",
+      name: "Roboto Mono",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=auto&subset=arabic,cyrillic,cyrillic-ext,hebrew,latin,latin-ext",
+      name: "Rubik",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese",
+      name: "Roboto Slab",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese",
+      name: "Roboto",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Rozha+One:wght@400&display=auto&subset=devanagari,latin,latin-ext",
+      name: "Rozha One",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Questrial:wght@400&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Questrial",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Rufina:wght@400;700&display=auto&subset=latin,latin-ext",
+      name: "Rufina",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Average+Sans:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Average Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Rufina:wght@400;700&display=auto&subset=latin,latin-ext",
+      name: "Rufina",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=auto&subset=latin,latin-ext",
+      name: "Oxygen",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Sacramento:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Sacramento",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Alice:wght@400&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext",
+      name: "Alice",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Six+Caps:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Six Caps",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese&axes=opsz",
+      name: "Inter",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Slabo+27px:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Slabo 27px",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Ultra:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Ultra",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese",
+      name: "Source Code Pro",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,greek,latin,latin-ext,vietnamese&axes=opsz",
+      name: "Source Serif 4",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Space Mono",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=auto&subset=arabic,cyrillic,cyrillic-ext,hebrew,latin,latin-ext",
+      name: "Rubik",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Spectral:wght@200;300;400;500;600;700;800&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Spectral",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400;500;600;700;800&display=auto&subset=latin,latin-ext",
+      name: "Karla",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Stint+Ultra+Expanded:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Stint Ultra Expanded",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Pontano+Sans:wght@300;400;500;600;700&display=auto&subset=latin,latin-ext",
+      name: "Pontano Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=auto&subset=greek,latin,latin-ext",
+      name: "Syne",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext,vietnamese&axes=opsz",
+      name: "Inter",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=auto&subset=devanagari,latin,latin-ext",
+      name: "Teko",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext",
+      name: "Ubuntu",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Tenor+Sans:wght@400&display=auto&subset=cyrillic,latin,latin-ext",
+      name: "Tenor Sans",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Archivo Narrow",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Ultra:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Ultra",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Slabo+27px:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Slabo 27px",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Unica+One:wght@400&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Unica One",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Crimson Text",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin,latin-ext",
+      name: "Ubuntu",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,hebrew,latin,latin-ext,math,symbols,vietnamese&axes=wdth",
+      name: "Open Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Ultra:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Ultra",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext",
+      name: "PT Serif",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Work Sans",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Merriweather",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Work Sans",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=auto&subset=cyrillic,cyrillic-ext,greek,greek-ext,hebrew,latin,latin-ext,math,symbols,vietnamese&axes=wdth",
+      name: "Open Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Yeseva+One:wght@400&display=auto&subset=cyrillic,cyrillic-ext,latin,latin-ext,vietnamese",
+      name: "Yeseva One",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&display=auto&subset=latin,latin-ext,vietnamese",
+      name: "Josefin Sans",
+    },
+  },
+  {
+    primaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Yellowtail:wght@400&display=auto&subset=latin,latin-ext",
+      name: "Yellowtail",
+    },
+    secondaryFont: {
+      href: "https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=auto&subset=latin,latin-ext",
+      name: "Lato",
+    },
+  },
+];
+
+export { googleFonts, fontPairs };
