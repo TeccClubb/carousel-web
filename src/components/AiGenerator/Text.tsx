@@ -11,14 +11,19 @@ import {
 } from "@/store";
 import { useDispatch } from "react-redux";
 import { googleFonts, fontPairs } from "@/assets/fonts";
+import { useTranslation } from "react-i18next";
 
 const Text: FC = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
-  const textAlignments: ("left" | "center" | "right")[] = [
-    "left",
-    "center",
-    "right",
+  const textAlignments: {
+    alignment: "left" | "center" | "right";
+    text: string;
+  }[] = [
+    { alignment: "left", text: t("text_panel_alignment_left_text") },
+    { alignment: "center", text: t("text_panel_alignment_center_text") },
+    { alignment: "right", text: t("text_panel_alignment_right_text") },
   ];
 
   const {
@@ -57,7 +62,7 @@ const Text: FC = () => {
             <Switch
               checked={isCustomFontsEnabled}
               onCheckedChange={() => dispatch(toggleCustomFontsEnabled())}
-              label="Use Custom Fonts"
+              label={t("text_panel_switch_custom_fonts_label")}
             />
           </div>
 
@@ -65,11 +70,11 @@ const Text: FC = () => {
             <div className="space-y-4 p-2 border rounded-lg">
               <div className="flex flex-col space-y-1">
                 <Combobox
-                  label={"Primary Font"}
+                  label={t("text_panel_primary_font_label")}
                   value={primaryFont.href}
                   text={primaryFont.name}
-                  emptyMessage="No font found."
-                  placeholder="Select Primary Font"
+                  emptyMessage={t("text_panel_font_empty_message")}
+                  placeholder={t("text_panel_primary_font_placeholder")}
                   className="w-full"
                   size="sm"
                 >
@@ -87,11 +92,11 @@ const Text: FC = () => {
 
               <div className="flex flex-col space-y-1">
                 <Combobox
-                  label={"Secondary Font"}
+                  label={t("text_panel_secondary_font_label")}
                   value={secondaryFont.href}
                   text={secondaryFont.name}
-                  emptyMessage="No font found."
-                  placeholder="Select Secondary Font"
+                  emptyMessage={t("text_panel_font_empty_message")}
+                  placeholder={t("text_panel_secondary_font_placeholder")}
                   className="w-full"
                   size="sm"
                 >
@@ -112,11 +117,11 @@ const Text: FC = () => {
 
         <div className="flex flex-col space-y-1">
           <Combobox
-            label={"Font Pair"}
+            label={t("text_panel_font_pair_label")}
             value={`${primaryFont.href} & ${secondaryFont.href}`}
             text={`${primaryFont.name} & ${secondaryFont.name}`}
-            emptyMessage="No font found."
-            placeholder="Select Font Pair"
+            emptyMessage={t("text_panel_font_empty_message")}
+            placeholder={t("text_panel_font_pair_placeholder")}
             className="w-full"
             size="sm"
           >
@@ -135,7 +140,7 @@ const Text: FC = () => {
         <div className="space-y-4">
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between align-top">
-              <Label asSpan>Font Size</Label>
+              <Label asSpan>{t("font_size_label")}</Label>
               <p className="text-sm text-muted-foreground">{fontSize}</p>
             </div>
 
@@ -151,21 +156,21 @@ const Text: FC = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label asSpan>Text Alignment</Label>
+            <Label asSpan>{t("text_panel_text_alignment_label")}</Label>
             <div className="grid grid-cols-3 gap-4">
-              {textAlignments.map((textAlignment) => (
+              {textAlignments.map(({ alignment, text }) => (
                 <Button
-                  key={textAlignment}
+                  key={alignment}
                   variant={"outline"}
                   size="sm"
                   onClick={() =>
-                    dispatch(setContentFontTextAlignment(textAlignment))
+                    dispatch(setContentFontTextAlignment(alignment))
                   }
                   className={`capitalize border-2 ${
-                    fontTextAlignment === textAlignment ? "border-primary" : ""
+                    fontTextAlignment === alignment ? "border-primary" : ""
                   }`}
                 >
-                  {textAlignment}
+                  {text}
                 </Button>
               ))}
             </div>

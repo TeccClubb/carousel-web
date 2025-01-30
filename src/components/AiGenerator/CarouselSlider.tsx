@@ -7,12 +7,13 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  Label,
 } from "../ui";
 import Slide from "./Slide/Slide";
 import { useCarouselsState, useLastIndex } from "@/hooks";
 import { useDispatch } from "react-redux";
 import { setCurrentIndex, zoomIn, zoomOut } from "@/store";
-import { MinusIcon, PlusIcon } from "@/icons";
+import { Minus, Plus } from "lucide-react";
 
 const CarouselSlider: FC = () => {
   const dispatch = useDispatch();
@@ -107,20 +108,19 @@ const CarouselSlider: FC = () => {
             size="sm"
             className="h-7 w-7"
           >
-            <MinusIcon />
+            <Minus />
           </Button>
 
-          <div className="text-xs flex items-center">
-            <div className="inline-flex items-center rounded-md border font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs px-1 py-1">
-              {zoomValue}%
-            </div>
-          </div>
+          <Label asSpan className="p-1">
+            {zoomValue}%
+          </Label>
+
           <Button
             onClick={() => dispatch(zoomIn())}
             size="sm"
             className="h-7 w-7"
           >
-            <PlusIcon />
+            <Plus />
           </Button>
         </div>
       </div>

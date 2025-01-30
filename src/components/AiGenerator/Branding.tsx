@@ -13,9 +13,11 @@ import {
   toggleBrandShowInOutroSlide,
   toggleBrandShowInRegularSlide,
 } from "@/store";
+import { useTranslation } from "react-i18next";
 
 const Branding: FC = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const {
     isShowInIntroSlide,
     isShowInOutroSlide,
@@ -29,7 +31,7 @@ const Branding: FC = () => {
 
   const brandName = userData === null ? "John Doe" : name.text ?? userData.name;
   const brandHandle =
-    userData === null ? "@carouselmakerco" : handle.text ?? userData.email;
+    userData === null ? "@pixmart" : handle.text ?? userData.email;
   const brandImageSrc =
     userData === null ? "/john.jpg" : profileImage.src || userData.picture;
 
@@ -53,14 +55,18 @@ const Branding: FC = () => {
             <Switch
               checked={name.isEnabled}
               onCheckedChange={() => dispatch(toggleBrandName())}
-              label="Name"
+              label={t("branding_panel_switch_name_label")}
             />
           </div>
           <Input
             value={brandName}
             onChange={(e) => dispatch(setBrandName(e.target.value.trim()))}
             type="text"
-            placeholder={userData !== null ? userData.name : "Name"}
+            placeholder={
+              userData !== null
+                ? userData.name
+                : t("branding_panel_switch_name_label")
+            }
           />
         </div>
 
@@ -69,14 +75,18 @@ const Branding: FC = () => {
             <Switch
               checked={handle.isEnabled}
               onCheckedChange={() => dispatch(toggleBrandHandle())}
-              label="Handle"
+              label={t("branding_panel_switch_handle_label")}
             />
           </div>
           <Input
             value={brandHandle}
             onChange={(e) => dispatch(setBrandHandle(e.target.value.trim()))}
             type="text"
-            placeholder={userData !== null ? userData.name : "Handle"}
+            placeholder={
+              userData !== null
+                ? userData.email
+                : t("branding_panel_switch_handle_label")
+            }
           />
         </div>
 
@@ -85,7 +95,7 @@ const Branding: FC = () => {
             <Switch
               checked={profileImage.isEnabled}
               onCheckedChange={() => dispatch(toggleBrandProfile())}
-              label="Profile Picture"
+              label={t("branding_panel_switch_image_label")}
             />
           </div>
           <Input onChange={handleImageChoose} type="file" accept="image/*" />
@@ -100,7 +110,7 @@ const Branding: FC = () => {
           <Switch
             checked={isShowInIntroSlide}
             onCheckedChange={() => dispatch(toggleBrandShowInIntroSlide())}
-            label="Show in Intro Slide"
+            label={t("branding_panel_switch_intro_slide_label")}
           />
         </div>
 
@@ -108,7 +118,7 @@ const Branding: FC = () => {
           <Switch
             checked={isShowInOutroSlide}
             onCheckedChange={() => dispatch(toggleBrandShowInOutroSlide())}
-            label="Show in Outro Slide"
+            label={t("branding_panel_switch_outro_slide_label")}
           />
         </div>
 
@@ -116,7 +126,7 @@ const Branding: FC = () => {
           <Switch
             checked={isShowInRegularSlide}
             onCheckedChange={() => dispatch(toggleBrandShowInRegularSlide())}
-            label="Show in Regular Slides"
+            label={t("branding_panel_switch_regular_slide_label")}
           />
         </div>
       </div>

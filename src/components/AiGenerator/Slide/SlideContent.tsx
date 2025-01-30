@@ -111,7 +111,7 @@ const SlideContent: FC<{
             </div>
           )}
 
-          {type === "outro" && isCtaButtonEnabled && (
+          {type === "outro" && isCtaButtonEnabled && ctaButtonText !== "" && (
             <div className="text-[2.5em] w-fit h-auto flex items-center justify-center text-left mt-[1em] z-[999]">
               <div
                 className="px-[1.5em] py-[0.5em] rounded-[99em]"

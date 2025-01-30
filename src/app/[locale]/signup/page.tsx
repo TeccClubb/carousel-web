@@ -1,3 +1,4 @@
+"use client";
 import React, { FC } from "react";
 import { AuthLayout, Signup } from "@/components";
 

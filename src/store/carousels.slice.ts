@@ -5,7 +5,6 @@ const initialState: CarouselsState = {
   isOnceAppLoaded: false,
   loginStatus: false,
   userData: null,
-  language: "en",
   currentIndex: 0,
   slideRatio: { id: "linkedIn1", width: 4, height: 5 },
   zoomValue: 39,
@@ -138,10 +137,6 @@ const carouselsSlice = createSlice({
       state.isOnceAppLoaded = true;
       state.loginStatus = action.payload !== null;
       state.userData = action.payload;
-    },
-
-    setLanguage: (state, action: PayloadAction<string>) => {
-      state.language = action.payload;
     },
 
     setCurrentIndex: (state, action: PayloadAction<number>) => {
@@ -463,7 +458,6 @@ export const {
   setOnceAppLoaded,
   setLoginStatus,
   setUserData,
-  setLanguage,
   setCurrentIndex,
   setSlideRatio,
   zoomIn,

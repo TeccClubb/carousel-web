@@ -33,7 +33,6 @@ import BrandingIcon from "./BrandingIcon";
 import SwipeIcon from "./SwipeIcon";
 import OrderIcon from "./OrderIcon";
 import SettingsIcon from "./SettingsIcon";
-import ArrowsShuffleIcon from "./ArrowsShuffleIcon";
 import MyCarouselsIcon from "./MyCarouselsIcon";
 import DownloadIcon from "./DownloadIcon";
 import LockIcon from "./LockIcon";
@@ -41,15 +40,12 @@ import InstagramGradientIcon from "./InstagramGradientIcon";
 import LinkedInGradientIcon from "./LinkedInGradientIcon";
 import TikTokGradientIcon from "./TikTokGradientIcon";
 import DragHandleIcon from "./DragHandleIcon";
-import AddIcon from "./AddIcon";
 import ProjectIcon from "./ProjectIcon";
 import DashboardIcon from "./DashboardIcon";
 import SearchIcon from "./SearchIcon";
 import ProfileIcon from "./ProfileIcon";
 import PowerOffIcon from "./PowerOffIcon";
 import PlanIcon from "./PlanIcon";
-import MinusIcon from "./MinusIcon";
-import PlusIcon from "./PlusIcon";
 import HorizontalIcon from "./HorizontalIcon";
 import HorizontalReverseIcon from "./HorizontalReverseIcon";
 import VerticalIcon from "./VerticalIcon";
@@ -91,7 +87,6 @@ export {
   SwipeIcon,
   OrderIcon,
   SettingsIcon,
-  ArrowsShuffleIcon,
   MyCarouselsIcon,
   DownloadIcon,
   LockIcon,
@@ -99,15 +94,12 @@ export {
   LinkedInGradientIcon,
   TikTokGradientIcon,
   DragHandleIcon,
-  AddIcon,
   ProjectIcon,
   DashboardIcon,
   SearchIcon,
   ProfileIcon,
   PowerOffIcon,
   PlanIcon,
-  MinusIcon,
-  PlusIcon,
   HorizontalIcon,
   HorizontalReverseIcon,
   VerticalIcon,

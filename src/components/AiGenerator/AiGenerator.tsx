@@ -9,7 +9,6 @@ import {
   MyCarouselsIcon,
   OrderIcon,
   SettingsIcon,
-  ArrowsShuffleIcon,
   SwipeIcon,
   TextIcon,
 } from "@/icons";
@@ -32,8 +31,11 @@ import Settings from "./Settings";
 import MyCarousels from "./MyCarousels";
 import Randomize from "./Randomize";
 import CarouselSlider from "./CarouselSlider";
+import { useTranslation } from "react-i18next";
+import { Shuffle } from "lucide-react";
 
 const AiGenerator: FC = () => {
+  const { t } = useTranslation();
 
   type NavItem =
     | "ai"
@@ -66,33 +68,37 @@ const AiGenerator: FC = () => {
 
   const items = {
     ai: { name: "AI", icon: <AiIcon />, container: <Ai /> },
-    content: { name: "Content", icon: <ContentIcon />, container: <Content /> },
-    text: { name: "Text", icon: <TextIcon />, container: <Text /> },
-    colors: { name: "Colors", icon: <ColorsIcon />, container: <Colors /> },
+    content: {
+      name: t("content"),
+      icon: <ContentIcon />,
+      container: <Content />,
+    },
+    text: { name: t("text"), icon: <TextIcon />, container: <Text /> },
+    colors: { name: t("colors"), icon: <ColorsIcon />, container: <Colors /> },
     background: {
-      name: "Background",
+      name: t("background"),
       icon: <BackgroundIcon />,
       container: <Background />,
     },
     branding: {
-      name: "Branding",
+      name: t("branding"),
       icon: <BrandingIcon />,
       container: <Branding />,
     },
-    swipe: { name: "Swipe", icon: <SwipeIcon />, container: <Swipe /> },
-    order: { name: "Order", icon: <OrderIcon />, container: <Order /> },
+    swipe: { name: t("swipe"), icon: <SwipeIcon />, container: <Swipe /> },
+    order: { name: t("order"), icon: <OrderIcon />, container: <Order /> },
     settings: {
-      name: "Settings",
+      name: t("settings"),
       icon: <SettingsIcon />,
       container: <Settings />,
     },
     randomize: {
-      name: "Randomize",
-      icon: <ArrowsShuffleIcon />,
+      name: t("randomize"),
+      icon: <Shuffle className="h-5 w-5" />,
       container: <Randomize />,
     },
     my_carousels: {
-      name: "My Carousels",
+      name: t("my_carousels"),
       icon: <MyCarouselsIcon />,
       container: <MyCarousels />,
     },
@@ -106,22 +112,19 @@ const AiGenerator: FC = () => {
             {navItems.map((item) => (
               <TooltipProvider key={item}>
                 <Tooltip>
-                  <TooltipTrigger>
-                    <div
-                      key={item}
-                      onClick={() => setActiveNavItem(item)}
-                      className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 w-9 cursor-pointer ${
-                        activeNavItem === item
-                          ? `${
-                              item === "ai"
-                                ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0"
-                                : "bg-primary text-primary-foreground shadow hover:bg-primary/90"
-                            } dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white`
-                          : "hover:bg-accent hover:text-accent-foreground"
-                      }`}
-                    >
-                      {items[item].icon}
-                    </div>
+                  <TooltipTrigger
+                    onClick={() => setActiveNavItem(item)}
+                    className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 w-9 cursor-pointer ${
+                      activeNavItem === item
+                        ? `${
+                            item === "ai"
+                              ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0"
+                              : "bg-primary text-primary-foreground shadow hover:bg-primary/90"
+                          } dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white`
+                        : "hover:bg-accent hover:text-accent-foreground"
+                    }`}
+                  >
+                    {items[item].icon}
                   </TooltipTrigger>
                   <TooltipContent side="right">
                     <span>{items[item].name}</span>

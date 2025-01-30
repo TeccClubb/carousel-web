@@ -4,11 +4,12 @@ export { useLoginToken } from "./use-cookie";
 
 export { useAuthStatus } from "./use-auth-status";
 
+export { usePathname } from "./use-path-name";
+
 export {
   useIsOnceAppLoaded,
   useLoginStatus,
   useUserData,
-  useLanguage,
   useCarouselsState,
   useLastIndex,
   useCurrentIndex,

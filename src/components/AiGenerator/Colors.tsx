@@ -11,12 +11,19 @@ import {
   toggleAlternateSlideColors,
   toggleCustomColors,
 } from "@/store";
+import { useTranslation } from "react-i18next";
 
 const Colors: FC = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
-  const { isUseCustomColors, isAlternateSlideColors, backgroundColor, textColor, accentColor } =
-    useColors();
+  const {
+    isUseCustomColors,
+    isAlternateSlideColors,
+    backgroundColor,
+    textColor,
+    accentColor,
+  } = useColors();
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
@@ -26,7 +33,7 @@ const Colors: FC = () => {
             <Switch
               checked={isUseCustomColors}
               onCheckedChange={() => dispatch(toggleCustomColors())}
-              label="Use Custom Colors"
+              label={t("colors_panel_switch_custom_colors_label")}
             />
           </div>
           {isUseCustomColors && (
@@ -35,21 +42,21 @@ const Colors: FC = () => {
                 <InputColor
                   color={backgroundColor}
                   setColor={(color) => dispatch(setBackgroundColor(color))}
-                  label="Background Color"
+                  label={t("colors_panel_background_color_label")}
                 />
               </div>
               <div>
                 <InputColor
                   color={textColor}
                   setColor={(color) => dispatch(setTextColor(color))}
-                  label="Text Color"
+                  label={t("colors_panel_text_color_label")}
                 />
               </div>
               <div>
                 <InputColor
                   color={accentColor}
                   setColor={(color) => dispatch(setAccentColor(color))}
-                  label="Accent Color"
+                  label={t("colors_panel_accent_color_label")}
                 />
               </div>
             </div>
@@ -60,7 +67,7 @@ const Colors: FC = () => {
           <Switch
             checked={isAlternateSlideColors}
             onCheckedChange={() => dispatch(toggleAlternateSlideColors())}
-            label="Alternate Slide Colors"
+            label={t("colors_panel_switch_alternate_colors_label")}
           />
         </div>
       </div>
@@ -68,7 +75,7 @@ const Colors: FC = () => {
       <div className="space-y-4 py-4">
         <div>
           <h3 className="pb-2 font-semibold leading-none tracking-tight">
-            Dark
+            {t("colors_panel_dark_colors_label")}
           </h3>
           <div className="flex space-between flex-wrap gap-2">
             {darkColors.map((colors) => {
@@ -114,7 +121,7 @@ const Colors: FC = () => {
 
         <div>
           <h3 className="pb-2 font-semibold leading-none tracking-tight">
-            Light
+            {t("colors_panel_light_colors_label")}
           </h3>
           <div className="flex space-between flex-wrap gap-2">
             {lightColors.map((colors) => {

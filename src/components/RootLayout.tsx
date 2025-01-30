@@ -1,6 +1,6 @@
 "use client";
 import React, { FC, ReactNode } from "react";
-import { usePathname } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { CAROUSEL_GENERATOR_PATH, DASHBOARD_PAGE_PATH } from "@/pathNames";
 import { Geist, Geist_Mono } from "next/font/google";
 import store from "@/store";
@@ -11,6 +11,9 @@ import AiNavbar from "./AiGenerator/AiNavbar";
 import { Provider } from "react-redux";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GOOGLE_OAUTH_CLIENT_ID } from "@/constant";
+import { usePathname } from "@/hooks";
+import TranslationsProvider from "./TranslationsProvider";
+import { i18nConfig } from "../../i18nConfig";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,8 +27,12 @@ const geistMono = Geist_Mono({
 
 const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
   const pathName = usePathname();
+  const { locale } = useParams();
+  if (!i18nConfig.locales.includes(locale as string)) {
+    notFound();
+  }
   return (
-    <html lang="en">
+    <html lang={locale as string}>
       <body
         className={`${geistSans.variable} ${
           geistMono.variable
@@ -34,30 +41,34 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
         } transition duration-300`}
       >
         <Provider store={store}>
-          <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CLIENT_ID } >
-
-          {pathName === CAROUSEL_GENERATOR_PATH && <AiNavbar />}
-          {pathName !== CAROUSEL_GENERATOR_PATH &&
-            pathName !== DASHBOARD_PAGE_PATH && <Navbar />}
-
-          {pathName === DASHBOARD_PAGE_PATH ? (
-            <>{children}</>
-          ) : (
-            <main
-              className={`flex-1 flex-shrink-0 ${
-                pathName === CAROUSEL_GENERATOR_PATH
-                  ? "min-h-[calc(100vh-4rem)]"
-                  : ""
-              }`}
+          <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CLIENT_ID}>
+            <TranslationsProvider
+              locale={locale as string}
+              namespaces={["common"]}
             >
-              {children}
-            </main>
-          )}
-          <Toaster />
-          {pathName !== CAROUSEL_GENERATOR_PATH &&
-            pathName !== DASHBOARD_PAGE_PATH && <Footer />}
+              {pathName === CAROUSEL_GENERATOR_PATH && <AiNavbar />}
+              {pathName !== CAROUSEL_GENERATOR_PATH &&
+                pathName !== DASHBOARD_PAGE_PATH && <Navbar />}
+
+              {pathName === DASHBOARD_PAGE_PATH ? (
+                <>{children}</>
+              ) : (
+                <main
+                  className={`flex-1 flex-shrink-0 ${
+                    pathName === CAROUSEL_GENERATOR_PATH
+                      ? "min-h-[calc(100vh-4rem)]"
+                      : ""
+                  }`}
+                >
+                  {children}
+                </main>
+              )}
+              <Toaster />
+              {pathName !== CAROUSEL_GENERATOR_PATH &&
+                pathName !== DASHBOARD_PAGE_PATH && <Footer />}
+            </TranslationsProvider>
           </GoogleOAuthProvider>
-          </Provider>
+        </Provider>
       </body>
     </html>
   );

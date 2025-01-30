@@ -20,7 +20,8 @@ const BlogCard: FC<{
             width={0}
             height={0}
             sizes="100vw"
-            priority
+            placeholder="blur"
+            blurDataURL={imageSrc}
           />
           <h5 className="text-white bg-blue left-2.5 bottom-[-15px] absolute uppercase text-base font-normal leading-6 px-5 py-1 rounded-full">
             {category}

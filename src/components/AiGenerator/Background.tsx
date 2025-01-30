@@ -11,9 +11,11 @@ import {
 } from "@/store";
 import { useDispatch } from "react-redux";
 import { useBackgroundOverlay } from "@/hooks";
+import { useTranslation } from "react-i18next";
 
 const Background: FC = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const {
     backgroundId,
@@ -81,7 +83,7 @@ const Background: FC = () => {
         <fieldset className="grid gap-6 rounded-lg border p-4 pb-8">
           <legend className="-ml-1 px-1 text-sm font-medium">
             <h3 className="font-semibold leading-none tracking-tight">
-              Overlay
+              {t("background_panel_overlay_label")}
             </h3>
           </legend>
 
@@ -100,7 +102,9 @@ const Background: FC = () => {
             </div>
 
             <div className="flex justify-between gap-2 items-center">
-              <Label htmlFor="fadeCornerActive">Fade Corner</Label>
+              <Label htmlFor="fadeCornerActive">
+                {t("background_panel_fade_corner_label")}
+              </Label>
               <Checkbox
                 id="fadeCornerActive"
                 checked={isOverlayFadeCorner}
@@ -123,17 +127,17 @@ const Background: FC = () => {
                     : ""
                 }`}
               >
-                {bgId === "background_0" && "None"}
+                {bgId === "background_0" && t("background_panel_none")}
               </div>
             ))}
           </div>
 
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between align-top">
-              <Label asSpan>Overlay Opacity</Label>
-              <p className="text-sm text-muted-foreground">
-                {overlayOpacity}
-              </p>
+              <Label asSpan>
+                {t("background_panel_overlay_opacity_label")}
+              </Label>
+              <p className="text-sm text-muted-foreground">{overlayOpacity}</p>
             </div>
 
             <Slider
@@ -141,9 +145,7 @@ const Background: FC = () => {
               min={0}
               max={100}
               step={1}
-              onValueChange={(value) =>
-                dispatch(setOverlayOpacity(value[0]))
-              }
+              onValueChange={(value) => dispatch(setOverlayOpacity(value[0]))}
             />
           </div>
         </fieldset>
@@ -151,7 +153,7 @@ const Background: FC = () => {
         <fieldset className="grid gap-6 rounded-lg border p-4 pb-8">
           <legend className="-ml-1 px-1 text-sm font-medium">
             <h3 className="font-semibold leading-none tracking-tight">
-              Element
+              {t("background_panel_element_label")}
             </h3>
           </legend>
 
@@ -173,14 +175,16 @@ const Background: FC = () => {
                   backgroundPosition: "center center",
                 }}
               >
-                {element.id === "element_0" && "None"}
+                {element.id === "element_0" && t("background_panel_none")}
               </div>
             ))}
           </div>
 
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between align-top">
-              <Label asSpan>Element Opacity</Label>
+              <Label asSpan>
+                {t("background_panel_element_opacity_label")}
+              </Label>
               <p className="text-sm text-muted-foreground">
                 {cornerElementOpacity}
               </p>

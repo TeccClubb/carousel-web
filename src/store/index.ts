@@ -6,7 +6,6 @@ export {
   setOnceAppLoaded,
   setLoginStatus,
   setUserData,
-  setLanguage,
   setCurrentIndex,
   setSlideRatio,
   zoomIn,

@@ -52,72 +52,77 @@ import {
   VerticalIcon,
   VerticalReverseIcon,
 } from "@/icons";
+import { useTranslation } from "react-i18next";
 
 const FontSizeSlider: FC<{
   fontSize: number;
   setFontSize: (value: number) => void;
   onResetClick: () => void;
   toolTipText: string;
-}> = memo(({ fontSize, setFontSize, onResetClick, toolTipText }) => (
-  <Popover>
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <PopoverTrigger asChild>
-            <Button
-              size="icon"
-              variant="outline"
-              className="h-7 w-7 border-none bg-transparent"
-            >
-              <SettingsIcon />
-            </Button>
-          </PopoverTrigger>
-        </TooltipTrigger>
-        <TooltipContent side="bottom">
-          <span>{toolTipText}</span>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-    <PopoverContent className="w-64">
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between align-top">
-          <div className="flex items-center gap-2">
-            <Label asSpan className="text-xs">
-              Font Size
-            </Label>
+}> = memo(({ fontSize, setFontSize, onResetClick, toolTipText }) => {
+  const { t } = useTranslation();
+  return (
+    <Popover>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <PopoverTrigger asChild>
+              <Button
+                size="icon"
+                variant="outline"
+                className="h-7 w-7 border-none bg-transparent"
+              >
+                <SettingsIcon />
+              </Button>
+            </PopoverTrigger>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">
+            <span>{toolTipText}</span>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <PopoverContent className="w-64">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between align-top">
+            <div className="flex items-center gap-2">
+              <Label asSpan className="text-xs">
+                {t("font_size_label")}
+              </Label>
 
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <RefreshCcwIcon
-                    onClick={onResetClick}
-                    className="h-3 w-3 cursor-pointer"
-                  />
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
-                  <span>Reset Slider</span>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <RefreshCcwIcon
+                      onClick={onResetClick}
+                      className="h-3 w-3 cursor-pointer"
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    <span>{t("content_panel_reset_font_slider")}</span>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <p className="text-xs text-muted-foreground">{fontSize}%</p>
           </div>
-          <p className="text-xs text-muted-foreground">{fontSize}%</p>
+          <Slider
+            defaultValue={[fontSize]}
+            min={10}
+            max={200}
+            step={5}
+            onValueChange={(value) => setFontSize(value[0])}
+          />
         </div>
-        <Slider
-          defaultValue={[fontSize]}
-          min={10}
-          max={200}
-          step={5}
-          onValueChange={(value) => setFontSize(value[0])}
-        />
-      </div>
-    </PopoverContent>
-  </Popover>
-));
+      </PopoverContent>
+    </Popover>
+  );
+});
 
 FontSizeSlider.displayName = "FontSizeSlider";
 
 const TextSettings: FC = memo(() => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const {
     subTitle: { text: subTitle = "", isEnabled: isSubTitleEnabled = true },
@@ -140,14 +145,14 @@ const TextSettings: FC = memo(() => {
           <Switch
             checked={isSubTitleEnabled}
             onCheckedChange={() => dispatch(toggleSubTitle())}
-            label="Sub Title"
+            label={t("content_panel_switch_sub_title_label")}
           />
         </div>
         <Input
           value={subTitle}
           onChange={(e) => dispatch(setSubTitle(e.target.value.trim()))}
           type="text"
-          placeholder="Enter your sub title"
+          placeholder={t("content_panel_sub_title_placeholder")}
         />
       </div>
 
@@ -157,11 +162,11 @@ const TextSettings: FC = memo(() => {
             <Switch
               checked={isTitleEnabled}
               onCheckedChange={() => dispatch(toggleTitle())}
-              label="Title"
+              label={t("content_panel_switch_title_label")}
             />
           </div>
           <FontSizeSlider
-            toolTipText="Title Settings"
+            toolTipText={t("content_panel_title_tool_tip_text")}
             fontSize={titleFontSize || 100}
             onResetClick={() => dispatch(setTitleFontSize(100))}
             setFontSize={(value) => dispatch(setTitleFontSize(value))}
@@ -172,7 +177,7 @@ const TextSettings: FC = memo(() => {
           value={title}
           onChange={(e) => dispatch(setTitle(e.target.value.trim()))}
           type="text"
-          placeholder="Enter your title"
+          placeholder={t("content_panel_title_placeholder")}
         />
       </div>
 
@@ -182,11 +187,11 @@ const TextSettings: FC = memo(() => {
             <Switch
               checked={isDescriptionEnabled}
               onCheckedChange={() => dispatch(toggleDescription())}
-              label="Description"
+              label={t("content_panel_switch_description_label")}
             />
           </div>
           <FontSizeSlider
-            toolTipText="Description Settings"
+            toolTipText={t("content_panel_description_tool_tip_text")}
             fontSize={descriptionFontSize || 100}
             onResetClick={() => dispatch(setDescriptionFontSize(100))}
             setFontSize={(value) => dispatch(setDescriptionFontSize(value))}
@@ -196,7 +201,7 @@ const TextSettings: FC = memo(() => {
           value={description}
           rows={5}
           onChange={(e) => dispatch(setDescription(e.target.value.trim()))}
-          placeholder="Enter your description"
+          placeholder={t("content_panel_description_placeholder")}
         />
       </div>
     </>
@@ -207,6 +212,7 @@ TextSettings.displayName = "TextSettings";
 
 const ImageSettings: FC = memo(() => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const {
     contentOrientation = "column",
@@ -257,7 +263,7 @@ const ImageSettings: FC = memo(() => {
     <fieldset className="grid gap-6 rounded-lg border p-4 pb-8">
       <legend className="-ml-1 px-1 text-sm font-medium">
         <h3 className="font-semibold leading-none tracking-tight">
-          Slide Image
+          {t("content_panel_image_heading")}
         </h3>
       </legend>
 
@@ -266,7 +272,7 @@ const ImageSettings: FC = memo(() => {
           <Switch
             checked={isImageEnabled}
             onCheckedChange={() => dispatch(toggleImage())}
-            label="Image"
+            label={t("content_panel_switch_image_label")}
           />
         </div>
         <Input onChange={handleImageChoose} type="file" accept="image/*" />
@@ -280,14 +286,15 @@ const ImageSettings: FC = memo(() => {
             width={100}
             height={100}
             sizes="100vw"
-            priority
+            placeholder="blur"
+            blurDataURL={imageSrc}
             className="rounded-md h-auto w-auto object-cover transition-all hover:scale-105 aspect-square border"
           />
         </div>
         <div className="flex-1 flex flex-col">
           <div className="flex gap-2">
             <div className="flex flex-col gap-2">
-              <Label asSpan>Position</Label>
+              <Label asSpan>{t("content_panel_image_position_label")}</Label>
               <div className="flex flex-col items-start">
                 <div className="grid grid-cols-3 gap-1.5 p-1.5 rounded-md border">
                   {bgPositions.map((backgroundPosition) => (
@@ -309,7 +316,7 @@ const ImageSettings: FC = memo(() => {
             <div className="flex flex-col flex-1">
               <div className="flex flex-col items-start gap-2">
                 <div className="flex flex-col gap-2">
-                  <Label asSpan>Image Fit</Label>
+                  <Label asSpan>{t("content_panel_image_fit_label")}</Label>
                   <Button
                     variant="outline"
                     onClick={() => dispatch(toggleImageBackgroundCover())}
@@ -324,7 +331,9 @@ const ImageSettings: FC = memo(() => {
                 </div>
                 <div className="flex flex-col gap-2 w-full">
                   <div className="flex items-center justify-between align-top">
-                    <Label asSpan>Opacity</Label>
+                    <Label asSpan>
+                      {t("content_panel_image_opacity_label")}
+                    </Label>
                     <p className="text-xs text-muted-foreground">
                       {imageOpacity}
                     </p>
@@ -346,7 +355,7 @@ const ImageSettings: FC = memo(() => {
       </div>
 
       <div className="space-y-2">
-        <Label asSpan>Image Orientation</Label>
+        <Label asSpan>{t("content_panel_image_orientation_label")}</Label>
 
         <div className="grid grid-cols-4 gap-4 outline-none">
           {flexDirections.map((direction) => (
@@ -373,6 +382,7 @@ ImageSettings.displayName = "ImageSettings";
 
 const Content: FC = memo(() => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const {
     type = "regular",
@@ -393,9 +403,15 @@ const Content: FC = memo(() => {
             onValueChange={(value) => dispatch(setContentSelectedTab(value))}
           >
             <TabsList>
-              <TabsTrigger value="text">Text</TabsTrigger>
-              <TabsTrigger value="image">Image</TabsTrigger>
-              <TabsTrigger value="text_&_image">Text & Image</TabsTrigger>
+              <TabsTrigger value="text">
+                {t("content_panel_text_label")}
+              </TabsTrigger>
+              <TabsTrigger value="image">
+                {t("content_panel_image_label")}
+              </TabsTrigger>
+              <TabsTrigger value="text_&_image">
+                {t("content_panel_text_and_image_label")}
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="text" className="space-y-6">
               <TextSettings />
@@ -421,14 +437,16 @@ const Content: FC = memo(() => {
                 <Switch
                   checked={isCtaButtonEnabled}
                   onCheckedChange={() => dispatch(toggleCTAButton())}
-                  label="CTA Text"
+                  label={`CTA ${t("content_panel_text_label")}`}
                 />
               </div>
               <Input
                 value={ctaButtonText}
                 onChange={(e) => dispatch(setCTAText(e.target.value.trim()))}
                 type="text"
-                placeholder="Enter your title"
+                placeholder={`${t(
+                  "content_panel_enter_your_placeholder"
+                )} CTA ${t("content_panel_text_label")}`}
               />
             </div>
           )}

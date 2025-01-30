@@ -1,12 +1,15 @@
 import React, { FC } from "react";
 import BlogCard from "./BlogCard";
 import Section from "./Section";
+import { useTranslation } from "react-i18next";
 
 const BlogSection: FC<{
   isHeroSection?: boolean;
   showGradient?: boolean;
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
+  const { t } = useTranslation();
+
   const blogs = [
     {
       link: "/blog-link",
@@ -39,14 +42,16 @@ const BlogSection: FC<{
     >
       <div className="flex flex-col gap-y-8">
         <div className="text-center">
-          <span className="text-[#0F73F6] text-base font-medium">BLOG</span>
+          <span className="text-[#0F73F6] text-base font-medium">
+            {t("blog_section_title")}
+          </span>
           <h1 className="text-gray-900 dark:text-white xl:text-5xl md:text-4xl text-3xl font-semibold lg:leading-[58px]">
-            Latest Expert Design Tips & Insights
+            {t("blog_section_heading")}
           </h1>
         </div>
 
         <div className="flex flex-wrap w-full relative">
-      <div className="absolute left-1/2 top-[6%] right-1/2 transform -translate-x-1/2 w-full h-[25em] bg-[#0F73F6] opacity-10 blur-3xl rounded-full"></div>
+          <div className="absolute left-1/2 top-[6%] right-1/2 transform -translate-x-1/2 w-full h-[25em] bg-[#0F73F6] opacity-10 blur-3xl rounded-full"></div>
           {blogs.map((blog, index) => (
             <BlogCard
               key={`${blog.link} ${index}`}

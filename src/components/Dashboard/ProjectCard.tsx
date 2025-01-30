@@ -21,7 +21,8 @@ const ProjectCard: FC<{
           width={0}
           height={0}
           sizes="100vw"
-          priority
+          placeholder="blur"
+          blurDataURL={imageSrc}
         />
         <span className="text-gray-900 dark:text-white px-2 py-4 text-lg font-bold">
           {title}

@@ -1,4 +1,4 @@
-import { RootState, setLanguage, setSlideRatio } from "@/store";
+import { RootState, setSlideRatio } from "@/store";
 import { useSelector } from "react-redux";
 
 export const useIsOnceAppLoaded = () =>
@@ -9,11 +9,6 @@ export const useLoginStatus = () =>
 
 export const useUserData = () =>
   useSelector((state: RootState) => state.carousels.userData);
-
-export const useLanguage = () => ({
-  language: useSelector((state: RootState) => state.carousels.language),
-  setLanguage,
-});
 
 export const useCarouselsState = () =>
   useSelector((state: RootState) => state.carousels);

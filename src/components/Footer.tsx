@@ -1,3 +1,4 @@
+"use client"
 import React, { FC, ReactNode } from "react";
 import Link from "next/link";
 import {
@@ -28,11 +29,9 @@ import {
   SITE_MAP_PAGE_PATH,
   TERMS_AND_CONDITIONS_PAGE_PATH,
 } from "@/pathNames";
+import { useTranslation } from "react-i18next";
 
-const SocialIcon: FC<{ href: string; icon: ReactNode }> = ({
-  href,
-  icon,
-}) => (
+const SocialIcon: FC<{ href: string; icon: ReactNode }> = ({ href, icon }) => (
   <Link
     href={href}
     target="_blank"
@@ -72,6 +71,8 @@ const FooterSlice: FC<{
 );
 
 const Footer: FC = () => {
+  const { t } = useTranslation();
+
   const socialIconSize = "1.5em";
 
   const socialIcons = [
@@ -94,40 +95,41 @@ const Footer: FC = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-t from-[#F0F6FD] dark:from-[#2D2D44] to-transparent"> {/*bg-white dark:bg-gray-900*/} 
+    <footer className="bg-gradient-to-t from-[#F0F6FD] dark:from-[#2D2D44] to-transparent">
+      {/*bg-white dark:bg-gray-900*/}
       <div className="max-w-7xl mx-auto pb-8 pt-16 sm:pt-24 md:pt-32 sm:px-6 md:px-8 px-4">
         <div className="flex flex-wrap flex-col lg:flex-row gap-y-4">
           <div className="w-full lg:w-3/5 flex flex-wrap mt-16 lg:mt-0 px-4 lg:px-0 order-2 lg:order-1">
             <FooterSlice
-              title="Products"
+              title={t("products")}
               links={[
                 {
-                  text: "Linkedin Carousel Generate",
+                  text: `Linkedin ${t("carousel_generate")}`,
                   href: LINKEDIN_CAROUSEL_GENERATE_URL,
                 },
                 {
-                  text: "TikTok Carousel Generate",
+                  text: `TikTok ${t("carousel_generate")}`,
                   href: TIKTOK_CAROUSEL_GENERATE_URL,
                 },
                 {
-                  text: "Instagram Carousel Generate",
+                  text: `Instagram ${t("carousel_generate")}`,
                   href: INSTAGRAM_CAROUSEL_GENERATE_URL,
                 },
                 {
-                  text: "Facebook Carousel Generate",
+                  text: `Facebook ${t("carousel_generate")}`,
                   href: FACEBOOK_CAROUSEL_GENERATE_URL,
                 },
               ]}
             />
             <FooterSlice
-              title="Free Tools"
+              title={t("free_tools")}
               links={[
                 {
-                  text: "Linkedin Banner Generate",
+                  text: `Linkedin ${t("banner_generate")}`,
                   href: LINKEDIN_BANNER_GENERATE_URL,
                 },
                 {
-                  text: "Linkedin Post Image Generate",
+                  text: `Linkedin ${t("post_image_generate")}`,
                   href: LINKEDIN_POST_IMAGE_GENERATE_URL,
                 },
                 {
@@ -135,32 +137,32 @@ const Footer: FC = () => {
                   href: HOME_PAGE_PATH,
                 },
                 {
-                  text: "About Us",
+                  text: t("about_us"),
                   href: ABOUT_US_PAGE_PATH,
                 },
                 {
-                  text: "Creators",
+                  text: t("creators"),
                   href: CREATORS_PAGE_PATH,
                 },
                 {
-                  text: "Blog Articles",
+                  text: t("blog_articles"),
                   href: BLOG_ARTICLES_PAGE_PATH,
                 },
               ]}
             />
             <FooterSlice
-              title="Resources"
+              title={t("resources")}
               links={[
                 {
-                  text: "Blog",
+                  text: t("blog"),
                   href: BLOG_PAGE_PATH,
                 },
                 {
-                  text: "Features",
+                  text: t("features"),
                   href: FEATURES_PAGE_PATH,
                 },
                 {
-                  text: "Refund Policy",
+                  text: t("refund_policy"),
                   href: REFUND_POLICY_PAGE_PATH,
                 },
               ]}
@@ -169,8 +171,7 @@ const Footer: FC = () => {
           <div className="w-full lg:w-2/5 flex flex-col gap-y-4 items-center justify-center lg:items-start lg:justify-start px-4 order-1 lg:order-2">
             <LogoIcon className="w-56 h-auto" />
             <p className="text-gray-600 text-sm leading-6 space-y-8">
-              Your premium digital assets solution with high quality and
-              comprehensive range of products and services.
+              {t("footer_description")}
             </p>
             <div className="flex gap-x-6">
               {socialIcons.map((socialIcon) => (
@@ -187,14 +188,17 @@ const Footer: FC = () => {
       <div className="bg-black dark:bg-gray-800">
         <div className="w-full max-w-7xl mx-auto p-4 flex items-center justify-center md:justify-between flex-col md:flex-row gap-y-4">
           <nav className="text-white  text-sm font-normal space-x-6">
-            <Link href={PRIVACY_POLICY_PAGE_PATH}>Privacy Policy</Link>
+            <Link href={PRIVACY_POLICY_PAGE_PATH}>{t("privacy_policy")}</Link>
             <span>|</span>
-            <Link href={TERMS_AND_CONDITIONS_PAGE_PATH}>Terms and Condition</Link>
+            <Link href={TERMS_AND_CONDITIONS_PAGE_PATH}>
+              {t("term_and_conditions")}
+            </Link>
             <span>|</span>
-            <Link href={SITE_MAP_PAGE_PATH}>Site Map</Link>
+            <Link href={SITE_MAP_PAGE_PATH}>{t("site_map")}</Link>
           </nav>
           <span className="text-white text-sm font-normal">
-            Copyright &copy; 2024 Pixmart. All rights reserved.
+            {t("copyright")}&nbsp;&copy;&nbsp;2024 Pixmart.&nbsp;
+            {t("all_rights_reserved")}
           </span>
         </div>
       </div>

@@ -12,16 +12,16 @@ import {
   PRICING_PAGE_PATH,
   SIGNUP_PAGE_PATH,
 } from "@/pathNames";
-import { usePathname, useRouter } from "next/navigation";
-import { Avatar, SelectLanguage } from "./elements";
-import { useDispatch } from "react-redux";
-import { useAuthStatus, useLanguage } from "@/hooks";
+import { useRouter } from "next/navigation";
+import { Avatar, LanguageChanger } from "./elements";
+import { useAuthStatus, usePathname } from "@/hooks";
+import { useTranslation } from "react-i18next";
 
 const Navbar: FC = () => {
-  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   const { isLoading, isLoggedIn } = useAuthStatus();
 
-  const { language, setLanguage } = useLanguage();
   const [activePath, setActivePath] = useState<string>(HOME_PAGE_PATH);
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
@@ -32,17 +32,17 @@ const Navbar: FC = () => {
 
   const navItems = [
     {
-      name: "Pricing",
+      name: t("nav_item_pricing"),
       href: PRICING_PAGE_PATH,
       auth: true && !isLoading,
     },
     {
-      name: "Blog",
+      name: t("nav_item_blog"),
       href: BLOG_PAGE_PATH,
       auth: true && !isLoading,
     },
     {
-      name: "Dashboard",
+      name: t("nav_item_dashboard"),
       href: DASHBOARD_PAGE_PATH,
       auth: !isLoading && isLoggedIn,
     },
@@ -99,18 +99,14 @@ const Navbar: FC = () => {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-1 sm:gap-4">
-            <SelectLanguage
-              language={language}
-              setLanguage={(lang) => dispatch(setLanguage(lang))}
-              showIcon
-              size="sm"
-            />
+            <LanguageChanger />
+
             <Button
               className="bg-blue dark:text-white"
               onClick={() => router.push(CAROUSEL_GENERATOR_PATH)}
             >
-              <span className="sm:hidden">Generate</span>
-              <span className="hidden sm:inline">Generate Carousel</span>
+              <span className="sm:hidden">{t("generate")}</span>
+              <span className="hidden sm:inline">{t("generate_carousel")}</span>
               <LongRightArrow className="hidden sm:inline" />
             </Button>
 
@@ -126,7 +122,9 @@ const Navbar: FC = () => {
                   )
                 }
               >
-                {pathname !== LOGIN_PAGE_PATH ? "Login" : "Signup"}
+                {pathname !== LOGIN_PAGE_PATH
+                  ? t("login_btn_text")
+                  : t("signup_btn_text")}
               </Button>
             )}
           </div>

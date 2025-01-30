@@ -11,9 +11,11 @@ import {
 } from "@/store";
 import { useDispatch } from "react-redux";
 import { useArrowText } from "@/hooks";
+import { useTranslation } from "react-i18next";
 
 const Swipe: FC = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const { isOnlyArrow, introSlideArrow, regularSlideArrow } = useArrowText();
 
@@ -58,8 +60,10 @@ const Swipe: FC = () => {
         onValueChange={() => dispatch(toggleArrowText())}
       >
         <TabsList>
-          <TabsTrigger value="text_and_arrow">Text & Arrow</TabsTrigger>
-          <TabsTrigger value="arrow">Arrow</TabsTrigger>
+          <TabsTrigger value="text_and_arrow">
+            {t("swipe_panel_text_and_arrow")}
+          </TabsTrigger>
+          <TabsTrigger value="arrow">{t("swipe_panel_arrow")}</TabsTrigger>
         </TabsList>
         <TabsContent value="text_and_arrow" className="space-y-6">
           <div className="grid gap-2">
@@ -67,7 +71,7 @@ const Swipe: FC = () => {
               <Switch
                 checked={introSlideArrow.isEnabled}
                 onCheckedChange={() => dispatch(toggleIntroSlideArrow())}
-                label="Intro Slide Arrow"
+                label={t("swipe_panel_switch_intro_slide_arrow_label")}
               />
             </div>
             <Input
@@ -76,7 +80,9 @@ const Swipe: FC = () => {
                 dispatch(setIntroSlideArrowText(e.target.value.trim()))
               }
               type="text"
-              placeholder="Intro Slide Arrow Text"
+              placeholder={t(
+                "swipe_panel_switch_intro_slide_arrow_placeholder"
+              )}
             />
           </div>
 
@@ -85,7 +91,7 @@ const Swipe: FC = () => {
               <Switch
                 checked={regularSlideArrow.isEnabled}
                 onCheckedChange={() => dispatch(toggleRegularSlideArrow())}
-                label="Regular Slide Arrow"
+                label={t("swipe_panel_switch_regular_slide_arrow_label")}
               />
             </div>
             <Input
@@ -94,7 +100,9 @@ const Swipe: FC = () => {
                 dispatch(setRegularSlideArrowText(e.target.value.trim()))
               }
               type="text"
-              placeholder="Regular Slide Arrow Text"
+              placeholder={t(
+                "swipe_panel_switch_regular_slide_arrow_placeholder"
+              )}
             />
           </div>
         </TabsContent>

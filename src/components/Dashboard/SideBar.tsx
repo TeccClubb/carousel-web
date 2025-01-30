@@ -7,20 +7,22 @@ import {
 } from "@/pathNames";
 import Link from "next/link";
 import React, { FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const SideBar: FC = () => {
+  const { t } = useTranslation();
   const [activeNavItem, setActiveNavItem] =
     useState<string>(DASHBOARD_PAGE_PATH);
 
   const navItems = [
     {
       href: PROFILE_PAGE_PATH,
-      text: "Profile",
+      text: t("dashboard_profile_text"),
       icon: <ProfileIcon />,
     },
     {
       href: PRICING_PAGE_PATH,
-      text: "Plan",
+      text: t("dashboard_plan_text"),
       icon: <PlanIcon />,
     },
   ];
@@ -43,7 +45,7 @@ const SideBar: FC = () => {
                     }  flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3`}
                   >
                     <DashboardIcon />
-                    Dashboard
+                    {t("dashboard_heading")}
                   </Link>
                 </li>
               </ul>
@@ -52,7 +54,7 @@ const SideBar: FC = () => {
             <li>
               <ul className="-mx-2 space-y-1">
                 <span className="font-semibold text-xs leading-6">
-                  My Account
+                  {t("dashboard_my_account_heading")}
                 </span>
 
                 {navItems.map((item) => (
@@ -78,7 +80,7 @@ const SideBar: FC = () => {
 
             <li className="mt-auto -mx-2 text-white bg-red-600 hover:text-white hover:bg-red-500 flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3">
               <PowerOffIcon />
-              Logout
+              {t("dashboard_logout_text")}
             </li>
           </ul>
         </nav>

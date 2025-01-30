@@ -1,6 +1,8 @@
 import React, { FC, useState } from "react";
 import {
   Button,
+  Combobox,
+  ComboboxItem,
   Input,
   Tabs,
   TabsContent,
@@ -8,25 +10,31 @@ import {
   TabsTrigger,
   Textarea,
 } from "../ui";
-import { SelectLanguage } from "../elements";
+import { languages } from "@/assets/languages";
+import { useTranslation } from "react-i18next";
 
 const Ai: FC = () => {
-  const [language, setLanguage] = useState<string>("en");
+  const [locale, setLocale] = useState<string>("en");
   const [text, setText] = useState<string>("");
   const textMaxLength = 8000;
+  const { t } = useTranslation();
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
       <div className="space-y-4">
         <div className="bg-background/95 pb-2 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <Tabs defaultValue="topic">
             <TabsList>
-              <TabsTrigger value="topic">Topic</TabsTrigger>
-              <TabsTrigger value="text">Text</TabsTrigger>
-              <TabsTrigger value="url">URL</TabsTrigger>
+              <TabsTrigger value="topic">{t("ai_topic")}</TabsTrigger>
+              <TabsTrigger value="text">{t("ai_text")}</TabsTrigger>
+              <TabsTrigger value="url">{t("ai_url")}</TabsTrigger>
             </TabsList>
             <TabsContent value="topic">
               <div className="space-y-2">
-                <Input label="Topic" type="text" placeholder="Enter a topic" />
+                <Input
+                  label={t("ai_topic")}
+                  type="text"
+                  placeholder={t("ai_topic_placeholder")}
+                />
               </div>
             </TabsContent>
             <TabsContent value="text">
@@ -35,7 +43,7 @@ const Ai: FC = () => {
                 onChange={(e) => setText(e.target.value)}
                 rows={5}
                 maxLength={textMaxLength}
-                placeholder="Paste your text content here, not URLs (e.g., article, notes)"
+                placeholder={t("ai_text_placeholder")}
               />
               <p className="text-[0.8rem] text-muted-foreground">
                 {text.length}/{textMaxLength}
@@ -44,9 +52,9 @@ const Ai: FC = () => {
             <TabsContent value="url">
               <div className="space-y-2">
                 <Input
-                  label="Article or Blog URL"
+                  label={t("ai_url_label")}
                   type="text"
-                  placeholder="Enter Article or Blog URL"
+                  placeholder={t("ai_url_placeholder")}
                 />
               </div>
             </TabsContent>
@@ -56,23 +64,36 @@ const Ai: FC = () => {
         <div className="flex gap-4">
           <div className="flex-1">
             <div className="space-y-2">
-              <Input label="Total Slides" type="number" />
+              <Input label={t("ai_total_slides_label")} type="number" />
             </div>
           </div>
           <div className="flex-1">
             <div className="space-y-2">
-              <SelectLanguage
-                label="Language"
-                className="h-9"
-                language={language}
-                setLanguage={setLanguage}
-              />
+              <Combobox
+                label={t("ai_language_label")}
+                value={locale}
+                onValueChange={setLocale}
+                text={languages.find((lang) => lang.locale === locale)!.label}
+                tickSide="left"
+                emptyMessage={t("ai_language_empty_message")}
+                placeholder={t("ai_language_placeholder")}
+                size="md"
+              >
+                {languages.map((lang) => (
+                  <ComboboxItem key={lang.locale} value={lang.locale}>
+                    {lang.name}
+                    <span className="text-xs text-gray-500">
+                      &nbsp;({lang.label})
+                    </span>
+                  </ComboboxItem>
+                ))}
+              </Combobox>
             </div>
           </div>
         </div>
 
         <Button size="sm" className="w-full">
-          Generate carousel with AI
+          {t("ai_btn_text")}
         </Button>
       </div>
     </div>

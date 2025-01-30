@@ -3,11 +3,19 @@ import { Switch } from "../ui";
 import { LockIcon } from "@/icons";
 import { useSettings } from "@/hooks";
 import { useDispatch } from "react-redux";
-import { toggleHideCounter, toggleHideIntroSlide, toggleHideOutroSlide, toggleShowWaterMark } from "@/store";
+import {
+  toggleHideCounter,
+  toggleHideIntroSlide,
+  toggleHideOutroSlide,
+  toggleShowWaterMark,
+} from "@/store";
+import { useTranslation } from "react-i18next";
 
 const Settings: FC = () => {
   const dispatch = useDispatch();
-  const {isShowWaterMark, isHideIntroSlide, isHideOutroSlide, isHideCounter} = useSettings();
+  const { t } = useTranslation();
+  const { isShowWaterMark, isHideIntroSlide, isHideOutroSlide, isHideCounter } =
+    useSettings();
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
@@ -17,12 +25,12 @@ const Settings: FC = () => {
             <Switch
               checked={isShowWaterMark}
               onCheckedChange={() => dispatch(toggleShowWaterMark())}
-              label="Show Watermark"
+              label={t("settings_panel_switch_watermark_label")}
               labelIcon={<LockIcon />}
             />
           </div>
           <p className="text-sm text-muted-foreground">
-            Show watermark and give credit to support our tool.
+            {t("settings_panel_watermark_message")}
           </p>
         </div>
 
@@ -30,7 +38,7 @@ const Settings: FC = () => {
           <Switch
             checked={isHideIntroSlide}
             onCheckedChange={() => dispatch(toggleHideIntroSlide())}
-            label="Hide Intro Slide"
+            label={t("settings_panel_switch_hide_intro_slide_label")}
           />
         </div>
 
@@ -38,7 +46,7 @@ const Settings: FC = () => {
           <Switch
             checked={isHideOutroSlide}
             onCheckedChange={() => dispatch(toggleHideOutroSlide())}
-            label="Hide Outro Slide"
+            label={t("settings_panel_switch_hide_outro_slide_label")}
           />
         </div>
 
@@ -46,7 +54,7 @@ const Settings: FC = () => {
           <Switch
             checked={isHideCounter}
             onCheckedChange={() => dispatch(toggleHideCounter())}
-            label="Hide Counter"
+            label={t("settings_panel_switch_hide_counter_label")}
           />
         </div>
       </div>

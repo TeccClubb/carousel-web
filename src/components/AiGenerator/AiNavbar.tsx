@@ -20,10 +20,11 @@ import {
   SelectValue,
 } from "../ui";
 import { HOME_PAGE_PATH, LOGIN_PAGE_PATH, SIGNUP_PAGE_PATH } from "@/pathNames";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { useAuthStatus, useSlideRatio } from "@/hooks";
+import { useAuthStatus, usePathname, useSlideRatio } from "@/hooks";
 import { Avatar } from "../elements";
+import { useTranslation } from "react-i18next";
 
 const AiNavbar: FC = () => {
   const dispatch = useDispatch();
@@ -84,6 +85,8 @@ const AiNavbar: FC = () => {
     []
   );
 
+  const { t } = useTranslation();
+
   const handleSave = () => {};
 
   const handleDownload = () => {};
@@ -104,7 +107,9 @@ const AiNavbar: FC = () => {
           <div className="flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-1 sm:gap-4">
             <Button size="sm" onClick={handleSave}>
               <LockIcon />
-              <span className="hidden sm:inline">Save</span>
+              <span className="hidden sm:inline">
+                {t("save_btn_text")}
+              </span>
             </Button>
 
             <Select
@@ -113,12 +118,12 @@ const AiNavbar: FC = () => {
               onValueChange={handleSlideRatioChange}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Carousel Type" />
+                <SelectValue placeholder={t("carousal_type")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel className="text-muted-foreground font-medium text-xs py-[0.375rem] px-2">
-                    Carousel Type
+                    {t("carousal_type")}
                   </SelectLabel>
                   {ratios.map((ratio) => (
                     <SelectItem
@@ -138,7 +143,9 @@ const AiNavbar: FC = () => {
 
             <Button size="sm" onClick={handleDownload}>
               <DownloadIcon />
-              <span className="hidden sm:inline">Download</span>
+              <span className="hidden sm:inline">
+                {t("download_btn_text")}
+              </span>
             </Button>
 
             <div
@@ -159,7 +166,9 @@ const AiNavbar: FC = () => {
                   )
                 }
               >
-                {pathname !== LOGIN_PAGE_PATH ? "Login" : "Signup"}
+                {pathname !== LOGIN_PAGE_PATH
+                  ? t("login_btn_text")
+                  : t("signup_btn_text")}
               </Button>
             )}
           </div>

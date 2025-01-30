@@ -77,7 +77,6 @@ export type CarouselsState = {
   isOnceAppLoaded: boolean;
   loginStatus: boolean;
   userData: GoogleUser | null;
-  language: string;
   currentIndex: number;
   slideRatio: { id: string; width: number; height: number };
   zoomValue: number;
