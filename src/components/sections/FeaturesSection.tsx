@@ -8,6 +8,7 @@ import {
   FeatureIcon4,
 } from "@/icons";
 import { useTranslation } from "react-i18next";
+import { featuresSectionBlurImageSrc } from "@/assets/features-section-base64-image";
 
 const FeaturesSection: FC<{
   isHeroSection?: boolean;
@@ -79,7 +80,7 @@ const FeaturesSection: FC<{
             height={0}
             sizes="100vw"
             placeholder="blur"
-            blurDataURL="/feature-image.png"
+            blurDataURL={featuresSectionBlurImageSrc}
             // style={{ width: "341px", height: "auto" }}
           />
         </div>

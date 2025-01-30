@@ -3,6 +3,7 @@ import { Button } from "../ui";
 import Image from "next/image";
 import Section from "./Section";
 import { useTranslation } from "react-i18next";
+import { homeSectionBlurImageSrc } from "@/assets/home-section-base64-image";
 
 const HomeSection: FC<{ showGradient?: boolean }> = ({ showGradient }) => {
   const { t } = useTranslation();
@@ -35,7 +36,7 @@ const HomeSection: FC<{ showGradient?: boolean }> = ({ showGradient }) => {
           height={0}
           sizes="100vw"
           placeholder="blur"
-          blurDataURL="/home-section-image.jpg"
+          blurDataURL={homeSectionBlurImageSrc}
         />
       </div>
     </Section>

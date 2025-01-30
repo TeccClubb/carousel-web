@@ -3,6 +3,7 @@ import Section from "./Section";
 import { ToolIcon1, ToolIcon2, ToolIcon3, ToolIcon4 } from "@/icons";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
+import { designToolsSectionBlurImageSrc } from "@/assets/design-tools-section-base64-image";
 
 const DesignToolsSection: FC<{
   isHeroSection?: boolean;
@@ -61,7 +62,7 @@ const DesignToolsSection: FC<{
           height={0}
           sizes="100vw"
           placeholder="blur"
-          blurDataURL={imageSrc}
+          blurDataURL={designToolsSectionBlurImageSrc}
         />
 
         <ToolCard
@@ -102,7 +103,7 @@ const DesignToolsSection: FC<{
           height={0}
           sizes="100vw"
           placeholder="blur"
-          blurDataURL={imageSrc}
+          blurDataURL={designToolsSectionBlurImageSrc}
         />
       </div>
     </Section>
