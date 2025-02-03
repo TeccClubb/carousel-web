@@ -9,7 +9,7 @@ const Brand: FC<{ color: string }> = ({ color }) => {
 
   const brandName = userData === null ? "John Doe" : name.text || userData.name;
   const brandHandle =
-    userData === null ? "@carouselmakerco" : handle.text || userData.email;
+    userData === null ? "Pixmart" : handle.text || userData.email;
   const brandImageSrc =
     userData === null ? "/john.jpg" : profileImage.src || userData.picture;
 

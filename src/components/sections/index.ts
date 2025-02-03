@@ -6,8 +6,6 @@ import FAQSection from "./FAQSection";
 import FeaturesSection from "./FeaturesSection";
 import PriceSection from "./PriceSection";
 import TemplatesSection from "./TemplatesSection";
-import TermsAndConditions from "./TermsAndConditions";
-import PrivacyPolicy from "./PrivacyPolicy";
 
 export {
   HomeSection,
@@ -18,6 +16,4 @@ export {
   FeaturesSection,
   PriceSection,
   TemplatesSection,
-  TermsAndConditions,
-  PrivacyPolicy,
 };

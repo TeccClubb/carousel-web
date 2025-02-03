@@ -1,7 +1,6 @@
 "use client";
 import React, { FC, useMemo } from "react";
 import {
-  DownloadIcon,
   InstagramGradientIcon,
   LinkedInGradientIcon,
   TikTokGradientIcon,
@@ -23,7 +22,7 @@ import { HOME_PAGE_PATH, LOGIN_PAGE_PATH, SIGNUP_PAGE_PATH } from "@/pathNames";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { useAuthStatus, usePathname, useSlideRatio } from "@/hooks";
-import { Avatar } from "../elements";
+import { Avatar, DownloadButton } from "../elements";
 import { useTranslation } from "react-i18next";
 
 const AiNavbar: FC = () => {
@@ -89,8 +88,6 @@ const AiNavbar: FC = () => {
 
   const handleSave = () => {};
 
-  const handleDownload = () => {};
-
   const handleSlideRatioChange = (id: string) => {
     const { width, height } = ratios.find((ratio) => ratio.id === id)!;
     dispatch(setSlideRatio({ id, width, height }));
@@ -141,12 +138,7 @@ const AiNavbar: FC = () => {
               </SelectContent>
             </Select>
 
-            <Button size="sm" onClick={handleDownload}>
-              <DownloadIcon />
-              <span className="hidden sm:inline">
-                {t("download_btn_text")}
-              </span>
-            </Button>
+            <DownloadButton/>
 
             <div
               data-orientation="vertical"

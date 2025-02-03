@@ -73,8 +73,8 @@ const CarouselSlider: FC = () => {
         <div className="overflow-hidden w-full flex items-center justify-center">
           <CarouselContent className="w-[68em]">
             {slides.map((slide, index) => (
-              <CarouselItem key={index}>
-                <Slide key={slide.title.text} slide={slide} index={index} />
+              <CarouselItem key={`slide_${index}`}>
+                <Slide slide={slide} index={index} />
               </CarouselItem>
             ))}
           </CarouselContent>
