@@ -14,6 +14,7 @@ export {
   useLastIndex,
   useCurrentIndex,
   useSlideRatio,
+  useNewSlide,
   useSlides,
   useCurrentSlide,
   useContentText,

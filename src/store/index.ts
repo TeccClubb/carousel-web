@@ -11,10 +11,19 @@ export {
   zoomIn,
   zoomOut,
   addNewSlide,
+  resetNewSlide,
   removeSlide,
   reorderSlides,
   setContentSelectedTab,
   setContentOrientation,
+  toggleNewSlideSubTitle,
+  setNewSlideSubTitle,
+  toggleNewSlideTitle,
+  setNewSlideTitle,
+  toggleNewSlideDescription,
+  setNewSlideDescription,
+  toggleNewSlideImage,
+  setNewSlideImageSrc,
   setTitle,
   setTitleFontSize,
   toggleSubTitle,
@@ -67,6 +76,7 @@ export {
   toggleRegularSlideArrow,
   toggleArrowText,
   setArrowId,
+  randomize,
 } from "./carousels.slice";
 
 export default store;

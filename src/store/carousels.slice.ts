@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CarouselsState, GoogleUser, SlideContent } from "@/types";
+import { CarouselsState, GoogleUser } from "@/types";
 
 const initialState: CarouselsState = {
   isOnceAppLoaded: false,
@@ -8,62 +8,75 @@ const initialState: CarouselsState = {
   currentIndex: 0,
   slideRatio: { id: "linkedIn1", width: 4, height: 5 },
   zoomValue: 39,
+  newSlide: {
+    subTitle: { text: "", isEnabled: true },
+    title: { text: "", isEnabled: true },
+    description: { text: "", isEnabled: true },
+    ctaButton: { text: "" },
+    image: { src: "", isEnabled: true },
+  },
   slides: [
     {
       type: "intro",
-      subTitle: { text: "Empower Your Inner Journey" },
-      title: { text: "Mental Health and <c>Self-Care</c>" },
+      subTitle: { text: "Empower Your Inner Journey", isEnabled: true },
+      title: { text: "Mental Health and <c>Self-Care</c>", isEnabled: true },
       description: {
         text: "Nurturing Your Mind, Body, and Soul for Inner Peace",
+        isEnabled: true,
       },
-      ctaButton: { text: "" },
-      image: { src: "" },
+      ctaButton: { text: "", isEnabled: true },
+      image: { src: "", isEnabled: true },
     },
     {
-      subTitle: { text: "" },
-      title: { text: "<c>Mindfulness</c> Meditation" },
+      subTitle: { text: "", isEnabled: true },
+      title: { text: "<c>Mindfulness</c> Meditation", isEnabled: true },
       description: {
         text: "Incorporate mindfulness meditation into your daily routine to reduce stress, increase self-awareness, and cultivate inner peace.",
+        isEnabled: true,
       },
-      ctaButton: { text: "" },
-      image: { src: "/slide2-image.jpg" },
+      ctaButton: { text: "", isEnabled: true },
+      image: { src: "/slide2-image.jpg", isEnabled: true },
     },
     {
-      subTitle: { text: "" },
-      title: { text: "Daily Affirmations" },
+      subTitle: { text: "", isEnabled: true },
+      title: { text: "Daily Affirmations", isEnabled: true },
       description: {
         text: "Start each day with positive affirmations to boost self-confidence and promote a healthy mindset. Believe in yourself and your ability to overcome challenges.",
+        isEnabled: true,
       },
-      ctaButton: { text: "" },
-      image: { src: "/slide3-image.jpg" },
+      ctaButton: { text: "", isEnabled: true },
+      image: { src: "/slide3-image.jpg", isEnabled: true },
     },
     {
-      subTitle: { text: "" },
-      title: { text: "Creative Expression" },
+      subTitle: { text: "", isEnabled: true },
+      title: { text: "Creative Expression", isEnabled: true },
       description: {
         text: "Engage in creative activities like painting, writing, or crafting to express yourself and channel your emotions in a positive way. Creativity is a powerful tool for self-discovery and healing.",
+        isEnabled: true,
       },
-      ctaButton: { text: "" },
-      image: { src: "/slide4-image.jpg" },
+      ctaButton: { text: "", isEnabled: true },
+      image: { src: "/slide4-image.jpg", isEnabled: true },
     },
     {
-      subTitle: { text: "" },
-      title: { text: "Self-Care Rituals" },
+      subTitle: { text: "", isEnabled: true },
+      title: { text: "Self-Care Rituals", isEnabled: true },
       description: {
         text: "Prioritize self-care by indulging in activities that nourish your body, mind, and soul. Whether it's a soothing bath, a leisurely walk, or a cozy night in, make time for self-love and relaxation.",
+        isEnabled: true,
       },
-      ctaButton: { text: "" },
-      image: { src: "/slide5-image.jpg" },
+      ctaButton: { text: "", isEnabled: true },
+      image: { src: "/slide5-image.jpg", isEnabled: true },
     },
     {
       type: "outro",
-      subTitle: { text: "Stay Connected" },
+      subTitle: { text: "Stay Connected", isEnabled: true },
       title: {
         text: "Join us for daily inspiration and support on your journey to thrive!",
+        isEnabled: true,
       },
-      description: { text: "" },
-      ctaButton: { text: "Follow for More Inspiration" },
-      image: { src: "" },
+      description: { text: "", isEnabled: true },
+      ctaButton: { text: "Follow for More Inspiration", isEnabled: true },
+      image: { src: "", isEnabled: true },
     },
   ],
 
@@ -160,11 +173,19 @@ const carouselsSlice = createSlice({
       state.zoomValue -= 3;
     },
 
-    addNewSlide: (
-      state,
-      action: PayloadAction<{ index: number; slide: SlideContent }>
-    ) => {
-      state.slides.splice(action.payload.index, 0, action.payload.slide);
+    addNewSlide: (state, action: PayloadAction<number>) => {
+      state.slides.splice(action.payload + 1, 0, state.newSlide);
+    },
+
+    resetNewSlide: (state) => {
+      state.newSlide.subTitle.text = "";
+      state.newSlide.subTitle.isEnabled = true;
+      state.newSlide.title.text = "";
+      state.newSlide.title.isEnabled = true;
+      state.newSlide.description.text = "";
+      state.newSlide.description.isEnabled = true;
+      state.newSlide.image.src = "";
+      state.newSlide.image.isEnabled = true;
     },
 
     removeSlide: (state, action: PayloadAction<number>) => {
@@ -199,6 +220,33 @@ const carouselsSlice = createSlice({
       );
       slide!.contentOrientation = action.payload;
     },
+
+    toggleNewSlideSubTitle: (state) => {
+      state.newSlide.subTitle.isEnabled = !state.newSlide.subTitle.isEnabled;
+    },
+    setNewSlideSubTitle: (state, action: PayloadAction<string>) => {
+      state.newSlide.subTitle.text = action.payload;
+    },
+    toggleNewSlideTitle: (state) => {
+      state.newSlide.title.isEnabled = !state.newSlide.title.isEnabled;
+    },
+    setNewSlideTitle: (state, action: PayloadAction<string>) => {
+      state.newSlide.title.text = action.payload;
+    },
+    toggleNewSlideDescription: (state) => {
+      state.newSlide.description.isEnabled =
+        !state.newSlide.description.isEnabled;
+    },
+    setNewSlideDescription: (state, action: PayloadAction<string>) => {
+      state.newSlide.description.text = action.payload;
+    },
+    toggleNewSlideImage: (state) => {
+      state.newSlide.image.isEnabled = !state.newSlide.image.isEnabled;
+    },
+    setNewSlideImageSrc: (state, action: PayloadAction<string>) => {
+      state.newSlide.image.src = action.payload;
+    },
+
     toggleSubTitle: (state) => {
       const slide = state.slides.find(
         (_, index) => index === state.currentIndex
@@ -451,6 +499,30 @@ const carouselsSlice = createSlice({
     setArrowId: (state, action: PayloadAction<string>) => {
       state.arrowText.arrowId = action.payload;
     },
+
+    randomize: (
+      state,
+      action: PayloadAction<{
+        primaryFont: { href: string; name: string };
+        secondaryFont: { href: string; name: string };
+        backgroundColor: string;
+        textColor: string;
+        accentColor: string;
+        isAlternateSlideColors: boolean;
+        backgroundId: string;
+        cornerElementId: string;
+      }>
+    ) => {
+      state.contentText.primaryFont = action.payload.primaryFont;
+      state.contentText.secondaryFont = action.payload.secondaryFont;
+      state.colors.backgroundColor = action.payload.backgroundColor;
+      state.colors.textColor = action.payload.textColor;
+      state.colors.accentColor = action.payload.accentColor;
+      state.colors.isAlternateSlideColors =
+        action.payload.isAlternateSlideColors;
+      state.backgroundOverlay.backgroundId = action.payload.backgroundId;
+      state.backgroundOverlay.cornerElementId = action.payload.cornerElementId;
+    },
   },
 });
 
@@ -463,10 +535,19 @@ export const {
   zoomIn,
   zoomOut,
   addNewSlide,
+  resetNewSlide,
   removeSlide,
   reorderSlides,
   setContentSelectedTab,
   setContentOrientation,
+  toggleNewSlideSubTitle,
+  setNewSlideSubTitle,
+  toggleNewSlideTitle,
+  setNewSlideTitle,
+  toggleNewSlideDescription,
+  setNewSlideDescription,
+  toggleNewSlideImage,
+  setNewSlideImageSrc,
   setTitle,
   toggleSubTitle,
   setSubTitle,
@@ -519,6 +600,7 @@ export const {
   toggleRegularSlideArrow,
   toggleArrowText,
   setArrowId,
+  randomize,
 } = carouselsSlice.actions;
 
 export default carouselsSlice.reducer;

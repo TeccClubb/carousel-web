@@ -24,6 +24,9 @@ export const useSlideRatio = () => ({
   setSlideRatio,
 });
 
+export const useNewSlide = () =>
+  useSelector((state: RootState) => state.carousels.newSlide);
+
 export const useSlides = () =>
   useSelector((state: RootState) => state.carousels.slides);
 

@@ -104,9 +104,7 @@ const AiNavbar: FC = () => {
           <div className="flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-1 sm:gap-4">
             <Button size="sm" onClick={handleSave}>
               <LockIcon />
-              <span className="hidden sm:inline">
-                {t("save_btn_text")}
-              </span>
+              <span className="hidden sm:inline">{t("save_btn_text")}</span>
             </Button>
 
             <Select
@@ -130,7 +128,7 @@ const AiNavbar: FC = () => {
                     >
                       <span className="flex items-center justify-center gap-2">
                         {ratio.icon}
-                        {ratio.name}
+                        <span className="hidden sm:inline">{ratio.name}</span>
                       </span>
                     </SelectItem>
                   ))}
@@ -138,7 +136,7 @@ const AiNavbar: FC = () => {
               </SelectContent>
             </Select>
 
-            <DownloadButton/>
+            <DownloadButton />
 
             <div
               data-orientation="vertical"

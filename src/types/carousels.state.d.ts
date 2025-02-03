@@ -4,21 +4,21 @@ export type SlideContent = {
   type?: "intro" | "regular" | "outro";
   selectedTab?: string;
   contentOrientation?: "row" | "row-reverse" | "column" | "column-reverse";
-  subTitle: { text: string; isEnabled?: boolean };
+  subTitle: { text: string; isEnabled: boolean };
   title: {
     text: string;
-    isEnabled?: boolean;
+    isEnabled: boolean;
     fontSize?: number;
   };
   ctaButton: { text: string; isEnabled?: boolean };
   description: {
     text: string;
-    isEnabled?: boolean;
+    isEnabled: boolean;
     fontSize?: number;
   };
   image: {
     src: string;
-    isEnabled?: boolean;
+    isEnabled: boolean;
     opacity?: number;
     backgroundPosition?: string;
     isBgCover?: boolean;
@@ -80,6 +80,7 @@ export type CarouselsState = {
   currentIndex: number;
   slideRatio: { id: string; width: number; height: number };
   zoomValue: number;
+  newSlide: SlideContent;
   slides: SlideContent[];
   contentText: ContentText;
   colors: Colors;

@@ -125,15 +125,15 @@ const TextSettings: FC = memo(() => {
   const { t } = useTranslation();
 
   const {
-    subTitle: { text: subTitle = "", isEnabled: isSubTitleEnabled = true },
+    subTitle: { text: subTitle = "", isEnabled: isSubTitleEnabled },
     title: {
       text: title = "",
-      isEnabled: isTitleEnabled = true,
+      isEnabled: isTitleEnabled,
       fontSize: titleFontSize = 100,
     },
     description: {
       text: description = "",
-      isEnabled: isDescriptionEnabled = true,
+      isEnabled: isDescriptionEnabled,
       fontSize: descriptionFontSize = 100,
     },
   } = useCurrentSlide();
@@ -218,7 +218,7 @@ const ImageSettings: FC = memo(() => {
     contentOrientation = "column",
     image: {
       src: imageSrc = "",
-      isEnabled: isImageEnabled = true,
+      isEnabled: isImageEnabled,
       opacity: imageOpacity = 100,
       backgroundPosition: imageBackgroundPosition = "center center",
       isBgCover: isImageBackgroundCover = true,

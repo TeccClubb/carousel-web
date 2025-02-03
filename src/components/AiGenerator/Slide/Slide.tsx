@@ -44,19 +44,11 @@ const Slide: FC<{ slide: SlideContentType; index: number }> = ({
       : textColor
     : backgroundColor;
 
-  const handleChangeBackground = () => {};
-
-  const handleAddSlide = () => {};
-
-  const handleDeleteSlide = () => {};
-
   return (
     <div className="h-full mx-[2px] float-left outline-none">
       <SlideHeader
         type={slide.type || "regular"}
-        handleChangeBackground={handleChangeBackground}
-        handleAddSlide={handleAddSlide}
-        handleDeleteSlide={handleDeleteSlide}
+        index={index}
       />
 
       <div
