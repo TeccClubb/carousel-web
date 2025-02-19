@@ -1,5 +1,5 @@
-"use client"
-import React, { FC, ReactNode } from "react";
+"use client";
+import React, { FC, memo } from "react";
 import Link from "next/link";
 import {
   FacebookIcon,
@@ -30,16 +30,7 @@ import {
   TERMS_AND_CONDITIONS_PAGE_PATH,
 } from "@/pathNames";
 import { useTranslation } from "react-i18next";
-
-const SocialIcon: FC<{ href: string; icon: ReactNode }> = ({ href, icon }) => (
-  <Link
-    href={href}
-    target="_blank"
-    className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
-  >
-    {icon}
-  </Link>
-);
+import { useAppState } from "@/hooks/use-app-state";
 
 const FooterSlice: FC<{
   title: string;
@@ -72,6 +63,7 @@ const FooterSlice: FC<{
 
 const Footer: FC = () => {
   const { t } = useTranslation();
+  const { locale } = useAppState();
 
   const socialIconSize = "1.5em";
 
@@ -134,19 +126,19 @@ const Footer: FC = () => {
                 },
                 {
                   text: "Homepage v3",
-                  href: HOME_PAGE_PATH,
+                  href: `${HOME_PAGE_PATH}${locale}`,
                 },
                 {
                   text: t("about_us"),
-                  href: ABOUT_US_PAGE_PATH,
+                  href: `/${locale}${ABOUT_US_PAGE_PATH}`,
                 },
                 {
                   text: t("creators"),
-                  href: CREATORS_PAGE_PATH,
+                  href: `/${locale}${CREATORS_PAGE_PATH}`,
                 },
                 {
                   text: t("blog_articles"),
-                  href: BLOG_ARTICLES_PAGE_PATH,
+                  href: `/${locale}${BLOG_ARTICLES_PAGE_PATH}`,
                 },
               ]}
             />
@@ -155,15 +147,15 @@ const Footer: FC = () => {
               links={[
                 {
                   text: t("blog"),
-                  href: BLOG_PAGE_PATH,
+                  href: `/${locale}${BLOG_PAGE_PATH}`,
                 },
                 {
                   text: t("features"),
-                  href: FEATURES_PAGE_PATH,
+                  href: `/${locale}${FEATURES_PAGE_PATH}`,
                 },
                 {
                   text: t("refund_policy"),
-                  href: REFUND_POLICY_PAGE_PATH,
+                  href: `/${locale}${REFUND_POLICY_PAGE_PATH}`,
                 },
               ]}
             />
@@ -175,11 +167,14 @@ const Footer: FC = () => {
             </p>
             <div className="flex gap-x-6">
               {socialIcons.map((socialIcon) => (
-                <SocialIcon
+                <Link
                   key={socialIcon.href}
                   href={socialIcon.href}
-                  icon={socialIcon.icon}
-                />
+                  target="_blank"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+                >
+                  {socialIcon.icon}
+                </Link>
               ))}
             </div>
           </div>
@@ -188,16 +183,20 @@ const Footer: FC = () => {
       <div className="bg-black dark:bg-gray-800">
         <div className="w-full max-w-7xl mx-auto p-4 flex items-center justify-center md:justify-between flex-col md:flex-row gap-y-4">
           <nav className="text-white  text-sm font-normal space-x-6">
-            <Link href={PRIVACY_POLICY_PAGE_PATH}>{t("privacy_policy")}</Link>
+            <Link href={`/${locale}${PRIVACY_POLICY_PAGE_PATH}`}>
+              {t("privacy_policy")}
+            </Link>
             <span>|</span>
-            <Link href={TERMS_AND_CONDITIONS_PAGE_PATH}>
+            <Link href={`/${locale}${TERMS_AND_CONDITIONS_PAGE_PATH}`}>
               {t("term_and_conditions")}
             </Link>
             <span>|</span>
-            <Link href={SITE_MAP_PAGE_PATH}>{t("site_map")}</Link>
+            <Link href={`/${locale}${SITE_MAP_PAGE_PATH}`}>
+              {t("site_map")}
+            </Link>
           </nav>
           <span className="text-white text-sm font-normal">
-            {t("copyright")}&nbsp;&copy;&nbsp;2024 Pixmart.&nbsp;
+            {t("copyright")}&nbsp;&copy;&nbsp;2024 carousel builder.&nbsp;
             {t("all_rights_reserved")}
           </span>
         </div>
@@ -206,4 +205,4 @@ const Footer: FC = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

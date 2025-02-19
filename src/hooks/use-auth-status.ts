@@ -1,51 +1,62 @@
-"use client"
-import { useState, useEffect } from "react";
-import { useIsOnceAppLoaded, useLoginStatus } from "./use-carousels-state";
-import axios from "axios";
-import { GoogleUser } from "@/types";
-import { useDispatch } from "react-redux";
-import { setOnceAppLoaded, setUserData } from "@/store";
-import { useLoginToken } from "./use-cookie";
+"use client";
 
-export const useAuthStatus = () => {
+import { GET_USER_ROUTE, TOKEN_LOCAL_STORAGE_KEY } from "@/constant";
+import { setLoading } from "@/store/app.slice";
+import { RootState } from "@/store/store";
+import { setOnceAppLoaded, setUserData } from "@/store/user.slice";
+import { User } from "@/types";
+import axios, { AxiosError } from "axios";
+import { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+export const useSyncAuthStatus = () => {
+  // This function sync only once when app is reload
+  const isLoading = useSelector((state: RootState) => state.app.isLoading);
+  const { isOnceAppLoaded, userData } = useSelector(
+    (state: RootState) => state.user
+  );
+
   const dispatch = useDispatch();
-  const isOnceAppLoaded = useIsOnceAppLoaded();
-  const [isLoading, setLoading] = useState<boolean>(true);
-  const isLoggedIn = useLoginStatus();
-  const { loginCookie } = useLoginToken();
+  const fetchUserData = useCallback(async (): Promise<void> => {
+    try {
+      if (!isOnceAppLoaded) {
+        const token = localStorage.getItem(TOKEN_LOCAL_STORAGE_KEY);
+        if (token !== null && token !== "[]") {
+          const resData = await axios
+            .get<{ status: boolean; user: User }>(GET_USER_ROUTE, {
+              headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            .then((res) => res.data);
+          if (resData) {
+            dispatch(setUserData({ ...resData.user, access_token: token }));
+          } else {
+            dispatch(setOnceAppLoaded());
+            localStorage.removeItem(TOKEN_LOCAL_STORAGE_KEY);
+          }
+        } else dispatch(setOnceAppLoaded());
+      }
+    } catch (error) {
+      dispatch(setOnceAppLoaded());
+      if (error instanceof AxiosError) {
+        localStorage.removeItem(TOKEN_LOCAL_STORAGE_KEY);
+      }
+    } finally {
+      dispatch(setLoading({ isLoading: false }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   useEffect(() => {
-    const loggingIn = async () => {
-      try {
-        const userInfo: GoogleUser = await axios
-          .get("https://www.googleapis.com/oauth2/v3/userinfo", {
-            headers: {
-              Authorization: `Bearer ${loginCookie.carousel_login_token_cookie_key}`,
-            },
-          })
-          .then((res) => res.data);
+    fetchUserData();
+  }, [fetchUserData]);
 
-        dispatch(setUserData(userInfo));
-      } catch (error) {
-        console.error("Failed to check auth status", error);
-      } finally {
-        setLoading(false);
-        dispatch(setOnceAppLoaded());
-      }
-    };
-
-    if (!isOnceAppLoaded) {
-      if (loginCookie.carousel_login_token_cookie_key) {
-        loggingIn();
-      } else {
-        setLoading(false);
-        dispatch(setOnceAppLoaded());
-      }
-    } else {
-      setLoading(false);
-      dispatch(setOnceAppLoaded());
-    }
-  }, [loginCookie, isOnceAppLoaded, dispatch]);
-
-  return { isLoading, isLoggedIn };
+  return {
+    user: userData,
+    isOnceAppLoaded,
+    isLoading,
+    isLoggedIn: userData !== null,
+  };
 };

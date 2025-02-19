@@ -1,92 +1,116 @@
 "use client";
+import { TOKEN_LOCAL_STORAGE_KEY } from "@/constant";
+import { useAppState } from "@/hooks/use-app-state";
+import { useToast } from "@/hooks/use-sonner-toast";
+import { useUserState } from "@/hooks/use-user-state";
 import { DashboardIcon, PlanIcon, PowerOffIcon, ProfileIcon } from "@/icons";
-import {
-  DASHBOARD_PAGE_PATH,
-  PRICING_PAGE_PATH,
-  PROFILE_PAGE_PATH,
-} from "@/pathNames";
+import { logout } from "@/lib/utils";
+import { PRICING_PAGE_PATH } from "@/pathNames";
+import { setDashboardActiveItem, setLoading } from "@/store/app.slice";
+import { setUserData } from "@/store/user.slice";
 import Link from "next/link";
-import React, { FC, useState } from "react";
+import React, { FC, memo } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 
 const SideBar: FC = () => {
+  const dispatch = useDispatch();
+  const { dashboardActiveItem } = useAppState();
   const { t } = useTranslation();
-  const [activeNavItem, setActiveNavItem] =
-    useState<string>(DASHBOARD_PAGE_PATH);
+  const { locale } = useAppState();
+  const toast = useToast();
+  const { userData: user } = useUserState();
+  const loadingSetter = ({
+    isLoading,
+    title,
+  }: {
+    isLoading: boolean;
+    title?: string;
+  }) => {
+    dispatch(setLoading({ isLoading, title }));
+  };
 
-  const navItems = [
-    {
-      href: PROFILE_PAGE_PATH,
-      text: t("dashboard_profile_text"),
-      icon: <ProfileIcon />,
-    },
-    {
-      href: PRICING_PAGE_PATH,
-      text: t("dashboard_plan_text"),
-      icon: <PlanIcon />,
-    },
-  ];
+  const onSuccess = (message: string) => {
+    toast.success(message);
+    dispatch(setUserData(null));
+    localStorage.removeItem(TOKEN_LOCAL_STORAGE_KEY);
+  };
+
+  const onError = (message: string) => {
+    toast.error(message);
+  };
+
+  const handleLogout = () =>
+    logout({
+      access_token: user!.access_token,
+      loadingSetter,
+      onSuccess,
+      onError,
+    });
+
   return (
-    <div className="hidden lg:flex lg:flex-col lg:w-72 lg:z-50 min-h-[calc(100vh-4rem)]">
-      <div className="flex py-4 px-6 bg-[#F0F6FD] overflow-y-auto gap-y-5 flex-col flex-grow">
-        {/* <div className="flex shrink-0 items-center h-16">
-        </div> */}
-        <nav className="flex flex-col flex-1">
-          <ul role="list" className="flex flex-col flex-1 gap-y-7">
-            <li>
-              <ul className="-mx-2 space-y-1">
-                <li onClick={() => setActiveNavItem(DASHBOARD_PAGE_PATH)}>
-                  <Link
-                    href={DASHBOARD_PAGE_PATH}
-                    className={`${
-                      activeNavItem === DASHBOARD_PAGE_PATH
-                        ? "text-white bg-[#0139FF]"
-                        : "hover:text-white hover:bg-[#0139FF]"
-                    }  flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3`}
-                  >
-                    <DashboardIcon />
-                    {t("dashboard_heading")}
-                  </Link>
-                </li>
-              </ul>
-            </li>
+    <div className="flex py-4 px-6 bg-[#F0F6FD] overflow-auto gap-y-5 flex-col flex-grow">
+      <nav className="flex flex-col flex-1">
+        <ul role="list" className="flex flex-col flex-1 gap-y-7">
+          <li>
+            <ul className="-mx-2 space-y-1">
+              <li
+                onClick={() => dispatch(setDashboardActiveItem("dashboard"))}
+                className={`${
+                  dashboardActiveItem === "dashboard"
+                    ? "text-white bg-[#0139FF]"
+                    : "hover:text-white hover:bg-[#0139FF]"
+                }  flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3`}
+              >
+                <DashboardIcon />
+                {t("dashboard_heading")}
+              </li>
+            </ul>
+          </li>
 
-            <li>
-              <ul className="-mx-2 space-y-1">
-                <span className="font-semibold text-xs leading-6">
-                  {t("dashboard_my_account_heading")}
-                </span>
+          <li>
+            <ul className="-mx-2 space-y-1">
+              <span className="font-semibold text-xs leading-6">
+                {t("dashboard_my_account_heading")}
+              </span>
 
-                {navItems.map((item) => (
-                  <li
-                    key={item.href}
-                    onClick={() => setActiveNavItem(item.href)}
-                  >
-                    <Link
-                      href={item.href}
-                      className={`${
-                        activeNavItem === item.href
-                          ? "text-white bg-[#0139FF]"
-                          : "hover:text-white hover:bg-[#0139FF]"
-                      }  flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3`}
-                    >
-                      {item.icon}
-                      {item.text}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
+              <li
+                onClick={() => dispatch(setDashboardActiveItem("profile"))}
+                className={`${
+                  dashboardActiveItem === "profile"
+                    ? "text-white bg-[#0139FF]"
+                    : "hover:text-white hover:bg-[#0139FF]"
+                } flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3`}
+              >
+                <ProfileIcon />
+                {t("dashboard_profile_text")}
+              </li>
 
-            <li className="mt-auto -mx-2 text-white bg-red-600 hover:text-white hover:bg-red-500 flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3">
-              <PowerOffIcon />
-              {t("dashboard_logout_text")}
-            </li>
-          </ul>
-        </nav>
-      </div>
+              <li>
+                <Link
+                  href={`/${locale}${PRICING_PAGE_PATH}`}
+                  className={
+                    "hover:text-white hover:bg-[#0139FF] flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3"
+                  }
+                >
+                  <PlanIcon />
+                  {t("dashboard_plan_text")}
+                </Link>
+              </li>
+            </ul>
+          </li>
+
+          <li
+            onClick={handleLogout}
+            className="mt-auto -mx-2 text-white bg-red-600 hover:text-white hover:bg-red-500 flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3"
+          >
+            <PowerOffIcon />
+            {t("dashboard_logout_text")}
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 };
 
-export default SideBar;
+export default memo(SideBar);

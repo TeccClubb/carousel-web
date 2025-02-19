@@ -1,52 +1,35 @@
 "use client";
-import React, { FC } from "react";
-import { BarsIcon, LogoIcon, PlanIcon, ProjectIcon } from "@/icons";
+import React, { FC, memo } from "react";
+import { PlanIcon, ProjectIcon } from "@/icons";
 import ReportCard from "./ReportCard";
 import ProjectCard from "./ProjectCard";
 import SideBar from "./SideBar";
-import Link from "next/link";
-import { HOME_PAGE_PATH } from "@/pathNames";
-import { ScrollArea } from "../ui";
-import { Avatar } from "../elements";
+import { CAROUSEL_GENERATOR_PAGE_PATH } from "@/pathNames";
+import { Avatar, AvatarFallback, AvatarImage, ScrollArea } from "../ui";
+import { SkeletonCard } from "../elements";
 import { useTranslation } from "react-i18next";
+import { useAppState } from "@/hooks/use-app-state";
+import { useDispatch } from "react-redux";
+import { setCarousel } from "@/store/carousels.slice";
+import { useCarousels } from "@/hooks/use-carousels";
+import { useUserState } from "@/hooks/use-user-state";
 
 const Dashboard: FC = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { userData: user } = useUserState();
+  const { dashboardActiveItem } = useAppState();
+  const { isLoading, carousels } = useCarousels();
+
   return (
-    <div className="bg-white">
-      <div className="bg-[#0139FF] border-gray-200 sticky top-0 z-40 flex items-center h-16 px-4 sm:px-6 md:px-8 gap-4 border-b shadow-sm">
-        <button className="lg:hidden text-white p-2.5 -m-2.5">
-          <BarsIcon className="w-5 h-5" />
-        </button>
-        <div className="w-px h-6 lg:hidden bg-white" aria-hidden="true"></div>
-        <Link href={HOME_PAGE_PATH} className="px-3 py-2" aria-current="page">
-          <LogoIcon className="w-24 h-auto text-white" />
-        </Link>
-
-        <div className="flex flex-1 lg:gap-6 gap-4 self-stretch">
-          {/* <form className="grid grid-cols-1 flex-1 relative">
-              <Input
-                name="search"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-                className="pl-10 pr-4 self-center row-start-1 col-start-1"
-              />
-              <SearchIcon
-                className="text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
-
-              />
-
-            </form> */}
-        </div>
-
-        <Avatar />
-      </div>
-      <div className="flex min-h-[calc(100vh-4rem)]">
+    <div className="min-h-[calc(100vh-4rem)] flex items-start gap-0 overflow-hidden">
+      <div className="hidden lg:flex lg:flex-col lg:w-72 lg:z-50 min-h-[calc(100vh-4rem)]">
         <SideBar />
-        <ScrollArea className="h-[calc(100vh-4rem)] flex-1">
-          <main className="py-10">
-            <div className="lg:px-8 md:px-6 px-4 flex flex-col space-y-8">
+      </div>
+      <ScrollArea className="h-[calc(100vh-4rem)] flex-1 lg:border-x">
+        <div className="py-10 lg:px-8 md:px-6 px-4 flex flex-col space-y-8">
+          {dashboardActiveItem === "dashboard" && (
+            <>
               <div className="w-full">
                 <h2 className="w-full text-2xl font-bold text-gray-900 dark:text-white mb-6">
                   {t("dashboard_heading")}
@@ -70,39 +53,52 @@ const Dashboard: FC = () => {
                   {t("dashboard_your_projects_heading")}
                 </h2>
                 <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
-                  <ProjectCard
-                    link="https://google.com"
-                    imageSrc="/apple-watches.jpg"
-                    title="This image is not found"
-                  />
-                  <ProjectCard
-                    link="https://google.com"
-                    imageSrc="/apple-watches.jpg"
-                    title="This image is not found"
-                  />
-                  <ProjectCard
-                    link="https://google.com"
-                    imageSrc="/apple-watches.jpg"
-                    title="This image is not found"
-                  />
-                  <ProjectCard
-                    link="https://google.com"
-                    imageSrc="/apple-watches.jpg"
-                    title="This image is not found"
-                  />
-                  <ProjectCard
-                    link="https://google.com"
-                    imageSrc="/apple-watches.jpg"
-                    title="This image is not found"
-                  />
+                  {isLoading &&
+                    Array.from({ length: 4 }).map((_, index) => (
+                      <SkeletonCard key={`skeleton_${index}`} />
+                    ))}
+                  {!isLoading &&
+                    carousels.map((carousel) => (
+                      <ProjectCard
+                        key={carousel.carouselId}
+                        link={CAROUSEL_GENERATOR_PAGE_PATH}
+                        imageSrc={carousel.imageSrc}
+                        title={carousel.title}
+                        onClick={() => dispatch(setCarousel(carousel))}
+                      />
+                    ))}
+                  {carousels.length === 0 && (
+                    <div className="text-center text-muted-foreground">
+                      No carousels found
+                    </div>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+
+          {dashboardActiveItem === "profile" && (
+            <div className="w-full">
+              <h2 className="w-full text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                Your Profile
+              </h2>
+
+              <div className="flex gap-6 items-center">
+                <Avatar className="size-36 transition-all hover:scale-105">
+                  {user && user.avatar && <AvatarImage src={user.avatar} />}
+                  <AvatarFallback>{user?.name}</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col text-3xl">
+                  <span className="font-bold">{user?.name}</span>
+                  <span>{user?.email}</span>
                 </div>
               </div>
             </div>
-          </main>
-        </ScrollArea>
-      </div>
+          )}
+        </div>
+      </ScrollArea>
     </div>
   );
 };
 
-export default Dashboard;
+export default memo(Dashboard);

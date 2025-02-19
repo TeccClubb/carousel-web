@@ -1,13 +1,148 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CarouselsState, GoogleUser } from "@/types";
+import { Carousel, CarouselsState } from "@/types";
+import { fontPairs } from "@/assets/fonts";
+import { darkColors, lightColors } from "@/assets/slide-colors";
+
+export const defaultCarousel: Carousel = {
+  carouselId: null,
+  title: "",
+  imageSrc: "",
+  data: {
+    slideRatio: { ratioId: "linkedIn1", width: 4, height: 5 },
+    slides: [
+      {
+        type: "intro",
+        subTitle: { text: "Empower Your Inner Journey", isEnabled: true },
+        title: {
+          text: "Mental Health and <c>Self-Care</c>",
+          isEnabled: true,
+        },
+        description: {
+          text: "Nurturing Your Mind, Body, and Soul for Inner Peace",
+          isEnabled: true,
+        },
+        ctaButton: { text: "" },
+        image: { src: "", isEnabled: true },
+      },
+      {
+        subTitle: { text: "", isEnabled: true },
+        title: { text: "<c>Mindfulness</c> Meditation", isEnabled: true },
+        description: {
+          text: "Incorporate mindfulness meditation into your daily routine to reduce stress, increase self-awareness, and cultivate inner peace.",
+          isEnabled: true,
+        },
+        ctaButton: { text: "" },
+        image: { src: "/slide2-image.jpg", isEnabled: true },
+      },
+      {
+        subTitle: { text: "", isEnabled: true },
+        title: { text: "Daily Affirmations", isEnabled: true },
+        description: {
+          text: "Start each day with positive affirmations to boost self-confidence and promote a healthy mindset. Believe in yourself and your ability to overcome challenges.",
+          isEnabled: true,
+        },
+        ctaButton: { text: "" },
+        image: { src: "/slide3-image.jpg", isEnabled: true },
+      },
+      {
+        subTitle: { text: "", isEnabled: true },
+        title: { text: "Creative Expression", isEnabled: true },
+        description: {
+          text: "Engage in creative activities like painting, writing, or crafting to express yourself and channel your emotions in a positive way. Creativity is a powerful tool for self-discovery and healing.",
+          isEnabled: true,
+        },
+        ctaButton: { text: "" },
+        image: { src: "/slide4-image.jpg", isEnabled: true },
+      },
+      {
+        subTitle: { text: "", isEnabled: true },
+        title: { text: "Self-Care Rituals", isEnabled: true },
+        description: {
+          text: "Prioritize self-care by indulging in activities that nourish your body, mind, and soul. Whether it's a soothing bath, a leisurely walk, or a cozy night in, make time for self-love and relaxation.",
+          isEnabled: true,
+        },
+        ctaButton: { text: "" },
+        image: { src: "/slide5-image.jpg", isEnabled: true },
+      },
+      {
+        type: "outro",
+        subTitle: { text: "Stay Connected", isEnabled: true },
+        title: {
+          text: "Join us for daily inspiration and support on your journey to thrive!",
+          isEnabled: true,
+        },
+        description: { text: "", isEnabled: true },
+        ctaButton: { text: "Follow for More Inspiration", isEnabled: true },
+        image: { src: "", isEnabled: true },
+      },
+    ],
+
+    contentText: {
+      isCustomFontsEnabled: false,
+      primaryFont: {
+        name: "DM Serif Display",
+        href: "https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400&display=auto&subset=latin,latin-ext",
+      },
+      secondaryFont: {
+        name: "DM Sans",
+        href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900;1000&display=auto&subset=latin,latin-ext&axes=opsz",
+      },
+      fontSize: 0.8,
+      fontTextAlignment: "left",
+    },
+
+    colors: {
+      isUseCustomColors: false,
+      isAlternateSlideColors: true,
+      backgroundColor: "#160910",
+      textColor: "#e7d8c7",
+      accentColor: "#ef922d",
+    },
+
+    brand: {
+      isShowInIntroSlide: true,
+      isShowInOutroSlide: true,
+      isShowInRegularSlide: true,
+      name: { text: "", isEnabled: true },
+      handle: { text: "", isEnabled: true },
+      profileImage: { src: "", isEnabled: true },
+    },
+
+    backgroundOverlay: {
+      backgroundId: "background_1",
+      overlayColor: "#FFFFFF",
+      isOverlayFadeCorner: true,
+      cornerElementId: "element_3",
+    },
+
+    settings: {
+      isShowWaterMark: true,
+      isHideIntroSlide: false,
+      isHideOutroSlide: false,
+      isHideCounter: false,
+    },
+
+    arrowText: {
+      arrowId: "",
+      isOnlyArrow: false,
+      introSlideArrow: { text: "", isEnabled: true },
+      regularSlideArrow: { text: "", isEnabled: false },
+    },
+  },
+};
 
 const initialState: CarouselsState = {
-  isOnceAppLoaded: false,
-  loginStatus: false,
-  userData: null,
+  isOnceCarouselsFetched: false,
   currentIndex: 0,
-  slideRatio: { id: "linkedIn1", width: 4, height: 5 },
-  zoomValue: 39,
+  aiPanel: {
+    totalSlides: 6,
+    selectedTab: "topic",
+    topic: "",
+    text: "",
+    url: "",
+  },
+  carousels: [],
+  carousel: defaultCarousel,
   newSlide: {
     subTitle: { text: "", isEnabled: true },
     title: { text: "", isEnabled: true },
@@ -15,166 +150,152 @@ const initialState: CarouselsState = {
     ctaButton: { text: "" },
     image: { src: "", isEnabled: true },
   },
-  slides: [
-    {
-      type: "intro",
-      subTitle: { text: "Empower Your Inner Journey", isEnabled: true },
-      title: { text: "Mental Health and <c>Self-Care</c>", isEnabled: true },
-      description: {
-        text: "Nurturing Your Mind, Body, and Soul for Inner Peace",
-        isEnabled: true,
-      },
-      ctaButton: { text: "", isEnabled: true },
-      image: { src: "", isEnabled: true },
-    },
-    {
-      subTitle: { text: "", isEnabled: true },
-      title: { text: "<c>Mindfulness</c> Meditation", isEnabled: true },
-      description: {
-        text: "Incorporate mindfulness meditation into your daily routine to reduce stress, increase self-awareness, and cultivate inner peace.",
-        isEnabled: true,
-      },
-      ctaButton: { text: "", isEnabled: true },
-      image: { src: "/slide2-image.jpg", isEnabled: true },
-    },
-    {
-      subTitle: { text: "", isEnabled: true },
-      title: { text: "Daily Affirmations", isEnabled: true },
-      description: {
-        text: "Start each day with positive affirmations to boost self-confidence and promote a healthy mindset. Believe in yourself and your ability to overcome challenges.",
-        isEnabled: true,
-      },
-      ctaButton: { text: "", isEnabled: true },
-      image: { src: "/slide3-image.jpg", isEnabled: true },
-    },
-    {
-      subTitle: { text: "", isEnabled: true },
-      title: { text: "Creative Expression", isEnabled: true },
-      description: {
-        text: "Engage in creative activities like painting, writing, or crafting to express yourself and channel your emotions in a positive way. Creativity is a powerful tool for self-discovery and healing.",
-        isEnabled: true,
-      },
-      ctaButton: { text: "", isEnabled: true },
-      image: { src: "/slide4-image.jpg", isEnabled: true },
-    },
-    {
-      subTitle: { text: "", isEnabled: true },
-      title: { text: "Self-Care Rituals", isEnabled: true },
-      description: {
-        text: "Prioritize self-care by indulging in activities that nourish your body, mind, and soul. Whether it's a soothing bath, a leisurely walk, or a cozy night in, make time for self-love and relaxation.",
-        isEnabled: true,
-      },
-      ctaButton: { text: "", isEnabled: true },
-      image: { src: "/slide5-image.jpg", isEnabled: true },
-    },
-    {
-      type: "outro",
-      subTitle: { text: "Stay Connected", isEnabled: true },
-      title: {
-        text: "Join us for daily inspiration and support on your journey to thrive!",
-        isEnabled: true,
-      },
-      description: { text: "", isEnabled: true },
-      ctaButton: { text: "Follow for More Inspiration", isEnabled: true },
-      image: { src: "", isEnabled: true },
-    },
-  ],
-
-  contentText: {
-    isCustomFontsEnabled: false,
-    primaryFont: {
-      name: "DM Serif Display",
-      href: "https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400&display=auto&subset=latin,latin-ext",
-    },
-    secondaryFont: {
-      name: "DM Sans",
-      href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900;1000&display=auto&subset=latin,latin-ext&axes=opsz",
-    },
-    fontSize: 0.8,
-    fontTextAlignment: "left",
-  },
-
-  colors: {
-    isUseCustomColors: false,
-    isAlternateSlideColors: true,
-    backgroundColor: "#160910",
-    textColor: "#e7d8c7",
-    accentColor: "#ef922d",
-  },
-
-  brand: {
-    isShowInIntroSlide: true,
-    isShowInOutroSlide: true,
-    isShowInRegularSlide: true,
-    name: { text: "", isEnabled: true },
-    handle: { text: "", isEnabled: true },
-    profileImage: { src: "", isEnabled: true },
-  },
-
-  backgroundOverlay: {
-    backgroundId: "background_1",
-    overlayColor: "#FFFFFF",
-    isOverlayFadeCorner: true,
-    cornerElementId: "element_3",
-  },
-
-  settings: {
-    isShowWaterMark: true,
-    isHideIntroSlide: false,
-    isHideOutroSlide: false,
-    isHideCounter: false,
-  },
-
-  arrowText: {
-    arrowId: "",
-    isOnlyArrow: false,
-    introSlideArrow: { text: "", isEnabled: true },
-    regularSlideArrow: { text: "", isEnabled: false },
-  },
 };
 
 const carouselsSlice = createSlice({
   initialState,
   name: "carousels",
   reducers: {
-    setOnceAppLoaded: (state) => {
-      state.isOnceAppLoaded = true;
+    setOnceCarouselsFetched: (state) => {
+      state.isOnceCarouselsFetched = true;
     },
 
-    setLoginStatus: (state, action: PayloadAction<boolean>) => {
-      state.isOnceAppLoaded = true;
-      state.loginStatus = action.payload;
+    setAiTotalSlides: (state, action: PayloadAction<number>) => {
+      state.aiPanel.totalSlides = action.payload;
+    },
+    setAiPanelSelectedTab: (state, action: PayloadAction<string>) => {
+      state.aiPanel.selectedTab = action.payload;
+    },
+    setAiTopic: (state, action: PayloadAction<string>) => {
+      state.aiPanel.topic = action.payload;
+    },
+    setAiText: (state, action: PayloadAction<string>) => {
+      state.aiPanel.text = action.payload;
+    },
+    setAiURL: (state, action: PayloadAction<string>) => {
+      state.aiPanel.url = action.payload;
     },
 
-    setUserData: (state, action: PayloadAction<GoogleUser | null>) => {
-      state.isOnceAppLoaded = true;
-      state.loginStatus = action.payload !== null;
-      state.userData = action.payload;
+    setCarousels: (state, action: PayloadAction<Carousel[]>) => {
+      state.isOnceCarouselsFetched = true;
+      state.currentIndex = 0;
+      state.newSlide.subTitle.text = "";
+      state.newSlide.subTitle.isEnabled = true;
+      state.newSlide.title.text = "";
+      state.newSlide.title.isEnabled = true;
+      state.newSlide.description.text = "";
+      state.newSlide.description.isEnabled = true;
+      state.newSlide.image.src = "";
+      state.newSlide.image.isEnabled = true;
+
+      if (action.payload.length > 0) {
+        const lastCarousel = action.payload[action.payload.length - 1];
+        state.carousel.carouselId = lastCarousel.carouselId;
+        state.carousel.title = lastCarousel.title;
+        state.carousel.imageSrc = lastCarousel.imageSrc;
+        state.carousel.data = lastCarousel.data;
+      }
+
+      state.carousels.length = 0;
+      state.carousels.push(...action.payload);
+    },
+
+    addNewCarousel: (state, action: PayloadAction<Carousel>) => {
+      if (state.carousel.carouselId !== action.payload.carouselId) {
+        state.currentIndex = 0;
+        state.newSlide.subTitle.text = "";
+        state.newSlide.subTitle.isEnabled = true;
+        state.newSlide.title.text = "";
+        state.newSlide.title.isEnabled = true;
+        state.newSlide.description.text = "";
+        state.newSlide.description.isEnabled = true;
+        state.newSlide.image.src = "";
+        state.newSlide.image.isEnabled = true;
+      }
+
+      state.carousel.carouselId = action.payload.carouselId;
+      state.carousel.title = action.payload.title;
+      state.carousel.imageSrc = action.payload.imageSrc;
+      state.carousel.data = action.payload.data;
+
+      state.carousels.push(action.payload);
+    },
+
+    updateCarousel: (state, action: PayloadAction<Carousel>) => {
+      const index = state.carousels.findIndex(
+        (carousel) => carousel.carouselId === action.payload.carouselId
+      );
+      state.carousels[index] = action.payload;
+    },
+
+    removeCarousel: (state, action: PayloadAction<number>) => {
+      const index = state.carousels.findIndex(
+        (carousel) => carousel.carouselId === action.payload
+      );
+      state.carousels.splice(index, 1);
+
+      if (state.carousels.length > 0) {
+        if (state.carousel.carouselId === action.payload) {
+          const lastCarousel = state.carousels[index === 0 ? index : index - 1];
+          state.carousel.carouselId = lastCarousel.carouselId;
+          state.carousel.title = lastCarousel.title;
+          state.carousel.imageSrc = lastCarousel.imageSrc;
+          state.carousel.data = lastCarousel.data;
+        }
+      } else {
+        state.carousel.carouselId = defaultCarousel.carouselId;
+        state.carousel.title = defaultCarousel.title;
+        state.carousel.imageSrc = defaultCarousel.imageSrc;
+        state.carousel.data = defaultCarousel.data;
+      }
+    },
+
+    setCarousel: (state, action: PayloadAction<Carousel>) => {
+      if (state.carousel.carouselId !== action.payload.carouselId) {
+        state.currentIndex = 0;
+        state.newSlide.subTitle.text = "";
+        state.newSlide.subTitle.isEnabled = true;
+        state.newSlide.title.text = "";
+        state.newSlide.title.isEnabled = true;
+        state.newSlide.description.text = "";
+        state.newSlide.description.isEnabled = true;
+        state.newSlide.image.src = "";
+        state.newSlide.image.isEnabled = true;
+      }
+
+      state.carousel.carouselId = action.payload.carouselId;
+      state.carousel.title = action.payload.title;
+      state.carousel.imageSrc = action.payload.imageSrc;
+      state.carousel.data = action.payload.data;
+    },
+
+    setCarouselId: (state, action: PayloadAction<number>) => {
+      state.carousel.carouselId = action.payload;
     },
 
     setCurrentIndex: (state, action: PayloadAction<number>) => {
       state.currentIndex = action.payload;
     },
 
+    setTitle: (state, action: PayloadAction<string>) => {
+      state.carousel.title = action.payload;
+    },
+
+    setImageSrc: (state, action: PayloadAction<string>) => {
+      state.carousel.imageSrc = action.payload;
+    },
+
     setSlideRatio: (
       state,
-      action: PayloadAction<{ id: string; width: number; height: number }>
+      action: PayloadAction<{ ratioId: string; width: number; height: number }>
     ) => {
-      state.slideRatio.id = action.payload.id;
-      state.slideRatio.width = action.payload.width;
-      state.slideRatio.height = action.payload.height;
-    },
-
-    zoomIn: (state) => {
-      state.zoomValue += 3;
-    },
-
-    zoomOut: (state) => {
-      state.zoomValue -= 3;
+      state.carousel.data.slideRatio.ratioId = action.payload.ratioId;
+      state.carousel.data.slideRatio.width = action.payload.width;
+      state.carousel.data.slideRatio.height = action.payload.height;
     },
 
     addNewSlide: (state, action: PayloadAction<number>) => {
-      state.slides.splice(action.payload + 1, 0, state.newSlide);
+      state.carousel.data.slides.splice(action.payload + 1, 0, state.newSlide);
     },
 
     resetNewSlide: (state) => {
@@ -189,7 +310,7 @@ const carouselsSlice = createSlice({
     },
 
     removeSlide: (state, action: PayloadAction<number>) => {
-      state.slides.splice(action.payload, 1);
+      state.carousel.data.slides.splice(action.payload, 1);
     },
 
     reorderSlides: (
@@ -200,13 +321,77 @@ const carouselsSlice = createSlice({
       }>
     ) => {
       if (action.payload.destinationIndex === undefined) return;
-      const slides = state.slides;
+      const slides = state.carousel.data.slides;
       const [removed] = slides.splice(action.payload.sourceIndex, 1);
       slides.splice(action.payload.destinationIndex, 0, removed);
     },
 
+    setSlides: (
+      state,
+      action: PayloadAction<
+        { subTitle: string; title: string; description: string }[]
+      >
+    ) => {
+      state.currentIndex = 0;
+      state.newSlide.subTitle.text = "";
+      state.newSlide.subTitle.isEnabled = true;
+      state.newSlide.title.text = "";
+      state.newSlide.title.isEnabled = true;
+      state.newSlide.description.text = "";
+      state.newSlide.description.isEnabled = true;
+      state.newSlide.image.src = "";
+      state.newSlide.image.isEnabled = true;
+
+      state.carousel.data.slides = action.payload.map((slide, index) => ({
+        type:
+          index === 0
+            ? "intro"
+            : index === action.payload.length - 1
+            ? "outro"
+            : "regular",
+        subTitle: {
+          text: slide.subTitle,
+          isEnabled: index === 0 || index === action.payload.length - 1,
+        },
+        title: { text: slide.title, isEnabled: true },
+        description: { text: slide.description, isEnabled: true },
+        ctaButton: {
+          text:
+            index === action.payload.length - 1
+              ? "Follow for More Inspiration"
+              : "",
+          isEnabled: index === action.payload.length - 1,
+        },
+        image: { src: "", isEnabled: true },
+      }));
+
+      const randomFontPairIndex = Math.floor(Math.random() * fontPairs.length);
+      const fontPair = fontPairs[randomFontPairIndex];
+
+      const colorsGroup = [...darkColors, ...lightColors];
+      const randomColorsIndex = Math.floor(Math.random() * colorsGroup.length);
+      const colors = colorsGroup[randomColorsIndex];
+
+      const randomIsAlternateColorsIndex = Math.floor(Math.random() * 2);
+
+      const randomBackgroundIdIndex = Math.floor(Math.random() * 24);
+
+      const randomCornerElementIndex = Math.floor(Math.random() * 4);
+
+      state.carousel.data.contentText.primaryFont = fontPair.primaryFont;
+      state.carousel.data.contentText.secondaryFont = fontPair.secondaryFont;
+      state.carousel.data.colors.backgroundColor = colors.backgroundColor;
+      state.carousel.data.colors.textColor = colors.textColor;
+      state.carousel.data.colors.accentColor = colors.accentColor;
+      state.carousel.data.colors.isAlternateSlideColors = [true, false][
+        randomIsAlternateColorsIndex
+      ];
+      state.carousel.data.backgroundOverlay.backgroundId = `background_${randomBackgroundIdIndex}`;
+      state.carousel.data.backgroundOverlay.cornerElementId = `element_${randomCornerElementIndex}`;
+    },
+
     setContentSelectedTab: (state, action: PayloadAction<string>) => {
-      const slide = state.slides.find(
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.selectedTab = action.payload;
@@ -215,7 +400,7 @@ const carouselsSlice = createSlice({
       state,
       action: PayloadAction<"row" | "row-reverse" | "column" | "column-reverse">
     ) => {
-      const slide = state.slides.find(
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.contentOrientation = action.payload;
@@ -247,116 +432,116 @@ const carouselsSlice = createSlice({
       state.newSlide.image.src = action.payload;
     },
 
-    toggleSubTitle: (state) => {
-      const slide = state.slides.find(
+    toggleSlideSubTitle: (state) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.subTitle.isEnabled = !slide!.subTitle.isEnabled;
     },
-    setSubTitle: (state, action: PayloadAction<string>) => {
-      const slide = state.slides.find(
+    setSlideSubTitle: (state, action: PayloadAction<string>) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.subTitle.text = action.payload;
     },
 
-    toggleTitle: (state) => {
-      const slide = state.slides.find(
+    toggleSlideTitle: (state) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.title.isEnabled = !slide!.title.isEnabled;
     },
-    setTitleFontSize: (state, action: PayloadAction<number>) => {
-      const slide = state.slides.find(
+    setSlideTitleFontSize: (state, action: PayloadAction<number>) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.title.fontSize = action.payload;
     },
-    setTitle: (state, action: PayloadAction<string>) => {
-      const slide = state.slides.find(
+    setSlideTitle: (state, action: PayloadAction<string>) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.title.text = action.payload;
     },
 
-    toggleDescription: (state) => {
-      const slide = state.slides.find(
+    toggleSlideDescription: (state) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.description.isEnabled = !slide!.description.isEnabled;
     },
-    setDescriptionFontSize: (state, action: PayloadAction<number>) => {
-      const slide = state.slides.find(
+    setSlideDescriptionFontSize: (state, action: PayloadAction<number>) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.description.fontSize = action.payload;
     },
-    setDescription: (state, action: PayloadAction<string>) => {
-      const slide = state.slides.find(
+    setSlideDescription: (state, action: PayloadAction<string>) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.description.text = action.payload;
     },
 
-    toggleCTAButton: (state) => {
-      const slide = state.slides.find(
+    toggleSlideCTAButton: (state) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.ctaButton.isEnabled = !slide!.ctaButton.isEnabled;
     },
-    setCTAText: (state, action: PayloadAction<string>) => {
-      const slide = state.slides.find(
+    setSlideCTAText: (state, action: PayloadAction<string>) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.ctaButton.text = action.payload;
     },
 
-    toggleImage: (state) => {
-      const slide = state.slides.find(
+    toggleSlideImage: (state) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.image.isEnabled = !slide!.image.isEnabled;
     },
-    setImageSrc: (state, action: PayloadAction<string>) => {
-      const slide = state.slides.find(
+    setSlideImageSrc: (state, action: PayloadAction<string>) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.image.src = action.payload;
     },
-    setImageOpacity: (state, action: PayloadAction<number>) => {
-      const slide = state.slides.find(
+    setSlideImageOpacity: (state, action: PayloadAction<number>) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.image.opacity = action.payload;
     },
-    setImageBackgroundPosition: (state, action: PayloadAction<string>) => {
-      const slide = state.slides.find(
+    setSlideImageBackgroundPosition: (state, action: PayloadAction<string>) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.image.backgroundPosition = action.payload;
     },
-    toggleImageBackgroundCover: (state) => {
-      const slide = state.slides.find(
+    toggleSlideImageBackgroundCover: (state) => {
+      const slide = state.carousel.data.slides.find(
         (_, index) => index === state.currentIndex
       );
       slide!.image.isBgCover = !slide!.image.isBgCover;
     },
 
     toggleCustomFontsEnabled: (state) => {
-      state.contentText.isCustomFontsEnabled =
-        !state.contentText.isCustomFontsEnabled;
+      state.carousel.data.contentText.isCustomFontsEnabled =
+        !state.carousel.data.contentText.isCustomFontsEnabled;
     },
     setPrimaryFont: (
       state,
       action: PayloadAction<{ name: string; href: string }>
     ) => {
-      state.contentText.primaryFont = action.payload;
+      state.carousel.data.contentText.primaryFont = action.payload;
     },
     setSecondaryFont: (
       state,
       action: PayloadAction<{ name: string; href: string }>
     ) => {
-      state.contentText.secondaryFont = action.payload;
+      state.carousel.data.contentText.secondaryFont = action.payload;
     },
     setFontPair: (
       state,
@@ -365,30 +550,32 @@ const carouselsSlice = createSlice({
         secondaryFont: { name: string; href: string };
       }>
     ) => {
-      state.contentText.primaryFont = action.payload.primaryFont;
-      state.contentText.secondaryFont = action.payload.secondaryFont;
+      state.carousel.data.contentText.primaryFont = action.payload.primaryFont;
+      state.carousel.data.contentText.secondaryFont =
+        action.payload.secondaryFont;
     },
     setContentFontSize: (state, action: PayloadAction<number>) => {
-      state.contentText.fontSize = action.payload;
+      state.carousel.data.contentText.fontSize = action.payload;
     },
     setContentFontTextAlignment: (
       state,
       action: PayloadAction<"left" | "center" | "right">
     ) => {
-      state.contentText.fontTextAlignment = action.payload;
+      state.carousel.data.contentText.fontTextAlignment = action.payload;
     },
 
     toggleCustomColors: (state) => {
-      state.colors.isUseCustomColors = !state.colors.isUseCustomColors;
+      state.carousel.data.colors.isUseCustomColors =
+        !state.carousel.data.colors.isUseCustomColors;
     },
     setBackgroundColor: (state, action: PayloadAction<string>) => {
-      state.colors.backgroundColor = action.payload;
+      state.carousel.data.colors.backgroundColor = action.payload;
     },
     setTextColor: (state, action: PayloadAction<string>) => {
-      state.colors.textColor = action.payload;
+      state.carousel.data.colors.textColor = action.payload;
     },
     setAccentColor: (state, action: PayloadAction<string>) => {
-      state.colors.accentColor = action.payload;
+      state.carousel.data.colors.accentColor = action.payload;
     },
     setColors: (
       state,
@@ -398,146 +585,171 @@ const carouselsSlice = createSlice({
         accentColor: string;
       }>
     ) => {
-      state.colors.backgroundColor = action.payload.backgroundColor;
-      state.colors.textColor = action.payload.textColor;
-      state.colors.accentColor = action.payload.accentColor;
+      state.carousel.data.colors.backgroundColor =
+        action.payload.backgroundColor;
+      state.carousel.data.colors.textColor = action.payload.textColor;
+      state.carousel.data.colors.accentColor = action.payload.accentColor;
     },
     toggleAlternateSlideColors: (state) => {
-      state.colors.isAlternateSlideColors =
-        !state.colors.isAlternateSlideColors;
+      state.carousel.data.colors.isAlternateSlideColors =
+        !state.carousel.data.colors.isAlternateSlideColors;
     },
 
     setBackgroundId: (state, action: PayloadAction<string>) => {
-      state.backgroundOverlay.backgroundId = action.payload;
+      state.carousel.data.backgroundOverlay.backgroundId = action.payload;
     },
 
     toggleBrandShowInIntroSlide: (state) => {
-      state.brand.isShowInIntroSlide = !state.brand.isShowInIntroSlide;
+      state.carousel.data.brand.isShowInIntroSlide =
+        !state.carousel.data.brand.isShowInIntroSlide;
     },
     toggleBrandShowInOutroSlide: (state) => {
-      state.brand.isShowInOutroSlide = !state.brand.isShowInOutroSlide;
+      state.carousel.data.brand.isShowInOutroSlide =
+        !state.carousel.data.brand.isShowInOutroSlide;
     },
     toggleBrandShowInRegularSlide: (state) => {
-      state.brand.isShowInRegularSlide = !state.brand.isShowInRegularSlide;
+      state.carousel.data.brand.isShowInRegularSlide =
+        !state.carousel.data.brand.isShowInRegularSlide;
     },
     setBrandName: (state, action: PayloadAction<string>) => {
-      state.brand.name.text = action.payload;
+      state.carousel.data.brand.name.text = action.payload;
     },
     toggleBrandName: (state) => {
-      state.brand.name.isEnabled = !state.brand.name.isEnabled;
+      state.carousel.data.brand.name.isEnabled =
+        !state.carousel.data.brand.name.isEnabled;
     },
     setBrandHandle: (state, action: PayloadAction<string>) => {
-      state.brand.handle.text = action.payload;
+      state.carousel.data.brand.handle.text = action.payload;
     },
     toggleBrandHandle: (state) => {
-      state.brand.handle.isEnabled = !state.brand.handle.isEnabled;
+      state.carousel.data.brand.handle.isEnabled =
+        !state.carousel.data.brand.handle.isEnabled;
     },
     setBrandProfileSrc: (state, action: PayloadAction<string>) => {
-      state.brand.profileImage.src = action.payload;
+      state.carousel.data.brand.profileImage.src = action.payload;
     },
     toggleBrandProfile: (state) => {
-      state.brand.profileImage.isEnabled = !state.brand.profileImage.isEnabled;
+      state.carousel.data.brand.profileImage.isEnabled =
+        !state.carousel.data.brand.profileImage.isEnabled;
     },
 
     setOverlayColor: (state, action: PayloadAction<string>) => {
-      state.backgroundOverlay.overlayColor = action.payload;
+      state.carousel.data.backgroundOverlay.overlayColor = action.payload;
     },
 
     setOverlayOpacity: (state, action: PayloadAction<number>) => {
-      state.backgroundOverlay.overlayOpacity = action.payload;
+      state.carousel.data.backgroundOverlay.overlayOpacity = action.payload;
     },
 
     toggleOverlayFadeCorner: (state) => {
-      state.backgroundOverlay.isOverlayFadeCorner =
-        !state.backgroundOverlay.isOverlayFadeCorner;
+      state.carousel.data.backgroundOverlay.isOverlayFadeCorner =
+        !state.carousel.data.backgroundOverlay.isOverlayFadeCorner;
     },
 
     setCornerElementId: (state, action: PayloadAction<string>) => {
-      state.backgroundOverlay.cornerElementId = action.payload;
+      state.carousel.data.backgroundOverlay.cornerElementId = action.payload;
     },
 
     setCornerElementOpacity: (state, action: PayloadAction<number>) => {
-      state.backgroundOverlay.cornerElementOpacity = action.payload;
+      state.carousel.data.backgroundOverlay.cornerElementOpacity =
+        action.payload;
     },
 
     toggleShowWaterMark: (state) => {
-      state.settings.isShowWaterMark = !state.settings.isShowWaterMark;
+      state.carousel.data.settings.isShowWaterMark =
+        !state.carousel.data.settings.isShowWaterMark;
     },
 
     toggleHideIntroSlide: (state) => {
-      state.settings.isHideIntroSlide = !state.settings.isHideIntroSlide;
+      state.carousel.data.settings.isHideIntroSlide =
+        !state.carousel.data.settings.isHideIntroSlide;
     },
 
     toggleHideOutroSlide: (state) => {
-      state.settings.isHideOutroSlide = !state.settings.isHideOutroSlide;
+      state.carousel.data.settings.isHideOutroSlide =
+        !state.carousel.data.settings.isHideOutroSlide;
     },
 
     toggleHideCounter: (state) => {
-      state.settings.isHideCounter = !state.settings.isHideCounter;
+      state.carousel.data.settings.isHideCounter =
+        !state.carousel.data.settings.isHideCounter;
     },
 
     setIntroSlideArrowText: (state, action: PayloadAction<string>) => {
-      state.arrowText.introSlideArrow.text = action.payload;
+      state.carousel.data.arrowText.introSlideArrow.text = action.payload;
     },
     toggleIntroSlideArrow: (state) => {
-      state.arrowText.introSlideArrow.isEnabled =
-        !state.arrowText.introSlideArrow.isEnabled;
+      state.carousel.data.arrowText.introSlideArrow.isEnabled =
+        !state.carousel.data.arrowText.introSlideArrow.isEnabled;
     },
 
     setRegularSlideArrowText: (state, action: PayloadAction<string>) => {
-      state.arrowText.regularSlideArrow.text = action.payload;
+      state.carousel.data.arrowText.regularSlideArrow.text = action.payload;
     },
     toggleRegularSlideArrow: (state) => {
-      state.arrowText.regularSlideArrow.isEnabled =
-        !state.arrowText.regularSlideArrow.isEnabled;
+      state.carousel.data.arrowText.regularSlideArrow.isEnabled =
+        !state.carousel.data.arrowText.regularSlideArrow.isEnabled;
     },
 
     toggleArrowText: (state) => {
-      state.arrowText.isOnlyArrow = !state.arrowText.isOnlyArrow;
+      state.carousel.data.arrowText.isOnlyArrow =
+        !state.carousel.data.arrowText.isOnlyArrow;
     },
 
     setArrowId: (state, action: PayloadAction<string>) => {
-      state.arrowText.arrowId = action.payload;
+      state.carousel.data.arrowText.arrowId = action.payload;
     },
 
-    randomize: (
-      state,
-      action: PayloadAction<{
-        primaryFont: { href: string; name: string };
-        secondaryFont: { href: string; name: string };
-        backgroundColor: string;
-        textColor: string;
-        accentColor: string;
-        isAlternateSlideColors: boolean;
-        backgroundId: string;
-        cornerElementId: string;
-      }>
-    ) => {
-      state.contentText.primaryFont = action.payload.primaryFont;
-      state.contentText.secondaryFont = action.payload.secondaryFont;
-      state.colors.backgroundColor = action.payload.backgroundColor;
-      state.colors.textColor = action.payload.textColor;
-      state.colors.accentColor = action.payload.accentColor;
-      state.colors.isAlternateSlideColors =
-        action.payload.isAlternateSlideColors;
-      state.backgroundOverlay.backgroundId = action.payload.backgroundId;
-      state.backgroundOverlay.cornerElementId = action.payload.cornerElementId;
+    randomize: (state) => {
+      const randomFontPairIndex = Math.floor(Math.random() * fontPairs.length);
+      const fontPair = fontPairs[randomFontPairIndex];
+
+      const colorsGroup = [...darkColors, ...lightColors];
+      const randomColorsIndex = Math.floor(Math.random() * colorsGroup.length);
+      const colors = colorsGroup[randomColorsIndex];
+
+      const randomIsAlternateColorsIndex = Math.floor(Math.random() * 2);
+
+      const randomBackgroundIdIndex = Math.floor(Math.random() * 24);
+
+      const randomCornerElementIndex = Math.floor(Math.random() * 4);
+
+      state.carousel.data.contentText.primaryFont = fontPair.primaryFont;
+      state.carousel.data.contentText.secondaryFont = fontPair.secondaryFont;
+      state.carousel.data.colors.backgroundColor = colors.backgroundColor;
+      state.carousel.data.colors.textColor = colors.textColor;
+      state.carousel.data.colors.accentColor = colors.accentColor;
+      state.carousel.data.colors.isAlternateSlideColors = [true, false][
+        randomIsAlternateColorsIndex
+      ];
+      state.carousel.data.backgroundOverlay.backgroundId = `background_${randomBackgroundIdIndex}`;
+      state.carousel.data.backgroundOverlay.cornerElementId = `element_${randomCornerElementIndex}`;
     },
   },
 });
 
 export const {
-  setOnceAppLoaded,
-  setLoginStatus,
-  setUserData,
+  setOnceCarouselsFetched,
+  setAiTotalSlides,
+  setAiPanelSelectedTab,
+  setAiTopic,
+  setAiText,
+  setAiURL,
+  setCarousels,
+  addNewCarousel,
+  updateCarousel,
+  removeCarousel,
+  setCarousel,
+  setCarouselId,
   setCurrentIndex,
+  setTitle,
+  setImageSrc,
   setSlideRatio,
-  zoomIn,
-  zoomOut,
   addNewSlide,
   resetNewSlide,
   removeSlide,
   reorderSlides,
+  setSlides,
   setContentSelectedTab,
   setContentOrientation,
   toggleNewSlideSubTitle,
@@ -548,21 +760,21 @@ export const {
   setNewSlideDescription,
   toggleNewSlideImage,
   setNewSlideImageSrc,
-  setTitle,
-  toggleSubTitle,
-  setSubTitle,
-  toggleTitle,
-  setTitleFontSize,
-  setDescription,
-  setDescriptionFontSize,
-  toggleDescription,
-  setCTAText,
-  toggleCTAButton,
-  setImageSrc,
-  toggleImage,
-  setImageOpacity,
-  setImageBackgroundPosition,
-  toggleImageBackgroundCover,
+  toggleSlideSubTitle,
+  setSlideSubTitle,
+  toggleSlideTitle,
+  setSlideTitle,
+  setSlideTitleFontSize,
+  setSlideDescription,
+  setSlideDescriptionFontSize,
+  toggleSlideDescription,
+  setSlideCTAText,
+  toggleSlideCTAButton,
+  setSlideImageSrc,
+  toggleSlideImage,
+  setSlideImageOpacity,
+  setSlideImageBackgroundPosition,
+  toggleSlideImageBackgroundCover,
   toggleCustomFontsEnabled,
   setPrimaryFont,
   setSecondaryFont,

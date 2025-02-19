@@ -1,5 +1,5 @@
 "use client";
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import Section from "./Section";
 import { FAQ } from "@/types";
 import {
@@ -17,7 +17,7 @@ import {
   Input,
   Textarea,
 } from "../ui";
-import { toast } from "@/hooks";
+import { toast } from "sonner";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -86,9 +86,7 @@ const FAQSection: FC<{
   const submit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
 
-    toast({
-      description: "Your message has been sent.",
-    });
+    toast("Your message has been sent.");
   };
 
   return (
@@ -186,4 +184,4 @@ const FAQSection: FC<{
   );
 };
 
-export default FAQSection;
+export default memo(FAQSection);

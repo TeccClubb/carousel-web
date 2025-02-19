@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { useContentText } from "@/hooks";
+import React, { FC, memo } from "react";
+import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { getBrightness } from "@/lib/utils";
 import { SlideContent as SlideContentType } from "@/types";
 
@@ -40,10 +40,16 @@ const SlideContent: FC<{
   } = slide;
 
   const {
-    primaryFont: {name: primaryFont},
-    fontSize = 0.8,
-    fontTextAlignment = "left",
-  } = useContentText();
+    carousel: {
+      data: {
+        contentText: {
+          primaryFont: { name: primaryFont },
+          fontSize = 0.8,
+          fontTextAlignment = "left",
+        },
+      },
+    },
+  } = useCarouselsState();
 
   return (
     <div
@@ -150,4 +156,4 @@ const SlideContent: FC<{
   );
 };
 
-export default SlideContent;
+export default memo(SlideContent);

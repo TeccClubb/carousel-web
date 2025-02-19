@@ -1,57 +1,74 @@
 "use client";
-import React, { FC, useState } from "react";
+import React, { FC, memo } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
-import { useDispatch } from "react-redux";
 import { Button } from "../ui";
 import { GoogleIcon } from "@/icons";
-import axios from "axios";
-import { setUserData } from "@/store";
-import { GoogleUser } from "@/types";
-import { useLoginToken } from "@/hooks";
-import { Loading } from ".";
+import axios, { AxiosError } from "axios";
+import { User } from "@/types";
+import { LOGIN_ROUTE, TOKEN_LOCAL_STORAGE_KEY } from "@/constant";
+import { useToast } from "@/hooks/use-sonner-toast";
+import { useDispatch } from "react-redux";
+import { setLoading } from "@/store/app.slice";
+import { setUserData } from "@/store/user.slice";
 
 const AuthWithGoogle: FC<{ text: string }> = ({ text }) => {
   const dispatch = useDispatch();
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
 
-  const { setLoginToken } = useLoginToken();
+  type LoginResponse = {
+    status: boolean;
+    message: string;
+    user: User;
+    access_token: string;
+    token_type: string;
+  };
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      setLoading(true)
-      setLoginToken(tokenResponse.access_token);
       try {
-        const userInfo: GoogleUser = await axios
-          .get("https://www.googleapis.com/oauth2/v3/userinfo", {
-            headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+        dispatch(setLoading({ isLoading: true, title: "Logging in..." }));
+        const res: LoginResponse = await axios
+          .post(LOGIN_ROUTE, {
+            headers: { Accept: "application/json" },
+            token: tokenResponse.access_token,
           })
           .then((res) => res.data);
-
-        dispatch(setUserData(userInfo));
+        if (res.status) {
+          dispatch(
+            setUserData({
+              name: res.user.name,
+              email: res.user.email,
+              avatar: res.user.avatar,
+              access_token: res.access_token,
+            })
+          );
+          localStorage.setItem(
+            TOKEN_LOCAL_STORAGE_KEY,
+            res.access_token
+          );
+        } else toast.error(res.message);
       } catch (error) {
-        console.log(error);
+        if (error instanceof AxiosError) {
+          toast.error(error.message);
+        } else toast.error("Something went wrong while login");
       } finally {
-        setLoading(false);
+        dispatch(setLoading({ isLoading: false }));
       }
     },
   });
 
   const handleLogin = () => {
-    // setLoading(true);
     googleLogin();
   };
 
   return (
-    <>
-      <Button
-        onClick={handleLogin}
-        className="w-full bg-slate-300 text-black hover:text-white dark:bg-black dark:text-white dark:hover:bg-white dark:hover:text-black"
-      >
-        <GoogleIcon /> {text}
-      </Button>
-      {isLoading && <Loading />}
-    </>
+    <Button
+      onClick={handleLogin}
+      className="min-w-72 sm:min-w-96 bg-slate-300 text-black hover:text-white dark:bg-black dark:text-white dark:hover:bg-white dark:hover:text-black"
+    >
+      <GoogleIcon /> {text}
+    </Button>
   );
 };
 
-export default AuthWithGoogle;
+export default memo(AuthWithGoogle);

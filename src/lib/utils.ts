@@ -1,9 +1,101 @@
+import { LOGOUT_ROUTE, UPLOAD_IMAGE_ROUTE } from "@/constant";
+import { googleLogout } from "@react-oauth/google";
+import axios, { AxiosError } from "axios";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export const uploadImage = async ({
+  oldUrl,
+  file,
+  loadingSetter,
+  onImageSelect,
+  onError,
+}: {
+  oldUrl: string;
+  file: File;
+  loadingSetter: ({
+    isLoading,
+    title,
+  }: {
+    isLoading: boolean;
+    title?: string;
+  }) => void;
+  onImageSelect: (imageSrc: string) => void;
+  onError: (message: string) => void;
+}) => {
+  try {
+    loadingSetter({ isLoading: true, title: "Uploading..." });
+    const formData = new FormData();
+    formData.append("image", file);
+    if (oldUrl.startsWith("http")) {
+      formData.append("old_url", oldUrl);
+    }
+    const res = await axios
+      .post<{ status: boolean; url: string }>(UPLOAD_IMAGE_ROUTE, formData)
+      .then((res) => res.data);
+    if (res.status) {
+      onImageSelect(res.url);
+    }
+  } catch (error) {
+    onError(
+      error instanceof AxiosError
+        ? error.message
+        : "Something went wrong while uploading image"
+    );
+  } finally {
+    loadingSetter({ isLoading: false });
+  }
+};
+
+export const logout = async ({
+  access_token,
+  loadingSetter,
+  onSuccess,
+  onError,
+}: {
+  access_token: string;
+  loadingSetter: ({
+    isLoading,
+    title,
+  }: {
+    isLoading: boolean;
+    title?: string;
+  }) => void;
+  onSuccess: (message: string) => void;
+  onError: (message: string) => void;
+}) => {
+  try {
+    loadingSetter({ isLoading: true, title: "Logging out..." });
+    googleLogout();
+    const res = await axios
+      .post<{ status: boolean; message: string }>(
+        LOGOUT_ROUTE,
+        {},
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      )
+      .then((res) => res.data);
+    if (res.status) {
+      onSuccess(res.message);
+    } else onError(res.message);
+  } catch (error) {
+    onError(
+      error instanceof AxiosError
+        ? error.message
+        : "Something went wrong while logout"
+    );
+  } finally {
+    loadingSetter({ isLoading: false });
+  }
+};
 
 // const hexToRgb = (hex: string): { r: number; g: number; b: number } | null => {
 //   // Remove '#' if it exists
@@ -107,7 +199,7 @@ export const getBrightness = (color: string) => {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 };
 
-//   
+//
 //   color: string
 // ): "light" | "dark" | "intermediate" => {
 //   let r: number, g: number, b: number;

@@ -1,9 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { getBrightness } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 
 const Watermark: FC<{ backgroundColor: string }> = ({ backgroundColor }) => {
-  const domainName = "TechClub";
+  const domainName = "CarouselBuilder.io";
   const { t } = useTranslation();
   return (
     <div
@@ -21,4 +21,4 @@ const Watermark: FC<{ backgroundColor: string }> = ({ backgroundColor }) => {
   );
 };
 
-export default Watermark;
+export default memo(Watermark);

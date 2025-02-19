@@ -1,5 +1,3 @@
-import { GoogleUser } from "./google.user";
-
 export type SlideContent = {
   type?: "intro" | "regular" | "outro";
   selectedTab?: string;
@@ -24,6 +22,14 @@ export type SlideContent = {
     isBgCover?: boolean;
   };
 };
+
+type AiPanel = {
+  totalSlides: number;
+  selectedTab: string;
+  topic: string;
+  text: string;
+  url: string;
+}
 
 type ContentText = {
   isCustomFontsEnabled: boolean;
@@ -73,19 +79,27 @@ type Settings = {
   isHideCounter: boolean;
 };
 
+export type Carousel = {
+  carouselId: number | null;
+  title: string;
+  imageSrc: string;
+  data: {
+    slideRatio: { ratioId: string; width: number; height: number };
+    slides: SlideContent[];
+    contentText: ContentText;
+    colors: Colors;
+    brand: Brand;
+    backgroundOverlay: BackgroundOverlay;
+    settings: Settings;
+    arrowText: ArrowText;
+  };
+};
+
 export type CarouselsState = {
-  isOnceAppLoaded: boolean;
-  loginStatus: boolean;
-  userData: GoogleUser | null;
+  isOnceCarouselsFetched: boolean,
+  aiPanel: AiPanel;
+  carousel: Carousel;
+  carousels: Carousel[];
   currentIndex: number;
-  slideRatio: { id: string; width: number; height: number };
-  zoomValue: number;
   newSlide: SlideContent;
-  slides: SlideContent[];
-  contentText: ContentText;
-  colors: Colors;
-  brand: Brand;
-  backgroundOverlay: BackgroundOverlay;
-  settings: Settings;
-  arrowText: ArrowText;
 };

@@ -18,27 +18,27 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui";
-import { useCurrentSlide } from "@/hooks";
+import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { useDispatch } from "react-redux";
 import {
-  setTitle,
-  toggleSubTitle,
-  setSubTitle,
-  toggleTitle,
-  setDescription,
-  toggleDescription,
-  setCTAText,
-  toggleCTAButton,
-  setImageSrc,
-  toggleImage,
-  setDescriptionFontSize,
-  setTitleFontSize,
-  setImageOpacity,
-  setImageBackgroundPosition,
-  toggleImageBackgroundCover,
+  setSlideTitle,
+  toggleSlideSubTitle,
+  setSlideSubTitle,
+  toggleSlideTitle,
+  setSlideDescription,
+  toggleSlideDescription,
+  setSlideCTAText,
+  toggleSlideCTAButton,
+  setSlideImageSrc,
+  toggleSlideImage,
+  setSlideDescriptionFontSize,
+  setSlideTitleFontSize,
+  setSlideImageOpacity,
+  setSlideImageBackgroundPosition,
+  toggleSlideImageBackgroundCover,
   setContentOrientation,
   setContentSelectedTab,
-} from "@/store";
+} from "@/store/carousels.slice";
 import {
   Maximize2Icon,
   Minimize2Icon,
@@ -53,6 +53,9 @@ import {
   VerticalReverseIcon,
 } from "@/icons";
 import { useTranslation } from "react-i18next";
+import { uploadImage } from "@/lib/utils";
+import { useToast } from "@/hooks/use-sonner-toast";
+import { setLoading } from "@/store/app.slice";
 
 const FontSizeSlider: FC<{
   fontSize: number;
@@ -125,6 +128,13 @@ const TextSettings: FC = memo(() => {
   const { t } = useTranslation();
 
   const {
+    currentIndex,
+    carousel: {
+      data: { slides },
+    },
+  } = useCarouselsState();
+
+  const {
     subTitle: { text: subTitle = "", isEnabled: isSubTitleEnabled },
     title: {
       text: title = "",
@@ -136,7 +146,7 @@ const TextSettings: FC = memo(() => {
       isEnabled: isDescriptionEnabled,
       fontSize: descriptionFontSize = 100,
     },
-  } = useCurrentSlide();
+  } = slides[currentIndex];
 
   return (
     <>
@@ -144,13 +154,13 @@ const TextSettings: FC = memo(() => {
         <div className="flex items-center gap-2">
           <Switch
             checked={isSubTitleEnabled}
-            onCheckedChange={() => dispatch(toggleSubTitle())}
+            onCheckedChange={() => dispatch(toggleSlideSubTitle())}
             label={t("content_panel_switch_sub_title_label")}
           />
         </div>
         <Input
           value={subTitle}
-          onChange={(e) => dispatch(setSubTitle(e.target.value.trim()))}
+          onChange={(e) => dispatch(setSlideSubTitle(e.target.value.trim()))}
           type="text"
           placeholder={t("content_panel_sub_title_placeholder")}
         />
@@ -161,21 +171,21 @@ const TextSettings: FC = memo(() => {
           <div className="flex items-center gap-2">
             <Switch
               checked={isTitleEnabled}
-              onCheckedChange={() => dispatch(toggleTitle())}
+              onCheckedChange={() => dispatch(toggleSlideTitle())}
               label={t("content_panel_switch_title_label")}
             />
           </div>
           <FontSizeSlider
             toolTipText={t("content_panel_title_tool_tip_text")}
             fontSize={titleFontSize || 100}
-            onResetClick={() => dispatch(setTitleFontSize(100))}
-            setFontSize={(value) => dispatch(setTitleFontSize(value))}
+            onResetClick={() => dispatch(setSlideTitleFontSize(100))}
+            setFontSize={(value) => dispatch(setSlideTitleFontSize(value))}
           />
         </div>
 
         <Input
           value={title}
-          onChange={(e) => dispatch(setTitle(e.target.value.trim()))}
+          onChange={(e) => dispatch(setSlideTitle(e.target.value.trim()))}
           type="text"
           placeholder={t("content_panel_title_placeholder")}
         />
@@ -186,21 +196,23 @@ const TextSettings: FC = memo(() => {
           <div className="flex items-center gap-2">
             <Switch
               checked={isDescriptionEnabled}
-              onCheckedChange={() => dispatch(toggleDescription())}
+              onCheckedChange={() => dispatch(toggleSlideDescription())}
               label={t("content_panel_switch_description_label")}
             />
           </div>
           <FontSizeSlider
             toolTipText={t("content_panel_description_tool_tip_text")}
             fontSize={descriptionFontSize || 100}
-            onResetClick={() => dispatch(setDescriptionFontSize(100))}
-            setFontSize={(value) => dispatch(setDescriptionFontSize(value))}
+            onResetClick={() => dispatch(setSlideDescriptionFontSize(100))}
+            setFontSize={(value) =>
+              dispatch(setSlideDescriptionFontSize(value))
+            }
           />
         </div>
         <Textarea
           value={description}
           rows={5}
-          onChange={(e) => dispatch(setDescription(e.target.value.trim()))}
+          onChange={(e) => dispatch(setSlideDescription(e.target.value.trim()))}
           placeholder={t("content_panel_description_placeholder")}
         />
       </div>
@@ -212,7 +224,15 @@ TextSettings.displayName = "TextSettings";
 
 const ImageSettings: FC = memo(() => {
   const dispatch = useDispatch();
+  const toast = useToast();
   const { t } = useTranslation();
+
+  const {
+    currentIndex,
+    carousel: {
+      data: { slides },
+    },
+  } = useCarouselsState();
 
   const {
     contentOrientation = "column",
@@ -223,7 +243,7 @@ const ImageSettings: FC = memo(() => {
       backgroundPosition: imageBackgroundPosition = "center center",
       isBgCover: isImageBackgroundCover = true,
     },
-  } = useCurrentSlide();
+  } = slides[currentIndex];
 
   const bgPositions = [
     "left top",
@@ -247,15 +267,39 @@ const ImageSettings: FC = memo(() => {
     { value: "row-reverse", icon: <VerticalReverseIcon /> },
   ];
 
+  const loadingSetter = ({
+    isLoading,
+    title,
+  }: {
+    isLoading: boolean;
+    title?: string;
+  }) => {
+    dispatch(setLoading({ isLoading, title }));
+  };
+
+  const onError = (message: string) => toast.error(message);
+
   const handleImageChoose = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]; // Get the first selected file
-
-    if (file && file.type.startsWith("image/")) {
-      const fileURL = URL.createObjectURL(file);
-
-      dispatch(setImageSrc(fileURL));
-    } else {
-      alert("Please select a valid image file.");
+    const file = event.target.files?.[0];
+    if (file) {
+      const fileType = file.type;
+      if (
+        fileType === "image/jpeg" ||
+        fileType === "image/png" ||
+        fileType === "image/jpg"
+      ) {
+        uploadImage({
+          oldUrl: "imageSrc",
+          file,
+          loadingSetter,
+          onError,
+          onImageSelect: (imageSrc) => {
+            dispatch(setSlideImageSrc(imageSrc));
+          },
+        });
+      } else {
+        toast.error("Please select an image in jpeg, png, or jpg formats.");
+      }
     }
   };
 
@@ -271,7 +315,7 @@ const ImageSettings: FC = memo(() => {
         <div className="flex items-center gap-2">
           <Switch
             checked={isImageEnabled}
-            onCheckedChange={() => dispatch(toggleImage())}
+            onCheckedChange={() => dispatch(toggleSlideImage())}
             label={t("content_panel_switch_image_label")}
           />
         </div>
@@ -280,16 +324,18 @@ const ImageSettings: FC = memo(() => {
 
       <div className="flex gap-2">
         <div className="w-[100px] h-[100px] flex justify-center items-center overflow-hidden">
-          <Image
-            src={imageSrc}
-            alt="Image not founded"
-            width={100}
-            height={100}
-            sizes="100vw"
-            placeholder="blur"
-            blurDataURL={imageSrc}
-            className="rounded-md h-auto w-auto object-cover transition-all hover:scale-105 aspect-square border"
-          />
+          {imageSrc && (
+            <Image
+              src={imageSrc}
+              alt="Image not founded"
+              width={100}
+              height={100}
+              sizes="100vw"
+              placeholder="blur"
+              blurDataURL={imageSrc}
+              className="rounded-md h-auto w-auto object-cover transition-all hover:scale-105 aspect-square border"
+            />
+          )}
         </div>
         <div className="flex-1 flex flex-col">
           <div className="flex gap-2">
@@ -301,7 +347,9 @@ const ImageSettings: FC = memo(() => {
                     <div
                       key={backgroundPosition}
                       onClick={() =>
-                        dispatch(setImageBackgroundPosition(backgroundPosition))
+                        dispatch(
+                          setSlideImageBackgroundPosition(backgroundPosition)
+                        )
                       }
                       className={`w-[10px] h-[10px] cursor-pointer rounded-[50%] ${
                         backgroundPosition === imageBackgroundPosition
@@ -319,7 +367,7 @@ const ImageSettings: FC = memo(() => {
                   <Label asSpan>{t("content_panel_image_fit_label")}</Label>
                   <Button
                     variant="outline"
-                    onClick={() => dispatch(toggleImageBackgroundCover())}
+                    onClick={() => dispatch(toggleSlideImageBackgroundCover())}
                     className="h-9"
                   >
                     {isImageBackgroundCover ? (
@@ -344,7 +392,7 @@ const ImageSettings: FC = memo(() => {
                     max={100}
                     step={1}
                     onValueChange={(value) =>
-                      dispatch(setImageOpacity(value[0]))
+                      dispatch(setSlideImageOpacity(value[0]))
                     }
                   />
                 </div>
@@ -380,9 +428,16 @@ const ImageSettings: FC = memo(() => {
 
 ImageSettings.displayName = "ImageSettings";
 
-const Content: FC = memo(() => {
+const Content: FC = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  const {
+    currentIndex,
+    carousel: {
+      data: { slides },
+    },
+  } = useCarouselsState();
 
   const {
     type = "regular",
@@ -391,7 +446,7 @@ const Content: FC = memo(() => {
       text: ctaButtonText = "",
       isEnabled: isCtaButtonEnabled = true,
     },
-  } = useCurrentSlide();
+  } = slides[currentIndex];
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
@@ -436,13 +491,15 @@ const Content: FC = memo(() => {
               <div className="flex items-center gap-2">
                 <Switch
                   checked={isCtaButtonEnabled}
-                  onCheckedChange={() => dispatch(toggleCTAButton())}
+                  onCheckedChange={() => dispatch(toggleSlideCTAButton())}
                   label={`CTA ${t("content_panel_text_label")}`}
                 />
               </div>
               <Input
                 value={ctaButtonText}
-                onChange={(e) => dispatch(setCTAText(e.target.value.trim()))}
+                onChange={(e) =>
+                  dispatch(setSlideCTAText(e.target.value.trim()))
+                }
                 type="text"
                 placeholder={`${t(
                   "content_panel_enter_your_placeholder"
@@ -454,8 +511,8 @@ const Content: FC = memo(() => {
       )}
     </div>
   );
-});
+};
 
 Content.displayName = "Content";
 
-export default Content;
+export default memo(Content);

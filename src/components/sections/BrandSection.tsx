@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC, memo, ReactNode } from "react";
 import Section from "./Section";
 import { BrandIcon1, BrandIcon2, BrandIcon3 } from "@/icons";
 import { useTranslation } from "react-i18next";
@@ -72,4 +72,4 @@ const BrandSection: FC<{
   );
 };
 
-export default BrandSection;
+export default memo(BrandSection);

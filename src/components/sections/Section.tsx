@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC, memo, ReactNode } from "react";
 
 const Section: FC<{
   isHeroSection?: boolean;
@@ -35,4 +35,4 @@ const Section: FC<{
   );
 };
 
-export default Section;
+export default memo(Section);

@@ -1,9 +1,9 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC, memo, ReactNode } from "react";
 import { Button } from "../ui";
 import { ChevronRightIcon, DownloadIcon } from "lucide-react";
 import { SlideContent as SlideContentType } from "@/types";
 import { useTranslation } from "react-i18next";
-import { useCarouselsState } from "@/hooks";
+import { useCarouselsState } from "@/hooks/use-carousels-state";
 import {
   Document,
   Image,
@@ -16,36 +16,47 @@ import {
 import { getBrightness } from "@/lib/utils";
 import { getArrow } from "@/icons/arrows";
 import ReactDOMServer from "react-dom/server";
+import { useUserState } from "@/hooks/use-user-state";
 
 const DownloadButton: FC = () => {
   const { t } = useTranslation();
 
-  const domainName = "Pixmart";
+  const domainName = "CarouselBuilder.io";
   const convertSvgToBase64 = (SvgComponent: ReactNode): string => {
     const svgString = ReactDOMServer.renderToStaticMarkup(SvgComponent);
     return `data:image/svg+xml;base64,${btoa(svgString)}`;
   };
 
+  const { userData } = useUserState();
+
   const {
-    userData,
-    slides,
-    colors: { isAlternateSlideColors, backgroundColor, textColor, accentColor },
-    brand: {
-      isShowInIntroSlide,
-      isShowInOutroSlide,
-      isShowInRegularSlide,
-      name,
-      handle,
-      profileImage,
-    },
-    settings: { isShowWaterMark, isHideCounter },
-    arrowText: { arrowId, isOnlyArrow, introSlideArrow, regularSlideArrow },
-    slideRatio: { width, height },
-    contentText: {
-      //   primaryFont: { name: primaryFont },
-      //   secondaryFont: { name: secondaryFont },
-      fontSize = 0.8,
-      fontTextAlignment = "left",
+    carousel: {
+      data: {
+        slides,
+        colors: {
+          isAlternateSlideColors,
+          backgroundColor,
+          textColor,
+          accentColor,
+        },
+        brand: {
+          isShowInIntroSlide,
+          isShowInOutroSlide,
+          isShowInRegularSlide,
+          name,
+          handle,
+          profileImage,
+        },
+        settings: { isShowWaterMark, isHideCounter },
+        arrowText: { arrowId, isOnlyArrow, introSlideArrow, regularSlideArrow },
+        slideRatio: { width, height },
+        contentText: {
+          //   primaryFont: { name: primaryFont },
+          //   secondaryFont: { name: secondaryFont },
+          fontSize = 0.8,
+          fontTextAlignment = "left",
+        },
+      },
     },
   } = useCarouselsState();
 
@@ -110,9 +121,9 @@ const DownloadButton: FC = () => {
     const brandName =
       userData === null ? "John Doe" : name.text || userData.name;
     const brandHandle =
-      userData === null ? "Pixmart" : handle.text || userData.email;
+      userData === null ? "https://carouselbuilder.io" : handle.text || userData.email;
     const brandImageSrc =
-      userData === null ? "/john.jpg" : profileImage.src || userData.picture;
+      userData === null ? "/john.jpg" : profileImage.src || userData.avatar;
 
     const getPositionStyle = (position: string) => {
       switch (position) {
@@ -663,4 +674,4 @@ const DownloadButton: FC = () => {
   );
 };
 
-export default DownloadButton;
+export default memo(DownloadButton);

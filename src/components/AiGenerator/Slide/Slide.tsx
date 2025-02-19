@@ -1,7 +1,7 @@
 "use client";
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import Watermark from "./Watermark";
-import { useCarouselsState, useSlideRatio } from "@/hooks";
+import { useCarouselsState } from "@/hooks/use-carousels-state";
 import Brand from "./Brand";
 import BgOverlay from "./BgOverlay";
 import SlideHeader from "./SlideHeader";
@@ -14,18 +14,24 @@ const Slide: FC<{ slide: SlideContentType; index: number }> = ({
   index,
 }) => {
   const {
-    colors: { isAlternateSlideColors, backgroundColor, textColor, accentColor },
-    brand: { isShowInIntroSlide, isShowInOutroSlide, isShowInRegularSlide },
-    settings: { isShowWaterMark, isHideCounter },
-    arrowText: { arrowId, isOnlyArrow, introSlideArrow, regularSlideArrow },
-    contentText: {
-      secondaryFont: { name: secondaryFont },
+    carousel: {
+      data: {
+        colors: {
+          isAlternateSlideColors,
+          backgroundColor,
+          textColor,
+          accentColor,
+        },
+        brand: { isShowInIntroSlide, isShowInOutroSlide, isShowInRegularSlide },
+        settings: { isShowWaterMark, isHideCounter },
+        arrowText: { arrowId, isOnlyArrow, introSlideArrow, regularSlideArrow },
+        contentText: {
+          secondaryFont: { name: secondaryFont },
+        },
+        slideRatio: { width, height },
+      },
     },
   } = useCarouselsState();
-
-  const {
-    ratio: { width, height },
-  } = useSlideRatio();
 
   const isIntroSlide = slide.type === "intro";
   const isOutroSlide = slide.type === "outro";
@@ -46,10 +52,7 @@ const Slide: FC<{ slide: SlideContentType; index: number }> = ({
 
   return (
     <div className="h-full mx-[2px] float-left outline-none">
-      <SlideHeader
-        type={slide.type || "regular"}
-        index={index}
-      />
+      <SlideHeader type={slide.type || "regular"} index={index} />
 
       <div
         className="shadow-md"
@@ -110,4 +113,4 @@ const Slide: FC<{ slide: SlideContentType; index: number }> = ({
   );
 };
 
-export default Slide;
+export default memo(Slide);

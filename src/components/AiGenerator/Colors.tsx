@@ -1,7 +1,6 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { InputColor, Switch } from "../ui";
 import { darkColors, lightColors } from "@/assets/slide-colors";
-import { useColors } from "@/hooks";
 import { useDispatch } from "react-redux";
 import {
   setAccentColor,
@@ -10,20 +9,27 @@ import {
   setTextColor,
   toggleAlternateSlideColors,
   toggleCustomColors,
-} from "@/store";
+} from "@/store/carousels.slice";
 import { useTranslation } from "react-i18next";
+import { useCarouselsState } from "@/hooks/use-carousels-state";
 
 const Colors: FC = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const {
-    isUseCustomColors,
-    isAlternateSlideColors,
-    backgroundColor,
-    textColor,
-    accentColor,
-  } = useColors();
+    carousel: {
+      data: {
+        colors: {
+          isUseCustomColors,
+          isAlternateSlideColors,
+          backgroundColor,
+          textColor,
+          accentColor,
+        },
+      },
+    },
+  } = useCarouselsState();
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
@@ -169,4 +175,4 @@ const Colors: FC = () => {
   );
 };
 
-export default Colors;
+export default memo(Colors);

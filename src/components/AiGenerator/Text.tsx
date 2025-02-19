@@ -1,6 +1,6 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, memo } from "react";
 import { Button, Combobox, ComboboxItem, Label, Slider, Switch } from "../ui";
-import { useContentText } from "@/hooks";
+import { useCarouselsState } from "@/hooks/use-carousels-state";
 import {
   setContentFontSize,
   setContentFontTextAlignment,
@@ -8,7 +8,7 @@ import {
   setSecondaryFont,
   setFontPair,
   toggleCustomFontsEnabled,
-} from "@/store";
+} from "@/store/carousels.slice";
 import { useDispatch } from "react-redux";
 import { googleFonts, fontPairs } from "@/assets/fonts";
 import { useTranslation } from "react-i18next";
@@ -27,32 +27,18 @@ const Text: FC = () => {
   ];
 
   const {
-    isCustomFontsEnabled,
-    primaryFont,
-    secondaryFont,
-    fontSize,
-    fontTextAlignment,
-  } = useContentText();
-
-  useEffect(() => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = primaryFont.href;
-    document.head.appendChild(link);
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, [primaryFont.href]);
-
-  useEffect(() => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = secondaryFont.href;
-    document.head.appendChild(link);
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, [secondaryFont.href]);
+    carousel: {
+      data: {
+        contentText: {
+          isCustomFontsEnabled,
+          primaryFont,
+          secondaryFont,
+          fontSize,
+          fontTextAlignment,
+        },
+      },
+    },
+  } = useCarouselsState();
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
@@ -181,4 +167,4 @@ const Text: FC = () => {
   );
 };
 
-export default Text;
+export default memo(Text);

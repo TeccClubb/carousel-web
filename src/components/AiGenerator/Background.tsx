@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { Checkbox, Label, Slider } from "../ui";
 import { backgroundPattern } from "@/assets/slide-backgrounds";
 import {
@@ -8,23 +8,29 @@ import {
   toggleOverlayFadeCorner,
   setCornerElementId,
   setCornerElementOpacity,
-} from "@/store";
+} from "@/store/carousels.slice";
 import { useDispatch } from "react-redux";
-import { useBackgroundOverlay } from "@/hooks";
 import { useTranslation } from "react-i18next";
+import { useCarouselsState } from "@/hooks/use-carousels-state";
 
 const Background: FC = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const {
-    backgroundId,
-    overlayColor,
-    overlayOpacity = 8,
-    isOverlayFadeCorner,
-    cornerElementId,
-    cornerElementOpacity = 20,
-  } = useBackgroundOverlay();
+    carousel: {
+      data: {
+        backgroundOverlay: {
+          backgroundId,
+          overlayColor,
+          overlayOpacity = 8,
+          isOverlayFadeCorner,
+          cornerElementId,
+          cornerElementOpacity = 20,
+        },
+      },
+    },
+  } = useCarouselsState();
 
   const overlayColors = ["#FFFFFF", "#000000", "#808080"];
 
@@ -206,4 +212,4 @@ const Background: FC = () => {
   );
 };
 
-export default Background;
+export default memo(Background);

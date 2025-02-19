@@ -1,0 +1,66 @@
+"use client";
+import React, { FC, memo } from "react";
+import { LogoIcon } from "@/icons";
+import Link from "next/link";
+import {
+  Button,
+  Separator,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui";
+import { HOME_PAGE_PATH } from "@/pathNames";
+import { AvatarProfile } from "../elements";
+import { Menu } from "lucide-react";
+import { useAppState } from "@/hooks/use-app-state";
+import { useSyncAuthStatus } from "@/hooks/use-auth-status";
+import SideBar from "./SideBar";
+
+const DashboardNavbar: FC = () => {
+  const { isLoading, isLoggedIn } = useSyncAuthStatus();
+
+  const { locale } = useAppState();
+
+  return (
+    <nav className="bg-slate-50 dark:bg-gray-800">
+      <div className="px-4 sm:px-6 md:px-8 flex h-16 items-center justify-between">
+        <div className="flex items-center justify-start gap-4">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="lg:hidden [&_svg]:size-7 text-white p-2.5 -m-2.5"
+              >
+                <Menu />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="flex flex-col p-0">
+              <SheetHeader className="hidden">
+                <SheetTitle>Dashboard</SheetTitle>
+                <SheetDescription>Dashboard Description</SheetDescription>
+              </SheetHeader>
+              <SideBar />
+            </SheetContent>
+          </Sheet>
+
+          <Separator orientation="vertical" className="h-6 lg:hidden" />
+
+          <Link
+            href={`${HOME_PAGE_PATH}${locale}`}
+            className="px-3 py-2"
+            aria-current="page"
+          >
+            <LogoIcon className="w-60 h-auto" />
+          </Link>
+        </div>
+        {!isLoading && isLoggedIn && <AvatarProfile />}
+      </div>
+    </nav>
+  );
+};
+
+export default memo(DashboardNavbar);

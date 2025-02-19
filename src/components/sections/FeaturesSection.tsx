@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC, memo, ReactNode } from "react";
 import Section from "./Section";
 import Image from "next/image";
 import {
@@ -107,4 +107,4 @@ const FeaturesSection: FC<{
   );
 };
 
-export default FeaturesSection;
+export default memo(FeaturesSection);

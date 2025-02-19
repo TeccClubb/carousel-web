@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC, memo, ReactNode } from "react";
 import Section from "./Section";
 import { ToolIcon1, ToolIcon2, ToolIcon3, ToolIcon4 } from "@/icons";
 import Image from "next/image";
@@ -110,4 +110,4 @@ const DesignToolsSection: FC<{
   );
 };
 
-export default DesignToolsSection;
+export default memo(DesignToolsSection);

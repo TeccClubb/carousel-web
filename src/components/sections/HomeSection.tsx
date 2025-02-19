@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { Button } from "../ui";
 import Image from "next/image";
 import Section from "./Section";
@@ -43,4 +43,4 @@ const HomeSection: FC<{ showGradient?: boolean }> = ({ showGradient }) => {
   );
 };
 
-export default HomeSection;
+export default memo(HomeSection);

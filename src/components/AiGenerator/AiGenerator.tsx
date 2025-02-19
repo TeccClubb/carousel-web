@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useState } from "react";
+import React, { FC, memo, useEffect, useState } from "react";
 import {
   AiIcon,
   BackgroundIcon,
@@ -13,7 +13,16 @@ import {
   TextIcon,
 } from "@/icons";
 import {
+  Button,
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
   ScrollArea,
+  Separator,
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -33,9 +42,17 @@ import Randomize from "./Randomize";
 import CarouselSlider from "./CarouselSlider";
 import { useTranslation } from "react-i18next";
 import { Shuffle } from "lucide-react";
+import { useCarousels } from "@/hooks/use-carousels";
 
 const AiGenerator: FC = () => {
   const { t } = useTranslation();
+  const {
+    carousel: {
+      data: {
+        contentText: { primaryFont, secondaryFont },
+      },
+    },
+  } = useCarousels();
 
   type NavItem =
     | "ai"
@@ -50,6 +67,8 @@ const AiGenerator: FC = () => {
     | "randomize"
     | "my_carousels";
 
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [activeNavItem, setActiveNavItem] = useState<NavItem>("ai");
 
   const navItems: NavItem[] = [
@@ -67,77 +86,174 @@ const AiGenerator: FC = () => {
   ];
 
   const items = {
-    ai: { name: "AI", icon: <AiIcon />, container: <Ai /> },
+    ai: {
+      name: "AI",
+      title: "AI Carousel",
+      icon: <AiIcon />,
+      container: <Ai />,
+    },
     content: {
       name: t("content"),
+      title: "Content Settings",
       icon: <ContentIcon />,
       container: <Content />,
     },
-    text: { name: t("text"), icon: <TextIcon />, container: <Text /> },
-    colors: { name: t("colors"), icon: <ColorsIcon />, container: <Colors /> },
+    text: {
+      name: t("text"),
+      title: "Text Settings",
+      icon: <TextIcon />,
+      container: <Text />,
+    },
+    colors: {
+      name: t("colors"),
+      title: "Color Settings",
+      icon: <ColorsIcon />,
+      container: <Colors />,
+    },
     background: {
       name: t("background"),
+      title: "Background Settings",
       icon: <BackgroundIcon />,
       container: <Background />,
     },
     branding: {
       name: t("branding"),
+      title: "Branding Settings",
       icon: <BrandingIcon />,
       container: <Branding />,
     },
-    swipe: { name: t("swipe"), icon: <SwipeIcon />, container: <Swipe /> },
-    order: { name: t("order"), icon: <OrderIcon />, container: <Order /> },
+    swipe: {
+      name: t("swipe"),
+      title: "Swipe Indicator Settings",
+      icon: <SwipeIcon />,
+      container: <Swipe />,
+    },
+    order: {
+      name: t("order"),
+      title: "Slide Order Settings",
+      icon: <OrderIcon />,
+      container: <Order />,
+    },
     settings: {
       name: t("settings"),
+      title: "General Settings",
       icon: <SettingsIcon />,
       container: <Settings />,
     },
     randomize: {
       name: t("randomize"),
+      title: "Randomize",
       icon: <Shuffle className="h-5 w-5" />,
       container: <Randomize />,
     },
     my_carousels: {
       name: t("my_carousels"),
+      title: "My Carousels",
       icon: <MyCarouselsIcon />,
       container: <MyCarousels />,
     },
   };
+
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = primaryFont.href;
+    document.head.appendChild(link);
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, [primaryFont.href]);
+
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = secondaryFont.href;
+    document.head.appendChild(link);
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, [secondaryFont.href]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-start gap-0 overflow-hidden">
       <div className="w-auto min-h-[calc(100vh-4rem)] border-r overflow-auto">
         <div className="flex flex-col gap-4 py-2">
           <nav className="grid gap-1 px-2 justify-center">
-            {navItems.map((item) => (
-              <TooltipProvider key={item}>
-                <Tooltip>
-                  <TooltipTrigger
-                    onClick={() => setActiveNavItem(item)}
-                    className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 w-9 cursor-pointer ${
-                      activeNavItem === item
-                        ? `${
-                            item === "ai"
+            <TooltipProvider>
+              <ul>
+                {navItems.map((item) => (
+                  <li key={item}>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          variant={activeNavItem === item ? "default" : "ghost"}
+                          size="icon"
+                          onClick={() => {
+                            setActiveNavItem(item);
+                            if (isMobile) setDrawerOpen(true);
+                          }}
+                          className={`[&_svg]:size-5 ${
+                            activeNavItem === item && item === "ai"
                               ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0"
-                              : "bg-primary text-primary-foreground shadow hover:bg-primary/90"
-                          } dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white`
-                        : "hover:bg-accent hover:text-accent-foreground"
-                    }`}
-                  >
-                    {items[item].icon}
-                  </TooltipTrigger>
-                  <TooltipContent side="right">
-                    <span>{items[item].name}</span>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            ))}
+                              : ""
+                          }`}
+                        >
+                          {items[item].icon}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent side="right">
+                        <span>{items[item].name}</span>
+                      </TooltipContent>
+                    </Tooltip>
+                  </li>
+                ))}
+              </ul>
+            </TooltipProvider>
           </nav>
         </div>
       </div>
 
+      <Drawer open={isDrawerOpen} onOpenChange={setDrawerOpen}>
+        <DrawerTrigger asChild></DrawerTrigger>
+        <DrawerContent
+          className="mt-24 max-h-[60vh]"
+          style={{
+            pointerEvents: "auto",
+            transition: "transform 0.5s cubic-bezier(0.32, 0.72, 0, 1)",
+            transform: "translate3d(0px, 0px, 0px)",
+          }}
+        >
+          <DrawerHeader className="flex items-center px-4 py-3">
+            <DrawerTitle className="text-xl font-bold">
+              {items[activeNavItem].title}
+            </DrawerTitle>
+            <DrawerDescription className="hidden">
+              {items[activeNavItem].name}
+            </DrawerDescription>
+            <DrawerClose asChild className="ml-auto">
+              <Button variant="ghost">Close</Button>
+            </DrawerClose>
+          </DrawerHeader>
+
+          <Separator />
+
+          <ScrollArea className="h-[60vh]">
+            {items[activeNavItem].container}
+          </ScrollArea>
+        </DrawerContent>
+      </Drawer>
+
       <ScrollArea className="w-80 h-[calc(100vh-4rem)] hidden md:flex border-r">
-        {items[activeNavItem].container && items[activeNavItem].container}
+        {items[activeNavItem].container}
       </ScrollArea>
       <ScrollArea
         className="h-[calc(100vh-4rem)] flex-1 lg:border-x relative"
@@ -149,4 +265,4 @@ const AiGenerator: FC = () => {
   );
 };
 
-export default AiGenerator;
+export default memo(AiGenerator);

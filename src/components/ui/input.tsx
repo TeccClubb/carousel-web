@@ -5,7 +5,7 @@ import { Label } from "./label";
 
 const Input = React.forwardRef<
   HTMLInputElement,
-  React.ComponentProps<"input"> & { label?: string }
+  React.ComponentProps<"input"> & { label?: React.ReactNode }
 >(({ label, className, type, ...props }, ref) => {
   const id = React.useId();
   return (

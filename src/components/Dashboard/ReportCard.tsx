@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC, memo, ReactNode } from "react";
 
 const ReportCard: FC<{
   title: string;
@@ -16,4 +16,4 @@ const ReportCard: FC<{
   </div>
 );
 
-export default ReportCard;
+export default memo(ReportCard);

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { Input, Switch, Tabs, TabsContent, TabsList, TabsTrigger } from "../ui";
 import { getArrow } from "@/icons/arrows";
 import {
@@ -8,16 +8,22 @@ import {
   toggleArrowText,
   toggleIntroSlideArrow,
   toggleRegularSlideArrow,
-} from "@/store";
+} from "@/store/carousels.slice";
 import { useDispatch } from "react-redux";
-import { useArrowText } from "@/hooks";
+import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { useTranslation } from "react-i18next";
 
 const Swipe: FC = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const { isOnlyArrow, introSlideArrow, regularSlideArrow } = useArrowText();
+  const {
+    carousel: {
+      data: {
+        arrowText: { isOnlyArrow, introSlideArrow, regularSlideArrow },
+      },
+    },
+  } = useCarouselsState();
 
   const arrowIds = [
     "arrow_1",
@@ -124,4 +130,4 @@ const Swipe: FC = () => {
   );
 };
 
-export default Swipe;
+export default memo(Swipe);

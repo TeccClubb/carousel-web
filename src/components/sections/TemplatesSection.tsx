@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC, memo, ReactNode } from "react";
 import Section from "./Section";
 import { TemplateIcon1, TemplateIcon2, TemplateIcon3 } from "@/icons";
 import { useTranslation } from "react-i18next";
@@ -71,4 +71,4 @@ const TemplatesSection: FC<{
   );
 };
 
-export default TemplatesSection;
+export default memo(TemplatesSection);

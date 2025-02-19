@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import BlogCard from "./BlogCard";
 import Section from "./Section";
 import { useTranslation } from "react-i18next";
@@ -68,4 +68,4 @@ const BlogSection: FC<{
   );
 };
 
-export default BlogSection;
+export default memo(BlogSection);

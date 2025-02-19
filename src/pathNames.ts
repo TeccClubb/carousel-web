@@ -8,7 +8,7 @@ export const PRICING_PAGE_PATH = "/pricing";
 
 export const BLOG_PAGE_PATH = "/blog";
 
-export const CAROUSEL_GENERATOR_PATH = "/carousel-generator";
+export const CAROUSEL_GENERATOR_PAGE_PATH = "/carousel-generator";
 
 export const ABOUT_US_PAGE_PATH = "/about-us";
 

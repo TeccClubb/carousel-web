@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import PriceCard from "./PriceCard";
 import Section from "./Section";
 import { useTranslation } from "react-i18next";
@@ -48,4 +48,4 @@ const PriceSection: FC<{
   );
 };
 
-export default PriceSection;
+export default memo(PriceSection);

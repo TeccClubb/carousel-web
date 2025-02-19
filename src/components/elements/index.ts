@@ -1,15 +1,19 @@
-import Loading from "./Loading";
+import Loader from "./Loader";
 import AuthWithGoogle from "./AuthWithGoogle";
-import Avatar from "./Avatar";
+import AvatarProfile from "./AvatarProfile";
 import LogoutButton from "./LogoutButton";
 import LanguageChanger from "./LanguageChanger";
 import DownloadButton from "./DownloadButton";
+import Toast from "./Toast";
+import SkeletonCard from "./SkeletonCard";
 
 export {
-  Loading,
+  Loader,
   AuthWithGoogle,
-  Avatar,
+  AvatarProfile,
   LogoutButton,
   LanguageChanger,
   DownloadButton,
+  Toast,
+  SkeletonCard,
 };

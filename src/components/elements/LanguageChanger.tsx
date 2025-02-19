@@ -1,43 +1,34 @@
 "use client";
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { Combobox, ComboboxItem } from "../ui";
 import { languages } from "@/assets/languages";
 import { Languages } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { i18nConfig } from "../../../i18nConfig";
-import { useCurrentLocale } from "next-i18n-router/client";
+// import { useCurrentLocale } from "next-i18n-router/client";
+import { useAppState } from "@/hooks/use-app-state";
+import { Locale } from "@/types";
 
 const LanguageChanger: FC = () => {
-  const currentLocale = useCurrentLocale(i18nConfig) ?? "en";
+  // const currentLocale = useCurrentLocale(i18nConfig) ?? "en";
   const router = useRouter();
   const currentPathname = usePathname();
+  const { locale } = useAppState();
 
-  const handleChange = (newLocale: string) => {
-    // set cookie for next-i18n-router
-    const days = 30;
-    const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    const expires = date.toUTCString();
-    document.cookie = `CAROUSAL_WEB_LOCALE=${newLocale};expires=${expires};path=/`;
-    // redirect to the new locale path
-    if (
-      currentLocale === i18nConfig.defaultLocale &&
-      !i18nConfig.prefixDefault
-    ) {
+  const handleChange = (newLocale: Locale) => {
+    if (locale === i18nConfig.defaultLocale && !i18nConfig.prefixDefault) {
       router.push("/" + newLocale + currentPathname);
     } else {
-      router.push(
-        currentPathname.replace(`/${currentLocale}`, `/${newLocale}`)
-      );
+      router.push(currentPathname.replace(`/${locale}`, `/${newLocale}`));
     }
     router.refresh();
   };
 
   return (
     <Combobox
-      value={currentLocale}
-      onValueChange={handleChange}
-      text={languages.find((lang) => lang.locale === currentLocale)?.label}
+      value={locale}
+      onValueChange={(value) => handleChange(value as Locale)}
+      text={languages.find((lang) => lang.locale === locale)?.label}
       tickSide="left"
       icon={<Languages className="h-5 w-5" />}
       emptyMessage="No language found"
@@ -54,4 +45,4 @@ const LanguageChanger: FC = () => {
   );
 };
 
-export default LanguageChanger;
+export default memo(LanguageChanger);

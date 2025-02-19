@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { getBrightness } from "@/lib/utils";
 import { ChevronRightIcon } from "lucide-react";
 import { getArrow } from "@/icons/arrows";
@@ -32,4 +32,4 @@ const ArrowText: FC<{
   );
 };
 
-export default ArrowText;
+export default memo(ArrowText);

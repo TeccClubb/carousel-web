@@ -1,17 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 
 const ProjectCard: FC<{
   link: string;
   imageSrc: string;
   title: string;
-}> = ({ link, imageSrc, title }) => {
+  onClick?: () => void;
+}> = ({ link, imageSrc, title, onClick }) => {
   return (
     // <div className="p-4 w-full lg:w-1/3 sm:w-1/2">
     <div className="w-full flex justify-start items-start">
       <Link
         href={link}
+        onClick={onClick}
         className="bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex flex-col items-start rounded-2xl w-full shadow-lg transition duration-300"
       >
         <Image
@@ -32,7 +34,7 @@ const ProjectCard: FC<{
   );
 };
 
-export default ProjectCard;
+export default memo(ProjectCard);
 
 // import Image from "next/image";
 // import Link from "next/link";

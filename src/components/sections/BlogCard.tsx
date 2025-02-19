@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 
 const BlogCard: FC<{
   link: string;
@@ -38,4 +38,4 @@ const BlogCard: FC<{
   );
 };
 
-export default BlogCard;
+export default memo(BlogCard);

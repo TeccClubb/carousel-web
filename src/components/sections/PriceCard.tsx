@@ -1,5 +1,5 @@
 import { TickIcon } from "@/icons";
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { Button } from "../ui";
 import { useTranslation } from "react-i18next";
 
@@ -61,4 +61,4 @@ const PriceCard: FC<{
   );
 };
 
-export default PriceCard;
+export default memo(PriceCard);

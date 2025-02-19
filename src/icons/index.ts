@@ -23,7 +23,6 @@ import InstagramIcon from "./InstagramIcon";
 import LinkedInIcon from "./LinkedInIcon";
 import WelcomeIcon from "./WelcomeIcon";
 import GoogleIcon from "./GoogleIcon";
-import BarsIcon from "./BarsIcon";
 import AiIcon from "./AiIcon";
 import ContentIcon from "./ContentIcon";
 import TextIcon from "./TextIcon";
@@ -49,6 +48,8 @@ import HorizontalIcon from "./HorizontalIcon";
 import HorizontalReverseIcon from "./HorizontalReverseIcon";
 import VerticalIcon from "./VerticalIcon";
 import VerticalReverseIcon from "./VerticalReverseIcon";
+import InfoIcon from "./InfoIcon";
+import CheckedCircleIcon from "./CheckedCircleIcon";
 
 export {
   LogoIcon,
@@ -76,7 +77,6 @@ export {
   LinkedInIcon,
   WelcomeIcon,
   GoogleIcon,
-  BarsIcon,
   AiIcon,
   ContentIcon,
   TextIcon,
@@ -102,4 +102,6 @@ export {
   HorizontalReverseIcon,
   VerticalIcon,
   VerticalReverseIcon,
+  InfoIcon,
+  CheckedCircleIcon,
 };

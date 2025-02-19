@@ -1,7 +1,6 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { Avatar, AvatarFallback, AvatarImage, Input, Switch } from "../ui";
 import { useDispatch } from "react-redux";
-import { useBrand, useUserData } from "@/hooks";
 import {
   setBrandHandle,
   setBrandName,
@@ -12,38 +11,73 @@ import {
   toggleBrandShowInIntroSlide,
   toggleBrandShowInOutroSlide,
   toggleBrandShowInRegularSlide,
-} from "@/store";
+} from "@/store/carousels.slice";
 import { useTranslation } from "react-i18next";
+import { useUserState } from "@/hooks/use-user-state";
+import { useCarouselsState } from "@/hooks/use-carousels-state";
+import { uploadImage } from "@/lib/utils";
+import { useToast } from "@/hooks/use-sonner-toast";
+import { setLoading } from "@/store/app.slice";
 
 const Branding: FC = () => {
   const dispatch = useDispatch();
+  const toast = useToast();
   const { t } = useTranslation();
   const {
-    isShowInIntroSlide,
-    isShowInOutroSlide,
-    isShowInRegularSlide,
-    name,
-    handle,
-    profileImage,
-  } = useBrand();
+    carousel: {
+      data: {
+        brand: {
+          isShowInIntroSlide,
+          isShowInOutroSlide,
+          isShowInRegularSlide,
+          name,
+          handle,
+          profileImage,
+        },
+      },
+    },
+  } = useCarouselsState();
 
-  const userData = useUserData();
+  const { userData: user } = useUserState();
 
-  const brandName = userData === null ? "John Doe" : name.text ?? userData.name;
-  const brandHandle =
-    userData === null ? "@pixmart" : handle.text ?? userData.email;
+  const brandName = user === null ? "John Doe" : name.text ?? user.name;
+  const brandHandle = user === null ? "https://carouselbuilder.io" : handle.text ?? user.email;
   const brandImageSrc =
-    userData === null ? "/john.jpg" : profileImage.src || userData.picture;
+    user === null ? "/john.jpg" : profileImage.src || user.avatar;
+
+  const loadingSetter = ({
+    isLoading,
+    title,
+  }: {
+    isLoading: boolean;
+    title?: string;
+  }) => {
+    dispatch(setLoading({ isLoading, title }));
+  };
+
+  const onError = (message: string) => toast.error(message);
 
   const handleImageChoose = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]; // Get the first selected file
-
-    if (file && file.type.startsWith("image/")) {
-      const fileURL = URL.createObjectURL(file);
-
-      dispatch(setBrandProfileSrc(fileURL));
-    } else {
-      alert("Please select a valid image file.");
+    const file = event.target.files?.[0];
+    if (file) {
+      const fileType = file.type;
+      if (
+        fileType === "image/jpeg" ||
+        fileType === "image/png" ||
+        fileType === "image/jpg"
+      ) {
+        uploadImage({
+          oldUrl: brandImageSrc,
+          file,
+          loadingSetter,
+          onError,
+          onImageSelect: (imageSrc) => {
+            dispatch(setBrandProfileSrc(imageSrc));
+          },
+        });
+      } else {
+        toast.error("Please select an image in jpeg, png, or jpg formats.");
+      }
     }
   };
 
@@ -63,9 +97,7 @@ const Branding: FC = () => {
             onChange={(e) => dispatch(setBrandName(e.target.value.trim()))}
             type="text"
             placeholder={
-              userData !== null
-                ? userData.name
-                : t("branding_panel_switch_name_label")
+              user !== null ? user.name : t("branding_panel_switch_name_label")
             }
           />
         </div>
@@ -83,8 +115,8 @@ const Branding: FC = () => {
             onChange={(e) => dispatch(setBrandHandle(e.target.value.trim()))}
             type="text"
             placeholder={
-              userData !== null
-                ? userData.email
+              user !== null
+                ? user.email
                 : t("branding_panel_switch_handle_label")
             }
           />
@@ -134,4 +166,4 @@ const Branding: FC = () => {
   );
 };
 
-export default Branding;
+export default memo(Branding);

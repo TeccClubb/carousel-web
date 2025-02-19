@@ -1,5 +1,5 @@
 import { backgroundPattern } from "@/assets/slide-backgrounds";
-import { useBackgroundOverlay, useColors } from "@/hooks";
+import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { getBrightness } from "@/lib/utils";
 import React, { CSSProperties, FC, memo } from "react";
 
@@ -8,13 +8,19 @@ const BgOverlay: FC<{
   isOddSlide: boolean;
 }> = ({ bgColor, isOddSlide }) => {
   const {
-    backgroundId,
-    overlayOpacity = 8,
-    cornerElementId,
-    cornerElementOpacity = 20,
-    isOverlayFadeCorner,
-  } = useBackgroundOverlay();
-  const { backgroundColor, accentColor } = useColors();
+    carousel: {
+      data: {
+        backgroundOverlay: {
+          backgroundId,
+          overlayOpacity = 8,
+          cornerElementId,
+          cornerElementOpacity = 20,
+          isOverlayFadeCorner,
+        },
+        colors: { backgroundColor, accentColor },
+      },
+    },
+  } = useCarouselsState();
 
   const background =
     cornerElementId === "element_3"

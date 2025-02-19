@@ -1,17 +1,24 @@
 "use client";
 import React, { FC, memo } from "react";
-import { useBrand, useUserData } from "@/hooks";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui";
+import { useUserState } from "@/hooks/use-user-state";
+import { useCarouselsState } from "@/hooks/use-carousels-state";
 
 const Brand: FC<{ color: string }> = ({ color }) => {
-  const { name, handle, profileImage } = useBrand();
-  const userData = useUserData();
+  const {
+    carousel: {
+      data: {
+        brand: { name, handle, profileImage },
+      },
+    },
+  } = useCarouselsState();
+  const { userData: user } = useUserState();
 
-  const brandName = userData === null ? "John Doe" : name.text || userData.name;
+  const brandName = user === null ? "John Doe" : name.text || user.name;
   const brandHandle =
-    userData === null ? "Pixmart" : handle.text || userData.email;
+    user === null ? "https://carouselbuilder.io" : handle.text || user.email;
   const brandImageSrc =
-    userData === null ? "/john.jpg" : profileImage.src || userData.picture;
+    user === null ? "/john.jpg" : profileImage.src || user.avatar;
 
   return (
     <div
@@ -20,12 +27,10 @@ const Brand: FC<{ color: string }> = ({ color }) => {
     >
       <div className="flex items-center justify-center">
         {profileImage.isEnabled && (
-          <span className="w-[6em] h-[6em] mr-[1em] rounded-[5em] shrink-0">
-            <Avatar className="size-9">
-              <AvatarImage src={brandImageSrc} />
-              <AvatarFallback>{brandName}</AvatarFallback>
-            </Avatar>
-          </span>
+          <Avatar className="w-[6em] h-[6em] mr-[1em] shrink-0">
+            <AvatarImage src={brandImageSrc} />
+            <AvatarFallback>{brandName}</AvatarFallback>
+          </Avatar>
         )}
         <div className="flex flex-col items-start justify-center relative z-[1]">
           {name.isEnabled && (

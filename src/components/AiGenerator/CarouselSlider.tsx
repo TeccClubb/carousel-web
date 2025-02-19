@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, memo, useEffect } from "react";
 import {
   Button,
   Carousel,
@@ -10,25 +10,32 @@ import {
   Label,
 } from "../ui";
 import Slide from "./Slide/Slide";
-import { useCarouselsState, useLastIndex } from "@/hooks";
+import { useAppState } from "@/hooks/use-app-state";
 import { useDispatch } from "react-redux";
-import { setCurrentIndex, zoomIn, zoomOut } from "@/store";
+import { zoomIn, zoomOut } from "@/store/app.slice";
+import { setCurrentIndex } from "@/store/carousels.slice";
 import { Minus, Plus } from "lucide-react";
+import { useCarouselsState } from "@/hooks/use-carousels-state";
 
 const CarouselSlider: FC = () => {
   const dispatch = useDispatch();
 
   const [api, setApi] = React.useState<CarouselApi>();
 
+  const { zoomValue } = useAppState();
+
   const {
     currentIndex,
-    slides: slidesData,
-    zoomValue,
-    settings: { isHideIntroSlide, isHideOutroSlide },
+    carousel: {
+      data: {
+        slides: slidesData,
+        settings: { isHideIntroSlide, isHideOutroSlide },
+      },
+    },
   } = useCarouselsState();
-  const lastIndex = useLastIndex();
 
   const slides = Array.from(slidesData);
+  const lastIndex = slides.length - 1;
 
   if (isHideIntroSlide) {
     const introSlideIndex = slides.findIndex((slide) => slide.type === "intro");
@@ -62,7 +69,12 @@ const CarouselSlider: FC = () => {
     ) {
       api?.scrollPrev();
     }
-  }, [api, currentIndex, lastIndex, isHideIntroSlide, isHideOutroSlide]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [api, isHideIntroSlide, isHideOutroSlide]);
+
+  useEffect(() => {
+    api?.scrollTo(currentIndex);
+  }, [api, currentIndex]);
 
   return (
     <div
@@ -84,7 +96,7 @@ const CarouselSlider: FC = () => {
         <CarouselNext className="-right-4" />
       </Carousel>
 
-      <ul className="flex flex-wrap gap-x-2.5">
+      <ul className="flex flex-wrap gap-2.5">
         {slides.map((_, index) => (
           <li
             key={index}
@@ -128,4 +140,4 @@ const CarouselSlider: FC = () => {
   );
 };
 
-export default CarouselSlider;
+export default memo(CarouselSlider);

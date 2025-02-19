@@ -1,33 +1,36 @@
 "use client";
-import React, { FC, ReactNode, useEffect } from "react";
+import React, { FC, memo, ReactNode, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { HOME_PAGE_PATH, LOGIN_PAGE_PATH } from "@/pathNames";
-import { useAuthStatus, useIsOnceAppLoaded } from "@/hooks";
-import { Loading } from "./elements";
+import { useAppState } from "@/hooks/use-app-state";
+import { useSyncAuthStatus } from "@/hooks/use-auth-status";
 
 const Protected: FC<{ children: ReactNode; authentication: boolean }> = ({
   children,
   authentication,
 }) => {
   const router = useRouter();
-
-  const isOnceAppLoaded = useIsOnceAppLoaded();
-
-  const { isLoading, isLoggedIn } = useAuthStatus();
+  const { locale } = useAppState();
+  const { isLoading, isOnceAppLoaded, isLoggedIn } = useSyncAuthStatus();
 
   useEffect(() => {
-    if (!isLoading && authentication !== isLoggedIn) {
-      const redirectPath = authentication ? LOGIN_PAGE_PATH : HOME_PAGE_PATH;
-      router.push(redirectPath);
+    if (!isLoading) {
+      if (authentication !== isLoggedIn) {
+        const redirectPath = authentication
+          ? `/${locale}${LOGIN_PAGE_PATH}`
+          : `${HOME_PAGE_PATH}${locale}`;
+        router.push(redirectPath);
+      }
     }
-  }, [isLoading, isLoggedIn, authentication, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn, authentication, router, isOnceAppLoaded]);
 
-  if(authentication !== isLoggedIn) {
-    return <Loading />
+  if (isOnceAppLoaded) {
+    return <>{children}</>;
+  } else if (isLoading) {
+    return <></>;
   }
-  if (isOnceAppLoaded) return <>{children}</>;
-  else if (isLoading) return <Loading />;
   return <>{children}</>;
 };
 
-export default Protected;
+export default memo(Protected);

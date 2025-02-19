@@ -1,11 +1,11 @@
 "use client";
-import React, { FC, useState } from "react";
+import React, { FC, memo, useState } from "react";
 import { CloseIcon, LogoIcon, LongRightArrow, MenuIcon } from "@/icons";
 import Link from "next/link";
 import { Button } from "./ui";
 import {
   BLOG_PAGE_PATH,
-  CAROUSEL_GENERATOR_PATH,
+  CAROUSEL_GENERATOR_PAGE_PATH,
   DASHBOARD_PAGE_PATH,
   HOME_PAGE_PATH,
   LOGIN_PAGE_PATH,
@@ -13,16 +13,21 @@ import {
   SIGNUP_PAGE_PATH,
 } from "@/pathNames";
 import { useRouter } from "next/navigation";
-import { Avatar, LanguageChanger } from "./elements";
-import { useAuthStatus, usePathname } from "@/hooks";
+import { AvatarProfile, LanguageChanger } from "./elements";
+import { useAppState } from "@/hooks/use-app-state";
+import { usePathname } from "@/hooks/use-path-name";
 import { useTranslation } from "react-i18next";
+import { useSyncAuthStatus } from "@/hooks/use-auth-status";
 
 const Navbar: FC = () => {
   const { t } = useTranslation();
+  const { locale } = useAppState();
 
-  const { isLoading, isLoggedIn } = useAuthStatus();
+  const { isLoading, isLoggedIn } = useSyncAuthStatus();
 
-  const [activePath, setActivePath] = useState<string>(HOME_PAGE_PATH);
+  const [activePath, setActivePath] = useState<string>(
+    `${HOME_PAGE_PATH}${locale}`
+  );
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
@@ -33,17 +38,17 @@ const Navbar: FC = () => {
   const navItems = [
     {
       name: t("nav_item_pricing"),
-      href: PRICING_PAGE_PATH,
-      auth: true && !isLoading,
+      href: `/${locale}${PRICING_PAGE_PATH}`,
+      auth: true,
     },
     {
       name: t("nav_item_blog"),
-      href: BLOG_PAGE_PATH,
-      auth: true && !isLoading,
+      href: `/${locale}${BLOG_PAGE_PATH}`,
+      auth: true,
     },
     {
       name: t("nav_item_dashboard"),
-      href: DASHBOARD_PAGE_PATH,
+      href: `/${locale}${DASHBOARD_PAGE_PATH}`,
       auth: !isLoading && isLoggedIn,
     },
   ];
@@ -66,14 +71,14 @@ const Navbar: FC = () => {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="hidden sm:ml-6 md:block">
-              <div className="flex space-x-4">
+              <div className="flex items-center justify-center space-x-4">
                 <Link
-                  href={HOME_PAGE_PATH}
-                  onClick={() => setActivePath(HOME_PAGE_PATH)}
+                  href={`${HOME_PAGE_PATH}${locale}`}
+                  onClick={() => setActivePath(`${HOME_PAGE_PATH}${locale}`)}
                   className="px-3 py-2"
                   aria-current="page"
                 >
-                  <LogoIcon className="w-24 h-auto" />
+                  <LogoIcon className="w-60 h-auto" />
                 </Link>
                 {navItems.map(
                   (item) =>
@@ -103,22 +108,24 @@ const Navbar: FC = () => {
 
             <Button
               className="bg-blue dark:text-white"
-              onClick={() => router.push(CAROUSEL_GENERATOR_PATH)}
+              onClick={() =>
+                router.push(`/${locale}${CAROUSEL_GENERATOR_PAGE_PATH}`)
+              }
             >
               <span className="sm:hidden">{t("generate")}</span>
               <span className="hidden sm:inline">{t("generate_carousel")}</span>
               <LongRightArrow className="hidden sm:inline" />
             </Button>
 
-            {!isLoading && isLoggedIn && <Avatar />}
+            {!isLoading && isLoggedIn && <AvatarProfile />}
 
             {!isLoading && !isLoggedIn && (
               <Button
                 onClick={() =>
                   router.push(
                     pathname !== LOGIN_PAGE_PATH
-                      ? LOGIN_PAGE_PATH
-                      : SIGNUP_PAGE_PATH
+                      ? `/${locale}${LOGIN_PAGE_PATH}`
+                      : `/${locale}${SIGNUP_PAGE_PATH}`
                   )
                 }
               >
@@ -156,4 +163,4 @@ const Navbar: FC = () => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);
