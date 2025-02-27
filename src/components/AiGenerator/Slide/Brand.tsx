@@ -3,6 +3,11 @@ import React, { FC, memo } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui";
 import { useUserState } from "@/hooks/use-user-state";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
+import {
+  DEFAULT_BRAND_HANDLE,
+  DEFAULT_BRAND_IMAGE_SRC,
+  DEFAULT_BRAND_NAME,
+} from "@/constant";
 
 const Brand: FC<{ color: string }> = ({ color }) => {
   const {
@@ -14,11 +19,16 @@ const Brand: FC<{ color: string }> = ({ color }) => {
   } = useCarouselsState();
   const { userData: user } = useUserState();
 
-  const brandName = user === null ? "John Doe" : name.text || user.name;
+  const brandName =
+    user === null ? name.text || DEFAULT_BRAND_NAME : name.text || user.name;
   const brandHandle =
-    user === null ? "https://carouselbuilder.io" : handle.text || user.email;
+    user === null
+      ? handle.text || DEFAULT_BRAND_HANDLE
+      : handle.text || user.email;
   const brandImageSrc =
-    user === null ? "/john.jpg" : profileImage.src || user.avatar;
+    user === null
+      ? profileImage.src || DEFAULT_BRAND_IMAGE_SRC
+      : profileImage.src || user.avatar;
 
   return (
     <div

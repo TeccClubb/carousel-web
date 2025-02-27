@@ -1,3 +1,8 @@
+export const DEFAULT_BRAND_NAME = "John Doe"
+export const DEFAULT_BRAND_HANDLE = "https://carouselbuilder.io"
+export const DEFAULT_BRAND_IMAGE_SRC = "/john.jpg"
+
+
 export const TOKEN_LOCAL_STORAGE_KEY = "CAROUSEL_BUILDER_USER";
 
 export const GOOGLE_API_GET_USER_INFO =

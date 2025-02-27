@@ -18,6 +18,11 @@ import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { uploadImage } from "@/lib/utils";
 import { useToast } from "@/hooks/use-sonner-toast";
 import { setLoading } from "@/store/app.slice";
+import {
+  DEFAULT_BRAND_HANDLE,
+  DEFAULT_BRAND_IMAGE_SRC,
+  DEFAULT_BRAND_NAME,
+} from "@/constant";
 
 const Branding: FC = () => {
   const dispatch = useDispatch();
@@ -40,10 +45,16 @@ const Branding: FC = () => {
 
   const { userData: user } = useUserState();
 
-  const brandName = user === null ? "John Doe" : name.text ?? user.name;
-  const brandHandle = user === null ? "https://carouselbuilder.io" : handle.text ?? user.email;
+  const brandName =
+    user === null ? name.text ?? DEFAULT_BRAND_NAME : name.text ?? user.name;
+  const brandHandle =
+    user === null
+      ? handle.text ?? DEFAULT_BRAND_HANDLE
+      : handle.text ?? user.email;
   const brandImageSrc =
-    user === null ? "/john.jpg" : profileImage.src || user.avatar;
+    user === null
+      ? profileImage.src || DEFAULT_BRAND_IMAGE_SRC
+      : profileImage.src || user.avatar;
 
   const loadingSetter = ({
     isLoading,
@@ -94,11 +105,9 @@ const Branding: FC = () => {
           </div>
           <Input
             value={brandName}
-            onChange={(e) => dispatch(setBrandName(e.target.value.trim()))}
+            onChange={(e) => dispatch(setBrandName(e.target.value))}
             type="text"
-            placeholder={
-              user !== null ? user.name : t("branding_panel_switch_name_label")
-            }
+            placeholder={user !== null ? user.name : DEFAULT_BRAND_NAME}
           />
         </div>
 
@@ -112,13 +121,9 @@ const Branding: FC = () => {
           </div>
           <Input
             value={brandHandle}
-            onChange={(e) => dispatch(setBrandHandle(e.target.value.trim()))}
+            onChange={(e) => dispatch(setBrandHandle(e.target.value))}
             type="text"
-            placeholder={
-              user !== null
-                ? user.email
-                : t("branding_panel_switch_handle_label")
-            }
+            placeholder={user !== null ? user.email : DEFAULT_BRAND_HANDLE}
           />
         </div>
 
