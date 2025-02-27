@@ -14,7 +14,6 @@ import {
   Switch,
   Textarea,
 } from "@/components/ui";
-import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import {
   addNewSlide,
@@ -40,7 +39,6 @@ const SlideHeader: FC<{
 }> = ({ type, index }) => {
   const dispatch = useDispatch();
   const toast = useToast();
-  const { t } = useTranslation();
 
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
@@ -133,16 +131,16 @@ const SlideHeader: FC<{
                   <Switch
                     checked={isSubTitleEnabled}
                     onCheckedChange={() => dispatch(toggleNewSlideSubTitle())}
-                    label={t("content_panel_switch_sub_title_label")}
+                    label="Sub Title"
                   />
                 </div>
                 <Input
                   value={subTitle}
                   onChange={(e) =>
-                    dispatch(setNewSlideSubTitle(e.target.value.trim()))
+                    dispatch(setNewSlideSubTitle(e.target.value))
                   }
                   type="text"
-                  placeholder={t("content_panel_sub_title_placeholder")}
+                  placeholder="Enter your sub title"
                 />
               </div>
 
@@ -151,16 +149,14 @@ const SlideHeader: FC<{
                   <Switch
                     checked={isTitleEnabled}
                     onCheckedChange={() => dispatch(toggleNewSlideTitle())}
-                    label={t("content_panel_switch_title_label")}
+                    label="Title"
                   />
                 </div>
                 <Input
                   value={title}
-                  onChange={(e) =>
-                    dispatch(setNewSlideTitle(e.target.value.trim()))
-                  }
+                  onChange={(e) => dispatch(setNewSlideTitle(e.target.value))}
                   type="text"
-                  placeholder={t("content_panel_title_placeholder")}
+                  placeholder="Enter your title"
                 />
               </div>
 
@@ -171,16 +167,16 @@ const SlideHeader: FC<{
                     onCheckedChange={() =>
                       dispatch(toggleNewSlideDescription())
                     }
-                    label={t("content_panel_switch_description_label")}
+                    label="Description"
                   />
                 </div>
                 <Textarea
                   value={description}
                   rows={4}
                   onChange={(e) =>
-                    dispatch(setNewSlideDescription(e.target.value.trim()))
+                    dispatch(setNewSlideDescription(e.target.value))
                   }
-                  placeholder={t("content_panel_description_placeholder")}
+                  placeholder="Enter your description"
                   className="resize-none"
                 />
               </div>
@@ -190,7 +186,7 @@ const SlideHeader: FC<{
                   <Switch
                     checked={isImageEnabled}
                     onCheckedChange={() => dispatch(toggleNewSlideImage())}
-                    label={t("content_panel_switch_image_label")}
+                    label="Image"
                   />
                 </div>
                 <Input

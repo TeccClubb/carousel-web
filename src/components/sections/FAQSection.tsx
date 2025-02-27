@@ -21,14 +21,12 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 
 const FAQSection: FC<{
   isHeroSection?: boolean;
   showGradient?: boolean;
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
-  const { t } = useTranslation();
   const faqs: FAQ[] = [
     {
       question: "Can I request a refund?",
@@ -111,7 +109,7 @@ const FAQSection: FC<{
         <div className="text-center lg:text-left">
           <span className="text-[#0F73F6] text-base font-medium">FAQ</span>
           <h1 className="text-gray-900 dark:text-white lg:text-5xl md:text-4xl text-3xl font-semibold lg:leading-[58px]">
-            {t("faq_section_heading")}
+            Answers to Your Questions
           </h1>
         </div>
 
@@ -122,11 +120,11 @@ const FAQSection: FC<{
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("faq_section_name_label")}</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder={t("faq_section_name_placeholder")}
+                      placeholder="What is your name (optional)"
                       {...field}
                     />
                   </FormControl>
@@ -140,11 +138,11 @@ const FAQSection: FC<{
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("faq_section_email_label")}</FormLabel>
+                  <FormLabel>Email Address *</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder={t("faq_section_email_placeholder")}
+                      placeholder="Enter your email address"
                       {...field}
                     />
                   </FormControl>
@@ -158,10 +156,10 @@ const FAQSection: FC<{
               name="message"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("faq_section_message_label")}</FormLabel>
+                  <FormLabel>Question *</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder={t("faq_section_message_placeholder")}
+                      placeholder="Type here your Question."
                       className="min-h-32"
                       {...field}
                     />
@@ -175,7 +173,7 @@ const FAQSection: FC<{
               type="submit"
               className="bg-blue-200 text-blue-600 hover:bg-blue-300 text-base font-bold leading-6 self-end px-10 py-5 rounded-lg"
             >
-              {t("faq_section_btn_text")}
+              Ask Us A Question
             </Button>
           </form>
         </Form>

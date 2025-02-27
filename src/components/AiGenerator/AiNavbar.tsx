@@ -36,7 +36,6 @@ import {
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { AvatarProfile, DownloadButton, Toast } from "../elements";
-import { useTranslation } from "react-i18next";
 import { Save } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { SAVE_CAROUSEL_ROUTE } from "@/constant";
@@ -91,8 +90,6 @@ const AiNavbar: FC = () => {
       toast.error("Please select an image in jpeg, png, or jpg formats.");
     }
   };
-
-  const { t } = useTranslation();
 
   const handleSave = async () => {
     if (!user) {
@@ -178,10 +175,7 @@ const AiNavbar: FC = () => {
     <nav className="bg-slate-50 dark:bg-gray-800">
       <div className="px-1 sm:px-2 lg:px-6">
         <div className="flex h-16 items-center justify-start sm:justify-between gap-6">
-          <Link
-            href={`${HOME_PAGE_PATH}${locale}`}
-            aria-current="page"
-          >
+          <Link href={`${HOME_PAGE_PATH}${locale}`} aria-current="page">
             <LogoIcon className="w-32 sm:w-40 md:w-60 h-auto" />
           </Link>
 
@@ -190,7 +184,7 @@ const AiNavbar: FC = () => {
               <Button size="sm" onClick={handleSave}>
                 {!isLoggedIn && <LockIcon />}
                 {isLoggedIn && <Save />}
-                <span className="hidden sm:inline">{t("save_btn_text")}</span>
+                <span className="hidden sm:inline">Save</span>
               </Button>
             )}
 
@@ -207,10 +201,10 @@ const AiNavbar: FC = () => {
                   <div className="grid gap-2">
                     <Input
                       value={carouselTitle}
-                      label={t("content_panel_switch_title_label")}
+                      label="Title"
                       onChange={(e) => dispatch(setTitle(e.target.value))}
                       type="text"
-                      placeholder={t("content_panel_title_placeholder")}
+                      placeholder="Enter your title"
                     />
                   </div>
 
@@ -218,7 +212,7 @@ const AiNavbar: FC = () => {
                     <Input
                       label={
                         <>
-                          {t("content_panel_switch_image_label")}{" "}
+                          Image
                           {imageFile && (
                             <span style={{ color: "green" }}>
                               ({imageFile.name})
@@ -251,12 +245,12 @@ const AiNavbar: FC = () => {
               onValueChange={handleSlideRatioChange}
             >
               <SelectTrigger>
-                <SelectValue placeholder={t("carousal_type")} />
+                <SelectValue placeholder="Carousel Type" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel className="text-muted-foreground font-medium text-xs py-[0.375rem] px-2">
-                    {t("carousal_type")}
+                    Carousel Type
                   </SelectLabel>
                   {ratios.map((ratio) => (
                     <SelectItem
@@ -300,9 +294,7 @@ const AiNavbar: FC = () => {
                   )
                 }
               >
-                {pathname !== LOGIN_PAGE_PATH
-                  ? t("login_btn_text")
-                  : t("signup_btn_text")}
+                {pathname !== LOGIN_PAGE_PATH ? "Login" : "Signup"}
               </Button>
             )}
           </div>

@@ -40,14 +40,12 @@ import Settings from "./Settings";
 import MyCarousels from "./MyCarousels";
 import Randomize from "./Randomize";
 import CarouselSlider from "./CarouselSlider";
-import { useTranslation } from "react-i18next";
 import { Shuffle } from "lucide-react";
 import { useCarousels } from "@/hooks/use-carousels";
 import { useDispatch } from "react-redux";
 import { setZoomValue } from "@/store/app.slice";
 
 const AiGenerator: FC = () => {
-  const { t } = useTranslation();
   const dispatch = useDispatch();
   const {
     carousel: {
@@ -98,61 +96,61 @@ const AiGenerator: FC = () => {
       container: <Ai />,
     },
     content: {
-      name: t("content"),
+      name: "Content",
       title: "Content Settings",
       icon: <ContentIcon />,
       container: <Content />,
     },
     text: {
-      name: t("text"),
+      name: "Text",
       title: "Text Settings",
       icon: <TextIcon />,
       container: <Text />,
     },
     colors: {
-      name: t("colors"),
+      name: "Colors",
       title: "Color Settings",
       icon: <ColorsIcon />,
       container: <Colors />,
     },
     background: {
-      name: t("background"),
+      name: "Background",
       title: "Background Settings",
       icon: <BackgroundIcon />,
       container: <Background />,
     },
     branding: {
-      name: t("branding"),
+      name: "Branding",
       title: "Branding Settings",
       icon: <BrandingIcon />,
       container: <Branding />,
     },
     swipe: {
-      name: t("swipe"),
+      name: "Swipe",
       title: "Swipe Indicator Settings",
       icon: <SwipeIcon />,
       container: <Swipe />,
     },
     order: {
-      name: t("order"),
+      name: "Order",
       title: "Slide Order Settings",
       icon: <OrderIcon />,
       container: <Order />,
     },
     settings: {
-      name: t("settings"),
+      name: "Settings",
       title: "General Settings",
       icon: <SettingsIcon />,
       container: <Settings />,
     },
     randomize: {
-      name: t("randomize"),
+      name: "Randomize",
       title: "Randomize",
       icon: <Shuffle className="h-5 w-5" />,
       container: <Randomize />,
     },
     my_carousels: {
-      name: t("my_carousels"),
+      name: "My Carousels",
       title: "My Carousels",
       icon: <MyCarouselsIcon />,
       container: <MyCarousels />,

@@ -10,13 +10,11 @@ import { setDashboardActiveItem, setLoading } from "@/store/app.slice";
 import { setUserData } from "@/store/user.slice";
 import Link from "next/link";
 import React, { FC, memo } from "react";
-import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 
 const SideBar: FC = () => {
   const dispatch = useDispatch();
   const { dashboardActiveItem } = useAppState();
-  const { t } = useTranslation();
   const { locale } = useAppState();
   const toast = useToast();
   const { userData: user } = useUserState();
@@ -63,7 +61,7 @@ const SideBar: FC = () => {
                 }  flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3`}
               >
                 <DashboardIcon />
-                {t("dashboard_heading")}
+                Dashboard
               </li>
             </ul>
           </li>
@@ -71,7 +69,7 @@ const SideBar: FC = () => {
           <li>
             <ul className="-mx-2 space-y-1">
               <span className="font-semibold text-xs leading-6">
-                {t("dashboard_my_account_heading")}
+                My Account
               </span>
 
               <li
@@ -83,7 +81,7 @@ const SideBar: FC = () => {
                 } flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3`}
               >
                 <ProfileIcon />
-                {t("dashboard_profile_text")}
+                Profile
               </li>
 
               <li>
@@ -94,7 +92,7 @@ const SideBar: FC = () => {
                   }
                 >
                   <PlanIcon />
-                  {t("dashboard_plan_text")}
+                  Plan
                 </Link>
               </li>
             </ul>
@@ -105,7 +103,7 @@ const SideBar: FC = () => {
             className="mt-auto -mx-2 text-white bg-red-600 hover:text-white hover:bg-red-500 flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3"
           >
             <PowerOffIcon />
-            {t("dashboard_logout_text")}
+            Logout
           </li>
         </ul>
       </nav>

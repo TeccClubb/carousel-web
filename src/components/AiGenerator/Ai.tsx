@@ -11,7 +11,6 @@ import {
   Textarea,
 } from "../ui";
 import { languages } from "@/assets/languages";
-import { useTranslation } from "react-i18next";
 import axios, { AxiosError } from "axios";
 import { OPENAI_API_ENDPOINT, OPENAI_API_KEY } from "@/constant";
 import { useToast } from "@/hooks/use-sonner-toast";
@@ -45,7 +44,6 @@ const Ai: FC = () => {
 
   const [locale, setLocale] = useState<string>(defaultLocale);
   const language = languages.find((lang) => lang.locale === locale)?.name;
-  const { t } = useTranslation();
   const toast = useToast();
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -116,18 +114,18 @@ const Ai: FC = () => {
             onValueChange={(value) => dispatch(setAiPanelSelectedTab(value))}
           >
             <TabsList>
-              <TabsTrigger value="topic">{t("ai_topic")}</TabsTrigger>
-              <TabsTrigger value="text">{t("ai_text")}</TabsTrigger>
-              <TabsTrigger value="url">{t("ai_url")}</TabsTrigger>
+              <TabsTrigger value="topic">Topic</TabsTrigger>
+              <TabsTrigger value="text">Text</TabsTrigger>
+              <TabsTrigger value="url">URL</TabsTrigger>
             </TabsList>
             <TabsContent value="topic">
               <div className="space-y-2">
                 <Input
-                  label={t("ai_topic")}
+                  label="Topic"
                   type="text"
                   value={topic}
                   onChange={(e) => dispatch(setAiTopic(e.target.value))}
-                  placeholder={t("ai_topic_placeholder")}
+                  placeholder="Enter a topic"
                 />
               </div>
             </TabsContent>
@@ -137,7 +135,7 @@ const Ai: FC = () => {
                 onChange={(e) => dispatch(setAiText(e.target.value))}
                 rows={5}
                 maxLength={textMaxLength}
-                placeholder={t("ai_text_placeholder")}
+                placeholder="Paste your text content here, not URLs (e.g., article, notes)"
               />
               <p className="text-[0.8rem] text-muted-foreground">
                 {text.length}/{textMaxLength}
@@ -146,11 +144,11 @@ const Ai: FC = () => {
             <TabsContent value="url">
               <div className="space-y-2">
                 <Input
-                  label={t("ai_url_label")}
+                  label="Article or Blog URL"
                   type="text"
                   value={url}
                   onChange={(e) => dispatch(setAiURL(e.target.value))}
-                  placeholder={t("ai_url_placeholder")}
+                  placeholder="Article or Blog URL"
                 />
               </div>
             </TabsContent>
@@ -161,7 +159,7 @@ const Ai: FC = () => {
           <div className="flex-1">
             <div className="space-y-2">
               <Input
-                label={t("ai_total_slides_label")}
+                label="Total Slides"
                 type="number"
                 placeholder="How many slides?"
                 min={4}
@@ -173,13 +171,13 @@ const Ai: FC = () => {
           <div className="flex-1">
             <div className="space-y-2">
               <Combobox
-                label={t("ai_language_label")}
+                label="Language"
                 value={locale}
                 onValueChange={(value) => setLocale(value)}
                 text={languages.find((lang) => lang.locale === locale)!.label}
                 tickSide="left"
-                emptyMessage={t("ai_language_empty_message")}
-                placeholder={t("ai_language_placeholder")}
+                emptyMessage="No language found"
+                placeholder="Select Language"
                 size="md"
                 className="w-full"
               >
@@ -209,7 +207,7 @@ const Ai: FC = () => {
               &nbsp;Generating...
             </>
           )}
-          {!isLoading && t("ai_btn_text")}
+          {!isLoading && "Generate carousel with AI"}
         </Button>
       </form>
     </div>

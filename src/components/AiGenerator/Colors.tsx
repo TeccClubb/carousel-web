@@ -10,12 +10,10 @@ import {
   toggleAlternateSlideColors,
   toggleCustomColors,
 } from "@/store/carousels.slice";
-import { useTranslation } from "react-i18next";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 
 const Colors: FC = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
 
   const {
     carousel: {
@@ -39,7 +37,7 @@ const Colors: FC = () => {
             <Switch
               checked={isUseCustomColors}
               onCheckedChange={() => dispatch(toggleCustomColors())}
-              label={t("colors_panel_switch_custom_colors_label")}
+              label="Use Custom Colors"
             />
           </div>
           {isUseCustomColors && (
@@ -48,21 +46,21 @@ const Colors: FC = () => {
                 <InputColor
                   color={backgroundColor}
                   setColor={(color) => dispatch(setBackgroundColor(color))}
-                  label={t("colors_panel_background_color_label")}
+                  label="Background Color"
                 />
               </div>
               <div>
                 <InputColor
                   color={textColor}
                   setColor={(color) => dispatch(setTextColor(color))}
-                  label={t("colors_panel_text_color_label")}
+                  label="Text Color"
                 />
               </div>
               <div>
                 <InputColor
                   color={accentColor}
                   setColor={(color) => dispatch(setAccentColor(color))}
-                  label={t("colors_panel_accent_color_label")}
+                  label="Accent Color"
                 />
               </div>
             </div>
@@ -73,7 +71,7 @@ const Colors: FC = () => {
           <Switch
             checked={isAlternateSlideColors}
             onCheckedChange={() => dispatch(toggleAlternateSlideColors())}
-            label={t("colors_panel_switch_alternate_colors_label")}
+            label="Alternate Slide Colors"
           />
         </div>
       </div>
@@ -81,7 +79,7 @@ const Colors: FC = () => {
       <div className="space-y-4 py-4">
         <div>
           <h3 className="pb-2 font-semibold leading-none tracking-tight">
-            {t("colors_panel_dark_colors_label")}
+            Dark
           </h3>
           <div className="flex space-between flex-wrap gap-2">
             {darkColors.map((colors) => {
@@ -127,7 +125,7 @@ const Colors: FC = () => {
 
         <div>
           <h3 className="pb-2 font-semibold leading-none tracking-tight">
-            {t("colors_panel_light_colors_label")}
+            Light
           </h3>
           <div className="flex space-between flex-wrap gap-2">
             {lightColors.map((colors) => {

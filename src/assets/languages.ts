@@ -1,3 +1,5 @@
+import { Locale } from "@/types";
+
 export const languages = [
   { locale: "en", name: "English", label: "English" },
   { locale: "es", name: "Spanish", label: "Español" },
@@ -19,4 +21,27 @@ export const languages = [
   { locale: "sv", name: "Swedish", label: "Svenska" },
   { locale: "ar", name: "Arabic", label: "العربية" },
   { locale: "ru", name: "Russian", label: "Русский" },
+];
+
+export const locales: Locale[] = [
+  "en",
+  "es",
+  "fr",
+  "de",
+  "it",
+  "ja",
+  "ko",
+  "pl",
+  "pt",
+  "tr",
+  "vi",
+  "id",
+  "zh",
+  "th",
+  "da",
+  "nl",
+  "no",
+  "sv",
+  "ar",
+  "ru",
 ];

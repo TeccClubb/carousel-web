@@ -7,7 +7,6 @@ import SideBar from "./SideBar";
 import { CAROUSEL_GENERATOR_PAGE_PATH } from "@/pathNames";
 import { Avatar, AvatarFallback, AvatarImage, ScrollArea } from "../ui";
 import { SkeletonCard } from "../elements";
-import { useTranslation } from "react-i18next";
 import { useAppState } from "@/hooks/use-app-state";
 import { useDispatch } from "react-redux";
 import { setCarousel } from "@/store/carousels.slice";
@@ -16,7 +15,6 @@ import { useUserState } from "@/hooks/use-user-state";
 
 const Dashboard: FC = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
   const { userData: user } = useUserState();
   const { dashboardActiveItem } = useAppState();
   const { isLoading, carousels } = useCarousels();
@@ -32,16 +30,16 @@ const Dashboard: FC = () => {
             <>
               <div className="w-full">
                 <h2 className="w-full text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                  {t("dashboard_heading")}
+                  Dashboard
                 </h2>
                 <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
                   <ReportCard
-                    title={t("dashboard_total_projects_title")}
+                    title="Total Projects"
                     value={0}
                     icon={<ProjectIcon />}
                   />
                   <ReportCard
-                    title={t("dashboard_subscription_title")}
+                    title="Subscription"
                     value="3 days left"
                     icon={<PlanIcon className="w-10 h-10" />}
                   />
@@ -50,7 +48,7 @@ const Dashboard: FC = () => {
 
               <div className="w-full">
                 <h2 className="w-full text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                  {t("dashboard_your_projects_heading")}
+                  Your Projects
                 </h2>
                 <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
                   {isLoading &&

@@ -13,10 +13,10 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GOOGLE_OAUTH_CLIENT_ID } from "@/constant";
 import { usePathname } from "@/hooks/use-path-name";
 import TranslationsProvider from "./TranslationsProvider";
-import { i18nConfig } from "../../i18nConfig";
 import { Locale } from "@/types";
 import { Loader } from "./elements";
 import DashboardNavbar from "./Dashboard/DashboardNavbar";
+import { locales } from "@/assets/languages";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,7 +39,7 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
     dispatch(setLocale(locale as Locale));
   }, [dispatch, locale]);
 
-  if (!i18nConfig.locales.includes(locale as Locale)) {
+  if (!locales.includes(locale as Locale)) {
     notFound();
   }
   return (

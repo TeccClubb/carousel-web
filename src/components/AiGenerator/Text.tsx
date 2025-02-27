@@ -11,19 +11,17 @@ import {
 } from "@/store/carousels.slice";
 import { useDispatch } from "react-redux";
 import { googleFonts, fontPairs } from "@/assets/fonts";
-import { useTranslation } from "react-i18next";
 
 const Text: FC = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
 
   const textAlignments: {
     alignment: "left" | "center" | "right";
     text: string;
   }[] = [
-    { alignment: "left", text: t("text_panel_alignment_left_text") },
-    { alignment: "center", text: t("text_panel_alignment_center_text") },
-    { alignment: "right", text: t("text_panel_alignment_right_text") },
+    { alignment: "left", text: "Left" },
+    { alignment: "center", text: "Center" },
+    { alignment: "right", text: "Right" },
   ];
 
   const {
@@ -48,7 +46,7 @@ const Text: FC = () => {
             <Switch
               checked={isCustomFontsEnabled}
               onCheckedChange={() => dispatch(toggleCustomFontsEnabled())}
-              label={t("text_panel_switch_custom_fonts_label")}
+              label="Use Custom Fonts"
             />
           </div>
 
@@ -56,11 +54,11 @@ const Text: FC = () => {
             <div className="space-y-4 p-2 border rounded-lg">
               <div className="flex flex-col space-y-1">
                 <Combobox
-                  label={t("text_panel_primary_font_label")}
+                  label="Primary Font"
                   value={primaryFont.href}
                   text={primaryFont.name}
-                  emptyMessage={t("text_panel_font_empty_message")}
-                  placeholder={t("text_panel_primary_font_placeholder")}
+                  emptyMessage="No font found."
+                  placeholder="Select Primary Font"
                   className="w-full"
                   size="sm"
                 >
@@ -78,11 +76,11 @@ const Text: FC = () => {
 
               <div className="flex flex-col space-y-1">
                 <Combobox
-                  label={t("text_panel_secondary_font_label")}
+                  label="Secondary Font"
                   value={secondaryFont.href}
                   text={secondaryFont.name}
-                  emptyMessage={t("text_panel_font_empty_message")}
-                  placeholder={t("text_panel_secondary_font_placeholder")}
+                  emptyMessage="No font found."
+                  placeholder="Select Secondary Font"
                   className="w-full"
                   size="sm"
                 >
@@ -103,11 +101,11 @@ const Text: FC = () => {
 
         <div className="flex flex-col space-y-1">
           <Combobox
-            label={t("text_panel_font_pair_label")}
+            label="Font Pair"
             value={`${primaryFont.href} & ${secondaryFont.href}`}
             text={`${primaryFont.name} & ${secondaryFont.name}`}
-            emptyMessage={t("text_panel_font_empty_message")}
-            placeholder={t("text_panel_font_pair_placeholder")}
+            emptyMessage="No font found."
+            placeholder="Select Font Pair"
             className="w-full"
             size="sm"
           >
@@ -126,7 +124,7 @@ const Text: FC = () => {
         <div className="space-y-4">
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between align-top">
-              <Label asSpan>{t("font_size_label")}</Label>
+              <Label asSpan>Font Size</Label>
               <p className="text-sm text-muted-foreground">{fontSize}</p>
             </div>
 
@@ -142,7 +140,7 @@ const Text: FC = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label asSpan>{t("text_panel_text_alignment_label")}</Label>
+            <Label asSpan>Text Alignment</Label>
             <div className="grid grid-cols-3 gap-4">
               {textAlignments.map(({ alignment, text }) => (
                 <Button

@@ -29,7 +29,6 @@ import {
   SITE_MAP_PAGE_PATH,
   TERMS_AND_CONDITIONS_PAGE_PATH,
 } from "@/pathNames";
-import { useTranslation } from "react-i18next";
 import { useAppState } from "@/hooks/use-app-state";
 
 const FooterSlice: FC<{
@@ -62,7 +61,6 @@ const FooterSlice: FC<{
 );
 
 const Footer: FC = () => {
-  const { t } = useTranslation();
   const { locale } = useAppState();
 
   const socialIconSize = "1.5em";
@@ -93,35 +91,35 @@ const Footer: FC = () => {
         <div className="flex flex-wrap flex-col lg:flex-row gap-y-4">
           <div className="w-full lg:w-3/5 flex flex-wrap mt-16 lg:mt-0 px-4 lg:px-0 order-2 lg:order-1">
             <FooterSlice
-              title={t("products")}
+              title={"Products"}
               links={[
                 {
-                  text: `Linkedin ${t("carousel_generate")}`,
+                  text: `Linkedin Carousel Generate`,
                   href: LINKEDIN_CAROUSEL_GENERATE_URL,
                 },
                 {
-                  text: `TikTok ${t("carousel_generate")}`,
+                  text: `TikTok Carousel Generate`,
                   href: TIKTOK_CAROUSEL_GENERATE_URL,
                 },
                 {
-                  text: `Instagram ${t("carousel_generate")}`,
+                  text: `Instagram Carousel Generate`,
                   href: INSTAGRAM_CAROUSEL_GENERATE_URL,
                 },
                 {
-                  text: `Facebook ${t("carousel_generate")}`,
+                  text: `Facebook Carousel Generate`,
                   href: FACEBOOK_CAROUSEL_GENERATE_URL,
                 },
               ]}
             />
             <FooterSlice
-              title={t("free_tools")}
+              title={"Free Tools"}
               links={[
                 {
-                  text: `Linkedin ${t("banner_generate")}`,
+                  text: `Linkedin Banner Generate`,
                   href: LINKEDIN_BANNER_GENERATE_URL,
                 },
                 {
-                  text: `Linkedin ${t("post_image_generate")}`,
+                  text: `Linkedin Post Image Generate`,
                   href: LINKEDIN_POST_IMAGE_GENERATE_URL,
                 },
                 {
@@ -129,32 +127,32 @@ const Footer: FC = () => {
                   href: `${HOME_PAGE_PATH}${locale}`,
                 },
                 {
-                  text: t("about_us"),
+                  text: "About Us",
                   href: `/${locale}${ABOUT_US_PAGE_PATH}`,
                 },
                 {
-                  text: t("creators"),
+                  text: "Creators",
                   href: `/${locale}${CREATORS_PAGE_PATH}`,
                 },
                 {
-                  text: t("blog_articles"),
+                  text: "Blog Articles",
                   href: `/${locale}${BLOG_ARTICLES_PAGE_PATH}`,
                 },
               ]}
             />
             <FooterSlice
-              title={t("resources")}
+              title={"Resources"}
               links={[
                 {
-                  text: t("blog"),
+                  text: "Blog",
                   href: `/${locale}${BLOG_PAGE_PATH}`,
                 },
                 {
-                  text: t("features"),
+                  text: "Features",
                   href: `/${locale}${FEATURES_PAGE_PATH}`,
                 },
                 {
-                  text: t("refund_policy"),
+                  text: "Refund Policy",
                   href: `/${locale}${REFUND_POLICY_PAGE_PATH}`,
                 },
               ]}
@@ -163,7 +161,8 @@ const Footer: FC = () => {
           <div className="w-full lg:w-2/5 flex flex-col gap-y-4 items-center justify-center lg:items-start lg:justify-start px-4 order-1 lg:order-2">
             <LogoIcon className="w-56 h-auto" />
             <p className="text-gray-600 text-sm leading-6 space-y-8">
-              {t("footer_description")}
+              Your premium digital assets solution with high quality and
+              comprehensive range of products and services.
             </p>
             <div className="flex gap-x-6">
               {socialIcons.map((socialIcon) => (
@@ -184,20 +183,18 @@ const Footer: FC = () => {
         <div className="w-full max-w-7xl mx-auto p-4 flex items-center justify-center md:justify-between flex-col md:flex-row gap-y-4">
           <nav className="text-white  text-sm font-normal space-x-6">
             <Link href={`/${locale}${PRIVACY_POLICY_PAGE_PATH}`}>
-              {t("privacy_policy")}
+              Privacy Policy
             </Link>
             <span>|</span>
             <Link href={`/${locale}${TERMS_AND_CONDITIONS_PAGE_PATH}`}>
-              {t("term_and_conditions")}
+              Terms and condition
             </Link>
             <span>|</span>
-            <Link href={`/${locale}${SITE_MAP_PAGE_PATH}`}>
-              {t("site_map")}
-            </Link>
+            <Link href={`/${locale}${SITE_MAP_PAGE_PATH}`}>Site Map</Link>
           </nav>
           <span className="text-white text-sm font-normal">
-            {t("copyright")}&nbsp;&copy;&nbsp;2024 carousel builder.&nbsp;
-            {t("all_rights_reserved")}
+            Copyright&nbsp;&copy;&nbsp;2024 carousel builder.&nbsp; All rights
+            reserved.
           </span>
         </div>
       </div>

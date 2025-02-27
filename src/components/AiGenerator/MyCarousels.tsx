@@ -22,7 +22,6 @@ import {
 import { LOGIN_PAGE_PATH } from "@/pathNames";
 import { useRouter } from "next/navigation";
 import { Edit2Icon, Plus, Save, Trash2Icon } from "lucide-react";
-import { useTranslation } from "react-i18next";
 import { useUserState } from "@/hooks/use-user-state";
 import { useAppState } from "@/hooks/use-app-state";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
@@ -44,7 +43,6 @@ import { setLoading } from "@/store/app.slice";
 const MyCarousels: FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { t } = useTranslation();
   const { locale } = useAppState();
   const { userData: user } = useUserState();
   const {
@@ -242,7 +240,7 @@ const MyCarousels: FC = () => {
               }}
             >
               <Plus />
-              {t("my_carousels_panel_new_carousel_btn_text")}
+              New Carousel
             </Button>
             <Dialog
               open={isCreateDialogOpen}
@@ -260,10 +258,10 @@ const MyCarousels: FC = () => {
                   <div className="grid gap-2">
                     <Input
                       value={createdTitle}
-                      label={t("content_panel_switch_title_label")}
+                      label="Title"
                       onChange={(e) => setCreatedTitle(e.target.value)}
                       type="text"
-                      placeholder={t("content_panel_title_placeholder")}
+                      placeholder="Enter your title"
                     />
                   </div>
 
@@ -271,7 +269,7 @@ const MyCarousels: FC = () => {
                     <Input
                       label={
                         <>
-                          {t("content_panel_switch_image_label")}
+                          Image
                           {createdImageFile && (
                             <span style={{ color: "green" }}>
                               &nbsp;({createdImageFile.name})
@@ -303,12 +301,12 @@ const MyCarousels: FC = () => {
           {!user && (
             <div className="border rounded p-2 flex flex-col items-center">
               <div className="text-center text-muted-foreground">
-                {t("my_carousels_panel_message")}
+                Login to save and view carousels
               </div>
               <Button
                 onClick={() => router.push(`/${locale}${LOGIN_PAGE_PATH}`)}
               >
-                {t("login_btn_text")}
+                Login
               </Button>
             </div>
           )}
@@ -382,10 +380,10 @@ const MyCarousels: FC = () => {
                           <div className="grid gap-2">
                             <Input
                               value={updatedTitle}
-                              label={t("content_panel_switch_title_label")}
+                              label="Title"
                               onChange={(e) => setUpdatedTitle(e.target.value)}
                               type="text"
-                              placeholder={t("content_panel_title_placeholder")}
+                              placeholder="Enter your title"
                             />
                           </div>
 
@@ -393,7 +391,7 @@ const MyCarousels: FC = () => {
                             <Input
                               label={
                                 <>
-                                  {t("content_panel_switch_image_label")}{" "}
+                                  Image
                                   {updatedImageFile && (
                                     <span style={{ color: "green" }}>
                                       ({updatedImageFile.name})

@@ -12,7 +12,6 @@ import {
   toggleBrandShowInOutroSlide,
   toggleBrandShowInRegularSlide,
 } from "@/store/carousels.slice";
-import { useTranslation } from "react-i18next";
 import { useUserState } from "@/hooks/use-user-state";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { uploadImage } from "@/lib/utils";
@@ -27,7 +26,6 @@ import {
 const Branding: FC = () => {
   const dispatch = useDispatch();
   const toast = useToast();
-  const { t } = useTranslation();
   const {
     carousel: {
       data: {
@@ -100,7 +98,7 @@ const Branding: FC = () => {
             <Switch
               checked={name.isEnabled}
               onCheckedChange={() => dispatch(toggleBrandName())}
-              label={t("branding_panel_switch_name_label")}
+              label="Name"
             />
           </div>
           <Input
@@ -116,7 +114,7 @@ const Branding: FC = () => {
             <Switch
               checked={handle.isEnabled}
               onCheckedChange={() => dispatch(toggleBrandHandle())}
-              label={t("branding_panel_switch_handle_label")}
+              label="Handle"
             />
           </div>
           <Input
@@ -132,7 +130,7 @@ const Branding: FC = () => {
             <Switch
               checked={profileImage.isEnabled}
               onCheckedChange={() => dispatch(toggleBrandProfile())}
-              label={t("branding_panel_switch_image_label")}
+              label="Profile Picture"
             />
           </div>
           <Input onChange={handleImageChoose} type="file" accept="image/*" />
@@ -147,7 +145,7 @@ const Branding: FC = () => {
           <Switch
             checked={isShowInIntroSlide}
             onCheckedChange={() => dispatch(toggleBrandShowInIntroSlide())}
-            label={t("branding_panel_switch_intro_slide_label")}
+            label="Show in Intro Slide"
           />
         </div>
 
@@ -155,7 +153,7 @@ const Branding: FC = () => {
           <Switch
             checked={isShowInOutroSlide}
             onCheckedChange={() => dispatch(toggleBrandShowInOutroSlide())}
-            label={t("branding_panel_switch_outro_slide_label")}
+            label="Show in Outro Slide"
           />
         </div>
 
@@ -163,7 +161,7 @@ const Branding: FC = () => {
           <Switch
             checked={isShowInRegularSlide}
             onCheckedChange={() => dispatch(toggleBrandShowInRegularSlide())}
-            label={t("branding_panel_switch_regular_slide_label")}
+            label="Show in Regular Slides"
           />
         </div>
       </div>

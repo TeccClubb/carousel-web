@@ -2,7 +2,6 @@ import React, { FC, memo, ReactNode } from "react";
 import Section from "./Section";
 import { ToolIcon1, ToolIcon2, ToolIcon3, ToolIcon4 } from "@/icons";
 import Image from "next/image";
-import { useTranslation } from "react-i18next";
 import { designToolsSectionBlurImageSrc } from "@/assets/design-tools-section-base64-image";
 
 const DesignToolsSection: FC<{
@@ -10,7 +9,6 @@ const DesignToolsSection: FC<{
   showGradient?: boolean;
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
-  const { t } = useTranslation();
   const imageSrc = "/design-tools-section-image.png";
   const ToolCard: FC<{
     title: string;
@@ -47,10 +45,10 @@ const DesignToolsSection: FC<{
       <div className="lg:w-1/2 px-4 pr-16 flex flex-col gap-y-4">
         <div className="text-center lg:text-left">
           <span className="text-[#0F73F6] text-base font-medium">
-            {t("design_tool_section_description")}
+            Streamline Your Carousel Creation
           </span>
           <h1 className="text-gray-900 dark:text-white xl:text-5xl md:text-4xl text-3xl font-semibold lg:leading-[58px]">
-            {t("design_tool_section_heading")}
+            Accessible Design Tools
           </h1>
         </div>
 
@@ -67,29 +65,29 @@ const DesignToolsSection: FC<{
 
         <ToolCard
           isIconLarge
-          title={t("design_tool_section_card_1_title")}
-          description={t("design_tool_section_card_1_description")}
+          title="Easily Rearrange Slides"
+          description="Drag and drop slides to effortlessly change their order. Organize your content with ease."
         >
           <ToolIcon1 />
         </ToolCard>
 
         <ToolCard
-          title={t("design_tool_section_card_2_title")}
-          description={t("design_tool_section_card_2_description")}
+          title="Personalize Navigation Arrows"
+          description="Select from a variety of arrow styles or text options for seamless navigation. Customize the look and feel of your carousel."
         >
           <ToolIcon2 />
         </ToolCard>
 
         <ToolCard
-          title={t("design_tool_section_card_3_title")}
-          description={t("design_tool_section_card_3_description")}
+          title="Automatic Save Function"
+          description="Your progress is saved automatically as you work, so you never have to worry about losing your changes."
         >
           <ToolIcon3 />
         </ToolCard>
 
         <ToolCard
-          title={t("design_tool_section_card_4_title")}
-          description={t("design_tool_section_card_4_description")}
+          title="Shuffle Design Elements"
+          description="Click the Randomize button to instantly apply a unique mix of fonts, colors, backgrounds, and designs. Ideal for sparking creativity and exploring fresh ideas."
         >
           <ToolIcon4 />
         </ToolCard>

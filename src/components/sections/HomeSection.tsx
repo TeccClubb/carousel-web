@@ -2,11 +2,9 @@ import React, { FC, memo } from "react";
 import { Button } from "../ui";
 import Image from "next/image";
 import Section from "./Section";
-import { useTranslation } from "react-i18next";
 import { homeSectionBlurImageSrc } from "@/assets/home-section-base64-image";
 
 const HomeSection: FC<{ showGradient?: boolean }> = ({ showGradient }) => {
-  const { t } = useTranslation();
   return (
     <Section
       isHeroSection
@@ -15,16 +13,15 @@ const HomeSection: FC<{ showGradient?: boolean }> = ({ showGradient }) => {
     >
       <div className="lg:w-1/2 flex flex-col gap-y-6 px-4 text-center md:text-left">
         <h1 className="text-gray-900 dark:text-white break-words text-5xl font-bold leading-[60px]">
-          {`${t("home_section_heading_part_1")} `}
-          <span className="text-blue">{t("carousels")}</span>
-          {` ${t("home_section_heading_part_2")} `}AI
+          Create beautiful Social media{" "}
+          <span className="text-blue">Carousels</span> in seconds with AI
         </h1>
         <p className="text-gray-900 dark:text-white text-lg font-normal opacity-70">
-          {t("home_section_description_part_1")}&nbsp;AI,&nbsp;
-          {t("home_section_description_part_2")}
+          Carousel Maker lets you quickly create and design beautiful carousels
+          for your social media posts using AI, without any design expertise
         </p>
         <Button className="bg-blue hover:bg-blue/80 self-center sm:self-start">
-          {t("home_section_btn_text")}
+          Get Stated
         </Button>
       </div>
       <div className="w-full lg:w-1/2">

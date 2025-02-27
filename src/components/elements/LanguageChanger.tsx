@@ -4,24 +4,16 @@ import { Combobox, ComboboxItem } from "../ui";
 import { languages } from "@/assets/languages";
 import { Languages } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { i18nConfig } from "../../../i18nConfig";
-// import { useCurrentLocale } from "next-i18n-router/client";
 import { useAppState } from "@/hooks/use-app-state";
 import { Locale } from "@/types";
 
 const LanguageChanger: FC = () => {
-  // const currentLocale = useCurrentLocale(i18nConfig) ?? "en";
   const router = useRouter();
   const currentPathname = usePathname();
   const { locale } = useAppState();
 
   const handleChange = (newLocale: Locale) => {
-    if (locale === i18nConfig.defaultLocale && !i18nConfig.prefixDefault) {
-      router.push("/" + newLocale + currentPathname);
-    } else {
-      router.push(currentPathname.replace(`/${locale}`, `/${newLocale}`));
-    }
-    router.refresh();
+    router.replace(currentPathname.replace(`/${locale}`, `/${newLocale}`));
   };
 
   return (

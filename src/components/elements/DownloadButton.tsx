@@ -1,9 +1,8 @@
-"use client"
+"use client";
 import React, { FC, memo, ReactNode } from "react";
 import { Button } from "../ui";
 import { ChevronRightIcon, DownloadIcon } from "lucide-react";
 import { SlideContent as SlideContentType } from "@/types";
-import { useTranslation } from "react-i18next";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 import {
   Document,
@@ -20,8 +19,6 @@ import ReactDOMServer from "react-dom/server";
 import { useUserState } from "@/hooks/use-user-state";
 
 const DownloadButton: FC = () => {
-  const { t } = useTranslation();
-
   const domainName = "CarouselBuilder.io";
   const convertSvgToBase64 = (SvgComponent: ReactNode): string => {
     const svgString = ReactDOMServer.renderToStaticMarkup(SvgComponent);
@@ -122,7 +119,9 @@ const DownloadButton: FC = () => {
     const brandName =
       userData === null ? "John Doe" : name.text || userData.name;
     const brandHandle =
-      userData === null ? "https://carouselbuilder.io" : handle.text || userData.email;
+      userData === null
+        ? "https://carouselbuilder.io"
+        : handle.text || userData.email;
     const brandImageSrc =
       userData === null ? "/john.jpg" : profileImage.src || userData.avatar;
 
@@ -576,7 +575,7 @@ const DownloadButton: FC = () => {
                   //   />
                   <View style={styles.watermark}>
                     <Text style={styles.watermarkText}>
-                      {t("slide_water_mark_text")}&nbsp;{domainName}
+                      Created with {domainName}
                     </Text>
                   </View>
                 )}
@@ -670,7 +669,7 @@ const DownloadButton: FC = () => {
   return (
     <Button size="sm" onClick={handleDownload}>
       <DownloadIcon />
-      <span className="hidden sm:inline">{t("download_btn_text")}</span>
+      <span className="hidden sm:inline">Download</span>
     </Button>
   );
 };

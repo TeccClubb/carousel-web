@@ -10,12 +10,10 @@ import {
   setCornerElementOpacity,
 } from "@/store/carousels.slice";
 import { useDispatch } from "react-redux";
-import { useTranslation } from "react-i18next";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 
 const Background: FC = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
 
   const {
     carousel: {
@@ -89,7 +87,7 @@ const Background: FC = () => {
         <fieldset className="grid gap-6 rounded-lg border p-4 pb-8">
           <legend className="-ml-1 px-1 text-sm font-medium">
             <h3 className="font-semibold leading-none tracking-tight">
-              {t("background_panel_overlay_label")}
+              Overlay
             </h3>
           </legend>
 
@@ -108,9 +106,7 @@ const Background: FC = () => {
             </div>
 
             <div className="flex justify-between gap-2 items-center">
-              <Label htmlFor="fadeCornerActive">
-                {t("background_panel_fade_corner_label")}
-              </Label>
+              <Label htmlFor="fadeCornerActive">Fade Corner</Label>
               <Checkbox
                 id="fadeCornerActive"
                 checked={isOverlayFadeCorner}
@@ -133,16 +129,14 @@ const Background: FC = () => {
                     : ""
                 }`}
               >
-                {bgId === "background_0" && t("background_panel_none")}
+                {bgId === "background_0" && "None"}
               </div>
             ))}
           </div>
 
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between align-top">
-              <Label asSpan>
-                {t("background_panel_overlay_opacity_label")}
-              </Label>
+              <Label asSpan>Overlay Opacity</Label>
               <p className="text-sm text-muted-foreground">{overlayOpacity}</p>
             </div>
 
@@ -159,7 +153,7 @@ const Background: FC = () => {
         <fieldset className="grid gap-6 rounded-lg border p-4 pb-8">
           <legend className="-ml-1 px-1 text-sm font-medium">
             <h3 className="font-semibold leading-none tracking-tight">
-              {t("background_panel_element_label")}
+              Element
             </h3>
           </legend>
 
@@ -181,16 +175,14 @@ const Background: FC = () => {
                   backgroundPosition: "center center",
                 }}
               >
-                {element.id === "element_0" && t("background_panel_none")}
+                {element.id === "element_0" && "None"}
               </div>
             ))}
           </div>
 
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between align-top">
-              <Label asSpan>
-                {t("background_panel_element_opacity_label")}
-              </Label>
+              <Label asSpan>Element Opacity</Label>
               <p className="text-sm text-muted-foreground">
                 {cornerElementOpacity}
               </p>

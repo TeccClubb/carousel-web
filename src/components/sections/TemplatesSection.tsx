@@ -1,14 +1,12 @@
 import React, { FC, memo, ReactNode } from "react";
 import Section from "./Section";
 import { TemplateIcon1, TemplateIcon2, TemplateIcon3 } from "@/icons";
-import { useTranslation } from "react-i18next";
 
 const TemplatesSection: FC<{
   isHeroSection?: boolean;
   showGradient?: boolean;
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
-  const { t } = useTranslation();
   const TemplateCard: FC<{
     title: string;
     description: string;
@@ -39,32 +37,32 @@ const TemplatesSection: FC<{
       <div className="lg:w-1/2 px-4 flex flex-col xl:gap-y-8 gap-y-4 lg:pr-16 relative">
         <div className="absolute left-1/2 top-[6%] right-1/2 transform -translate-x-1/2 w-[25em] h-[25em] bg-[#0F73F6] opacity-10 blur-3xl rounded-full"></div>
         <TemplateCard
-          title={t("template_card_1_title")}
-          description={t("template_card_1_description")}
+          title="Background Patterns & Designs"
+          description="Enhance your slides with a selection of stunning background patterns and designs, adding depth."
         >
           <TemplateIcon1 />
         </TemplateCard>
 
         <TemplateCard
-          title={t("template_card_2_title")}
-          description={t("template_card_2_description")}
+          title="Customizable Templates"
+          description="Kickstart your design with professionally crafted templates and make them your own. No need to design from the ground."
         >
           <TemplateIcon2 />
         </TemplateCard>
 
         <TemplateCard
-          title={t("template_card_3_title")}
-          description={t("template_card_3_description")}
+          title="Upload Custom Backgrounds"
+          description="Personalize your carousels even further by uploading your own backgrounds. Achieve unique, branded visuals effortlessly."
         >
           <TemplateIcon3 />
         </TemplateCard>
       </div>
       <div className="lg:w-1/2 px-4 text-center lg:text-left">
         <span className="text-[#0F73F6] text-base font-medium">
-          {t("template_section_description")}
+          Personalize your carousels with ease
         </span>
         <h1 className="text-gray-900 dark:text-white lg:text-5xl md:text-4xl text-3xl font-semibold lg:leading-[58px]">
-          {t("template_section_heading")}
+          Flexible Templates and Designs
         </h1>
       </div>
     </Section>

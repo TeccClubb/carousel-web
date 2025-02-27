@@ -11,7 +11,6 @@ import {
   toggleHideOutroSlide,
   toggleShowWaterMark,
 } from "@/store/carousels.slice";
-import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Toast } from "../elements";
 import { useRouter } from "next/navigation";
@@ -19,7 +18,6 @@ import { PRICING_PAGE_PATH } from "@/pathNames";
 
 const Settings: FC = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
   const router = useRouter();
   const { userData: user } = useUserState();
   const { locale } = useAppState();
@@ -68,12 +66,12 @@ const Settings: FC = () => {
             <Switch
               checked={isShowWaterMark}
               onCheckedChange={handleToggleShowWatermark}
-              label={t("settings_panel_switch_watermark_label")}
+              label="Show Watermark"
               labelIcon={!user ? <LockIcon /> : undefined}
             />
           </div>
           <p className="text-sm text-muted-foreground">
-            {t("settings_panel_watermark_message")}
+            Show watermark and give credit to support our tool.
           </p>
         </div>
 
@@ -81,7 +79,7 @@ const Settings: FC = () => {
           <Switch
             checked={isHideIntroSlide}
             onCheckedChange={() => dispatch(toggleHideIntroSlide())}
-            label={t("settings_panel_switch_hide_intro_slide_label")}
+            label="Hide Intro Slide"
           />
         </div>
 
@@ -89,7 +87,7 @@ const Settings: FC = () => {
           <Switch
             checked={isHideOutroSlide}
             onCheckedChange={() => dispatch(toggleHideOutroSlide())}
-            label={t("settings_panel_switch_hide_outro_slide_label")}
+            label="Hide Outro Slide"
           />
         </div>
 
@@ -97,7 +95,7 @@ const Settings: FC = () => {
           <Switch
             checked={isHideCounter}
             onCheckedChange={() => dispatch(toggleHideCounter())}
-            label={t("settings_panel_switch_hide_counter_label")}
+            label="Hide Counter"
           />
         </div>
       </div>

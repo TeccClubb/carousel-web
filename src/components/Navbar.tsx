@@ -16,11 +16,9 @@ import { useRouter } from "next/navigation";
 import { AvatarProfile, LanguageChanger } from "./elements";
 import { useAppState } from "@/hooks/use-app-state";
 import { usePathname } from "@/hooks/use-path-name";
-import { useTranslation } from "react-i18next";
 import { useSyncAuthStatus } from "@/hooks/use-auth-status";
 
 const Navbar: FC = () => {
-  const { t } = useTranslation();
   const { locale } = useAppState();
 
   const { isLoading, isLoggedIn } = useSyncAuthStatus();
@@ -37,17 +35,17 @@ const Navbar: FC = () => {
 
   const navItems = [
     {
-      name: t("nav_item_pricing"),
+      name: "Pricing",
       href: `/${locale}${PRICING_PAGE_PATH}`,
       auth: true,
     },
     {
-      name: t("nav_item_blog"),
+      name: "Blog",
       href: `/${locale}${BLOG_PAGE_PATH}`,
       auth: true,
     },
     {
-      name: t("nav_item_dashboard"),
+      name: "Dashboard",
       href: `/${locale}${DASHBOARD_PAGE_PATH}`,
       auth: !isLoading && isLoggedIn,
     },
@@ -110,8 +108,8 @@ const Navbar: FC = () => {
               href={`/${locale}${CAROUSEL_GENERATOR_PAGE_PATH}`}
               className="bg-blue dark:text-white"
             >
-              <span className="sm:hidden">{t("generate")}</span>
-              <span className="hidden sm:inline">{t("generate_carousel")}</span>
+              <span className="sm:hidden">Generate</span>
+              <span className="hidden sm:inline">Generate Carousel</span>
               <LongRightArrow className="hidden sm:inline" />
             </LinkButton>
 
@@ -127,9 +125,7 @@ const Navbar: FC = () => {
                   )
                 }
               >
-                {pathname !== LOGIN_PAGE_PATH
-                  ? t("login_btn_text")
-                  : t("signup_btn_text")}
+                {pathname !== LOGIN_PAGE_PATH ? "Login" : "Signup"}
               </Button>
             )}
           </div>
