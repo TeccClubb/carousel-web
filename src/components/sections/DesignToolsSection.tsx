@@ -42,7 +42,7 @@ const DesignToolsSection: FC<{
       isHeroSection={isHeroSection}
       showGradient={showGradient}
       cornerGradient={cornerGradient}
-      className="flex-col lg:flex-row gap-y-4"
+      containerClassName="flex-col lg:flex-row gap-y-4"
     >
       <div className="lg:w-1/2 px-4 pr-16 flex flex-col gap-y-4">
         <div className="text-center lg:text-left">

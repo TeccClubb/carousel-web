@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import React, { FC, memo, ReactNode } from "react";
 
 const Section: FC<{
@@ -5,22 +6,36 @@ const Section: FC<{
   showGradient?: boolean;
   cornerGradient?: "left" | "right";
   className?: string;
+  containerClassName?: string;
   children: ReactNode;
-}> = ({ isHeroSection, showGradient, cornerGradient, className, children }) => {
+}> = ({
+  isHeroSection,
+  showGradient,
+  cornerGradient,
+  className,
+  containerClassName,
+  children,
+}) => {
   return (
     <section
-      className={`flex items-center justify-center bg-cover bg-center w-full overflow-hidden relative ${
-        isHeroSection ? "min-h-[calc(100vh-4rem)]" : "h-auto"
-      } ${
-        showGradient
-          ? "bg-gradient-to-r from-[#F0F6FD] to-[#FFFFFF] dark:bg-gradient-to-r dark:from-[#1E1E2F] dark:to-[#2D2D44]"
-          : ""
-      }`}
+      className={cn(
+        `flex items-center justify-center bg-cover bg-center w-full overflow-hidden relative ${
+          isHeroSection ? "min-h-[calc(100vh-4rem)]" : "h-auto"
+        } ${
+          showGradient
+            ? "bg-gradient-to-r from-[#F0F6FD] to-[#FFFFFF] dark:bg-gradient-to-r dark:from-[#1E1E2F] dark:to-[#2D2D44]"
+            : ""
+        }`,
+        className
+      )}
     >
       <div
-        className={`flex flex-wrap items-center justify-center w-full max-w-7xl ${
-          isHeroSection ? "p-4" : "px-4 py-12 lg:py-14"
-        } mx-auto z-0  ${className ? className : ""}`}
+        className={cn(
+          `flex flex-wrap items-center justify-center w-full max-w-7xl ${
+            isHeroSection ? "p-4" : "px-4 py-12 lg:py-14"
+          } mx-auto z-0`,
+          containerClassName
+        )}
       >
         {children}
       </div>

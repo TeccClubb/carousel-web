@@ -6,6 +6,7 @@ import FAQSection from "./FAQSection";
 import FeaturesSection from "./FeaturesSection";
 import PriceSection from "./PriceSection";
 import TemplatesSection from "./TemplatesSection";
+import PaymentSuccessSection from "./PaymentSuccessSection";
 
 export {
   HomeSection,
@@ -16,4 +17,5 @@ export {
   FeaturesSection,
   PriceSection,
   TemplatesSection,
+  PaymentSuccessSection,
 };

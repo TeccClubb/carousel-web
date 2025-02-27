@@ -69,7 +69,7 @@ const CarouselSlider: FC = () => {
     ) {
       api?.scrollPrev();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [api, isHideIntroSlide, isHideOutroSlide]);
 
   useEffect(() => {
@@ -78,6 +78,7 @@ const CarouselSlider: FC = () => {
 
   return (
     <div
+      id="carousel-slider"
       className="min-h-[calc(100vh-4rem)] mx-4 py-6 lg:mx-8 flex flex-col items-center justify-start gap-y-3"
       style={{ fontSize: `${zoomValue}%` }}
     >
@@ -105,7 +106,7 @@ const CarouselSlider: FC = () => {
           >
             <Button
               variant={currentIndex === index ? "default" : "outline"}
-              className={`py-0 px-0 h-6 w-6 cursor-pointer`}
+              className={`p-0 h-6 w-6 cursor-pointer`}
             >
               {index + 1}
             </Button>
@@ -119,6 +120,7 @@ const CarouselSlider: FC = () => {
             onClick={() => dispatch(zoomOut())}
             size="sm"
             className="h-7 w-7"
+            disabled={zoomValue <= 20}
           >
             <Minus />
           </Button>
@@ -131,6 +133,7 @@ const CarouselSlider: FC = () => {
             onClick={() => dispatch(zoomIn())}
             size="sm"
             className="h-7 w-7"
+            disabled={zoomValue >= 100}
           >
             <Plus />
           </Button>

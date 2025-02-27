@@ -182,7 +182,7 @@ const AiNavbar: FC = () => {
             href={`${HOME_PAGE_PATH}${locale}`}
             aria-current="page"
           >
-            <LogoIcon className="w-32 sm:w-40 md:w-60 h-auto 2xl:bg-red-50" />
+            <LogoIcon className="w-32 sm:w-40 md:w-60 h-auto" />
           </Link>
 
           <div className="flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-1 sm:gap-4">

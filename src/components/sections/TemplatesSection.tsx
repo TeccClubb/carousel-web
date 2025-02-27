@@ -34,7 +34,7 @@ const TemplatesSection: FC<{
       isHeroSection={isHeroSection}
       showGradient={showGradient}
       cornerGradient={cornerGradient}
-      className="flex-col-reverse lg:flex-row gap-y-4"
+      containerClassName="flex-col-reverse lg:flex-row gap-y-4"
     >
       <div className="lg:w-1/2 px-4 flex flex-col xl:gap-y-8 gap-y-4 lg:pr-16 relative">
         <div className="absolute left-1/2 top-[6%] right-1/2 transform -translate-x-1/2 w-[25em] h-[25em] bg-[#0F73F6] opacity-10 blur-3xl rounded-full"></div>

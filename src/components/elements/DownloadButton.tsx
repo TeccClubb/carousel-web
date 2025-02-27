@@ -1,3 +1,4 @@
+"use client"
 import React, { FC, memo, ReactNode } from "react";
 import { Button } from "../ui";
 import { ChevronRightIcon, DownloadIcon } from "lucide-react";

@@ -12,3 +12,5 @@ export type { FAQ } from "./FAQ";
 export type { User } from "./user";
 
 export type { Locale } from "./locale";
+
+export type { Plan, PlansState } from "./plans.state";

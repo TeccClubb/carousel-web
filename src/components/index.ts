@@ -7,6 +7,7 @@ import AiGenerator from "./AiGenerator/AiGenerator";
 import AiNavbar from "./AiGenerator/AiNavbar";
 import Dashboard from "./Dashboard/Dashboard";
 import AuthLayout from "./AuthLayout";
+import CheckoutForm from "./CheckoutForm";
 
 export {
   RootLayout,
@@ -18,4 +19,5 @@ export {
   AiNavbar,
   Dashboard,
   AuthLayout,
+  CheckoutForm,
 };

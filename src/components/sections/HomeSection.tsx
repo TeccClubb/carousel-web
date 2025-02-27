@@ -11,13 +11,13 @@ const HomeSection: FC<{ showGradient?: boolean }> = ({ showGradient }) => {
     <Section
       isHeroSection
       showGradient={showGradient}
-      className="flex-col lg:flex-row gap-y-12"
+      containerClassName="flex-col lg:flex-row gap-y-12"
     >
       <div className="lg:w-1/2 flex flex-col gap-y-6 px-4 text-center md:text-left">
-        <h1 className="text-gray-900 dark:text-white text-5xl font-bold leading-[60px]">
-          {t("home_section_heading_part_1")}&nbsp;
-          <span className="text-blue">{t("carousels")}</span>&nbsp;
-          {t("home_section_heading_part_2")}&nbsp;AI
+        <h1 className="text-gray-900 dark:text-white break-words text-5xl font-bold leading-[60px]">
+          {`${t("home_section_heading_part_1")} `}
+          <span className="text-blue">{t("carousels")}</span>
+          {` ${t("home_section_heading_part_2")} `}AI
         </h1>
         <p className="text-gray-900 dark:text-white text-lg font-normal opacity-70">
           {t("home_section_description_part_1")}&nbsp;AI,&nbsp;

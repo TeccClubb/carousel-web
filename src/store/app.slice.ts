@@ -4,7 +4,7 @@ import { AppState, Locale } from "@/types";
 const initialState: AppState = {
   locale: "en",
   zoomValue: 39,
-  isLoading: true,
+  isLoading: false,
   loaderTitle: "Loading...",
   dashboardActiveItem: "dashboard",
 };
@@ -19,11 +19,21 @@ const appSlice = createSlice({
     },
 
     zoomIn: (state) => {
-      state.zoomValue += 3;
+      const remainder = state.zoomValue % 3;
+      if (state.zoomValue === 99) state.zoomValue += 1;
+      else if (remainder === 0) state.zoomValue += 3;
+      else state.zoomValue += 3 - remainder;
     },
 
     zoomOut: (state) => {
-      state.zoomValue -= 3;
+      const remainder = state.zoomValue % 3;
+      if (state.zoomValue === 21) state.zoomValue -= 1;
+      else if (remainder === 0) state.zoomValue -= 3;
+      else state.zoomValue -= remainder;
+    },
+
+    setZoomValue: (state, action: PayloadAction<number>) => {
+      state.zoomValue = action.payload > 20 ? action.payload : 20;
     },
 
     setLoading: (
@@ -40,6 +50,13 @@ const appSlice = createSlice({
   },
 });
 
-export const { setLocale, zoomIn, zoomOut, setLoading, setDashboardActiveItem } = appSlice.actions;
+export const {
+  setLocale,
+  zoomIn,
+  zoomOut,
+  setZoomValue,
+  setLoading,
+  setDashboardActiveItem,
+} = appSlice.actions;
 
 export default appSlice.reducer;

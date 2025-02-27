@@ -43,9 +43,12 @@ import CarouselSlider from "./CarouselSlider";
 import { useTranslation } from "react-i18next";
 import { Shuffle } from "lucide-react";
 import { useCarousels } from "@/hooks/use-carousels";
+import { useDispatch } from "react-redux";
+import { setZoomValue } from "@/store/app.slice";
 
 const AiGenerator: FC = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const {
     carousel: {
       data: {
@@ -68,6 +71,8 @@ const AiGenerator: FC = () => {
     | "my_carousels";
 
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [divWidth, setDivWidth] = useState<number>(0);
+  const [divHeight, setDivHeight] = useState<number>(0);
   const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [activeNavItem, setActiveNavItem] = useState<NavItem>("ai");
 
@@ -177,11 +182,44 @@ const AiGenerator: FC = () => {
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
+      const sliderDiv = document.getElementById("carousel-slider");
+      if (sliderDiv) {
+        setDivWidth(sliderDiv.offsetWidth);
+        setDivHeight(sliderDiv.offsetHeight);
+      }
     };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    const fontSize = Math.round((divWidth / divHeight) * 17.26);
+    dispatch(setZoomValue(fontSize));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [divWidth]);
+
+  useEffect(() => {
+    const fontSize = Math.round((divWidth / divHeight) * 17.26);
+    dispatch(setZoomValue(fontSize));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [divHeight]);
+
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setIsMobile(window.innerWidth < 768);
+  //     const sliderDiv = document.getElementById("carousel-slider");
+  //     if (sliderDiv) {
+  //       const fontSize = Math.round(
+  //         (sliderDiv.offsetWidth / sliderDiv.offsetHeight) * 17.26
+  //       );
+  //       dispatch(setZoomValue(fontSize));
+  //     }
+  //   };
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, [dispatch]);
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-start gap-0 overflow-hidden">

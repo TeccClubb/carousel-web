@@ -1,17 +1,16 @@
 "use client";
 
 import { GET_USER_ROUTE, TOKEN_LOCAL_STORAGE_KEY } from "@/constant";
-import { setLoading } from "@/store/app.slice";
 import { RootState } from "@/store/store";
 import { setOnceAppLoaded, setUserData } from "@/store/user.slice";
 import { User } from "@/types";
 import axios, { AxiosError } from "axios";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export const useSyncAuthStatus = () => {
   // This function sync only once when app is reload
-  const isLoading = useSelector((state: RootState) => state.app.isLoading);
+  const [isLoading, setLoading] = useState<boolean>(true);
   const { isOnceAppLoaded, userData } = useSelector(
     (state: RootState) => state.user
   );
@@ -44,7 +43,7 @@ export const useSyncAuthStatus = () => {
         localStorage.removeItem(TOKEN_LOCAL_STORAGE_KEY);
       }
     } finally {
-      dispatch(setLoading({ isLoading: false }));
+      setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);

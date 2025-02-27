@@ -31,3 +31,5 @@ export const DASHBOARD_PAGE_PATH = "/dashboard";
 export const PROFILE_PAGE_PATH = "/profile";
 
 export const PLAN_PAGE_PATH = "/plan";
+
+export const PAYMENT_SUCCESSFUL_PAGE_PATH = "/payment";

@@ -8,7 +8,8 @@ const PriceCard: FC<{
   price: number;
   features: string[];
   isBestPrice?: boolean;
-}> = ({ heading, price, features = [], isBestPrice }) => {
+  onGetPlan: (heading: string, price: number) => void;
+}> = ({ heading, price, features = [], isBestPrice, onGetPlan }) => {
   const { t } = useTranslation();
   return (
     <div className="w-full lg:w-1/3 md:w-1/2 p-4">
@@ -47,6 +48,7 @@ const PriceCard: FC<{
             ))}
           </div>
           <Button
+            onClick={() => onGetPlan(heading, price)}
             className={`${
               isBestPrice
                 ? "bg-blue-600 text-white hover:bg-blue-700"

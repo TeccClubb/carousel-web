@@ -2,7 +2,7 @@
 import React, { FC, memo, useState } from "react";
 import { CloseIcon, LogoIcon, LongRightArrow, MenuIcon } from "@/icons";
 import Link from "next/link";
-import { Button } from "./ui";
+import { Button, LinkButton } from "./ui";
 import {
   BLOG_PAGE_PATH,
   CAROUSEL_GENERATOR_PAGE_PATH,
@@ -106,16 +106,14 @@ const Navbar: FC = () => {
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-1 sm:gap-4">
             <LanguageChanger />
 
-            <Button
+            <LinkButton
+              href={`/${locale}${CAROUSEL_GENERATOR_PAGE_PATH}`}
               className="bg-blue dark:text-white"
-              onClick={() =>
-                router.push(`/${locale}${CAROUSEL_GENERATOR_PAGE_PATH}`)
-              }
             >
               <span className="sm:hidden">{t("generate")}</span>
               <span className="hidden sm:inline">{t("generate_carousel")}</span>
               <LongRightArrow className="hidden sm:inline" />
-            </Button>
+            </LinkButton>
 
             {!isLoading && isLoggedIn && <AvatarProfile />}
 

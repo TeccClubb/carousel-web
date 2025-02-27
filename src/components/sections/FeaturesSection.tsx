@@ -42,7 +42,7 @@ const FeaturesSection: FC<{
       isHeroSection={isHeroSection}
       showGradient={showGradient}
       cornerGradient={cornerGradient}
-      className="flex-col gap-y-6"
+      containerClassName="flex-col gap-y-6"
     >
       <h1 className="text-gray-900 dark:text-white text-center text-6xl font-bold">
         {t("features_section_heading")}

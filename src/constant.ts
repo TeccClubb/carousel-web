@@ -6,6 +6,10 @@ export const GOOGLE_API_GET_USER_INFO =
 export const GOOGLE_OAUTH_CLIENT_ID =
   process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID!;
 
+export const STRIPE_PUBLISHABLE_KEY =
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!;
+export const STRIPE_SECRET_KEY = process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY!;
+
 export const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY!;
 
 export const OPENAI_API_ENDPOINT = "https://api.openai.com/v1/chat/completions";
@@ -15,6 +19,8 @@ export const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL!;
 export const LOGIN_ROUTE = `${BACKEND_API_URL}/auth/google`;
 export const LOGOUT_ROUTE = `${BACKEND_API_URL}/logout`;
 export const GET_USER_ROUTE = `${BACKEND_API_URL}/user`;
+
+export const GET_PLANS_ROUTE = `${BACKEND_API_URL}/plans`;
 
 export const GET_CAROUSELS_ROUTE = `${BACKEND_API_URL}/carousels`;
 export const GET_CAROUSEL_BY_ID_ROUTE = (carouselId: number) =>

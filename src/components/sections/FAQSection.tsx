@@ -94,7 +94,7 @@ const FAQSection: FC<{
       isHeroSection={isHeroSection}
       showGradient={showGradient}
       cornerGradient={cornerGradient}
-      className="flex-col lg:flex-row gap-y-8"
+      containerClassName="flex-col lg:flex-row gap-y-8"
     >
       <div className="w-full lg:w-1/2 px-4 lg:pr-16 self-start">
         <Accordion type="multiple" className="w-full">
