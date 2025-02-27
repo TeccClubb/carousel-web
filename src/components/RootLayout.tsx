@@ -33,6 +33,8 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
   const pathName = usePathname();
   const { locale } = useParams();
 
+  console.log("RootLayout")
+
   useEffect(() => {
     dispatch(setLocale(locale as Locale));
   }, [dispatch, locale]);
@@ -43,11 +45,9 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
   return (
     <html lang={locale as Locale}>
       <body
-        className={`${geistSans.variable} ${
-          geistMono.variable
-        } antialiased overflow-hidden bg-white dark:bg-gray-900 bg-background w-full min-h-screen ${
-          pathName === CAROUSEL_GENERATOR_PAGE_PATH ? "flex flex-col" : ""
-        } transition duration-300`}
+        className={`${geistSans.variable} ${geistMono.variable
+          } antialiased overflow-hidden bg-white dark:bg-gray-900 bg-background w-full min-h-screen ${pathName === CAROUSEL_GENERATOR_PAGE_PATH ? "flex flex-col" : ""
+          } transition duration-300`}
       >
         <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CLIENT_ID}>
           <TranslationsProvider
@@ -62,11 +62,10 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
                 pathName !== DASHBOARD_PAGE_PATH && <Navbar />}
 
               <main
-                className={`flex-1 flex-shrink-0 ${
-                  pathName === CAROUSEL_GENERATOR_PAGE_PATH
+                className={`flex-1 flex-shrink-0 ${pathName === CAROUSEL_GENERATOR_PAGE_PATH
                     ? "min-h-[calc(100vh-4rem)]"
                     : ""
-                }`}
+                  }`}
               >
                 {children}
               </main>
