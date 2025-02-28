@@ -63,8 +63,8 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
 
               <main
                 className={`flex-1 flex-shrink-0 ${pathName === CAROUSEL_GENERATOR_PAGE_PATH
-                    ? "min-h-[calc(100vh-4rem)]"
-                    : ""
+                  ? "min-h-[calc(100vh-4rem)]"
+                  : ""
                   }`}
               >
                 {children}
