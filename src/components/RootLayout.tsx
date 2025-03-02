@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, memo, ReactNode, useEffect } from "react";
+import React, { FC, ReactNode, useEffect } from "react";
 import { notFound, useParams } from "next/navigation";
 import { CAROUSEL_GENERATOR_PAGE_PATH, DASHBOARD_PAGE_PATH } from "@/pathNames";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -58,15 +58,14 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
             {pathName !== CAROUSEL_GENERATOR_PAGE_PATH &&
               pathName !== DASHBOARD_PAGE_PATH && <Navbar />}
 
-            <main
-              className={`flex-1 flex-shrink-0 ${
-                pathName === CAROUSEL_GENERATOR_PAGE_PATH
-                  ? "min-h-[calc(100vh-4rem)]"
-                  : ""
-              }`}
-            >
-              {children}
-            </main>
+              <main
+                className={`flex-1 flex-shrink-0 ${pathName === CAROUSEL_GENERATOR_PAGE_PATH
+                    ? "min-h-[calc(100vh-4rem)]"
+                    : ""
+                  }`}
+              >
+                {children}
+              </main>
 
             <Toaster
               position="bottom-center"
@@ -83,4 +82,4 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
   );
 };
 
-export default memo(RootLayout);
+export default RootLayout;
