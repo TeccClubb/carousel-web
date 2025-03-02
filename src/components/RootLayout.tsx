@@ -12,7 +12,6 @@ import { useDispatch } from "react-redux";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GOOGLE_OAUTH_CLIENT_ID } from "@/constant";
 import { usePathname } from "@/hooks/use-path-name";
-import TranslationsProvider from "./TranslationsProvider";
 import { Locale } from "@/types";
 import { Loader } from "./elements";
 import DashboardNavbar from "./Dashboard/DashboardNavbar";
@@ -33,7 +32,7 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
   const pathName = usePathname();
   const { locale } = useParams();
 
-  console.log("RootLayout")
+  console.log("RootLayout");
 
   useEffect(() => {
     dispatch(setLocale(locale as Locale));
@@ -45,41 +44,39 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
   return (
     <html lang={locale as Locale}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable
-          } antialiased overflow-hidden bg-white dark:bg-gray-900 bg-background w-full min-h-screen ${pathName === CAROUSEL_GENERATOR_PAGE_PATH ? "flex flex-col" : ""
-          } transition duration-300`}
+        className={`${geistSans.variable} ${
+          geistMono.variable
+        } antialiased overflow-hidden bg-white dark:bg-gray-900 bg-background w-full min-h-screen ${
+          pathName === CAROUSEL_GENERATOR_PAGE_PATH ? "flex flex-col" : ""
+        } transition duration-300`}
       >
         <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CLIENT_ID}>
-          <TranslationsProvider
-            locale={locale as string}
-            namespaces={["common"]}
-          >
-            <ScrollArea className="h-screen w-full">
-              <Loader />
-              {pathName === CAROUSEL_GENERATOR_PAGE_PATH && <AiNavbar />}
-              {pathName === DASHBOARD_PAGE_PATH && <DashboardNavbar />}
-              {pathName !== CAROUSEL_GENERATOR_PAGE_PATH &&
-                pathName !== DASHBOARD_PAGE_PATH && <Navbar />}
+          <ScrollArea className="h-screen w-full">
+            <Loader />
+            {pathName === CAROUSEL_GENERATOR_PAGE_PATH && <AiNavbar />}
+            {pathName === DASHBOARD_PAGE_PATH && <DashboardNavbar />}
+            {pathName !== CAROUSEL_GENERATOR_PAGE_PATH &&
+              pathName !== DASHBOARD_PAGE_PATH && <Navbar />}
 
-              <main
-                className={`flex-1 flex-shrink-0 ${pathName === CAROUSEL_GENERATOR_PAGE_PATH
-                    ? "min-h-[calc(100vh-4rem)]"
-                    : ""
-                  }`}
-              >
-                {children}
-              </main>
+            <main
+              className={`flex-1 flex-shrink-0 ${
+                pathName === CAROUSEL_GENERATOR_PAGE_PATH
+                  ? "min-h-[calc(100vh-4rem)]"
+                  : ""
+              }`}
+            >
+              {children}
+            </main>
 
-              <Toaster
-                position="bottom-center"
-                expand
-                visibleToasts={10}
-                duration={3000}
-              />
-              {pathName !== CAROUSEL_GENERATOR_PAGE_PATH &&
-                pathName !== DASHBOARD_PAGE_PATH && <Footer />}
-            </ScrollArea>
-          </TranslationsProvider>
+            <Toaster
+              position="bottom-center"
+              expand
+              visibleToasts={10}
+              duration={3000}
+            />
+            {pathName !== CAROUSEL_GENERATOR_PAGE_PATH &&
+              pathName !== DASHBOARD_PAGE_PATH && <Footer />}
+          </ScrollArea>
         </GoogleOAuthProvider>
       </body>
     </html>
