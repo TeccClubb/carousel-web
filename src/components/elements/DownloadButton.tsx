@@ -17,8 +17,10 @@ import { getBrightness } from "@/lib/utils";
 import { getArrow } from "@/icons/arrows";
 import ReactDOMServer from "react-dom/server";
 import { useUserState } from "@/hooks/use-user-state";
+import { useTranslations } from "next-intl";
 
 const DownloadButton: FC = () => {
+  const t = useTranslations();
   const domainName = "CarouselBuilder.io";
   const convertSvgToBase64 = (SvgComponent: ReactNode): string => {
     const svgString = ReactDOMServer.renderToStaticMarkup(SvgComponent);
@@ -669,7 +671,7 @@ const DownloadButton: FC = () => {
   return (
     <Button size="sm" onClick={handleDownload}>
       <DownloadIcon />
-      <span className="hidden sm:inline">Download</span>
+      <span className="hidden sm:inline">{t("download")}</span>
     </Button>
   );
 };

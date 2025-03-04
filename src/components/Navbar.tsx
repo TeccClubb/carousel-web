@@ -1,7 +1,7 @@
 "use client";
 import React, { FC, memo, useState } from "react";
 import { CloseIcon, LogoIcon, LongRightArrow, MenuIcon } from "@/icons";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Button, LinkButton } from "./ui";
 import {
   BLOG_PAGE_PATH,
@@ -12,20 +12,16 @@ import {
   PRICING_PAGE_PATH,
   SIGNUP_PAGE_PATH,
 } from "@/pathNames";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "@/i18n/navigation";
 import { AvatarProfile, LanguageChanger } from "./elements";
-import { useAppState } from "@/hooks/use-app-state";
-import { usePathname } from "@/hooks/use-path-name";
 import { useSyncAuthStatus } from "@/hooks/use-auth-status";
+import { useTranslations } from "next-intl";
 
 const Navbar: FC = () => {
-  const { locale } = useAppState();
-
+  const t = useTranslations();
   const { isLoading, isLoggedIn } = useSyncAuthStatus();
 
-  const [activePath, setActivePath] = useState<string>(
-    `${HOME_PAGE_PATH}${locale}`
-  );
+  const [activePath, setActivePath] = useState<string>(HOME_PAGE_PATH);
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
@@ -35,18 +31,18 @@ const Navbar: FC = () => {
 
   const navItems = [
     {
-      name: "Pricing",
-      href: `/${locale}${PRICING_PAGE_PATH}`,
+      name: t("pricing"),
+      href: PRICING_PAGE_PATH,
       auth: true,
     },
     {
-      name: "Blog",
-      href: `/${locale}${BLOG_PAGE_PATH}`,
+      name: t("blog"),
+      href: BLOG_PAGE_PATH,
       auth: true,
     },
     {
-      name: "Dashboard",
-      href: `/${locale}${DASHBOARD_PAGE_PATH}`,
+      name: t("dashboard"),
+      href: DASHBOARD_PAGE_PATH,
       auth: !isLoading && isLoggedIn,
     },
   ];
@@ -71,8 +67,8 @@ const Navbar: FC = () => {
             <div className="hidden sm:ml-6 md:block">
               <div className="flex items-center justify-center space-x-4">
                 <Link
-                  href={`${HOME_PAGE_PATH}${locale}`}
-                  onClick={() => setActivePath(`${HOME_PAGE_PATH}${locale}`)}
+                  href={HOME_PAGE_PATH}
+                  onClick={() => setActivePath(HOME_PAGE_PATH)}
                   className="px-3 py-2"
                   aria-current="page"
                 >
@@ -105,11 +101,13 @@ const Navbar: FC = () => {
             <LanguageChanger />
 
             <LinkButton
-              href={`/${locale}${CAROUSEL_GENERATOR_PAGE_PATH}`}
+              href={CAROUSEL_GENERATOR_PAGE_PATH}
               className="bg-blue dark:text-white"
             >
-              <span className="sm:hidden">Generate</span>
-              <span className="hidden sm:inline">Generate Carousel</span>
+              <span className="sm:hidden">{t("generate")}</span>
+              <span className="hidden sm:inline">
+                {t("generate")} {t("carousel")}
+              </span>
               <LongRightArrow className="hidden sm:inline" />
             </LinkButton>
 
@@ -120,12 +118,12 @@ const Navbar: FC = () => {
                 onClick={() =>
                   router.push(
                     pathname !== LOGIN_PAGE_PATH
-                      ? `/${locale}${LOGIN_PAGE_PATH}`
-                      : `/${locale}${SIGNUP_PAGE_PATH}`
+                      ? LOGIN_PAGE_PATH
+                      : SIGNUP_PAGE_PATH
                   )
                 }
               >
-                {pathname !== LOGIN_PAGE_PATH ? "Login" : "Signup"}
+                {pathname !== LOGIN_PAGE_PATH ? t("login") : t("signup")}
               </Button>
             )}
           </div>

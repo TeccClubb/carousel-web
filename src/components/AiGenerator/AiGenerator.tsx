@@ -203,22 +203,6 @@ const AiGenerator: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [divHeight]);
 
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setIsMobile(window.innerWidth < 768);
-  //     const sliderDiv = document.getElementById("carousel-slider");
-  //     if (sliderDiv) {
-  //       const fontSize = Math.round(
-  //         (sliderDiv.offsetWidth / sliderDiv.offsetHeight) * 17.26
-  //       );
-  //       dispatch(setZoomValue(fontSize));
-  //     }
-  //   };
-  //   handleResize();
-  //   window.addEventListener("resize", handleResize);
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, [dispatch]);
-
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-start gap-0 overflow-hidden">
       <div className="w-auto min-h-[calc(100vh-4rem)] border-r overflow-auto">

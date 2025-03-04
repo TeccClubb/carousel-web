@@ -63,7 +63,10 @@ const PriceSection: FC<{
                 key={plan.id}
                 heading={plan.name}
                 price={plan.price}
-                features={plan.description.split(",")}
+                duration={plan.duration}
+                durationUnit={plan.duration_unit}
+                features={plan.description.replace(/, /g, ",").split(",")}
+                isBestPrice={plan.isBestPrice}
                 onGetPlan={(heading, price) => setPlan({ heading, price })}
               />
             ))}

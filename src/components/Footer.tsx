@@ -1,6 +1,6 @@
 "use client";
 import React, { FC, memo } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import {
   FacebookIcon,
   InstagramIcon,
@@ -29,7 +29,7 @@ import {
   SITE_MAP_PAGE_PATH,
   TERMS_AND_CONDITIONS_PAGE_PATH,
 } from "@/pathNames";
-import { useAppState } from "@/hooks/use-app-state";
+import { useTranslations } from "next-intl";
 
 const FooterSlice: FC<{
   title: string;
@@ -61,8 +61,7 @@ const FooterSlice: FC<{
 );
 
 const Footer: FC = () => {
-  const { locale } = useAppState();
-
+  const t = useTranslations();
   const socialIconSize = "1.5em";
 
   const socialIcons = [
@@ -91,69 +90,69 @@ const Footer: FC = () => {
         <div className="flex flex-wrap flex-col lg:flex-row gap-y-4">
           <div className="w-full lg:w-3/5 flex flex-wrap mt-16 lg:mt-0 px-4 lg:px-0 order-2 lg:order-1">
             <FooterSlice
-              title={"Products"}
+              title={t("products")}
               links={[
                 {
-                  text: `Linkedin Carousel Generate`,
+                  text: `Linkedin ${t("carousel_generate")}`,
                   href: LINKEDIN_CAROUSEL_GENERATE_URL,
                 },
                 {
-                  text: `TikTok Carousel Generate`,
+                  text: `TikTok ${t("carousel_generate")}`,
                   href: TIKTOK_CAROUSEL_GENERATE_URL,
                 },
                 {
-                  text: `Instagram Carousel Generate`,
+                  text: `Instagram ${t("carousel_generate")}`,
                   href: INSTAGRAM_CAROUSEL_GENERATE_URL,
                 },
                 {
-                  text: `Facebook Carousel Generate`,
+                  text: `Facebook ${t("carousel_generate")}`,
                   href: FACEBOOK_CAROUSEL_GENERATE_URL,
                 },
               ]}
             />
             <FooterSlice
-              title={"Free Tools"}
+              title={t("free_tools")}
               links={[
                 {
-                  text: `Linkedin Banner Generate`,
+                  text: `Linkedin ${t("banner_generate")}`,
                   href: LINKEDIN_BANNER_GENERATE_URL,
                 },
                 {
-                  text: `Linkedin Post Image Generate`,
+                  text: `Linkedin ${t("post_image_generate")}`,
                   href: LINKEDIN_POST_IMAGE_GENERATE_URL,
                 },
                 {
-                  text: "Homepage v3",
-                  href: `${HOME_PAGE_PATH}${locale}`,
+                  text: t("homepage"),
+                  href: HOME_PAGE_PATH,
                 },
                 {
-                  text: "About Us",
-                  href: `/${locale}${ABOUT_US_PAGE_PATH}`,
+                  text: t("about_us"),
+                  href: ABOUT_US_PAGE_PATH,
                 },
                 {
-                  text: "Creators",
-                  href: `/${locale}${CREATORS_PAGE_PATH}`,
+                  text: t("creators"),
+                  href: CREATORS_PAGE_PATH,
                 },
                 {
-                  text: "Blog Articles",
-                  href: `/${locale}${BLOG_ARTICLES_PAGE_PATH}`,
+                  text: t("blog_articles"),
+                  href: BLOG_ARTICLES_PAGE_PATH,
                 },
               ]}
             />
             <FooterSlice
-              title={"Resources"}
+              title={t("resources")}
               links={[
                 {
-                  text: "Blog",
-                  href: `/${locale}${BLOG_PAGE_PATH}`,
+                  text: t("blog"),
+                  href: BLOG_PAGE_PATH,
                 },
                 {
-                  text: "Features",
-                  href: `/${locale}${FEATURES_PAGE_PATH}`,
+                  text: t("features"),
+                  href: FEATURES_PAGE_PATH,
                 },
                 {
-                  text: "Refund Policy",
-                  href: `/${locale}${REFUND_POLICY_PAGE_PATH}`,
+                  text: t("refund_policy"),
+                  href: REFUND_POLICY_PAGE_PATH,
                 },
               ]}
             />
@@ -161,8 +160,7 @@ const Footer: FC = () => {
           <div className="w-full lg:w-2/5 flex flex-col gap-y-4 items-center justify-center lg:items-start lg:justify-start px-4 order-1 lg:order-2">
             <LogoIcon className="w-56 h-auto" />
             <p className="text-gray-600 text-sm leading-6 space-y-8">
-              Your premium digital assets solution with high quality and
-              comprehensive range of products and services.
+              {t("footer_description")}
             </p>
             <div className="flex gap-x-6">
               {socialIcons.map((socialIcon) => (
@@ -182,19 +180,16 @@ const Footer: FC = () => {
       <div className="bg-black dark:bg-gray-800">
         <div className="w-full max-w-7xl mx-auto p-4 flex items-center justify-center md:justify-between flex-col md:flex-row gap-y-4">
           <nav className="text-white  text-sm font-normal space-x-6">
-            <Link href={`/${locale}${PRIVACY_POLICY_PAGE_PATH}`}>
-              Privacy Policy
+            <Link href={PRIVACY_POLICY_PAGE_PATH}>{t("privacy_policy")}</Link>
+            <span>|</span>
+            <Link href={TERMS_AND_CONDITIONS_PAGE_PATH}>
+              {t("terms_and_condition")}
             </Link>
             <span>|</span>
-            <Link href={`/${locale}${TERMS_AND_CONDITIONS_PAGE_PATH}`}>
-              Terms and condition
-            </Link>
-            <span>|</span>
-            <Link href={`/${locale}${SITE_MAP_PAGE_PATH}`}>Site Map</Link>
+            <Link href={SITE_MAP_PAGE_PATH}>{t("site_map")}</Link>
           </nav>
           <span className="text-white text-sm font-normal">
-            Copyright&nbsp;&copy;&nbsp;2024 carousel builder.&nbsp; All rights
-            reserved.
+            {t("footer_copy_right_message")}
           </span>
         </div>
       </div>

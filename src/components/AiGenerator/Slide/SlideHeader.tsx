@@ -32,12 +32,14 @@ import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { uploadImage } from "@/lib/utils";
 import { useToast } from "@/hooks/use-sonner-toast";
 import { setLoading } from "@/store/app.slice";
+import { useTranslations } from "next-intl";
 
 const SlideHeader: FC<{
   type: "intro" | "regular" | "outro";
   index: number;
 }> = ({ type, index }) => {
   const dispatch = useDispatch();
+  const t = useTranslations();
   const toast = useToast();
 
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
@@ -73,7 +75,7 @@ const SlideHeader: FC<{
           },
         });
       } else {
-        toast.error("Please select an image in jpeg, png, or jpg formats.");
+        toast.error(t("invalid_image_select_error_message"));
       }
     }
   };

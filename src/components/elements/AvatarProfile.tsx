@@ -15,9 +15,11 @@ import { setLoading } from "@/store/app.slice";
 import { useToast } from "@/hooks/use-sonner-toast";
 import { TOKEN_LOCAL_STORAGE_KEY } from "@/constant";
 import { setUserData } from "@/store/user.slice";
+import { useTranslations } from "next-intl";
 
 const AvatarProfile: FC = () => {
   const dispatch = useDispatch();
+  const t = useTranslations();
   const toast = useToast();
   const { userData: user } = useUserState();
   const loadingSetter = ({
@@ -64,7 +66,7 @@ const AvatarProfile: FC = () => {
               <AvatarImage src={user.avatar} />
               <AvatarFallback>{user.name}</AvatarFallback>
             </Avatar>
-            <div className="flex flex-col ">
+            <div className="flex flex-col">
               <span className="font-bold">{user.name}</span>
               <span>{user.email}</span>
             </div>
@@ -73,7 +75,7 @@ const AvatarProfile: FC = () => {
               variant="destructive"
               onClick={handleLogout}
             >
-              Logout
+              {t("logout")}
             </Button>
           </>
         )}

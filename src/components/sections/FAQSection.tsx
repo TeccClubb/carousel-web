@@ -21,12 +21,14 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 const FAQSection: FC<{
   isHeroSection?: boolean;
   showGradient?: boolean;
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
+  const t = useTranslations();
   const faqs: FAQ[] = [
     {
       question: "Can I request a refund?",
@@ -56,19 +58,19 @@ const FAQSection: FC<{
       .string()
       .optional()
       .refine((val) => (val !== "" && val === undefined) || val.length >= 2, {
-        message: "name must be at least 3 characters.",
+        message: t("name_min_length_error"),
       }),
     email: z
       .string()
       .min(1, {
-        message: "Email is required.",
+        message: t("email_empty_error"),
       })
       .email({
-        message: "Invalid email format.",
+        message: t("email_invalid_error"),
       }),
 
     message: z.string().min(3, {
-      message: "message must be at least 3 characters.",
+      message: t("message_min_length_error"),
     }),
   });
 
@@ -84,7 +86,7 @@ const FAQSection: FC<{
   const submit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
 
-    toast("Your message has been sent.");
+    toast(t("message_sent"));
   };
 
   return (
@@ -107,9 +109,11 @@ const FAQSection: FC<{
 
       <div className="w-full lg:w-1/2 px-4">
         <div className="text-center lg:text-left">
-          <span className="text-[#0F73F6] text-base font-medium">FAQ</span>
+          <span className="text-[#0F73F6] text-base font-medium">
+            {t("faq_section_description")}
+          </span>
           <h1 className="text-gray-900 dark:text-white lg:text-5xl md:text-4xl text-3xl font-semibold lg:leading-[58px]">
-            Answers to Your Questions
+            {t("faq_section_heading")}
           </h1>
         </div>
 
@@ -120,11 +124,13 @@ const FAQSection: FC<{
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t("name")}</FormLabel>
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder="What is your name (optional)"
+                      placeholder={`${t("what_is_your_name")} (${t(
+                        "optional"
+                      )})`}
                       {...field}
                     />
                   </FormControl>
@@ -138,11 +144,11 @@ const FAQSection: FC<{
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email Address *</FormLabel>
+                  <FormLabel>{t("email_address")} *</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder="Enter your email address"
+                      placeholder={t("enter_your_email_address")}
                       {...field}
                     />
                   </FormControl>
@@ -156,10 +162,10 @@ const FAQSection: FC<{
               name="message"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Question *</FormLabel>
+                  <FormLabel>{t("question")} *</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Type here your Question."
+                      placeholder={t("type_here_your_question")}
                       className="min-h-32"
                       {...field}
                     />
@@ -173,7 +179,7 @@ const FAQSection: FC<{
               type="submit"
               className="bg-blue-200 text-blue-600 hover:bg-blue-300 text-base font-bold leading-6 self-end px-10 py-5 rounded-lg"
             >
-              Ask Us A Question
+              {t("ask_us_a_question")}
             </Button>
           </form>
         </Form>

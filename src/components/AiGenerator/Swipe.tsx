@@ -11,9 +11,11 @@ import {
 } from "@/store/carousels.slice";
 import { useDispatch } from "react-redux";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
+import { useTranslations } from "next-intl";
 
 const Swipe: FC = () => {
   const dispatch = useDispatch();
+  const t = useTranslations();
 
   const {
     carousel: {
@@ -64,8 +66,10 @@ const Swipe: FC = () => {
         onValueChange={() => dispatch(toggleArrowText())}
       >
         <TabsList>
-          <TabsTrigger value="text_and_arrow">Text & Arrow</TabsTrigger>
-          <TabsTrigger value="arrow">Arrow</TabsTrigger>
+          <TabsTrigger value="text_and_arrow">
+            {t("text")} & {t("arrow")}
+          </TabsTrigger>
+          <TabsTrigger value="arrow">{t("arrow")}</TabsTrigger>
         </TabsList>
         <TabsContent value="text_and_arrow" className="space-y-6">
           <div className="grid gap-2">
@@ -73,7 +77,7 @@ const Swipe: FC = () => {
               <Switch
                 checked={introSlideArrow.isEnabled}
                 onCheckedChange={() => dispatch(toggleIntroSlideArrow())}
-                label="Show in Intro Slide"
+                label={t("show_in_intro_slide")}
               />
             </div>
             <Input
@@ -82,7 +86,7 @@ const Swipe: FC = () => {
                 dispatch(setIntroSlideArrowText(e.target.value.trim()))
               }
               type="text"
-              placeholder="Intro Slide Arrow Text"
+              placeholder={t("intro_slide_arrow_text")}
             />
           </div>
 
@@ -91,7 +95,7 @@ const Swipe: FC = () => {
               <Switch
                 checked={regularSlideArrow.isEnabled}
                 onCheckedChange={() => dispatch(toggleRegularSlideArrow())}
-                label="Regular Slide Arrow"
+                label={t("regular_slide_arrow")}
               />
             </div>
             <Input
@@ -100,7 +104,7 @@ const Swipe: FC = () => {
                 dispatch(setRegularSlideArrowText(e.target.value.trim()))
               }
               type="text"
-              placeholder="Regular Slide Arrow Text"
+              placeholder={t("regular_slide_arrow_text")}
             />
           </div>
         </TabsContent>

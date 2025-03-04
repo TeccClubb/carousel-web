@@ -26,12 +26,12 @@ import {
   setAiURL,
   setSlides,
 } from "@/store/carousels.slice";
-import { useAppState } from "@/hooks/use-app-state";
+import { useLocale } from "next-intl";
 
 const Ai: FC = () => {
   const dispatch = useDispatch();
 
-  const { locale: defaultLocale } = useAppState();
+  const defaultLocale = useLocale();
 
   const {
     aiPanel: { topic, text, url, totalSlides, selectedTab },

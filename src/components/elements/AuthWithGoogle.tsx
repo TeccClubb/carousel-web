@@ -10,9 +10,11 @@ import { useToast } from "@/hooks/use-sonner-toast";
 import { useDispatch } from "react-redux";
 import { setLoading } from "@/store/app.slice";
 import { setUserData } from "@/store/user.slice";
+import { useTranslations } from "next-intl";
 
 const AuthWithGoogle: FC<{ text: string }> = ({ text }) => {
   const dispatch = useDispatch();
+  const t = useTranslations();
   const toast = useToast();
 
   type LoginResponse = {
@@ -26,7 +28,7 @@ const AuthWithGoogle: FC<{ text: string }> = ({ text }) => {
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
-        dispatch(setLoading({ isLoading: true, title: "Logging in..." }));
+        dispatch(setLoading({ isLoading: true, title: t("logging_in") }));
         const res: LoginResponse = await axios
           .post(LOGIN_ROUTE, {
             headers: { Accept: "application/json" },
@@ -42,10 +44,7 @@ const AuthWithGoogle: FC<{ text: string }> = ({ text }) => {
               access_token: res.access_token,
             })
           );
-          localStorage.setItem(
-            TOKEN_LOCAL_STORAGE_KEY,
-            res.access_token
-          );
+          localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, res.access_token);
         } else toast.error(res.message);
       } catch (error) {
         if (error instanceof AxiosError) {

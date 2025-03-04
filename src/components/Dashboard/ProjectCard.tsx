@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import React, { FC, memo } from "react";
 
 const ProjectCard: FC<{
@@ -37,7 +37,7 @@ const ProjectCard: FC<{
 export default memo(ProjectCard);
 
 // import Image from "next/image";
-// import Link from "next/link";
+// import { Link } from "@/i18n/navigation";
 // import React, { FC } from "react";
 
 // const ProjectCard: FC<{ link: string; imgSrc: string; title: string }> = ({link, imgSrc, title}) => {
@@ -46,7 +46,7 @@ export default memo(ProjectCard);
 //     //   <Image
 //     //     className="rounded-xl w-full h-auto"
 //     //     src="/home-section-image.jpg"
-//     //     alt="Image not founded"
+//     //     alt={t("image_not_founded")}
 //     //     width={0}
 //     //     height={0}
 //     //     sizes="100vw"

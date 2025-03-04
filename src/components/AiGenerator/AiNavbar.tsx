@@ -7,7 +7,7 @@ import {
   LockIcon,
   LogoIcon,
 } from "@/icons";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import {
   Button,
   Dialog,
@@ -33,7 +33,7 @@ import {
   PRICING_PAGE_PATH,
   SIGNUP_PAGE_PATH,
 } from "@/pathNames";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "@/i18n/navigation";
 import { useDispatch } from "react-redux";
 import { AvatarProfile, DownloadButton, Toast } from "../elements";
 import { Save } from "lucide-react";
@@ -45,24 +45,23 @@ import {
   setSlideRatio,
   setTitle,
 } from "@/store/carousels.slice";
-import { usePathname } from "@/hooks/use-path-name";
 import { useToast } from "@/hooks/use-sonner-toast";
-import { useAppState } from "@/hooks/use-app-state";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { Carousel } from "@/types";
 import { setLoading } from "@/store/app.slice";
 import { useSyncAuthStatus } from "@/hooks/use-auth-status";
 import { ratios } from "@/assets/ratios";
+import { useTranslations } from "next-intl";
 
 const AiNavbar: FC = () => {
   const dispatch = useDispatch();
   const pathname = usePathname();
   const router = useRouter();
   const toast = useToast();
+  const t = useTranslations();
 
   const { isLoading, isLoggedIn, user } = useSyncAuthStatus();
 
-  const { locale } = useAppState();
   const {
     carousel: {
       carouselId,
@@ -87,7 +86,7 @@ const AiNavbar: FC = () => {
         setImageFile(file);
       }
     } else {
-      toast.error("Please select an image in jpeg, png, or jpg formats.");
+      toast.error(t("invalid_image_select_error_message"));
     }
   };
 
@@ -96,15 +95,15 @@ const AiNavbar: FC = () => {
       const toastId = toast.custom(
         <Toast
           action={{
-            label: "View Pricing",
+            label: t("view_pricing"),
             onClick: () => {
-              router.push(`/${locale}${PRICING_PAGE_PATH}`);
+              router.push(PRICING_PAGE_PATH);
               toast.dismiss(toastId);
             },
           }}
         >
           <LockIcon />
-          Please upgrade to a pro plan to save carousels.
+          {t("upgrade_to_pro_to_save")}
         </Toast>
       );
     } else if (!carouselTitle) {
@@ -175,7 +174,7 @@ const AiNavbar: FC = () => {
     <nav className="bg-slate-50 dark:bg-gray-800">
       <div className="px-1 sm:px-2 lg:px-6">
         <div className="flex h-16 items-center justify-start sm:justify-between gap-6">
-          <Link href={`${HOME_PAGE_PATH}${locale}`} aria-current="page">
+          <Link href={HOME_PAGE_PATH} aria-current="page">
             <LogoIcon className="w-32 sm:w-40 md:w-60 h-auto" />
           </Link>
 
@@ -184,7 +183,7 @@ const AiNavbar: FC = () => {
               <Button size="sm" onClick={handleSave}>
                 {!isLoggedIn && <LockIcon />}
                 {isLoggedIn && <Save />}
-                <span className="hidden sm:inline">Save</span>
+                <span className="hidden sm:inline">{t("save")}</span>
               </Button>
             )}
 
@@ -193,18 +192,18 @@ const AiNavbar: FC = () => {
               <DialogContent>
                 <form className="grid gap-4">
                   <DialogHeader>
-                    <DialogTitle>Save new carousel</DialogTitle>
+                    <DialogTitle>{t("save_new_carousel")}</DialogTitle>
                     <DialogDescription className="hidden">
-                      save new carousel
+                      {t("save_new_carousel")}
                     </DialogDescription>
                   </DialogHeader>
                   <div className="grid gap-2">
                     <Input
                       value={carouselTitle}
-                      label="Title"
+                      label={t("title")}
                       onChange={(e) => dispatch(setTitle(e.target.value))}
                       type="text"
-                      placeholder="Enter your title"
+                      placeholder={t("enter_your_title")}
                     />
                   </div>
 
@@ -212,7 +211,7 @@ const AiNavbar: FC = () => {
                     <Input
                       label={
                         <>
-                          Image
+                          {t("image")}
                           {imageFile && (
                             <span style={{ color: "green" }}>
                               ({imageFile.name})
@@ -232,7 +231,7 @@ const AiNavbar: FC = () => {
                       disabled={!carouselTitle || !imageFile}
                     >
                       <Save />
-                      Save
+                      {t("save")}
                     </Button>
                   </DialogFooter>
                 </form>
@@ -245,12 +244,12 @@ const AiNavbar: FC = () => {
               onValueChange={handleSlideRatioChange}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Carousel Type" />
+                <SelectValue placeholder={t("carousel_type")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel className="text-muted-foreground font-medium text-xs py-[0.375rem] px-2">
-                    Carousel Type
+                    {t("carousel_type")}
                   </SelectLabel>
                   {ratios.map((ratio) => (
                     <SelectItem
@@ -289,12 +288,12 @@ const AiNavbar: FC = () => {
                 onClick={() =>
                   router.push(
                     pathname !== LOGIN_PAGE_PATH
-                      ? `/${locale}${LOGIN_PAGE_PATH}`
-                      : `/${locale}${SIGNUP_PAGE_PATH}`
+                      ? LOGIN_PAGE_PATH
+                      : SIGNUP_PAGE_PATH
                   )
                 }
               >
-                {pathname !== LOGIN_PAGE_PATH ? "Login" : "Signup"}
+                {pathname !== LOGIN_PAGE_PATH ? t("login") : t("signup")}
               </Button>
             )}
           </div>

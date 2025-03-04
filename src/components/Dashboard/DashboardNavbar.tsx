@@ -1,7 +1,7 @@
 "use client";
 import React, { FC, memo } from "react";
 import { LogoIcon } from "@/icons";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import {
   Button,
   Separator,
@@ -15,14 +15,13 @@ import {
 import { HOME_PAGE_PATH } from "@/pathNames";
 import { AvatarProfile } from "../elements";
 import { Menu } from "lucide-react";
-import { useAppState } from "@/hooks/use-app-state";
 import { useSyncAuthStatus } from "@/hooks/use-auth-status";
 import SideBar from "./SideBar";
+import { useTranslations } from "next-intl";
 
 const DashboardNavbar: FC = () => {
   const { isLoading, isLoggedIn } = useSyncAuthStatus();
-
-  const { locale } = useAppState();
+  const t = useTranslations();
 
   return (
     <nav className="bg-slate-50 dark:bg-gray-800">
@@ -40,8 +39,10 @@ const DashboardNavbar: FC = () => {
             </SheetTrigger>
             <SheetContent side="left" className="flex flex-col p-0">
               <SheetHeader className="hidden">
-                <SheetTitle>Dashboard</SheetTitle>
-                <SheetDescription>Dashboard Description</SheetDescription>
+                <SheetTitle>{t("dashboard")}</SheetTitle>
+                <SheetDescription>
+                  {t("dashboard")} {t("description")}
+                </SheetDescription>
               </SheetHeader>
               <SideBar />
             </SheetContent>
@@ -49,11 +50,7 @@ const DashboardNavbar: FC = () => {
 
           <Separator orientation="vertical" className="h-6 lg:hidden" />
 
-          <Link
-            href={`${HOME_PAGE_PATH}${locale}`}
-            className="px-3 py-2"
-            aria-current="page"
-          >
+          <Link href={HOME_PAGE_PATH} className="px-3 py-2" aria-current="page">
             <LogoIcon className="w-60 h-auto" />
           </Link>
         </div>

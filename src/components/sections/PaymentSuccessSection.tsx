@@ -4,14 +4,17 @@ import Section from "./Section";
 import { CheckCircle2, ShieldClose } from "lucide-react";
 import { LinkButton } from "../ui";
 import { HOME_PAGE_PATH } from "@/pathNames";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import Stripe from "stripe";
 import { STRIPE_SECRET_KEY } from "@/constant";
 import { useToast } from "@/hooks/use-sonner-toast";
+import { useTranslations } from "next-intl";
 
 const PaymentSuccessSection: FC = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const t = useTranslations();
   const toast = useToast();
   const [isPaymentSuccessful, setPaymentStatus] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(true);
@@ -58,20 +61,20 @@ const PaymentSuccessSection: FC = () => {
         <>
           <div className="animate-spin shadow-xl shadow-slate-400 rounded-full h-32 w-32 border-t-2 border-b-2 border-black dark:border-slate-200"></div>
           <p className="text-xl font-semibold text-black dark:text-slate-200">
-            Processing Payment...
+            {t("processing_payment")}
           </p>
         </>
       )}
       <h1 className="text-3xl font-semibold text-gray-900 dark:text-white">
-        {!isLoading && !isPaymentSuccessful && "Payment Failed"}
-        {isPaymentSuccessful && "Payment Successful"}
+        {!isLoading && !isPaymentSuccessful && t("payment_failed")}
+        {isPaymentSuccessful && t("payment_successful")}
       </h1>
       {isPaymentSuccessful && (
         <>
           <p className="text-gray-500 dark:text-gray-400">
-            Your payment has been completed.
+            {t("your_payment_has_been_completed")}
           </p>
-          <LinkButton href={HOME_PAGE_PATH}>Back to Home</LinkButton>
+          <LinkButton href={HOME_PAGE_PATH}>{t("back_to_home")}</LinkButton>
         </>
       )}
     </Section>

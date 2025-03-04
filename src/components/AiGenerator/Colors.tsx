@@ -11,9 +11,11 @@ import {
   toggleCustomColors,
 } from "@/store/carousels.slice";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
+import { useTranslations } from "next-intl";
 
 const Colors: FC = () => {
   const dispatch = useDispatch();
+  const t = useTranslations();
 
   const {
     carousel: {
@@ -37,7 +39,7 @@ const Colors: FC = () => {
             <Switch
               checked={isUseCustomColors}
               onCheckedChange={() => dispatch(toggleCustomColors())}
-              label="Use Custom Colors"
+              label={t("use_custom_colors")}
             />
           </div>
           {isUseCustomColors && (
@@ -46,21 +48,21 @@ const Colors: FC = () => {
                 <InputColor
                   color={backgroundColor}
                   setColor={(color) => dispatch(setBackgroundColor(color))}
-                  label="Background Color"
+                  label={t("background_color")}
                 />
               </div>
               <div>
                 <InputColor
                   color={textColor}
                   setColor={(color) => dispatch(setTextColor(color))}
-                  label="Text Color"
+                  label={t("text_color")}
                 />
               </div>
               <div>
                 <InputColor
                   color={accentColor}
                   setColor={(color) => dispatch(setAccentColor(color))}
-                  label="Accent Color"
+                  label={t("accent_color")}
                 />
               </div>
             </div>
@@ -71,7 +73,7 @@ const Colors: FC = () => {
           <Switch
             checked={isAlternateSlideColors}
             onCheckedChange={() => dispatch(toggleAlternateSlideColors())}
-            label="Alternate Slide Colors"
+            label={t("alternate_slide_colors")}
           />
         </div>
       </div>
@@ -79,7 +81,7 @@ const Colors: FC = () => {
       <div className="space-y-4 py-4">
         <div>
           <h3 className="pb-2 font-semibold leading-none tracking-tight">
-            Dark
+            {t("dark")}
           </h3>
           <div className="flex space-between flex-wrap gap-2">
             {darkColors.map((colors) => {
@@ -125,7 +127,7 @@ const Colors: FC = () => {
 
         <div>
           <h3 className="pb-2 font-semibold leading-none tracking-tight">
-            Light
+            {t("light")}
           </h3>
           <div className="flex space-between flex-wrap gap-2">
             {lightColors.map((colors) => {

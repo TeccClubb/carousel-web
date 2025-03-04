@@ -5,10 +5,20 @@ import { Button } from "../ui";
 const PriceCard: FC<{
   heading: string;
   price: number;
+  duration: number;
+  durationUnit: string;
   features: string[];
   isBestPrice?: boolean;
   onGetPlan: (heading: string, price: number) => void;
-}> = ({ heading, price, features = [], isBestPrice, onGetPlan }) => {
+}> = ({
+  heading,
+  price,
+  duration,
+  durationUnit,
+  features = [],
+  isBestPrice,
+  onGetPlan,
+}) => {
   return (
     <div className="w-full lg:w-1/3 md:w-1/2 p-4">
       <div
@@ -19,7 +29,7 @@ const PriceCard: FC<{
         } flex relative p-8 flex-col items-start gap-8 rounded-md shadow-lg transition duration-300`}
       >
         {isBestPrice && (
-          <span className="text-white bg-blue-600 py-2 px-3 absolute top-4 right-4 font-[Libre Franklin] text-xs font-bold leading-normal inline-block rounded-full">
+          <span className="uppercase text-white bg-blue-600 py-2 px-3 absolute top-4 right-4 font-[Libre Franklin] text-xs font-bold leading-normal inline-block rounded-full">
             BEST SELLER
           </span>
         )}
@@ -31,7 +41,7 @@ const PriceCard: FC<{
             ${price}
           </h2>
           <h5 className="text-black dark:text-white mt-6 font-libre-franklin text-base font-normal leading-[24px] opacity-50 transition duration-300">
-            / Month
+            / {duration > 1 && duration} {durationUnit}
           </h5>
         </div>
 

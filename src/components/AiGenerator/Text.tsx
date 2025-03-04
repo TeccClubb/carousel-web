@@ -11,9 +11,11 @@ import {
 } from "@/store/carousels.slice";
 import { useDispatch } from "react-redux";
 import { googleFonts, fontPairs } from "@/assets/fonts";
+import { useTranslations } from "next-intl";
 
 const Text: FC = () => {
   const dispatch = useDispatch();
+  const t = useTranslations();
 
   const textAlignments: {
     alignment: "left" | "center" | "right";
@@ -46,7 +48,7 @@ const Text: FC = () => {
             <Switch
               checked={isCustomFontsEnabled}
               onCheckedChange={() => dispatch(toggleCustomFontsEnabled())}
-              label="Use Custom Fonts"
+              label={t("use_custom_fonts")}
             />
           </div>
 
@@ -54,11 +56,11 @@ const Text: FC = () => {
             <div className="space-y-4 p-2 border rounded-lg">
               <div className="flex flex-col space-y-1">
                 <Combobox
-                  label="Primary Font"
+                  label={t("primary_font")}
                   value={primaryFont.href}
                   text={primaryFont.name}
                   emptyMessage="No font found."
-                  placeholder="Select Primary Font"
+                  placeholder={t("select_primary_font")}
                   className="w-full"
                   size="sm"
                 >
@@ -76,11 +78,11 @@ const Text: FC = () => {
 
               <div className="flex flex-col space-y-1">
                 <Combobox
-                  label="Secondary Font"
+                  label={t("secondary_font")}
                   value={secondaryFont.href}
                   text={secondaryFont.name}
                   emptyMessage="No font found."
-                  placeholder="Select Secondary Font"
+                  placeholder={t("select_secondary_font")}
                   className="w-full"
                   size="sm"
                 >
@@ -101,11 +103,11 @@ const Text: FC = () => {
 
         <div className="flex flex-col space-y-1">
           <Combobox
-            label="Font Pair"
+            label={t("font_pair")}
             value={`${primaryFont.href} & ${secondaryFont.href}`}
             text={`${primaryFont.name} & ${secondaryFont.name}`}
             emptyMessage="No font found."
-            placeholder="Select Font Pair"
+            placeholder={t("select_font_pair")}
             className="w-full"
             size="sm"
           >
@@ -124,7 +126,7 @@ const Text: FC = () => {
         <div className="space-y-4">
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between align-top">
-              <Label asSpan>Font Size</Label>
+              <Label asSpan>{t("font_size")}</Label>
               <p className="text-sm text-muted-foreground">{fontSize}</p>
             </div>
 
@@ -140,7 +142,7 @@ const Text: FC = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label asSpan>Text Alignment</Label>
+            <Label asSpan>{t("text_alignment")}</Label>
             <div className="grid grid-cols-3 gap-4">
               {textAlignments.map(({ alignment, text }) => (
                 <Button

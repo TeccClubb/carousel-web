@@ -8,12 +8,14 @@ import {
   FeatureIcon4,
 } from "@/icons";
 import { featuresSectionBlurImageSrc } from "@/assets/features-section-base64-image";
+import { useTranslations } from "next-intl";
 
 const FeaturesSection: FC<{
   isHeroSection?: boolean;
   showGradient?: boolean;
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
+  const t = useTranslations();
   const Feature: FC<{
     title: string;
     description: string;
@@ -28,7 +30,7 @@ const FeaturesSection: FC<{
         <span className="text-gray-900 dark:text-white text-lg font-semibold">
           {title}
         </span>
-        <p className=" text-gray-600 dark:text-gray-400 text-lg leading-1">
+        <p className="text-gray-600 dark:text-gray-400 text-lg leading-1">
           {description}
         </p>
       </div>
@@ -43,25 +45,25 @@ const FeaturesSection: FC<{
       containerClassName="flex-col gap-y-6"
     >
       <h1 className="text-gray-900 dark:text-white text-center text-6xl font-bold">
-        Our Features
+        {t("features_section_heading")}
       </h1>
       <h2 className="text-blue text-center text-4xl font-medium">
-        AI-Powered Carousel Generator
+        {t("features_section_description")}
       </h2>
       <div className="flex flex-wrap flex-col lg:flex-row w-full">
         <div className="w-full lg:w-1/3 px-14 md:px-24 lg:px-0 lg:relative order-2 lg:order-1">
           <Feature
             className="lg:absolute left-0 top-24"
-            title="From Concept to Showcase"
-            description="Seamlessly transform any topic into a captivating carousel. Simply input your idea, and let our AI do the magic!"
+            title={t("feature1_title")}
+            description={t("feature1_description")}
           >
             <FeatureIcon1 />
           </Feature>
 
           <Feature
             className="lg:absolute left-0 lg:bottom-24 xl:bottom-32"
-            title="URLs into Carousels"
-            description="Effortlessly turn blog articles or URLs into visually stunning carousel slides. Ideal for sharing in-depth information with your audience."
+            title={t("feature2_title")}
+            description={t("feature2_description")}
           >
             <FeatureIcon2 />
           </Feature>
@@ -71,7 +73,7 @@ const FeaturesSection: FC<{
           <Image
             className="rounded-xl mx-auto w-80 h-auto"
             src="/feature-image.png"
-            alt="image not founded"
+            alt={t("image_not_founded")}
             width={0}
             height={0}
             sizes="100vw"
@@ -84,16 +86,16 @@ const FeaturesSection: FC<{
         <div className="w-full lg:w-1/3 px-14 md:px-24 lg:px-0 lg:relative order-3">
           <Feature
             className="lg:absolute lg:right-0 lg:top-36 xl:top-60"
-            title="Text to Carousel Made Simple"
-            description="Transform your text into eye-catching carousel slides in seconds. Perfect for creating impactful content quickly and efficiently."
+            title={t("feature3_title")}
+            description={t("feature3_description")}
           >
             <FeatureIcon3 />
           </Feature>
 
           <Feature
             className="lg:absolute lg:right-0 lg:bottom-0"
-            title="Create Carousels in 100+ Languages"
-            description="Generate carousels in over 100 languages to connect with a global audience. Amplify your content's reach with ease."
+            title={t("feature4_title")}
+            description={t("feature4_description")}
           >
             <FeatureIcon4 />
           </Feature>

@@ -12,9 +12,11 @@ import { useDispatch } from "react-redux";
 import { setCarousel } from "@/store/carousels.slice";
 import { useCarousels } from "@/hooks/use-carousels";
 import { useUserState } from "@/hooks/use-user-state";
+import { useTranslations } from "next-intl";
 
 const Dashboard: FC = () => {
   const dispatch = useDispatch();
+  const t = useTranslations();
   const { userData: user } = useUserState();
   const { dashboardActiveItem } = useAppState();
   const { isLoading, carousels } = useCarousels();
@@ -30,16 +32,16 @@ const Dashboard: FC = () => {
             <>
               <div className="w-full">
                 <h2 className="w-full text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                  Dashboard
+                  {t("dashboard")}
                 </h2>
                 <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
                   <ReportCard
-                    title="Total Projects"
+                    title={t("total_projects")}
                     value={0}
                     icon={<ProjectIcon />}
                   />
                   <ReportCard
-                    title="Subscription"
+                    title={t("subscription")}
                     value="3 days left"
                     icon={<PlanIcon className="w-10 h-10" />}
                   />
@@ -48,7 +50,7 @@ const Dashboard: FC = () => {
 
               <div className="w-full">
                 <h2 className="w-full text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                  Your Projects
+                  {t("your_projects")}
                 </h2>
                 <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
                   {isLoading &&
@@ -67,7 +69,7 @@ const Dashboard: FC = () => {
                     ))}
                   {carousels.length === 0 && (
                     <div className="text-center text-muted-foreground">
-                      No carousels found
+                      {t("no_carousels_found")}
                     </div>
                   )}
                 </div>
@@ -78,7 +80,7 @@ const Dashboard: FC = () => {
           {dashboardActiveItem === "profile" && (
             <div className="w-full">
               <h2 className="w-full text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                Your Profile
+                {t("your_profile")}
               </h2>
 
               <div className="flex gap-6 items-center">

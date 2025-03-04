@@ -3,9 +3,11 @@ import { Button } from "../ui";
 import { Shuffle } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { randomize } from "@/store/carousels.slice";
+import { useTranslations } from "next-intl";
 
 const Randomize: FC = () => {
   const dispatch = useDispatch();
+  const t = useTranslations();
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
       <Button
@@ -14,7 +16,7 @@ const Randomize: FC = () => {
         size="sm"
       >
         <Shuffle className="h-5 w-5" />
-        Randomize
+        {t("randomize")}
       </Button>
     </div>
   );

@@ -55,6 +55,7 @@ import {
 import { uploadImage } from "@/lib/utils";
 import { useToast } from "@/hooks/use-sonner-toast";
 import { setLoading } from "@/store/app.slice";
+import { useTranslations } from "next-intl";
 
 const FontSizeSlider: FC<{
   fontSize: number;
@@ -62,6 +63,7 @@ const FontSizeSlider: FC<{
   onResetClick: () => void;
   toolTipText: string;
 }> = memo(({ fontSize, setFontSize, onResetClick, toolTipText }) => {
+  const t = useTranslations();
   return (
     <Popover>
       <TooltipProvider>
@@ -87,7 +89,7 @@ const FontSizeSlider: FC<{
           <div className="flex items-center justify-between align-top">
             <div className="flex items-center gap-2">
               <Label asSpan className="text-xs">
-                Font Size
+                {t("font_size")}
               </Label>
 
               <TooltipProvider>
@@ -99,7 +101,7 @@ const FontSizeSlider: FC<{
                     />
                   </TooltipTrigger>
                   <TooltipContent side="bottom">
-                    <span>Reset Slider</span>
+                    <span>{t("reset_slider")}</span>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -123,6 +125,7 @@ FontSizeSlider.displayName = "FontSizeSlider";
 
 const TextSettings: FC = memo(() => {
   const dispatch = useDispatch();
+  const t = useTranslations();
 
   const {
     currentIndex,
@@ -152,14 +155,14 @@ const TextSettings: FC = memo(() => {
           <Switch
             checked={isSubTitleEnabled}
             onCheckedChange={() => dispatch(toggleSlideSubTitle())}
-            label="Sub Title"
+            label={t("sub_title")}
           />
         </div>
         <Input
           value={subTitle}
           onChange={(e) => dispatch(setSlideSubTitle(e.target.value.trim()))}
           type="text"
-          placeholder="Enter your sub title"
+          placeholder={t("enter_your_sub_title")}
         />
       </div>
 
@@ -169,11 +172,11 @@ const TextSettings: FC = memo(() => {
             <Switch
               checked={isTitleEnabled}
               onCheckedChange={() => dispatch(toggleSlideTitle())}
-              label="Title"
+              label={t("title")}
             />
           </div>
           <FontSizeSlider
-            toolTipText="Title Settings"
+            toolTipText={t("title_settings")}
             fontSize={titleFontSize || 100}
             onResetClick={() => dispatch(setSlideTitleFontSize(100))}
             setFontSize={(value) => dispatch(setSlideTitleFontSize(value))}
@@ -184,7 +187,7 @@ const TextSettings: FC = memo(() => {
           value={title}
           onChange={(e) => dispatch(setSlideTitle(e.target.value.trim()))}
           type="text"
-          placeholder="Enter your title"
+          placeholder={t("enter_your_title")}
         />
       </div>
 
@@ -194,11 +197,11 @@ const TextSettings: FC = memo(() => {
             <Switch
               checked={isDescriptionEnabled}
               onCheckedChange={() => dispatch(toggleSlideDescription())}
-              label="Description"
+              label={t("description")}
             />
           </div>
           <FontSizeSlider
-            toolTipText="Description Settings"
+            toolTipText={t("description_settings")}
             fontSize={descriptionFontSize || 100}
             onResetClick={() => dispatch(setSlideDescriptionFontSize(100))}
             setFontSize={(value) =>
@@ -210,7 +213,7 @@ const TextSettings: FC = memo(() => {
           value={description}
           rows={5}
           onChange={(e) => dispatch(setSlideDescription(e.target.value.trim()))}
-          placeholder="Enter your description"
+          placeholder={t("enter_your_description")}
         />
       </div>
     </>
@@ -221,6 +224,7 @@ TextSettings.displayName = "TextSettings";
 
 const ImageSettings: FC = memo(() => {
   const dispatch = useDispatch();
+  const t = useTranslations();
   const toast = useToast();
 
   const {
@@ -294,7 +298,7 @@ const ImageSettings: FC = memo(() => {
           },
         });
       } else {
-        toast.error("Please select an image in jpeg, png, or jpg formats.");
+        toast.error(t("invalid_image_select_error_message"));
       }
     }
   };
@@ -303,7 +307,7 @@ const ImageSettings: FC = memo(() => {
     <fieldset className="grid gap-6 rounded-lg border p-4 pb-8">
       <legend className="-ml-1 px-1 text-sm font-medium">
         <h3 className="font-semibold leading-none tracking-tight">
-          Slide Image
+          {t("slide_image")}
         </h3>
       </legend>
 
@@ -312,7 +316,7 @@ const ImageSettings: FC = memo(() => {
           <Switch
             checked={isImageEnabled}
             onCheckedChange={() => dispatch(toggleSlideImage())}
-            label="Image"
+            label={t("image")}
           />
         </div>
         <Input onChange={handleImageChoose} type="file" accept="image/*" />
@@ -323,7 +327,7 @@ const ImageSettings: FC = memo(() => {
           {imageSrc && (
             <Image
               src={imageSrc}
-              alt="Image not founded"
+              alt={t("image_not_founded")}
               width={100}
               height={100}
               sizes="100vw"
@@ -336,7 +340,7 @@ const ImageSettings: FC = memo(() => {
         <div className="flex-1 flex flex-col">
           <div className="flex gap-2">
             <div className="flex flex-col gap-2">
-              <Label asSpan>Position</Label>
+              <Label asSpan>{t("position")}</Label>
               <div className="flex flex-col items-start">
                 <div className="grid grid-cols-3 gap-1.5 p-1.5 rounded-md border">
                   {bgPositions.map((backgroundPosition) => (
@@ -360,7 +364,7 @@ const ImageSettings: FC = memo(() => {
             <div className="flex flex-col flex-1">
               <div className="flex flex-col items-start gap-2">
                 <div className="flex flex-col gap-2">
-                  <Label asSpan>Image Fit</Label>
+                  <Label asSpan>{t("image_fit")}</Label>
                   <Button
                     variant="outline"
                     onClick={() => dispatch(toggleSlideImageBackgroundCover())}
@@ -375,7 +379,7 @@ const ImageSettings: FC = memo(() => {
                 </div>
                 <div className="flex flex-col gap-2 w-full">
                   <div className="flex items-center justify-between align-top">
-                    <Label asSpan>Opacity</Label>
+                    <Label asSpan>{t("opacity")}</Label>
                     <p className="text-xs text-muted-foreground">
                       {imageOpacity}
                     </p>
@@ -397,7 +401,7 @@ const ImageSettings: FC = memo(() => {
       </div>
 
       <div className="space-y-2">
-        <Label asSpan>Image Orientation</Label>
+        <Label asSpan>{t("image_orientation")}</Label>
 
         <div className="grid grid-cols-4 gap-4 outline-none">
           {flexDirections.map((direction) => (
@@ -424,6 +428,7 @@ ImageSettings.displayName = "ImageSettings";
 
 const Content: FC = () => {
   const dispatch = useDispatch();
+  const t = useTranslations();
 
   const {
     currentIndex,
@@ -451,9 +456,11 @@ const Content: FC = () => {
             onValueChange={(value) => dispatch(setContentSelectedTab(value))}
           >
             <TabsList>
-              <TabsTrigger value="text">Text</TabsTrigger>
-              <TabsTrigger value="image">Image</TabsTrigger>
-              <TabsTrigger value="text_&_image">Text & Image</TabsTrigger>
+              <TabsTrigger value="text">{t("text")}</TabsTrigger>
+              <TabsTrigger value="image">{t("image")}</TabsTrigger>
+              <TabsTrigger value="text_&_image">
+                {t("text")} & {t("image")}
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="text" className="space-y-6">
               <TextSettings />
@@ -479,7 +486,7 @@ const Content: FC = () => {
                 <Switch
                   checked={isCtaButtonEnabled}
                   onCheckedChange={() => dispatch(toggleSlideCTAButton())}
-                  label="CTA Text"
+                  label={t("cta_text")}
                 />
               </div>
               <Input
@@ -488,7 +495,7 @@ const Content: FC = () => {
                   dispatch(setSlideCTAText(e.target.value.trim()))
                 }
                 type="text"
-                placeholder="Enter your CTA Text"
+                placeholder={t("enter_your_cta_text")}
               />
             </div>
           )}

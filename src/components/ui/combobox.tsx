@@ -103,6 +103,7 @@ const Combobox: FC<{
   tickSide?: "left" | "right";
   size?: "sm" | "md" | "lg";
   className?: string;
+  disabled?: boolean;
   children?: ReactNode;
 }> = ({
   label,
@@ -115,6 +116,7 @@ const Combobox: FC<{
   tickSide = "right",
   size = "md",
   className,
+  disabled,
   children,
 }) => {
   const sizes: { sm: string; md: string; lg: string } = {
@@ -136,6 +138,7 @@ const Combobox: FC<{
             variant="outline"
             role="combobox"
             aria-expanded={open}
+            disabled={disabled}
             className={cn("w-[120px] justify-between", sizes[size], className)}
           >
             {icon && icon}

@@ -1,12 +1,14 @@
 import React, { FC, memo, ReactNode } from "react";
 import Section from "./Section";
 import { BrandIcon1, BrandIcon2, BrandIcon3 } from "@/icons";
+import { useTranslations } from "next-intl";
 
 const BrandSection: FC<{
   isHeroSection?: boolean;
   showGradient?: boolean;
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
+  const t = useTranslations();
   const BrandCard: FC<{
     title: string;
     description: string;
@@ -36,32 +38,32 @@ const BrandSection: FC<{
     >
       <div className="lg:w-1/2 px-4 text-center lg:text-left">
         <span className="text-[#0F73F6] text-base font-medium">
-          Seamlessly integrate your brand identity
+          {t("brand_section_description")}
         </span>
         <h1 className="text-gray-900 dark:text-white lg:text-5xl md:text-4xl text-3xl font-semibold lg:leading-[58px]">
-          Seamless Branding Integration
+          {t("brand_section_heading")}
         </h1>
       </div>
 
       <div className="lg:w-1/2 px-4 flex flex-col xl:gap-y-8 gap-y-4 relative">
         <div className="absolute left-1/2 top-[6%] right-1/2 transform -translate-x-1/2 w-[30em] h-[35em] bg-[#0F73F6] opacity-10 blur-3xl rounded-full"></div>
         <BrandCard
-          title="Font Pairing,Size and Alignment"
-          description="Select font pairs that align with your brand's personality or customize them to fit your preferences. Fine-tune font size and alignment to achieve a polished, professional look while enhancing readability."
+          title={t("brand_section_card1_title")}
+          description={t("brand_section_card1_description")}
         >
           <BrandIcon1 />
         </BrandCard>
 
         <BrandCard
-          title="Color Palettes"
-          description="Effortlessly incorporate your logo and brand colors for cohesive, recognizable carousels. Choose from curated color palettes or design your own to perfectly complement your brand's identity."
+          title={t("brand_section_card2_title")}
+          description={t("brand_section_card2_description")}
         >
           <BrandIcon2 />
         </BrandCard>
 
         <BrandCard
-          title="Profiles for Companies and Individuals"
-          description="Personalize carousels for corporate and individual profiles. Easily integrate your logo, include your website URL or social handle, and deliver impactful branding. Designed to adapt seamlessly to diverse content formats"
+          title={t("brand_section_card3_title")}
+          description={t("brand_section_card3_description")}
         >
           <BrandIcon3 />
         </BrandCard>

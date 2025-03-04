@@ -2,7 +2,6 @@ import React, { FC, memo } from "react";
 import { Switch } from "../ui";
 import { LockIcon } from "@/icons";
 import { useUserState } from "@/hooks/use-user-state";
-import { useAppState } from "@/hooks/use-app-state";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { useDispatch } from "react-redux";
 import {
@@ -13,14 +12,15 @@ import {
 } from "@/store/carousels.slice";
 import { toast } from "sonner";
 import { Toast } from "../elements";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { PRICING_PAGE_PATH } from "@/pathNames";
+import { useTranslations } from "next-intl";
 
 const Settings: FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const t = useTranslations();
   const { userData: user } = useUserState();
-  const { locale } = useAppState();
 
   const {
     carousel: {
@@ -40,16 +40,16 @@ const Settings: FC = () => {
       const toastId = toast(
         <Toast
           action={{
-            label: "View Pricing",
+            label: t("view_pricing"),
             onClick: () => {
-              router.push(`/${locale}${PRICING_PAGE_PATH}`);
+              router.push(PRICING_PAGE_PATH);
               toast.dismiss(toastId);
             },
           }}
         >
           <LockIcon />
           <div>
-            Upgrade to <b>Pro plan</b> to remove watermark.
+            {t("upgrade_to")} <b>{t("pro_plan")}</b> {t("to_remove_watermark")}
           </div>
         </Toast>
       );
@@ -66,12 +66,12 @@ const Settings: FC = () => {
             <Switch
               checked={isShowWaterMark}
               onCheckedChange={handleToggleShowWatermark}
-              label="Show Watermark"
+              label={t("show_watermark")}
               labelIcon={!user ? <LockIcon /> : undefined}
             />
           </div>
           <p className="text-sm text-muted-foreground">
-            Show watermark and give credit to support our tool.
+            {t("show_watermark_message")}
           </p>
         </div>
 
@@ -79,7 +79,7 @@ const Settings: FC = () => {
           <Switch
             checked={isHideIntroSlide}
             onCheckedChange={() => dispatch(toggleHideIntroSlide())}
-            label="Hide Intro Slide"
+            label={t("hide_intro_slide")}
           />
         </div>
 
@@ -87,7 +87,7 @@ const Settings: FC = () => {
           <Switch
             checked={isHideOutroSlide}
             onCheckedChange={() => dispatch(toggleHideOutroSlide())}
-            label="Hide Outro Slide"
+            label={t("hide_outro_slide")}
           />
         </div>
 
@@ -95,7 +95,7 @@ const Settings: FC = () => {
           <Switch
             checked={isHideCounter}
             onCheckedChange={() => dispatch(toggleHideCounter())}
-            label="Hide Counter"
+            label={t("hide_counter")}
           />
         </div>
       </div>

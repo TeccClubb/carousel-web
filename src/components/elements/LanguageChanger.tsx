@@ -1,19 +1,31 @@
 "use client";
-import React, { FC, memo } from "react";
+import React, { FC, memo, useTransition } from "react";
 import { Combobox, ComboboxItem } from "../ui";
 import { languages } from "@/assets/languages";
 import { Languages } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
-import { useAppState } from "@/hooks/use-app-state";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { Locale } from "@/types";
+import { useParams } from "next/navigation";
 
 const LanguageChanger: FC = () => {
   const router = useRouter();
-  const currentPathname = usePathname();
-  const { locale } = useAppState();
+  const t = useTranslations();
+  const [isPending, startTransition] = useTransition();
+  const pathname = usePathname();
+  const params = useParams();
+  const locale = useLocale();
 
-  const handleChange = (newLocale: Locale) => {
-    router.replace(currentPathname.replace(`/${locale}`, `/${newLocale}`));
+  const handleChange = (nextLocale: Locale) => {
+    startTransition(() => {
+      router.replace(
+        // @ts-expect-error -- TypeScript will validate that only known `params`
+        // are used in combination with a given `pathname`. Since the two will
+        // always match for the current route, we can skip runtime checks.
+        { pathname, params },
+        { locale: nextLocale }
+      );
+    });
   };
 
   return (
@@ -24,8 +36,9 @@ const LanguageChanger: FC = () => {
       tickSide="left"
       icon={<Languages className="h-5 w-5" />}
       emptyMessage="No language found"
-      placeholder="Select Language"
+      placeholder={t("select_language")}
       size="sm"
+      disabled={isPending}
     >
       {languages.map((lang) => (
         <ComboboxItem key={lang.locale} value={lang.locale}>

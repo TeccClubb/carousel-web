@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppState, Locale } from "@/types";
+import { AppState } from "@/types";
 
 const initialState: AppState = {
-  locale: "en",
   zoomValue: 39,
   isLoading: false,
   loaderTitle: "Loading...",
@@ -14,10 +13,6 @@ const appSlice = createSlice({
   name: "app",
 
   reducers: {
-    setLocale: (state, action: PayloadAction<Locale>) => {
-      state.locale = action.payload;
-    },
-
     zoomIn: (state) => {
       const remainder = state.zoomValue % 3;
       if (state.zoomValue === 99) state.zoomValue += 1;
@@ -51,7 +46,6 @@ const appSlice = createSlice({
 });
 
 export const {
-  setLocale,
   zoomIn,
   zoomOut,
   setZoomValue,

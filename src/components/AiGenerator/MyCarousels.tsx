@@ -20,10 +20,9 @@ import {
   Input,
 } from "../ui";
 import { LOGIN_PAGE_PATH } from "@/pathNames";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { Edit2Icon, Plus, Save, Trash2Icon } from "lucide-react";
 import { useUserState } from "@/hooks/use-user-state";
-import { useAppState } from "@/hooks/use-app-state";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { useDispatch } from "react-redux";
 import {
@@ -39,11 +38,12 @@ import axios, { AxiosError } from "axios";
 import { DELETE_CAROUSEL_ROUTE, SAVE_CAROUSEL_ROUTE } from "@/constant";
 import { Carousel } from "@/types";
 import { setLoading } from "@/store/app.slice";
+import { useTranslations } from "next-intl";
 
 const MyCarousels: FC = () => {
   const dispatch = useDispatch();
+  const t = useTranslations();
   const router = useRouter();
-  const { locale } = useAppState();
   const { userData: user } = useUserState();
   const {
     carousels,
@@ -66,7 +66,7 @@ const MyCarousels: FC = () => {
     if (file && file.type.startsWith("image/")) {
       setCreatedImageFile(file);
     } else {
-      toast.error("Please select an image in jpeg, png, or jpg formats.");
+      toast.error(t("invalid_image_select_error_message"));
     }
   };
 
@@ -77,14 +77,14 @@ const MyCarousels: FC = () => {
     if (file && file.type.startsWith("image/")) {
       setUpdatedImageFile(file);
     } else {
-      toast.error("Please select an image in jpeg, png, or jpg formats.");
+      toast.error(t("invalid_image_select_error_message"));
     }
   };
 
   const handleCreate = async () => {
     if (user) {
       try {
-        dispatch(setLoading({ isLoading: true, title: "Creating..." }));
+        dispatch(setLoading({ isLoading: true, title: t("creating") }));
         const formData = new FormData();
         formData.append("carousel_id", "");
         formData.append("title", createdTitle.trim());
@@ -138,7 +138,7 @@ const MyCarousels: FC = () => {
   const handleEdit = async (carousel: Carousel) => {
     if (user) {
       try {
-        dispatch(setLoading({ isLoading: true, title: "Updating..." }));
+        dispatch(setLoading({ isLoading: true, title: t("updating") }));
         const formData = new FormData();
         formData.append("carousel_id", String(carousel.carouselId));
         formData.append("title", updatedTitle.trim());
@@ -194,7 +194,7 @@ const MyCarousels: FC = () => {
   const handleDelete = async (carouselId: number) => {
     if (user) {
       try {
-        dispatch(setLoading({ isLoading: true, title: "Deleting..." }));
+        dispatch(setLoading({ isLoading: true, title: t("deleting") }));
         const resData = await axios
           .delete<{
             status: boolean;
@@ -233,14 +233,12 @@ const MyCarousels: FC = () => {
               onClick={() => {
                 if (carouselId !== null) setCreateDialogOpen(true);
                 else {
-                  alert(
-                    "Are you sure you want to create a new carousel? Please save your current carousel first to avoid losing any of your work."
-                  );
+                  alert(t("create_new_carousel_alert"));
                 }
               }}
             >
               <Plus />
-              New Carousel
+              {t("new_carousel")}
             </Button>
             <Dialog
               open={isCreateDialogOpen}
@@ -250,18 +248,18 @@ const MyCarousels: FC = () => {
               <DialogContent>
                 <form className="grid gap-4">
                   <DialogHeader>
-                    <DialogTitle>Create new carousel</DialogTitle>
+                    <DialogTitle>{t("create_new_carousel")}</DialogTitle>
                     <DialogDescription className="hidden">
-                      create new carousel
+                      {t("create_new_carousel")}
                     </DialogDescription>
                   </DialogHeader>
                   <div className="grid gap-2">
                     <Input
                       value={createdTitle}
-                      label="Title"
+                      label={t("title")}
                       onChange={(e) => setCreatedTitle(e.target.value)}
                       type="text"
-                      placeholder="Enter your title"
+                      placeholder={t("enter_your_title")}
                     />
                   </div>
 
@@ -269,7 +267,7 @@ const MyCarousels: FC = () => {
                     <Input
                       label={
                         <>
-                          Image
+                          {t("image")}
                           {createdImageFile && (
                             <span style={{ color: "green" }}>
                               &nbsp;({createdImageFile.name})
@@ -290,7 +288,7 @@ const MyCarousels: FC = () => {
                       disabled={!createdTitle || !createdImageFile}
                     >
                       <Save />
-                      Create
+                      {t("create")}
                     </Button>
                   </DialogFooter>
                 </form>
@@ -301,19 +299,17 @@ const MyCarousels: FC = () => {
           {!user && (
             <div className="border rounded p-2 flex flex-col items-center">
               <div className="text-center text-muted-foreground">
-                Login to save and view carousels
+                {t("login_to_save_and_view_carousels")}
               </div>
-              <Button
-                onClick={() => router.push(`/${locale}${LOGIN_PAGE_PATH}`)}
-              >
-                Login
+              <Button onClick={() => router.push(LOGIN_PAGE_PATH)}>
+                {t("login")}
               </Button>
             </div>
           )}
 
           {user && carousels.length === 0 && (
             <div className="text-center text-muted-foreground">
-              No carousels found
+              {t("no_carousels_found")}
             </div>
           )}
 
@@ -366,24 +362,24 @@ const MyCarousels: FC = () => {
                           className="cursor-pointer"
                         >
                           <Edit2Icon className="w-4 h-4" />
-                          Edit
+                          {t("edit")}
                         </Button>
                       </DialogTrigger>
                       <DialogContent onClick={(e) => e.stopPropagation()}>
                         <form className="grid gap-4">
                           <DialogHeader>
-                            <DialogTitle>Edit carousel</DialogTitle>
+                            <DialogTitle>{t("edit_carousel")}</DialogTitle>
                             <DialogDescription className="hidden">
-                              edit carousel
+                              {t("edit_carousel")}
                             </DialogDescription>
                           </DialogHeader>
                           <div className="grid gap-2">
                             <Input
                               value={updatedTitle}
-                              label="Title"
+                              label={t("title")}
                               onChange={(e) => setUpdatedTitle(e.target.value)}
                               type="text"
-                              placeholder="Enter your title"
+                              placeholder={t("enter_your_title")}
                             />
                           </div>
 
@@ -391,7 +387,7 @@ const MyCarousels: FC = () => {
                             <Input
                               label={
                                 <>
-                                  Image
+                                  {t("image")}
                                   {updatedImageFile && (
                                     <span style={{ color: "green" }}>
                                       ({updatedImageFile.name})
@@ -416,7 +412,7 @@ const MyCarousels: FC = () => {
                               }
                             >
                               <Save />
-                              Update
+                              {t("update")}
                             </Button>
                           </DialogFooter>
                         </form>
@@ -432,27 +428,27 @@ const MyCarousels: FC = () => {
                           className="cursor-pointer"
                         >
                           <Trash2Icon className="w-4 h-4" />
-                          Delete
+                          {t("delete")}
                         </Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent onClick={(e) => e.stopPropagation()}>
                         <AlertDialogHeader>
                           <AlertDialogTitle>
-                            Are sure to delete the carousel {carousel.title}?
+                            {t("delete_carousel_dialog_title")} {carousel.title}
+                            ?
                           </AlertDialogTitle>
                           <AlertDialogDescription>
-                            This action cannot be undone. This will permanently
-                            remove from our servers.
+                            {t("delete_carousel_dialog_description")}
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
                           <AlertDialogAction
                             variant="destructive"
                             onClick={() => handleDelete(carousel.carouselId!)}
                           >
                             <Trash2Icon className="w-4 h-4" />
-                            Delete
+                            {t("delete")}
                           </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>

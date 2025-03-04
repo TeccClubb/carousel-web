@@ -6,6 +6,7 @@ export type Plan = {
   name: string;
   price: number;
   slug: string;
+  isBestPrice: boolean;
 };
 
 export type PlansState = {

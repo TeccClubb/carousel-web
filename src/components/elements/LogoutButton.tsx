@@ -8,15 +8,17 @@ import axios, { AxiosError } from "axios";
 import { LOGOUT_ROUTE, TOKEN_LOCAL_STORAGE_KEY } from "@/constant";
 import { useDispatch } from "react-redux";
 import { setLoading } from "@/store/app.slice";
+import { useTranslations } from "next-intl";
 
 const LogoutButton: FC<{ onLogout?: () => void }> = ({ onLogout }) => {
   const dispatch = useDispatch();
+  const t = useTranslations();
   const { userData: user } = useUserState();
   type LogoutResponse = { status: boolean; message: string };
   const toast = useToast();
   const handleLogout = async () => {
     try {
-      dispatch(setLoading({ isLoading: true, title: "Logging out..." }));
+      dispatch(setLoading({ isLoading: true, title: t("logging_out") }));
       googleLogout();
       const res: LogoutResponse = await axios
         .post(LOGOUT_ROUTE, {
@@ -42,7 +44,7 @@ const LogoutButton: FC<{ onLogout?: () => void }> = ({ onLogout }) => {
 
   return (
     <Button onClick={handleLogout} variant="destructive">
-      Logout
+      {t("logout")}
     </Button>
   );
 };
