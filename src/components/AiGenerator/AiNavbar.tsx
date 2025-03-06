@@ -121,7 +121,6 @@ const AiNavbar: FC = () => {
         link.click();
         toast.success("Carousel successfully generated");
       } else {
-        console.log(response);
         toast.error("Failed to generate PDF");
       }
     } catch (error) {
