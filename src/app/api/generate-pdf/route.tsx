@@ -1,5 +1,5 @@
 import { CarouselData } from "@/types";
-import puppeteer from "puppeteer";
+import { chromium } from "playwright";
 
 export async function GET(request: Request) {
   const host = request.headers.get("host") || "localhost:3000";
@@ -19,16 +19,18 @@ export async function GET(request: Request) {
   } = decodedCarouselData;
 
   try {
-    const browser = await puppeteer.launch();
+    const browser = await chromium.launch({
+      headless: true,
+    });
     const page = await browser.newPage();
     const pageWidth = 1024;
     const pageHeight = (height / width) * pageWidth;
-    await page.setViewport({
+    await page.setViewportSize({
       width: pageWidth,
       height: pageHeight,
     });
 
-    await page.goto(url, { waitUntil: "networkidle0" });
+    await page.goto(url, { waitUntil: "networkidle" });
 
     const pdfBuffer = await page.pdf({
       width: pageWidth,
