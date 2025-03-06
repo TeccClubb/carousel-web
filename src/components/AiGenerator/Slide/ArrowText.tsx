@@ -8,8 +8,8 @@ const ArrowText: FC<{
   arrowId: string;
   isOnlyArrow: boolean;
   text: string;
-}> = ({ accentColor, arrowId, isOnlyArrow, text }) => {
-  return !isOnlyArrow ? (
+}> = ({ accentColor, arrowId, isOnlyArrow, text }) =>
+  !isOnlyArrow ? (
     <div
       className="w-auto h-[4em] py-[3em] px-[1.5em] font-medium flex items-center justify-center gap-[1em] rounded-[99em] absolute right-[3.75em] bottom-[3.75em] z-[999]"
       style={{
@@ -30,6 +30,5 @@ const ArrowText: FC<{
       {getArrow(arrowId)}
     </div>
   );
-};
 
 export default memo(ArrowText);

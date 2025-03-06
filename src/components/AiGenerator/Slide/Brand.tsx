@@ -1,23 +1,21 @@
 "use client";
 import React, { FC, memo } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui";
-import { useUserState } from "@/hooks/use-user-state";
-import { useCarouselsState } from "@/hooks/use-carousels-state";
 import {
   DEFAULT_BRAND_HANDLE,
   DEFAULT_BRAND_IMAGE_SRC,
   DEFAULT_BRAND_NAME,
 } from "@/constant";
+import { CarouselData, User } from "@/types";
 
-const Brand: FC<{ color: string }> = ({ color }) => {
+const Brand: FC<{
+  color: string;
+  carouselData: CarouselData;
+  user: User | null;
+}> = ({ color, carouselData, user }) => {
   const {
-    carousel: {
-      data: {
-        brand: { name, handle, profileImage },
-      },
-    },
-  } = useCarouselsState();
-  const { userData: user } = useUserState();
+    brand: { name, handle, profileImage },
+  } = carouselData;
 
   const brandName =
     user === null ? name.text || DEFAULT_BRAND_NAME : name.text || user.name;

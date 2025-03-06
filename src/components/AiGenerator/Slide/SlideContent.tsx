@@ -1,16 +1,22 @@
 import React, { FC, memo } from "react";
-import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { getBrightness } from "@/lib/utils";
-import { SlideContent as SlideContentType } from "@/types";
+import { CarouselData, SlideContent as SlideContentType } from "@/types";
 
 const SlideContent: FC<{
   slide: SlideContentType;
   index: number;
-  isHideCounter: boolean;
   color: string;
   bgColor: string;
   accentColor: string;
-}> = ({ slide, index, isHideCounter, color, bgColor, accentColor }) => {
+  carouselData: CarouselData;
+}> = ({
+  slide,
+  index,
+  color,
+  bgColor,
+  accentColor,
+  carouselData,
+}) => {
   const {
     type = "regular",
     selectedTab = "text_&_image",
@@ -40,16 +46,13 @@ const SlideContent: FC<{
   } = slide;
 
   const {
-    carousel: {
-      data: {
-        contentText: {
-          primaryFont: { name: primaryFont },
-          fontSize = 0.8,
-          fontTextAlignment = "left",
-        },
-      },
+    settings: { isHideCounter },
+    contentText: {
+      primaryFont: { name: primaryFont },
+      fontSize = 0.8,
+      fontTextAlignment = "left",
     },
-  } = useCarouselsState();
+  } = carouselData;
 
   return (
     <div

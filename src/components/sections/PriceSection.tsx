@@ -8,14 +8,19 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../CheckoutForm";
 import { usePlans } from "@/hooks/use-plans.state";
 import { SkeletonCard } from "../elements";
+import { useUserState } from "@/hooks/use-user-state";
+import { useRouter } from "@/i18n/navigation";
+import { LOGIN_PAGE_PATH } from "@/pathNames";
 
 const PriceSection: FC<{
   isHeroSection?: boolean;
   showGradient?: boolean;
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
+  const router = useRouter();
   const { isPlansLoading, plans } = usePlans();
   const [plan, setPlan] = useState<{ heading: string; price: number }>();
+  const { userData: user } = useUserState();
 
   const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
   const options: StripeElementsOptionsMode = {
@@ -67,7 +72,11 @@ const PriceSection: FC<{
                 durationUnit={plan.duration_unit}
                 features={plan.description.replace(/, /g, ",").split(",")}
                 isBestPrice={plan.isBestPrice}
-                onGetPlan={(heading, price) => setPlan({ heading, price })}
+                onGetPlan={(heading, price) => {
+                  if (!user) {
+                    router.push(LOGIN_PAGE_PATH);
+                  } else setPlan({ heading, price });
+                }}
               />
             ))}
           </div>

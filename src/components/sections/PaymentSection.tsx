@@ -4,16 +4,14 @@ import Section from "./Section";
 import { CheckCircle2, ShieldClose } from "lucide-react";
 import { LinkButton } from "../ui";
 import { HOME_PAGE_PATH } from "@/pathNames";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "@/i18n/navigation";
+import { notFound, useSearchParams } from "next/navigation";
 import Stripe from "stripe";
 import { STRIPE_SECRET_KEY } from "@/constant";
 import { useToast } from "@/hooks/use-sonner-toast";
 import { useTranslations } from "next-intl";
 
-const PaymentSuccessSection: FC = () => {
+const PaymentSection: FC = () => {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const t = useTranslations();
   const toast = useToast();
   const [isPaymentSuccessful, setPaymentStatus] = useState<boolean>(false);
@@ -42,7 +40,7 @@ const PaymentSuccessSection: FC = () => {
 
     const paymentIntent = searchParams.get("payment_intent");
     if (!paymentIntent) {
-      router.replace(HOME_PAGE_PATH);
+      notFound();
     } else {
       verifyPayment(paymentIntent);
     }
@@ -81,4 +79,4 @@ const PaymentSuccessSection: FC = () => {
   );
 };
 
-export default memo(PaymentSuccessSection);
+export default memo(PaymentSection);

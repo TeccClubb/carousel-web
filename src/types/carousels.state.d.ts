@@ -29,7 +29,7 @@ type AiPanel = {
   topic: string;
   text: string;
   url: string;
-}
+};
 
 type ContentText = {
   isCustomFontsEnabled: boolean;
@@ -79,24 +79,26 @@ type Settings = {
   isHideCounter: boolean;
 };
 
+export type CarouselData = {
+  slideRatio: { ratioId: string; width: number; height: number };
+  slides: SlideContent[];
+  contentText: ContentText;
+  colors: Colors;
+  brand: Brand;
+  backgroundOverlay: BackgroundOverlay;
+  settings: Settings;
+  arrowText: ArrowText;
+};
+
 export type Carousel = {
   carouselId: number | null;
   title: string;
   imageSrc: string;
-  data: {
-    slideRatio: { ratioId: string; width: number; height: number };
-    slides: SlideContent[];
-    contentText: ContentText;
-    colors: Colors;
-    brand: Brand;
-    backgroundOverlay: BackgroundOverlay;
-    settings: Settings;
-    arrowText: ArrowText;
-  };
+  data: CarouselData;
 };
 
 export type CarouselsState = {
-  isOnceCarouselsFetched: boolean,
+  isOnceCarouselsFetched: boolean;
   aiPanel: AiPanel;
   carousel: Carousel;
   carousels: Carousel[];

@@ -35,8 +35,8 @@ import {
 } from "@/pathNames";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { useDispatch } from "react-redux";
-import { AvatarProfile, DownloadButton, Toast } from "../elements";
-import { Save } from "lucide-react";
+import { AvatarProfile, Toast } from "../elements";
+import { DownloadIcon, Loader2, Save } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { SAVE_CAROUSEL_ROUTE } from "@/constant";
 import {
@@ -61,6 +61,7 @@ const AiNavbar: FC = () => {
   const t = useTranslations();
 
   const { isLoading, isLoggedIn, user } = useSyncAuthStatus();
+  const [isPDFGenerating, setIsPDFGenerating] = useState<boolean>(false);
 
   const {
     carousel: {
@@ -70,6 +71,10 @@ const AiNavbar: FC = () => {
       data: carouselData,
     },
   } = useCarouselsState();
+
+  const {
+    slideRatio: { ratioId },
+  } = carouselData;
 
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [imageFile, setImageFile] = useState<File | undefined>(undefined);
@@ -87,6 +92,46 @@ const AiNavbar: FC = () => {
       }
     } else {
       toast.error(t("invalid_image_select_error_message"));
+    }
+  };
+
+  const handleDownload = async () => {
+    try {
+      setIsPDFGenerating(true);
+      const filename = ratioId.includes("linkedIn")
+        ? "Linked"
+        : ratioId.includes("InstaFeed")
+        ? "Instagram-Feed"
+        : ratioId.includes("InstaStories")
+        ? "Instagram-Stories"
+        : ratioId.includes("tikTok")
+        ? "TikTok"
+        : "";
+      const encodedCarousel = encodeURIComponent(JSON.stringify(carouselData));
+      const encodedUser = encodeURIComponent(JSON.stringify(user));
+      const response = await fetch(
+        `/api/generate-pdf?carousel=${encodedCarousel}&user=${encodedUser}`
+      );
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `${filename}-Carousel.pdf`;
+        link.click();
+        toast.success("Carousel successfully generated");
+      } else {
+        console.log(response);
+        toast.error("Failed to generate PDF");
+      }
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong while generating pdf"
+      );
+    } finally {
+      setIsPDFGenerating(false);
     }
   };
 
@@ -277,7 +322,25 @@ const AiNavbar: FC = () => {
               </SelectContent>
             </Select>
 
-            <DownloadButton />
+            <Button
+              size="sm"
+              onClick={handleDownload}
+              disabled={isPDFGenerating}
+            >
+              {isPDFGenerating && (
+                <>
+                  <Loader2 className="animate-spin" />
+                  <span className="hidden sm:inline">Generating...</span>
+                </>
+              )}
+
+              {!isPDFGenerating && (
+                <>
+                  <DownloadIcon />
+                  <span className="hidden sm:inline">{t("download")}</span>
+                </>
+              )}
+            </Button>
 
             <Separator orientation="vertical" className="h-6" />
 

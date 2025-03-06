@@ -1,8 +1,7 @@
 import React, { ReactNode } from "react";
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
-import { RootLayout as Layout } from "@/components";
-import ConfigureStore from "@/store/ConfigureStore";
+import { RootLayout } from "@/components";
 import { Locale } from "@/types";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
@@ -39,9 +38,7 @@ export default async function LocaleLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden bg-white dark:bg-gray-900 bg-background w-full min-h-screen flex flex-col transition duration-300`}
       >
         <NextIntlClientProvider messages={messages}>
-          <ConfigureStore>
-            <Layout>{children}</Layout>
-          </ConfigureStore>
+          <RootLayout>{children}</RootLayout>
         </NextIntlClientProvider>
       </body>
     </html>

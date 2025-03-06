@@ -1,26 +1,23 @@
 import { backgroundPattern } from "@/assets/slide-backgrounds";
-import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { getBrightness } from "@/lib/utils";
+import { CarouselData } from "@/types";
 import React, { CSSProperties, FC, memo } from "react";
 
 const BgOverlay: FC<{
   bgColor: string;
   isOddSlide: boolean;
-}> = ({ bgColor, isOddSlide }) => {
+  carouselData: CarouselData;
+}> = ({ bgColor, isOddSlide, carouselData }) => {
   const {
-    carousel: {
-      data: {
-        backgroundOverlay: {
-          backgroundId,
-          overlayOpacity = 8,
-          cornerElementId,
-          cornerElementOpacity = 20,
-          isOverlayFadeCorner,
-        },
-        colors: { backgroundColor, accentColor },
-      },
+    backgroundOverlay: {
+      backgroundId,
+      overlayOpacity = 8,
+      cornerElementId,
+      cornerElementOpacity = 20,
+      isOverlayFadeCorner,
     },
-  } = useCarouselsState();
+    colors: { backgroundColor, accentColor },
+  } = carouselData;
 
   const background =
     cornerElementId === "element_3"

@@ -1,4 +1,4 @@
-import React, { FC, memo, useEffect } from "react";
+import React, { FC, memo, useEffect, useState } from "react";
 import {
   Button,
   Carousel,
@@ -16,23 +16,26 @@ import { zoomIn, zoomOut } from "@/store/app.slice";
 import { setCurrentIndex } from "@/store/carousels.slice";
 import { Minus, Plus } from "lucide-react";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
+import { useUserState } from "@/hooks/use-user-state";
 
 const CarouselSlider: FC = () => {
   const dispatch = useDispatch();
 
-  const [api, setApi] = React.useState<CarouselApi>();
+  const [api, setApi] = useState<CarouselApi>();
 
   const { zoomValue } = useAppState();
 
+  const { userData: user } = useUserState();
+
   const {
     currentIndex,
-    carousel: {
-      data: {
-        slides: slidesData,
-        settings: { isHideIntroSlide, isHideOutroSlide },
-      },
-    },
+    carousel: { data: carouselData },
   } = useCarouselsState();
+
+  const {
+    slides: slidesData,
+    settings: { isHideIntroSlide, isHideOutroSlide },
+  } = carouselData;
 
   const slides = Array.from(slidesData);
   const lastIndex = slides.length - 1;
@@ -87,7 +90,12 @@ const CarouselSlider: FC = () => {
           <CarouselContent className="w-[68em]">
             {slides.map((slide, index) => (
               <CarouselItem key={`slide_${index}`}>
-                <Slide slide={slide} index={index} />
+                <Slide
+                  slide={slide}
+                  index={index}
+                  carouselData={carouselData}
+                  user={user}
+                />
               </CarouselItem>
             ))}
           </CarouselContent>

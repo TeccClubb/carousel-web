@@ -8,6 +8,7 @@ import AiNavbar from "./AiGenerator/AiNavbar";
 import Dashboard from "./Dashboard/Dashboard";
 import AuthLayout from "./AuthLayout";
 import CheckoutForm from "./CheckoutForm";
+import DownloadCarousel from "./DownloadCarousel";
 
 export {
   RootLayout,
@@ -20,4 +21,5 @@ export {
   Dashboard,
   AuthLayout,
   CheckoutForm,
+  DownloadCarousel,
 };

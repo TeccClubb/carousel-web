@@ -12,11 +12,13 @@ import { useToast } from "@/hooks/use-sonner-toast";
 import { STRIPE_SECRET_KEY } from "@/constant";
 import { PAYMENT_SUCCESSFUL_PAGE_PATH } from "@/pathNames";
 import { Loader2 } from "lucide-react";
+import { useLocale } from "next-intl";
 
 const CheckoutForm: FC<{ amount: number }> = ({ amount }) => {
   const stripe = useStripe();
   const elements = useElements();
   const toast = useToast();
+  const locale = useLocale();
 
   const [isLoading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
@@ -45,7 +47,7 @@ const CheckoutForm: FC<{ amount: number }> = ({ amount }) => {
         setErrorMessage(submitError.message);
         return;
       }
-      
+
       setLoading(true);
       setErrorMessage(undefined);
       const stripeSecret = new Stripe(STRIPE_SECRET_KEY);
@@ -65,7 +67,7 @@ const CheckoutForm: FC<{ amount: number }> = ({ amount }) => {
         elements,
         clientSecret,
         confirmParams: {
-          return_url: `${window.location.origin}${PAYMENT_SUCCESSFUL_PAGE_PATH}`,
+          return_url: `${window.location.origin}/${locale}${PAYMENT_SUCCESSFUL_PAGE_PATH}`,
         },
       });
 

@@ -3,6 +3,7 @@ export type { AppState } from "./app.state";
 export type {
   Colors,
   SlideContent,
+  CarouselData,
   Carousel,
   CarouselsState,
 } from "./carousels.state";

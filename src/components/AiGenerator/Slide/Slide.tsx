@@ -1,37 +1,30 @@
 "use client";
 import React, { FC, memo } from "react";
 import Watermark from "./Watermark";
-import { useCarouselsState } from "@/hooks/use-carousels-state";
 import Brand from "./Brand";
 import BgOverlay from "./BgOverlay";
 import SlideHeader from "./SlideHeader";
 import SlideContent from "./SlideContent";
 import ArrowText from "./ArrowText";
-import { SlideContent as SlideContentType } from "@/types";
+import { CarouselData, SlideContent as SlideContentType, User } from "@/types";
 
-const Slide: FC<{ slide: SlideContentType; index: number }> = ({
-  slide,
-  index,
-}) => {
+const Slide: FC<{
+  slide: SlideContentType;
+  index: number;
+  carouselData: CarouselData;
+  user: User | null;
+  isDownloadRequest?: boolean;
+}> = ({ slide, index, carouselData, user, isDownloadRequest }) => {
   const {
-    carousel: {
-      data: {
-        colors: {
-          isAlternateSlideColors,
-          backgroundColor,
-          textColor,
-          accentColor,
-        },
-        brand: { isShowInIntroSlide, isShowInOutroSlide, isShowInRegularSlide },
-        settings: { isShowWaterMark, isHideCounter },
-        arrowText: { arrowId, isOnlyArrow, introSlideArrow, regularSlideArrow },
-        contentText: {
-          secondaryFont: { name: secondaryFont },
-        },
-        slideRatio: { width, height },
-      },
+    colors: { isAlternateSlideColors, backgroundColor, textColor, accentColor },
+    brand: { isShowInIntroSlide, isShowInOutroSlide, isShowInRegularSlide },
+    settings: { isShowWaterMark },
+    arrowText: { arrowId, isOnlyArrow, introSlideArrow, regularSlideArrow },
+    contentText: {
+      secondaryFont: { name: secondaryFont },
     },
-  } = useCarouselsState();
+    slideRatio: { width, height },
+  } = carouselData;
 
   const isIntroSlide = slide.type === "intro";
   const isOutroSlide = slide.type === "outro";
@@ -51,8 +44,10 @@ const Slide: FC<{ slide: SlideContentType; index: number }> = ({
     : backgroundColor;
 
   return (
-    <div className="h-full mx-[2px] float-left outline-none">
-      <SlideHeader type={slide.type || "regular"} index={index} />
+    <div className="h-full float-left outline-none">
+      {!isDownloadRequest && (
+        <SlideHeader type={slide.type || "regular"} index={index} />
+      )}
 
       <div
         className="shadow-md"
@@ -70,15 +65,19 @@ const Slide: FC<{ slide: SlideContentType; index: number }> = ({
                 backgroundColor: bgColor,
               }}
             >
-              <BgOverlay bgColor={bgColor} isOddSlide={isOddSlide} />
+              <BgOverlay
+                bgColor={bgColor}
+                isOddSlide={isOddSlide}
+                carouselData={carouselData}
+              />
 
               <SlideContent
                 slide={slide}
                 index={index}
-                isHideCounter={isHideCounter}
                 color={color}
                 bgColor={bgColor}
                 accentColor={accentColor}
+                carouselData={carouselData}
               />
 
               {isShowWaterMark && (
@@ -103,7 +102,7 @@ const Slide: FC<{ slide: SlideContentType; index: number }> = ({
               {(isIntroSlide && isShowInIntroSlide) ||
               (isOutroSlide && isShowInOutroSlide) ||
               (isShowInRegularSlide && !isIntroSlide && !isOutroSlide) ? (
-                <Brand color={color} />
+                <Brand color={color} carouselData={carouselData} user={user} />
               ) : null}
             </div>
           </div>

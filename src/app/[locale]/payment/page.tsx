@@ -1,10 +1,10 @@
 "use client";
 import React, { FC, Suspense } from "react";
-import { PaymentSuccessSection } from "@/components/sections";
+import { PaymentSection } from "@/components/sections";
 
 const PaymentPage: FC = () => (
   <Suspense>
-    <PaymentSuccessSection />
+    <PaymentSection />
   </Suspense>
 );
 
