@@ -1,5 +1,5 @@
 export { Button, LinkButton, buttonVariants } from "./button";
-export { Input } from "./input";
+export { Input, ImageInput } from "./input";
 export { Textarea } from "./textarea";
 
 export {

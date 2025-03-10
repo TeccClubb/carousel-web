@@ -143,7 +143,7 @@ const Background: FC = () => {
             </div>
 
             <Slider
-              defaultValue={[overlayOpacity]}
+              value={[overlayOpacity]}
               min={0}
               max={100}
               step={1}
@@ -191,7 +191,7 @@ const Background: FC = () => {
             </div>
 
             <Slider
-              defaultValue={[cornerElementOpacity]}
+              value={[cornerElementOpacity]}
               min={0}
               max={100}
               step={1}

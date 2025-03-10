@@ -1,4 +1,4 @@
-import React, { FC, memo, useState } from "react";
+import React, { FC, FormEvent, memo, useState } from "react";
 import {
   Button,
   Combobox,
@@ -51,7 +51,8 @@ const Ai: FC = () => {
 
   const textMaxLength = 8000;
 
-  const handleGenerate = async () => {
+  const handleGenerate = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const command = `make ${totalSlides} carousel sliders for ${contentType} on ${
       selectedTab === "topic"
         ? `${topic} topic`
@@ -107,7 +108,7 @@ const Ai: FC = () => {
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleGenerate}>
         <div className="bg-background/95 pb-2 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <Tabs
             defaultValue={selectedTab}
@@ -194,13 +195,7 @@ const Ai: FC = () => {
           </div>
         </div>
 
-        <Button
-          size="sm"
-          type="submit"
-          onClick={handleGenerate}
-          disabled={isLoading}
-          className="w-full"
-        >
+        <Button size="sm" type="submit" disabled={isLoading} className="w-full">
           {isLoading && (
             <>
               <Loader2 className="animate-spin" />

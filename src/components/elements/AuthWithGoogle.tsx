@@ -5,12 +5,17 @@ import { Button } from "../ui";
 import { GoogleIcon } from "@/icons";
 import axios, { AxiosError } from "axios";
 import { User } from "@/types";
-import { LOGIN_ROUTE, TOKEN_LOCAL_STORAGE_KEY } from "@/constant";
+import {
+  GET_ACTIVE_PURCHASE_PLAN_ROUTE,
+  LOGIN_ROUTE,
+  TOKEN_LOCAL_STORAGE_KEY,
+} from "@/constant";
 import { useToast } from "@/hooks/use-sonner-toast";
 import { useDispatch } from "react-redux";
 import { setLoading } from "@/store/app.slice";
 import { setUserData } from "@/store/user.slice";
 import { useTranslations } from "next-intl";
+import { setActivePlan } from "@/store/plans.slice";
 
 const AuthWithGoogle: FC<{ text: string }> = ({ text }) => {
   const dispatch = useDispatch();
@@ -45,8 +50,37 @@ const AuthWithGoogle: FC<{ text: string }> = ({ text }) => {
             })
           );
           localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, res.access_token);
+
+          const planResData = await axios
+            .get<{
+              status: boolean;
+              message: string;
+              plan: {
+                plan_id: number;
+                start_date: string;
+                end_date: string;
+                amount_paid: string;
+                status: "active";
+              };
+            }>(GET_ACTIVE_PURCHASE_PLAN_ROUTE, {
+              headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${res.access_token}`,
+              },
+            })
+            .then((res) => res.data);
+          dispatch(
+            setActivePlan({
+              id: planResData.plan.plan_id,
+              start_date: planResData.plan.start_date,
+              end_date: planResData.plan.end_date,
+              amount_paid: planResData.plan.amount_paid,
+              status: planResData.plan.status,
+            })
+          );
         } else toast.error(res.message);
       } catch (error) {
+        console.log(error);
         if (error instanceof AxiosError) {
           toast.error(error.message);
         } else toast.error("Something went wrong while login");

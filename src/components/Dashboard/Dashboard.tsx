@@ -13,13 +13,23 @@ import { setCarousel } from "@/store/carousels.slice";
 import { useCarousels } from "@/hooks/use-carousels";
 import { useUserState } from "@/hooks/use-user-state";
 import { useTranslations } from "next-intl";
+import { usePlansState } from "@/hooks/use-plans.state";
 
 const Dashboard: FC = () => {
   const dispatch = useDispatch();
   const t = useTranslations();
   const { userData: user } = useUserState();
+  const { activePlan } = usePlansState();
   const { dashboardActiveItem } = useAppState();
   const { isLoading, carousels } = useCarousels();
+
+  // const startDate = new Date(activePlan!.start_date);
+  const today = new Date();
+  const endDate = new Date(activePlan!.end_date);
+
+  const remainingDays = Math.floor(
+    (endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+  );
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-start gap-0 overflow-hidden">
@@ -42,8 +52,15 @@ const Dashboard: FC = () => {
                   />
                   <ReportCard
                     title={t("subscription")}
-                    value="3 days left"
+                    value={`${remainingDays} days left`}
                     icon={<PlanIcon className="w-10 h-10" />}
+                    valueClassName={`${
+                      remainingDays < 3
+                        ? "text-red-600"
+                        : remainingDays < 7
+                        ? "text-yellow-600"
+                        : "text-green-600"
+                    }`}
                   />
                 </div>
               </div>
@@ -54,7 +71,7 @@ const Dashboard: FC = () => {
                 </h2>
                 <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
                   {isLoading &&
-                    Array.from({ length: 4 }).map((_, index) => (
+                    Array.from({ length: 8 }).map((_, index) => (
                       <SkeletonCard key={`skeleton_${index}`} />
                     ))}
                   {!isLoading &&

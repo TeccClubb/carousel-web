@@ -1,6 +1,11 @@
 "use client";
 
-import { GET_USER_ROUTE, TOKEN_LOCAL_STORAGE_KEY } from "@/constant";
+import {
+  GET_ACTIVE_PURCHASE_PLAN_ROUTE,
+  GET_USER_ROUTE,
+  TOKEN_LOCAL_STORAGE_KEY,
+} from "@/constant";
+import { setActivePlan } from "@/store/plans.slice";
 import { RootState } from "@/store/store";
 import { setOnceAppLoaded, setUserData } from "@/store/user.slice";
 import { User } from "@/types";
@@ -30,7 +35,34 @@ export const useSyncAuthStatus = () => {
             })
             .then((res) => res.data);
           if (resData) {
+            const planResData = await axios
+              .get<{
+                status: boolean;
+                message: string;
+                plan: {
+                  plan_id: number;
+                  start_date: string;
+                  end_date: string;
+                  amount_paid: string;
+                  status: "active";
+                };
+              }>(GET_ACTIVE_PURCHASE_PLAN_ROUTE, {
+                headers: {
+                  Accept: "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              })
+              .then((res) => res.data);
             dispatch(setUserData({ ...resData.user, access_token: token }));
+            dispatch(
+              setActivePlan({
+                id: planResData.plan.plan_id,
+                start_date: planResData.plan.start_date,
+                end_date: planResData.plan.end_date,
+                amount_paid: planResData.plan.amount_paid,
+                status: planResData.plan.status,
+              })
+            );
           } else {
             dispatch(setOnceAppLoaded());
             localStorage.removeItem(TOKEN_LOCAL_STORAGE_KEY);

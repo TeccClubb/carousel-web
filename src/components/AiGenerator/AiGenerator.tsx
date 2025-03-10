@@ -44,9 +44,13 @@ import { Shuffle } from "lucide-react";
 import { useCarousels } from "@/hooks/use-carousels";
 import { useDispatch } from "react-redux";
 import { setZoomValue } from "@/store/app.slice";
+import { NavPanel } from "@/types";
+import { useCarouselsState } from "@/hooks/use-carousels-state";
+import { setActiveNavPanel } from "@/store/carousels.slice";
 
 const AiGenerator: FC = () => {
   const dispatch = useDispatch();
+  const { activeNavPanel } = useCarouselsState();
   const {
     carousel: {
       data: {
@@ -55,26 +59,12 @@ const AiGenerator: FC = () => {
     },
   } = useCarousels();
 
-  type NavItem =
-    | "ai"
-    | "content"
-    | "text"
-    | "colors"
-    | "background"
-    | "branding"
-    | "swipe"
-    | "order"
-    | "settings"
-    | "randomize"
-    | "my_carousels";
-
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [divWidth, setDivWidth] = useState<number>(0);
   const [divHeight, setDivHeight] = useState<number>(0);
   const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
-  const [activeNavItem, setActiveNavItem] = useState<NavItem>("ai");
 
-  const navItems: NavItem[] = [
+  const navPanels: NavPanel[] = [
     "ai",
     "content",
     "text",
@@ -210,28 +200,30 @@ const AiGenerator: FC = () => {
           <nav className="grid gap-1 px-2 justify-center">
             <TooltipProvider>
               <ul>
-                {navItems.map((item) => (
-                  <li key={item}>
+                {navPanels.map((panel) => (
+                  <li key={panel}>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Button
-                          variant={activeNavItem === item ? "default" : "ghost"}
+                          variant={
+                            activeNavPanel === panel ? "default" : "ghost"
+                          }
                           size="icon"
                           onClick={() => {
-                            setActiveNavItem(item);
+                            dispatch(setActiveNavPanel(panel));
                             if (isMobile) setDrawerOpen(true);
                           }}
                           className={`[&_svg]:size-5 ${
-                            activeNavItem === item && item === "ai"
+                            activeNavPanel === panel && panel === "ai"
                               ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0"
                               : ""
                           }`}
                         >
-                          {items[item].icon}
+                          {items[panel].icon}
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent side="right">
-                        <span>{items[item].name}</span>
+                        <span>{items[panel].name}</span>
                       </TooltipContent>
                     </Tooltip>
                   </li>
@@ -254,10 +246,10 @@ const AiGenerator: FC = () => {
         >
           <DrawerHeader className="flex items-center px-4 py-3">
             <DrawerTitle className="text-xl font-bold">
-              {items[activeNavItem].title}
+              {items[activeNavPanel].title}
             </DrawerTitle>
             <DrawerDescription className="hidden">
-              {items[activeNavItem].name}
+              {items[activeNavPanel].name}
             </DrawerDescription>
             <DrawerClose asChild className="ml-auto">
               <Button variant="ghost">Close</Button>
@@ -267,13 +259,13 @@ const AiGenerator: FC = () => {
           <Separator />
 
           <ScrollArea className="h-[60vh]">
-            {items[activeNavItem].container}
+            {items[activeNavPanel].container}
           </ScrollArea>
         </DrawerContent>
       </Drawer>
 
       <ScrollArea className="w-80 h-[calc(100vh-4rem)] hidden md:flex border-r">
-        {items[activeNavItem].container}
+        {items[activeNavPanel].container}
       </ScrollArea>
       <ScrollArea
         className="h-[calc(100vh-4rem)] flex-1 lg:border-x relative"

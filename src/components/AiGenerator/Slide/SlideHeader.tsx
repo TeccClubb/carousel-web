@@ -1,4 +1,4 @@
-import React, { FC, memo, useState } from "react";
+import React, { FC, FormEvent, memo, useState } from "react";
 import { BackgroundIcon } from "@/icons";
 import { PlusCircleIcon, Trash2Icon } from "lucide-react";
 import {
@@ -10,9 +10,19 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  ImageInput,
   Input,
+  Label,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Slider,
   Switch,
   Textarea,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from "@/components/ui";
 import { useDispatch } from "react-redux";
 import {
@@ -23,16 +33,19 @@ import {
   setNewSlideImageSrc,
   setNewSlideSubTitle,
   setNewSlideTitle,
+  setSlideBackgroundImageBackgroundPosition,
+  setSlideBackgroundImageOpacity,
+  setSlideBackgroundImageSrc,
   toggleNewSlideDescription,
   toggleNewSlideImage,
   toggleNewSlideSubTitle,
   toggleNewSlideTitle,
+  toggleSlideBackgroundImage,
 } from "@/store/carousels.slice";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
-import { uploadImage } from "@/lib/utils";
-import { useToast } from "@/hooks/use-sonner-toast";
-import { setLoading } from "@/store/app.slice";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { imageBackgroundPositions } from "@/assets/imageBackgroundPositions";
 
 const SlideHeader: FC<{
   type: "intro" | "regular" | "outro";
@@ -40,47 +53,14 @@ const SlideHeader: FC<{
 }> = ({ type, index }) => {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const toast = useToast();
+  const [isOpen, setOpen] = useState<boolean>(false);
 
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
-  const loadingSetter = ({
-    isLoading,
-    title,
-  }: {
-    isLoading: boolean;
-    title?: string;
-  }) => {
-    dispatch(setLoading({ isLoading, title }));
-  };
-
-  const onError = (message: string) => toast.error(message);
-
-  const handleImageChoose = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const fileType = file.type;
-      if (
-        fileType === "image/jpeg" ||
-        fileType === "image/png" ||
-        fileType === "image/jpg"
-      ) {
-        uploadImage({
-          oldUrl: "imageSrc",
-          file,
-          loadingSetter,
-          onError,
-          onImageSelect: (imageSrc) => {
-            dispatch(setNewSlideImageSrc(imageSrc));
-          },
-        });
-      } else {
-        toast.error(t("invalid_image_select_error_message"));
-      }
-    }
-  };
-
   const {
+    carousel: {
+      data: { slides },
+    },
     newSlide: {
       subTitle: { text: subTitle = "", isEnabled: isSubTitleEnabled },
       title: { text: title = "", isEnabled: isTitleEnabled },
@@ -89,8 +69,17 @@ const SlideHeader: FC<{
     },
   } = useCarouselsState();
 
-  const handleChangeBackground = () => {};
-  const handleAddSlide = () => {
+  const {
+    backgroundImage: {
+      src: backgroundImageSrc = "",
+      isEnabled: isBackgroundImageEnabled,
+      backgroundPosition: backgroundImageBackgroundPosition = "center center",
+      opacity: backgroundImageOpacity = 30,
+    },
+  } = slides[index];
+
+  const handleAddSlide = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     dispatch(addNewSlide(index));
     setIsDialogOpen(false);
     dispatch(resetNewSlide());
@@ -101,31 +90,155 @@ const SlideHeader: FC<{
 
   return (
     <div className="py-1 flex justify-between">
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={handleChangeBackground}
-        className="border-none bg-transparent"
-      >
-        <BackgroundIcon size={4} />
-      </Button>
+      <Popover open={isOpen} onOpenChange={setOpen}>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="border-none bg-transparent"
+                >
+                  <BackgroundIcon size={4} />
+                </Button>
+              </PopoverTrigger>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className="z-[1000]">
+              Background Image
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <PopoverContent className="w-60 flex flex-col gap-4">
+          <div className="grid gap-2">
+            <div className="flex items-center gap-2">
+              <Switch
+                checked={isBackgroundImageEnabled}
+                onCheckedChange={() =>
+                  dispatch(toggleSlideBackgroundImage(index))
+                }
+                label={t("image")}
+              />
+            </div>
+            <ImageInput
+              id="background_image_input"
+              oldImageUrl={backgroundImageSrc}
+              onImageSelect={(imageSrc) =>
+                dispatch(setSlideBackgroundImageSrc({ index, imageSrc }))
+              }
+              disabled={!isBackgroundImageEnabled}
+            />
+          </div>
+          {backgroundImageSrc && (
+            <div
+              className="flex gap-2 aria-disabled:opacity-60 aria-disabled:pointer-events-none"
+              aria-disabled={!isBackgroundImageEnabled}
+            >
+              <label
+                htmlFor="background_image_input"
+                className="w-[100px] h-[100px] flex justify-center items-center overflow-hidden"
+              >
+                <Image
+                  src={backgroundImageSrc}
+                  alt={t("image_not_founded")}
+                  width={100}
+                  height={100}
+                  sizes="100vw"
+                  placeholder="blur"
+                  blurDataURL={backgroundImageSrc}
+                  className="rounded-md h-auto w-auto object-cover transition-all hover:scale-105 aspect-square border"
+                />
+              </label>
+              <div className="flex-1 flex flex-col">
+                <div className="flex gap-2">
+                  <div className="flex flex-col gap-2">
+                    <Label asSpan>{t("position")}</Label>
+                    <div className="flex flex-col items-start">
+                      <div className="grid grid-cols-3 gap-1.5 p-1.5 rounded-md border">
+                        {imageBackgroundPositions.map((backgroundPosition) => (
+                          <div
+                            key={backgroundPosition}
+                            onClick={() =>
+                              dispatch(
+                                setSlideBackgroundImageBackgroundPosition({
+                                  index,
+                                  backgroundPosition,
+                                })
+                              )
+                            }
+                            className={`w-[10px] h-[10px] cursor-pointer rounded-[50%] ${
+                              backgroundPosition ===
+                              backgroundImageBackgroundPosition
+                                ? "bg-primary"
+                                : "bg-slate-200"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-col flex-1">
+                    <div className="flex flex-col items-start gap-2">
+                      <div className="flex flex-col gap-2 w-full">
+                        <div className="flex items-center justify-between align-top">
+                          <Label asSpan>{t("opacity")}</Label>
+                          <p className="text-xs text-muted-foreground">
+                            {backgroundImageOpacity}
+                          </p>
+                        </div>
+                        <Slider
+                          value={[backgroundImageOpacity]}
+                          min={0}
+                          max={100}
+                          step={1}
+                          onValueChange={(value) =>
+                            dispatch(
+                              setSlideBackgroundImageOpacity({
+                                index,
+                                opacity: value[0],
+                              })
+                            )
+                          }
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          <Button size="sm" onClick={() => setOpen(false)} className="self-end">
+            {t("close")}
+          </Button>
+        </PopoverContent>
+      </Popover>
+
       <div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="border-none bg-transparent"
-            >
-              <PlusCircleIcon className="h-4 w-4" />
-            </Button>
-          </DialogTrigger>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="border-none bg-transparent"
+                  >
+                    <PlusCircleIcon className="h-4 w-4" />
+                  </Button>
+                </DialogTrigger>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="z-[1000]">
+                Add Slide
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <DialogContent>
-            <form className="grid gap-4">
+            <form className="grid gap-4" onSubmit={handleAddSlide}>
               <DialogHeader>
                 <DialogTitle>Add new Slide</DialogTitle>
                 <DialogDescription className="hidden">
-                  add new carousel
+                  add new slide
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-2">
@@ -191,16 +304,28 @@ const SlideHeader: FC<{
                     label="Image"
                   />
                 </div>
-                <Input
-                  onChange={handleImageChoose}
-                  type="file"
-                  accept="image/*"
+                <ImageInput
+                  oldImageUrl={imageSrc}
+                  onImageSelect={(imageSrc) =>
+                    dispatch(setNewSlideImageSrc(imageSrc))
+                  }
                 />
+                {imageSrc && (
+                  <Image
+                    src={imageSrc}
+                    alt={t("image_not_founded")}
+                    width={100}
+                    height={100}
+                    sizes="100vw"
+                    placeholder="blur"
+                    blurDataURL={imageSrc}
+                    className="rounded-md h-auto w-auto object-cover transition-all hover:scale-105 aspect-video border"
+                  />
+                )}
               </div>
 
               <DialogFooter>
                 <Button
-                  onClick={handleAddSlide}
                   disabled={!subTitle && !title && !description && !imageSrc}
                 >
                   Add New Slide
@@ -210,14 +335,23 @@ const SlideHeader: FC<{
           </DialogContent>
         </Dialog>
         {type === "regular" && (
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={handleDeleteSlide}
-            className="border-none bg-transparent"
-          >
-            <Trash2Icon className="w-4 h-4 text-red-500" />
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={handleDeleteSlide}
+                  className="border-none bg-transparent"
+                >
+                  <Trash2Icon className="w-4 h-4 text-red-500" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="z-[1000]">
+                Delete Slide
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         )}
       </div>
     </div>

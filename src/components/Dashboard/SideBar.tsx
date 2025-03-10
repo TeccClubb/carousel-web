@@ -49,7 +49,7 @@ const SideBar: FC = () => {
 
   return (
     <div className="flex py-4 px-6 bg-[#F0F6FD] overflow-auto gap-y-5 flex-col flex-grow">
-      <nav className="flex flex-col flex-1">
+      <nav className="flex flex-col flex-1 cursor-default select-none">
         <ul role="list" className="flex flex-col flex-1 gap-y-7">
           <li>
             <ul className="-mx-2 space-y-1">

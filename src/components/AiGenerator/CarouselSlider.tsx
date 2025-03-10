@@ -85,7 +85,11 @@ const CarouselSlider: FC = () => {
       className="min-h-[calc(100vh-4rem)] mx-4 py-6 lg:mx-8 flex flex-col items-center justify-start gap-y-3"
       style={{ fontSize: `${zoomValue}%` }}
     >
-      <Carousel setApi={setApi} opts={{ align: "start" }} className="w-full">
+      <Carousel
+        setApi={setApi}
+        opts={{ align: "start", }}
+        className="w-full"
+      >
         <div className="overflow-hidden w-full flex items-center justify-center">
           <CarouselContent className="w-[68em]">
             {slides.map((slide, index) => (

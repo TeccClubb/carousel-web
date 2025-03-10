@@ -9,7 +9,16 @@ export type Plan = {
   isBestPrice: boolean;
 };
 
+export type ActivePlan = {
+  id: number;
+  amount_paid: string;
+  start_date: string;
+  end_date: string;
+  status: "active" | "cancelled" | "expired";
+};
+
 export type PlansState = {
   isPlansLoadedOnce: boolean;
   plans: Plan[];
+  activePlan: ActivePlan | null;
 };

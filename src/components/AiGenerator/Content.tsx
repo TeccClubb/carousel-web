@@ -1,6 +1,7 @@
 import React, { FC, memo, ReactNode } from "react";
 import {
   Button,
+  ImageInput,
   Input,
   Label,
   Popover,
@@ -52,10 +53,8 @@ import {
   VerticalIcon,
   VerticalReverseIcon,
 } from "@/icons";
-import { uploadImage } from "@/lib/utils";
-import { useToast } from "@/hooks/use-sonner-toast";
-import { setLoading } from "@/store/app.slice";
 import { useTranslations } from "next-intl";
+import { imageBackgroundPositions } from "@/assets/imageBackgroundPositions";
 
 const FontSizeSlider: FC<{
   fontSize: number;
@@ -109,7 +108,7 @@ const FontSizeSlider: FC<{
             <p className="text-xs text-muted-foreground">{fontSize}%</p>
           </div>
           <Slider
-            defaultValue={[fontSize]}
+            value={[fontSize]}
             min={10}
             max={200}
             step={5}
@@ -177,7 +176,7 @@ const TextSettings: FC = memo(() => {
           </div>
           <FontSizeSlider
             toolTipText={t("title_settings")}
-            fontSize={titleFontSize || 100}
+            fontSize={titleFontSize}
             onResetClick={() => dispatch(setSlideTitleFontSize(100))}
             setFontSize={(value) => dispatch(setSlideTitleFontSize(value))}
           />
@@ -202,7 +201,7 @@ const TextSettings: FC = memo(() => {
           </div>
           <FontSizeSlider
             toolTipText={t("description_settings")}
-            fontSize={descriptionFontSize || 100}
+            fontSize={descriptionFontSize}
             onResetClick={() => dispatch(setSlideDescriptionFontSize(100))}
             setFontSize={(value) =>
               dispatch(setSlideDescriptionFontSize(value))
@@ -225,7 +224,6 @@ TextSettings.displayName = "TextSettings";
 const ImageSettings: FC = memo(() => {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const toast = useToast();
 
   const {
     currentIndex,
@@ -245,18 +243,6 @@ const ImageSettings: FC = memo(() => {
     },
   } = slides[currentIndex];
 
-  const bgPositions = [
-    "left top",
-    "center top",
-    "right top",
-    "left center",
-    "center center",
-    "right center",
-    "left bottom",
-    "center bottom",
-    "right bottom",
-  ];
-
   const flexDirections: {
     value: "row" | "row-reverse" | "column" | "column-reverse";
     icon: ReactNode;
@@ -266,42 +252,6 @@ const ImageSettings: FC = memo(() => {
     { value: "column-reverse", icon: <HorizontalReverseIcon /> },
     { value: "row-reverse", icon: <VerticalReverseIcon /> },
   ];
-
-  const loadingSetter = ({
-    isLoading,
-    title,
-  }: {
-    isLoading: boolean;
-    title?: string;
-  }) => {
-    dispatch(setLoading({ isLoading, title }));
-  };
-
-  const onError = (message: string) => toast.error(message);
-
-  const handleImageChoose = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const fileType = file.type;
-      if (
-        fileType === "image/jpeg" ||
-        fileType === "image/png" ||
-        fileType === "image/jpg"
-      ) {
-        uploadImage({
-          oldUrl: "imageSrc",
-          file,
-          loadingSetter,
-          onError,
-          onImageSelect: (imageSrc) => {
-            dispatch(setSlideImageSrc(imageSrc));
-          },
-        });
-      } else {
-        toast.error(t("invalid_image_select_error_message"));
-      }
-    }
-  };
 
   return (
     <fieldset className="grid gap-6 rounded-lg border p-4 pb-8">
@@ -319,22 +269,28 @@ const ImageSettings: FC = memo(() => {
             label={t("image")}
           />
         </div>
-        <Input onChange={handleImageChoose} type="file" accept="image/*" />
+        <ImageInput
+          id="slide_image_input"
+          oldImageUrl={imageSrc}
+          onImageSelect={(imageSrc) => dispatch(setSlideImageSrc(imageSrc))}
+        />
       </div>
 
       <div className="flex gap-2">
         <div className="w-[100px] h-[100px] flex justify-center items-center overflow-hidden">
           {imageSrc && (
-            <Image
-              src={imageSrc}
-              alt={t("image_not_founded")}
-              width={100}
-              height={100}
-              sizes="100vw"
-              placeholder="blur"
-              blurDataURL={imageSrc}
-              className="rounded-md h-auto w-auto object-cover transition-all hover:scale-105 aspect-square border"
-            />
+            <label htmlFor="slide_image_input">
+              <Image
+                src={imageSrc}
+                alt={t("image_not_founded")}
+                width={100}
+                height={100}
+                sizes="100vw"
+                placeholder="blur"
+                blurDataURL={imageSrc}
+                className="rounded-md h-auto w-auto object-cover transition-all hover:scale-105 aspect-square border"
+              />
+            </label>
           )}
         </div>
         <div className="flex-1 flex flex-col">
@@ -343,7 +299,7 @@ const ImageSettings: FC = memo(() => {
               <Label asSpan>{t("position")}</Label>
               <div className="flex flex-col items-start">
                 <div className="grid grid-cols-3 gap-1.5 p-1.5 rounded-md border">
-                  {bgPositions.map((backgroundPosition) => (
+                  {imageBackgroundPositions.map((backgroundPosition) => (
                     <div
                       key={backgroundPosition}
                       onClick={() =>
@@ -385,7 +341,7 @@ const ImageSettings: FC = memo(() => {
                     </p>
                   </div>
                   <Slider
-                    defaultValue={[imageOpacity]}
+                    value={[imageOpacity]}
                     min={0}
                     max={100}
                     step={1}

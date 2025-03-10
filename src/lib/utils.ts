@@ -1,4 +1,4 @@
-import { LOGOUT_ROUTE, UPLOAD_IMAGE_ROUTE } from "@/constant";
+import { LOGOUT_ROUTE } from "@/constant";
 import { googleLogout } from "@react-oauth/google";
 import axios, { AxiosError } from "axios";
 import { clsx, type ClassValue } from "clsx";
@@ -7,49 +7,6 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-
-export const uploadImage = async ({
-  oldUrl,
-  file,
-  loadingSetter,
-  onImageSelect,
-  onError,
-}: {
-  oldUrl: string;
-  file: File;
-  loadingSetter: ({
-    isLoading,
-    title,
-  }: {
-    isLoading: boolean;
-    title?: string;
-  }) => void;
-  onImageSelect: (imageSrc: string) => void;
-  onError: (message: string) => void;
-}) => {
-  try {
-    loadingSetter({ isLoading: true, title: "Uploading..." });
-    const formData = new FormData();
-    formData.append("image", file);
-    if (oldUrl.startsWith("http")) {
-      formData.append("old_url", oldUrl);
-    }
-    const res = await axios
-      .post<{ status: boolean; url: string }>(UPLOAD_IMAGE_ROUTE, formData)
-      .then((res) => res.data);
-    if (res.status) {
-      onImageSelect(res.url);
-    }
-  } catch (error) {
-    onError(
-      error instanceof AxiosError
-        ? error.message
-        : "Something went wrong while uploading image"
-    );
-  } finally {
-    loadingSetter({ isLoading: false });
-  }
-};
 
 export const logout = async ({
   access_token,

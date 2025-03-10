@@ -6,11 +6,19 @@ import { LinkButton } from "../ui";
 import { HOME_PAGE_PATH } from "@/pathNames";
 import { notFound, useSearchParams } from "next/navigation";
 import Stripe from "stripe";
-import { STRIPE_SECRET_KEY } from "@/constant";
+import {
+  ADD_PURCHASE_PLAN_ROUTE,
+  STRIPE_SECRET_KEY,
+  TOKEN_LOCAL_STORAGE_KEY,
+} from "@/constant";
 import { useToast } from "@/hooks/use-sonner-toast";
 import { useTranslations } from "next-intl";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setActivePlan } from "@/store/plans.slice";
 
 const PaymentSection: FC = () => {
+  const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const t = useTranslations();
   const toast = useToast();
@@ -18,7 +26,7 @@ const PaymentSection: FC = () => {
   const [isLoading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const verifyPayment = async (paymentIntent: string) => {
+    const verifyPayment = async (planId: number, paymentIntent: string) => {
       try {
         const stripe = new Stripe(STRIPE_SECRET_KEY);
         const verifyPaymentIntent = await stripe.paymentIntents.retrieve(
@@ -26,6 +34,48 @@ const PaymentSection: FC = () => {
         );
         if (verifyPaymentIntent.status === "succeeded") {
           setPaymentStatus(true);
+
+          type ResponseData = {
+            status: boolean;
+            message: string;
+            purchase: {
+              plan_id: number;
+              amount_paid: string;
+              start_date: string;
+              end_date: string;
+              status: "active";
+            };
+          };
+
+          const access_token = localStorage.getItem(TOKEN_LOCAL_STORAGE_KEY);
+          const res = await axios
+            .post<ResponseData>(
+              ADD_PURCHASE_PLAN_ROUTE,
+              {
+                plan_id: planId,
+              },
+              {
+                headers: {
+                  Accept: "application/json",
+                  Authorization: `Bearer ${access_token}`,
+                },
+              }
+            )
+            .then((res) => res.data);
+
+          console.log(res);
+
+          if (res.status) {
+            dispatch(
+              setActivePlan({
+                id: res.purchase.plan_id,
+                amount_paid: res.purchase.amount_paid,
+                start_date: res.purchase.start_date,
+                end_date: res.purchase.end_date,
+                status: res.purchase.status,
+              })
+            );
+          }
         } else {
           setPaymentStatus(false);
         }
@@ -39,10 +89,11 @@ const PaymentSection: FC = () => {
     };
 
     const paymentIntent = searchParams.get("payment_intent");
+    const planId = searchParams.get("planId");
     if (!paymentIntent) {
       notFound();
     } else {
-      verifyPayment(paymentIntent);
+      verifyPayment(+planId!, paymentIntent);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

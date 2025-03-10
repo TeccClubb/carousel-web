@@ -12,22 +12,22 @@ import {
   PRICING_PAGE_PATH,
   SIGNUP_PAGE_PATH,
 } from "@/pathNames";
-import { useRouter, usePathname } from "@/i18n/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { AvatarProfile, LanguageChanger } from "./elements";
 import { useSyncAuthStatus } from "@/hooks/use-auth-status";
 import { useTranslations } from "next-intl";
+import { usePlansState } from "@/hooks/use-plans.state";
 
 const Navbar: FC = () => {
   const t = useTranslations();
   const { isLoading, isLoggedIn } = useSyncAuthStatus();
+  const { activePlan } = usePlansState();
 
   const [activePath, setActivePath] = useState<string>(HOME_PAGE_PATH);
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   const pathname = usePathname();
-
-  const router = useRouter();
 
   const navItems = [
     {
@@ -85,9 +85,12 @@ const Navbar: FC = () => {
                           activePath === item.href
                             ? "text-gray-900 dark:text-white dark:bg-gray-900 border-indigo-500"
                             : "border-transparent hover:border-gray-300 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-                        } border-b-2 border-solid dark:border-none px-3 py-2 text-sm font-medium dark:rounded-md`}
+                        } border-b-2 border-solid dark:border-none px-3 py-2 text-sm font-medium dark:rounded-md aria-disabled:opacity-60 aria-disabled:cursor-default aria-disabled:pointer-events-none`}
                         aria-current={
                           activePath === item.href ? "page" : undefined
+                        }
+                        aria-disabled={
+                          item.href === DASHBOARD_PAGE_PATH && !activePlan
                         }
                       >
                         {item.name}
@@ -114,17 +117,15 @@ const Navbar: FC = () => {
             {!isLoading && isLoggedIn && <AvatarProfile />}
 
             {!isLoading && !isLoggedIn && (
-              <Button
-                onClick={() =>
-                  router.push(
-                    pathname !== LOGIN_PAGE_PATH
-                      ? LOGIN_PAGE_PATH
-                      : SIGNUP_PAGE_PATH
-                  )
+              <LinkButton
+                href={
+                  pathname !== LOGIN_PAGE_PATH
+                    ? LOGIN_PAGE_PATH
+                    : SIGNUP_PAGE_PATH
                 }
               >
                 {pathname !== LOGIN_PAGE_PATH ? t("login") : t("signup")}
-              </Button>
+              </LinkButton>
             )}
           </div>
         </div>
@@ -141,9 +142,10 @@ const Navbar: FC = () => {
                 className={`${
                   activePath === item.href
                     ? "text-indigo-700 bg-indigo-50 border-indigo-500 dark:text-white dark:bg-gray-900 border-l-4 border-solid dark:border-none"
-                    : "text-gray-500 active:text-indigo-700 active:bg-indigo-50 dark:text-gray-300 dark:active:bg-gray-700 dark:active:text-white"
+                    : "text-gray-500 active:text-indigo-700 active:bg-indigo-50 dark:text-gray-300 dark:active:bg-gray-700 dark:active:text-white aria-disabled:opacity-60 aria-disabled:cursor-default aria-disabled:pointer-events-none"
                 } px-3 py-2 block text-base font-medium dark:rounded-md`}
                 aria-current={activePath === item.href ? "page" : undefined}
+                aria-disabled={item.href === DASHBOARD_PAGE_PATH && !activePlan}
               >
                 {item.name}
               </Link>

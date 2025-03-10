@@ -1,4 +1,4 @@
-import React, { FC, memo, useState } from "react";
+import React, { FC, FormEvent, memo, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,9 +18,9 @@ import {
   DialogTitle,
   DialogTrigger,
   Input,
+  LinkButton,
 } from "../ui";
 import { LOGIN_PAGE_PATH } from "@/pathNames";
-import { useRouter } from "@/i18n/navigation";
 import { Edit2Icon, Plus, Save, Trash2Icon } from "lucide-react";
 import { useUserState } from "@/hooks/use-user-state";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
@@ -43,7 +43,6 @@ import { useTranslations } from "next-intl";
 const MyCarousels: FC = () => {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const router = useRouter();
   const { userData: user } = useUserState();
   const {
     carousels,
@@ -81,7 +80,8 @@ const MyCarousels: FC = () => {
     }
   };
 
-  const handleCreate = async () => {
+  const handleCreate = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (user) {
       try {
         dispatch(setLoading({ isLoading: true, title: t("creating") }));
@@ -135,7 +135,11 @@ const MyCarousels: FC = () => {
     }
   };
 
-  const handleEdit = async (carousel: Carousel) => {
+  const handleEdit = async (
+    event: FormEvent<HTMLFormElement>,
+    carousel: Carousel
+  ) => {
+    event.preventDefault();
     if (user) {
       try {
         dispatch(setLoading({ isLoading: true, title: t("updating") }));
@@ -246,7 +250,7 @@ const MyCarousels: FC = () => {
             >
               <DialogTrigger asChild></DialogTrigger>
               <DialogContent>
-                <form className="grid gap-4">
+                <form className="grid gap-4" onSubmit={handleCreate}>
                   <DialogHeader>
                     <DialogTitle>{t("create_new_carousel")}</DialogTitle>
                     <DialogDescription className="hidden">
@@ -283,7 +287,6 @@ const MyCarousels: FC = () => {
 
                   <DialogFooter>
                     <Button
-                      onClick={handleCreate}
                       type="submit"
                       disabled={!createdTitle || !createdImageFile}
                     >
@@ -301,9 +304,7 @@ const MyCarousels: FC = () => {
               <div className="text-center text-muted-foreground">
                 {t("login_to_save_and_view_carousels")}
               </div>
-              <Button onClick={() => router.push(LOGIN_PAGE_PATH)}>
-                {t("login")}
-              </Button>
+              <LinkButton href={LOGIN_PAGE_PATH}>{t("login")}</LinkButton>
             </div>
           )}
 
@@ -366,7 +367,10 @@ const MyCarousels: FC = () => {
                         </Button>
                       </DialogTrigger>
                       <DialogContent onClick={(e) => e.stopPropagation()}>
-                        <form className="grid gap-4">
+                        <form
+                          className="grid gap-4"
+                          onSubmit={(event) => handleEdit(event, carousel)}
+                        >
                           <DialogHeader>
                             <DialogTitle>{t("edit_carousel")}</DialogTitle>
                             <DialogDescription className="hidden">
@@ -404,7 +408,6 @@ const MyCarousels: FC = () => {
                           <DialogFooter>
                             <Button
                               type="submit"
-                              onClick={() => handleEdit(carousel)}
                               disabled={
                                 (!updatedTitle && !updatedImageFile) ||
                                 (updatedTitle === carousel.title &&

@@ -1,3 +1,18 @@
+import { ImageBackgroundPosition } from "@/assets/imageBackgroundPositions";
+
+export type NavPanel =
+  | "ai"
+  | "content"
+  | "text"
+  | "colors"
+  | "background"
+  | "branding"
+  | "swipe"
+  | "order"
+  | "settings"
+  | "randomize"
+  | "my_carousels";
+
 export type SlideContent = {
   type?: "intro" | "regular" | "outro";
   selectedTab?: string;
@@ -20,6 +35,12 @@ export type SlideContent = {
     opacity?: number;
     backgroundPosition?: string;
     isBgCover?: boolean;
+  };
+  backgroundImage: {
+    src: string;
+    isEnabled: boolean;
+    opacity?: number;
+    backgroundPosition?: ImageBackgroundPosition;
   };
 };
 
@@ -99,6 +120,7 @@ export type Carousel = {
 
 export type CarouselsState = {
   isOnceCarouselsFetched: boolean;
+  activeNavPanel: NavPanel;
   aiPanel: AiPanel;
   carousel: Carousel;
   carousels: Carousel[];

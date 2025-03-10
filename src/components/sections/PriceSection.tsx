@@ -19,7 +19,11 @@ const PriceSection: FC<{
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
   const router = useRouter();
   const { isPlansLoading, plans } = usePlans();
-  const [plan, setPlan] = useState<{ heading: string; price: number }>();
+  const [plan, setPlan] = useState<{
+    id: number;
+    heading: string;
+    price: number;
+  }>();
   const { userData: user } = useUserState();
 
   const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
@@ -75,7 +79,7 @@ const PriceSection: FC<{
                 onGetPlan={(heading, price) => {
                   if (!user) {
                     router.push(LOGIN_PAGE_PATH);
-                  } else setPlan({ heading, price });
+                  } else setPlan({ id: plan.id, heading, price });
                 }}
               />
             ))}
@@ -84,7 +88,7 @@ const PriceSection: FC<{
 
         {plan && (
           <Elements stripe={stripePromise} options={options}>
-            <CheckoutForm amount={plan.price * 100} />
+            <CheckoutForm planId={plan.id} amount={plan.price * 100} />
           </Elements>
         )}
       </div>

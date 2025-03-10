@@ -14,7 +14,10 @@ import { PAYMENT_SUCCESSFUL_PAGE_PATH } from "@/pathNames";
 import { Loader2 } from "lucide-react";
 import { useLocale } from "next-intl";
 
-const CheckoutForm: FC<{ amount: number }> = ({ amount }) => {
+const CheckoutForm: FC<{ planId: number; amount: number }> = ({
+  planId,
+  amount,
+}) => {
   const stripe = useStripe();
   const elements = useElements();
   const toast = useToast();
@@ -67,7 +70,7 @@ const CheckoutForm: FC<{ amount: number }> = ({ amount }) => {
         elements,
         clientSecret,
         confirmParams: {
-          return_url: `${window.location.origin}/${locale}${PAYMENT_SUCCESSFUL_PAGE_PATH}`,
+          return_url: `${window.location.origin}/${locale}${PAYMENT_SUCCESSFUL_PAGE_PATH}?planId=${planId}`,
         },
       });
 

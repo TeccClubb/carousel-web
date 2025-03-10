@@ -4,11 +4,13 @@ import { CarouselData } from "@/types";
 import React, { CSSProperties, FC, memo } from "react";
 
 const BgOverlay: FC<{
+  index: number;
   bgColor: string;
   isOddSlide: boolean;
   carouselData: CarouselData;
-}> = ({ bgColor, isOddSlide, carouselData }) => {
+}> = ({ index, bgColor, isOddSlide, carouselData }) => {
   const {
+    slides,
     backgroundOverlay: {
       backgroundId,
       overlayOpacity = 8,
@@ -18,6 +20,15 @@ const BgOverlay: FC<{
     },
     colors: { backgroundColor, accentColor },
   } = carouselData;
+
+  const {
+    backgroundImage: {
+      src: backgroundImageSrc = "",
+      isEnabled: isBackgroundImageEnabled,
+      backgroundPosition: backgroundImageBackgroundPosition = "center center",
+      opacity: backgroundImageOpacity = 30,
+    },
+  } = slides[index];
 
   const background =
     cornerElementId === "element_3"
@@ -108,6 +119,17 @@ const BgOverlay: FC<{
           className="w-full h-full absolute left-0 top-0 z-[3]"
           style={{
             backgroundImage: `radial-gradient(circle, ${bgColor}00 0%, ${bgColor} 100%)`,
+          }}
+        />
+      )}
+
+      {isBackgroundImageEnabled && backgroundImageSrc && (
+        <div
+          className="w-full h-full absolute left-0 top-0 overflow-hidden inline-block bg-cover bg-no-repeat z-0"
+          style={{
+            backgroundImage: `url("${backgroundImageSrc}")`,
+            backgroundPosition: backgroundImageBackgroundPosition,
+            opacity: backgroundImageOpacity,
           }}
         />
       )}

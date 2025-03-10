@@ -7,6 +7,9 @@ import { GET_PLANS_ROUTE } from "@/constant";
 import { Plan } from "@/types";
 import { setPlans } from "@/store/plans.slice";
 
+export const usePlansState = () =>
+  useSelector((state: RootState) => state.plans);
+
 export const usePlans = () => {
   const dispatch = useDispatch();
   const toast = useToast();

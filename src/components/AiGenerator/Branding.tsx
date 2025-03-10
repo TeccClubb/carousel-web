@@ -1,5 +1,12 @@
 import React, { FC, memo } from "react";
-import { Avatar, AvatarFallback, AvatarImage, Input, Switch } from "../ui";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  ImageInput,
+  Input,
+  Switch,
+} from "../ui";
 import { useDispatch } from "react-redux";
 import {
   setBrandHandle,
@@ -14,9 +21,6 @@ import {
 } from "@/store/carousels.slice";
 import { useUserState } from "@/hooks/use-user-state";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
-import { uploadImage } from "@/lib/utils";
-import { useToast } from "@/hooks/use-sonner-toast";
-import { setLoading } from "@/store/app.slice";
 import {
   DEFAULT_BRAND_HANDLE,
   DEFAULT_BRAND_IMAGE_SRC,
@@ -27,7 +31,6 @@ import { useTranslations } from "next-intl";
 const Branding: FC = () => {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const toast = useToast();
   const {
     carousel: {
       data: {
@@ -55,42 +58,6 @@ const Branding: FC = () => {
     user === null
       ? profileImage.src || DEFAULT_BRAND_IMAGE_SRC
       : profileImage.src || user.avatar;
-
-  const loadingSetter = ({
-    isLoading,
-    title,
-  }: {
-    isLoading: boolean;
-    title?: string;
-  }) => {
-    dispatch(setLoading({ isLoading, title }));
-  };
-
-  const onError = (message: string) => toast.error(message);
-
-  const handleImageChoose = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const fileType = file.type;
-      if (
-        fileType === "image/jpeg" ||
-        fileType === "image/png" ||
-        fileType === "image/jpg"
-      ) {
-        uploadImage({
-          oldUrl: brandImageSrc,
-          file,
-          loadingSetter,
-          onError,
-          onImageSelect: (imageSrc) => {
-            dispatch(setBrandProfileSrc(imageSrc));
-          },
-        });
-      } else {
-        toast.error(t("invalid_image_select_error_message"));
-      }
-    }
-  };
 
   return (
     <div className="p-4 pb-12 flex flex-col w-full">
@@ -135,10 +102,16 @@ const Branding: FC = () => {
               label={t("profile_picture")}
             />
           </div>
-          <Input onChange={handleImageChoose} type="file" accept="image/*" />
+          <ImageInput
+            id="brand_image_input"
+            oldImageUrl={brandImageSrc}
+            onImageSelect={(imageSrc) => dispatch(setBrandProfileSrc(imageSrc))}
+          />
 
           <Avatar className="size-16 transition-all hover:scale-105">
-            <AvatarImage src={brandImageSrc} />
+            <label htmlFor="brand_image_input">
+              <AvatarImage src={brandImageSrc} />
+            </label>
             <AvatarFallback>{brandName}</AvatarFallback>
           </Avatar>
         </div>

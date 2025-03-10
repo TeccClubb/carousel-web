@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, memo, useState } from "react";
+import React, { FC, FormEvent, memo, MouseEvent, useState } from "react";
 import {
   InstagramGradientIcon,
   LinkedInGradientIcon,
@@ -18,6 +18,7 @@ import {
   DialogTitle,
   DialogTrigger,
   Input,
+  LinkButton,
   Select,
   SelectContent,
   SelectGroup,
@@ -121,7 +122,9 @@ const AiNavbar: FC = () => {
         link.click();
         toast.success("Carousel successfully generated");
       } else {
-        toast.error("Failed to generate PDF");
+        toast.error(
+          "Failed to generate, maybe chromium not installed, check version of chromium"
+        );
       }
     } catch (error) {
       toast.error(
@@ -134,7 +137,10 @@ const AiNavbar: FC = () => {
     }
   };
 
-  const handleSave = async () => {
+  const handleSave = async (
+    event: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
     if (!user) {
       const toastId = toast.custom(
         <Toast
@@ -234,7 +240,7 @@ const AiNavbar: FC = () => {
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild></DialogTrigger>
               <DialogContent>
-                <form className="grid gap-4">
+                <form className="grid gap-4" onSubmit={handleSave}>
                   <DialogHeader>
                     <DialogTitle>{t("save_new_carousel")}</DialogTitle>
                     <DialogDescription className="hidden">
@@ -271,7 +277,7 @@ const AiNavbar: FC = () => {
 
                   <DialogFooter>
                     <Button
-                      onClick={handleSave}
+                      type="submit"
                       disabled={!carouselTitle || !imageFile}
                     >
                       <Save />
@@ -346,17 +352,15 @@ const AiNavbar: FC = () => {
             {!isLoading && isLoggedIn && <AvatarProfile />}
 
             {!isLoading && !isLoggedIn && (
-              <Button
-                onClick={() =>
-                  router.push(
-                    pathname !== LOGIN_PAGE_PATH
-                      ? LOGIN_PAGE_PATH
-                      : SIGNUP_PAGE_PATH
-                  )
+              <LinkButton
+                href={
+                  pathname !== LOGIN_PAGE_PATH
+                    ? LOGIN_PAGE_PATH
+                    : SIGNUP_PAGE_PATH
                 }
               >
                 {pathname !== LOGIN_PAGE_PATH ? t("login") : t("signup")}
-              </Button>
+              </LinkButton>
             )}
           </div>
         </div>

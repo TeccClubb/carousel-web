@@ -131,7 +131,7 @@ const Text: FC = () => {
             </div>
 
             <Slider
-              defaultValue={[fontSize * 100]}
+              value={[fontSize * 100]}
               min={10}
               max={100}
               step={5}

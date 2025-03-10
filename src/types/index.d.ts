@@ -1,6 +1,7 @@
 export type { AppState } from "./app.state";
 
 export type {
+  NavPanel,
   Colors,
   SlideContent,
   CarouselData,

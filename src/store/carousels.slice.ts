@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Carousel, CarouselsState } from "@/types";
+import { Carousel, CarouselsState, NavPanel } from "@/types";
 import { fontPairs } from "@/assets/fonts";
 import { darkColors, lightColors } from "@/assets/slide-colors";
+import { ImageBackgroundPosition } from "@/assets/imageBackgroundPositions";
 
 export const defaultCarousel: Carousel = {
   carouselId: null,
@@ -23,6 +24,7 @@ export const defaultCarousel: Carousel = {
         },
         ctaButton: { text: "" },
         image: { src: "", isEnabled: true },
+        backgroundImage: { src: "", isEnabled: true },
       },
       {
         subTitle: { text: "", isEnabled: true },
@@ -33,6 +35,7 @@ export const defaultCarousel: Carousel = {
         },
         ctaButton: { text: "" },
         image: { src: "/slide2-image.jpg", isEnabled: true },
+        backgroundImage: { src: "", isEnabled: true },
       },
       {
         subTitle: { text: "", isEnabled: true },
@@ -43,6 +46,7 @@ export const defaultCarousel: Carousel = {
         },
         ctaButton: { text: "" },
         image: { src: "/slide3-image.jpg", isEnabled: true },
+        backgroundImage: { src: "", isEnabled: true },
       },
       {
         subTitle: { text: "", isEnabled: true },
@@ -53,6 +57,7 @@ export const defaultCarousel: Carousel = {
         },
         ctaButton: { text: "" },
         image: { src: "/slide4-image.jpg", isEnabled: true },
+        backgroundImage: { src: "", isEnabled: true },
       },
       {
         subTitle: { text: "", isEnabled: true },
@@ -63,6 +68,7 @@ export const defaultCarousel: Carousel = {
         },
         ctaButton: { text: "" },
         image: { src: "/slide5-image.jpg", isEnabled: true },
+        backgroundImage: { src: "", isEnabled: true },
       },
       {
         type: "outro",
@@ -74,6 +80,7 @@ export const defaultCarousel: Carousel = {
         description: { text: "", isEnabled: true },
         ctaButton: { text: "Follow for More Inspiration", isEnabled: true },
         image: { src: "", isEnabled: true },
+        backgroundImage: { src: "", isEnabled: true },
       },
     ],
 
@@ -133,6 +140,7 @@ export const defaultCarousel: Carousel = {
 
 const initialState: CarouselsState = {
   isOnceCarouselsFetched: false,
+  activeNavPanel: "ai",
   currentIndex: 0,
   aiPanel: {
     totalSlides: 6,
@@ -149,6 +157,7 @@ const initialState: CarouselsState = {
     description: { text: "", isEnabled: true },
     ctaButton: { text: "" },
     image: { src: "", isEnabled: true },
+    backgroundImage: { src: "", isEnabled: true },
   },
 };
 
@@ -158,6 +167,10 @@ const carouselsSlice = createSlice({
   reducers: {
     setOnceCarouselsFetched: (state) => {
       state.isOnceCarouselsFetched = true;
+    },
+
+    setActiveNavPanel: (state, action: PayloadAction<NavPanel>) => {
+      state.activeNavPanel = action.payload;
     },
 
     setAiTotalSlides: (state, action: PayloadAction<number>) => {
@@ -363,6 +376,7 @@ const carouselsSlice = createSlice({
           isEnabled: index === action.payload.length - 1,
         },
         image: { src: "", isEnabled: true },
+        backgroundImage: { src: "", isEnabled: true },
       }));
 
       const randomFontPairIndex = Math.floor(Math.random() * fontPairs.length);
@@ -391,19 +405,15 @@ const carouselsSlice = createSlice({
     },
 
     setContentSelectedTab: (state, action: PayloadAction<string>) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.selectedTab = action.payload;
+      state.carousel.data.slides[state.currentIndex].selectedTab =
+        action.payload;
     },
     setContentOrientation: (
       state,
       action: PayloadAction<"row" | "row-reverse" | "column" | "column-reverse">
     ) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.contentOrientation = action.payload;
+      state.carousel.data.slides[state.currentIndex].contentOrientation =
+        action.payload;
     },
 
     toggleNewSlideSubTitle: (state) => {
@@ -433,98 +443,97 @@ const carouselsSlice = createSlice({
     },
 
     toggleSlideSubTitle: (state) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.subTitle.isEnabled = !slide!.subTitle.isEnabled;
+      state.carousel.data.slides[state.currentIndex].subTitle.isEnabled =
+        !state.carousel.data.slides[state.currentIndex].subTitle.isEnabled;
     },
     setSlideSubTitle: (state, action: PayloadAction<string>) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.subTitle.text = action.payload;
+      state.carousel.data.slides[state.currentIndex].subTitle.text =
+        action.payload;
     },
 
     toggleSlideTitle: (state) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.title.isEnabled = !slide!.title.isEnabled;
+      state.carousel.data.slides[state.currentIndex].title.isEnabled =
+        !state.carousel.data.slides[state.currentIndex].title.isEnabled;
     },
     setSlideTitleFontSize: (state, action: PayloadAction<number>) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.title.fontSize = action.payload;
+      state.carousel.data.slides[state.currentIndex].title.fontSize =
+        action.payload;
     },
     setSlideTitle: (state, action: PayloadAction<string>) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.title.text = action.payload;
+      state.carousel.data.slides[state.currentIndex].title.text =
+        action.payload;
     },
 
     toggleSlideDescription: (state) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.description.isEnabled = !slide!.description.isEnabled;
+      state.carousel.data.slides[state.currentIndex].description.isEnabled =
+        !state.carousel.data.slides[state.currentIndex].description.isEnabled;
     },
     setSlideDescriptionFontSize: (state, action: PayloadAction<number>) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.description.fontSize = action.payload;
+      state.carousel.data.slides[state.currentIndex].description.fontSize =
+        action.payload;
     },
     setSlideDescription: (state, action: PayloadAction<string>) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.description.text = action.payload;
+      state.carousel.data.slides[state.currentIndex].description.text =
+        action.payload;
     },
 
     toggleSlideCTAButton: (state) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.ctaButton.isEnabled = !slide!.ctaButton.isEnabled;
+      state.carousel.data.slides[state.currentIndex].ctaButton.isEnabled =
+        !state.carousel.data.slides[state.currentIndex].ctaButton.isEnabled;
     },
     setSlideCTAText: (state, action: PayloadAction<string>) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.ctaButton.text = action.payload;
+      state.carousel.data.slides[state.currentIndex].ctaButton.text =
+        action.payload;
     },
 
     toggleSlideImage: (state) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.image.isEnabled = !slide!.image.isEnabled;
+      state.carousel.data.slides[state.currentIndex].image.isEnabled =
+        !state.carousel.data.slides[state.currentIndex].image.isEnabled;
     },
     setSlideImageSrc: (state, action: PayloadAction<string>) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.image.src = action.payload;
+      state.carousel.data.slides[state.currentIndex].image.src = action.payload;
     },
     setSlideImageOpacity: (state, action: PayloadAction<number>) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.image.opacity = action.payload;
+      state.carousel.data.slides[state.currentIndex].image.opacity =
+        action.payload;
     },
     setSlideImageBackgroundPosition: (state, action: PayloadAction<string>) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.image.backgroundPosition = action.payload;
+      state.carousel.data.slides[state.currentIndex].image.backgroundPosition =
+        action.payload;
     },
     toggleSlideImageBackgroundCover: (state) => {
-      const slide = state.carousel.data.slides.find(
-        (_, index) => index === state.currentIndex
-      );
-      slide!.image.isBgCover = !slide!.image.isBgCover;
+      state.carousel.data.slides[state.currentIndex].image.isBgCover =
+        !state.carousel.data.slides[state.currentIndex].image.isBgCover;
+    },
+
+    toggleSlideBackgroundImage: (state, action: PayloadAction<number>) => {
+      state.carousel.data.slides[action.payload].backgroundImage.isEnabled =
+        !state.carousel.data.slides[action.payload].backgroundImage.isEnabled;
+    },
+    setSlideBackgroundImageSrc: (
+      state,
+      action: PayloadAction<{ index: number; imageSrc: string }>
+    ) => {
+      state.carousel.data.slides[action.payload.index].backgroundImage.src =
+        action.payload.imageSrc;
+    },
+    setSlideBackgroundImageOpacity: (
+      state,
+      action: PayloadAction<{ index: number; opacity: number }>
+    ) => {
+      state.carousel.data.slides[action.payload.index].backgroundImage.opacity =
+        action.payload.opacity;
+    },
+    setSlideBackgroundImageBackgroundPosition: (
+      state,
+      action: PayloadAction<{
+        index: number;
+        backgroundPosition: ImageBackgroundPosition;
+      }>
+    ) => {
+      state.carousel.data.slides[
+        action.payload.index
+      ].backgroundImage.backgroundPosition = action.payload.backgroundPosition;
     },
 
     toggleCustomFontsEnabled: (state) => {
@@ -730,6 +739,7 @@ const carouselsSlice = createSlice({
 
 export const {
   setOnceCarouselsFetched,
+  setActiveNavPanel,
   setAiTotalSlides,
   setAiPanelSelectedTab,
   setAiTopic,
@@ -775,6 +785,10 @@ export const {
   setSlideImageOpacity,
   setSlideImageBackgroundPosition,
   toggleSlideImageBackgroundCover,
+  toggleSlideBackgroundImage,
+  setSlideBackgroundImageSrc,
+  setSlideBackgroundImageOpacity,
+  setSlideBackgroundImageBackgroundPosition,
   toggleCustomFontsEnabled,
   setPrimaryFont,
   setSecondaryFont,
