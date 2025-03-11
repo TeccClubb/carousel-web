@@ -2,11 +2,11 @@
 import React, { FC, memo, useTransition } from "react";
 import { Combobox, ComboboxItem } from "../ui";
 import { languages } from "@/assets/languages";
-import { Languages } from "lucide-react";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Locale } from "@/types";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 
 const LanguageChanger: FC = () => {
   const router = useRouter();
@@ -15,6 +15,7 @@ const LanguageChanger: FC = () => {
   const pathname = usePathname();
   const params = useParams();
   const locale = useLocale();
+  const language = languages.find((lang) => lang.locale === locale)!;
 
   const handleChange = (nextLocale: Locale) => {
     startTransition(() => {
@@ -32,9 +33,20 @@ const LanguageChanger: FC = () => {
     <Combobox
       value={locale}
       onValueChange={(value) => handleChange(value as Locale)}
-      text={languages.find((lang) => lang.locale === locale)?.label}
+      text={language.label}
       tickSide="left"
-      icon={<Languages className="h-5 w-5" />}
+      icon={
+        <Image
+          src={`/flags/${language.flagCode}.png`}
+          alt="logo"
+          width={100}
+          height={100}
+          sizes="100vw"
+          placeholder="blur"
+          blurDataURL={`/flags/${language.flagCode}.png`}
+          className="size-5 rounded-full"
+        />
+      }
       emptyMessage="No language found"
       placeholder={t("select_language")}
       size="sm"
@@ -42,8 +54,20 @@ const LanguageChanger: FC = () => {
     >
       {languages.map((lang) => (
         <ComboboxItem key={lang.locale} value={lang.locale}>
-          {lang.name}
-          <span className="text-xs text-gray-500">&nbsp;({lang.label})</span>
+          <span className="flex items-center gap-2">
+            <Image
+              src={`/flags/${lang.flagCode}.png`}
+              alt="logo"
+              width={100}
+              height={100}
+              sizes="100vw"
+              placeholder="blur"
+              blurDataURL={`/flags/${lang.flagCode}.png`}
+              className="size-5 rounded-full"
+            />
+            {lang.name}
+            <span className="text-xs text-gray-500">({lang.label})</span>
+          </span>
         </ComboboxItem>
       ))}
     </Combobox>

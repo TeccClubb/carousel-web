@@ -27,6 +27,7 @@ import {
   setSlides,
 } from "@/store/carousels.slice";
 import { useLocale } from "next-intl";
+import Image from "next/image";
 
 const Ai: FC = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const Ai: FC = () => {
   } = useCarouselsState();
 
   const [locale, setLocale] = useState<string>(defaultLocale);
-  const language = languages.find((lang) => lang.locale === locale)?.name;
+  const language = languages.find((lang) => lang.locale === locale)!;
   const toast = useToast();
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -61,7 +62,7 @@ const Ai: FC = () => {
         : selectedTab === "url"
         ? `about article or blog from url ${url}`
         : ""
-    } , give me response in ${language} as json object array only, have subTitle, title and description, show only array no need any details`;
+    } , give me response in ${language.name} as json object array only, have subTitle, title and description, show only array no need any details`;
     try {
       setLoading(true);
       const response = await axios.post(
@@ -175,6 +176,18 @@ const Ai: FC = () => {
                 label="Language"
                 value={locale}
                 onValueChange={(value) => setLocale(value)}
+                icon={
+                  <Image
+                    src={`/flags/${language.flagCode}.png`}
+                    alt="logo"
+                    width={100}
+                    height={100}
+                    sizes="100vw"
+                    placeholder="blur"
+                    blurDataURL={`/flags/${language.flagCode}.png`}
+                    className="size-5 rounded-full"
+                  />
+                }
                 text={languages.find((lang) => lang.locale === locale)!.label}
                 tickSide="left"
                 emptyMessage="No language found"
@@ -184,9 +197,21 @@ const Ai: FC = () => {
               >
                 {languages.map((lang) => (
                   <ComboboxItem key={lang.locale} value={lang.locale}>
-                    {lang.name}
-                    <span className="text-xs text-gray-500">
-                      &nbsp;({lang.label})
+                    <span className="flex items-center gap-2">
+                      <Image
+                        src={`/flags/${lang.flagCode}.png`}
+                        alt="logo"
+                        width={100}
+                        height={100}
+                        sizes="100vw"
+                        placeholder="blur"
+                        blurDataURL={`/flags/${lang.flagCode}.png`}
+                        className="size-5 rounded-full"
+                      />
+                      {lang.name}
+                      <span className="text-xs text-gray-500">
+                        ({lang.label})
+                      </span>
                     </span>
                   </ComboboxItem>
                 ))}

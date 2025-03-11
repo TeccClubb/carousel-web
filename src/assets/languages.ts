@@ -1,26 +1,26 @@
 import { Locale } from "@/types";
 
 export const languages = [
-  { locale: "en", name: "English", label: "English" },
-  { locale: "es", name: "Spanish", label: "Español" },
-  { locale: "fr", name: "French", label: "Français" },
-  { locale: "de", name: "German", label: "Deutsch" },
-  { locale: "it", name: "Italian", label: "Italiano" },
-  { locale: "ja", name: "Japanese", label: "日本語" },
-  { locale: "ko", name: "Korean", label: "한국어" },
-  { locale: "pl", name: "Polish", label: "Polski" },
-  { locale: "pt", name: "Portuguese", label: "Português" },
-  { locale: "tr", name: "Turkish", label: "Türkçe" },
-  { locale: "vi", name: "Vietnamese", label: "Tiếng Việt" },
-  { locale: "id", name: "Indonesian", label: "Bahasa" },
-  { locale: "zh", name: "Chinese", label: "中文" },
-  { locale: "th", name: "Thai", label: "ไทย" },
-  { locale: "da", name: "Danish", label: "Dansk" },
-  { locale: "nl", name: "Dutch", label: "Nederlands" },
-  { locale: "no", name: "Norwegian", label: "Norsk" },
-  { locale: "sv", name: "Swedish", label: "Svenska" },
-  { locale: "ar", name: "Arabic", label: "العربية" },
-  { locale: "ru", name: "Russian", label: "Русский" },
+  { locale: "en", name: "English", label: "English", flagCode: "gb" }, // United Kingdom
+  { locale: "es", name: "Spanish", label: "Español", flagCode: "es" }, // Spain
+  { locale: "fr", name: "French", label: "Français", flagCode: "fr" }, // France
+  { locale: "de", name: "German", label: "Deutsch", flagCode: "de" }, // Germany
+  { locale: "it", name: "Italian", label: "Italiano", flagCode: "it" }, // Italy
+  { locale: "ja", name: "Japanese", label: "日本語", flagCode: "jp" }, // Japan
+  { locale: "ko", name: "Korean", label: "한국어", flagCode: "kr" }, // South Korea
+  { locale: "pl", name: "Polish", label: "Polski", flagCode: "pl" }, // Poland
+  { locale: "pt", name: "Portuguese", label: "Português", flagCode: "pt" }, // Portugal
+  { locale: "tr", name: "Turkish", label: "Türkçe", flagCode: "tr" }, // Turkey
+  { locale: "vi", name: "Vietnamese", label: "Tiếng Việt", flagCode: "vn" }, // Vietnam
+  { locale: "id", name: "Indonesian", label: "Bahasa", flagCode: "id" }, // Indonesia
+  { locale: "zh", name: "Chinese", label: "中文", flagCode: "cn" }, // China
+  { locale: "th", name: "Thai", label: "ไทย", flagCode: "th" }, // Thailand
+  { locale: "da", name: "Danish", label: "Dansk", flagCode: "dk" }, // Denmark
+  { locale: "nl", name: "Dutch", label: "Nederlands", flagCode: "nl" }, // Netherlands
+  { locale: "no", name: "Norwegian", label: "Norsk", flagCode: "no" }, // Norway
+  { locale: "sv", name: "Swedish", label: "Svenska", flagCode: "se" }, // Sweden
+  { locale: "ar", name: "Arabic", label: "العربية", flagCode: "ae" }, // United Arab Emirates (often used for Arabic)
+  { locale: "ru", name: "Russian", label: "Русский", flagCode: "ru" }, // Russia
 ];
 
 export const locales: Locale[] = [
