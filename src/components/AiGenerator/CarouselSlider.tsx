@@ -13,7 +13,10 @@ import Slide from "./Slide/Slide";
 import { useAppState } from "@/hooks/use-app-state";
 import { useDispatch } from "react-redux";
 import { zoomIn, zoomOut } from "@/store/app.slice";
-import { setActiveNavPanel, setCurrentIndex } from "@/store/carousels.slice";
+import {
+  setActiveNavPanelAndIndex,
+  setCurrentIndex,
+} from "@/store/carousels.slice";
 import { Minus, Plus } from "lucide-react";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { useUserState } from "@/hooks/use-user-state";
@@ -96,7 +99,9 @@ const CarouselSlider: FC = () => {
                   carouselData={carouselData}
                   user={user}
                   onClick={() =>
-                    dispatch(setActiveNavPanel({ index, navPanel: "content" }))
+                    dispatch(
+                      setActiveNavPanelAndIndex({ index, navPanel: "content" })
+                    )
                   }
                 />
               </CarouselItem>

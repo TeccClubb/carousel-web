@@ -1,11 +1,15 @@
 import React, { FC } from "react";
 
-const LinkedInIcon: FC<{ size: number | string }> = ({ size }) => (
+const LinkedInIcon: FC<{ size?: number | string; className?: string }> = ({
+  size = "1.5em",
+  className,
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
     height={size}
     viewBox="0 0 448 512"
+    className={className}
   >
     <path
       fill="currentColor"

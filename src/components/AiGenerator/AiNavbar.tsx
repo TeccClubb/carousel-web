@@ -2,11 +2,12 @@
 import React, { FC, FormEvent, memo, MouseEvent, useState } from "react";
 import {
   InstagramGradientIcon,
-  LinkedInGradientIcon,
   TikTokGradientIcon,
   LockIcon,
   LogoIcon,
   Logo,
+  FacebookIcon,
+  LinkedInIcon,
 } from "@/icons";
 import { Link } from "@/i18n/navigation";
 import {
@@ -100,10 +101,14 @@ const AiNavbar: FC = () => {
       setIsPDFGenerating(true);
       const filename = ratioId.includes("linkedIn")
         ? "Linked"
-        : ratioId.includes("InstaFeed")
+        : ratioId.includes("instaFeed")
         ? "Instagram-Feed"
-        : ratioId.includes("InstaStories")
+        : ratioId.includes("instaStories")
         ? "Instagram-Stories"
+        : ratioId.includes("facebookFeed")
+        ? "Facebook-Feed"
+        : ratioId.includes("facebookStories")
+        ? "Facebook-Stories"
         : ratioId.includes("tikTok")
         ? "TikTok"
         : "";
@@ -318,10 +323,13 @@ const AiNavbar: FC = () => {
                     >
                       <span className="flex items-center justify-center gap-2">
                         {ratio.ratioId.includes("linkedIn") && (
-                          <LinkedInGradientIcon className="aspect-square h-4 w-4" />
+                          <LinkedInIcon className="text-[#0A66C2] aspect-square h-4 w-4" />
                         )}
-                        {ratio.ratioId.includes("Insta") && (
+                        {ratio.ratioId.includes("insta") && (
                           <InstagramGradientIcon className="aspect-square h-4 w-4" />
+                        )}
+                        {ratio.ratioId.includes("facebook") && (
+                          <FacebookIcon className="text-[#0866FF] aspect-square h-4 w-4" />
                         )}
                         {ratio.ratioId.includes("tikTok") && (
                           <TikTokGradientIcon className="aspect-square h-4 w-4" />
