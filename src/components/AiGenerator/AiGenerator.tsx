@@ -47,9 +47,11 @@ import { setZoomValue } from "@/store/app.slice";
 import { NavPanel } from "@/types";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { setActiveNavPanel } from "@/store/carousels.slice";
+import { useTranslations } from "next-intl";
 
 const AiGenerator: FC = () => {
   const dispatch = useDispatch();
+  const t = useTranslations();
   const { activeNavPanel } = useCarouselsState();
   const {
     carousel: {
@@ -81,67 +83,67 @@ const AiGenerator: FC = () => {
   const items = {
     ai: {
       name: "AI",
-      title: "AI Carousel",
+      title: t("ai_carousel"),
       icon: <AiIcon />,
       container: <Ai />,
     },
     content: {
-      name: "Content",
-      title: "Content Settings",
+      name: t("content"),
+      title: t("content_settings"),
       icon: <ContentIcon />,
       container: <Content />,
     },
     text: {
-      name: "Text",
-      title: "Text Settings",
+      name: t("text"),
+      title: t("text_settings"),
       icon: <TextIcon />,
       container: <Text />,
     },
     colors: {
-      name: "Colors",
-      title: "Color Settings",
+      name: t("colors"),
+      title: t("color_settings"),
       icon: <ColorsIcon />,
       container: <Colors />,
     },
     background: {
-      name: "Background",
-      title: "Background Settings",
+      name: t("background"),
+      title: t("background_settings"),
       icon: <BackgroundIcon />,
       container: <Background />,
     },
     branding: {
-      name: "Branding",
-      title: "Branding Settings",
+      name: t("branding"),
+      title: t("branding_settings"),
       icon: <BrandingIcon />,
       container: <Branding />,
     },
     swipe: {
-      name: "Swipe",
-      title: "Swipe Indicator Settings",
+      name: t("swipe"),
+      title: t("swipe_indicator_settings"),
       icon: <SwipeIcon />,
       container: <Swipe />,
     },
     order: {
-      name: "Order",
-      title: "Slide Order Settings",
+      name: t("order"),
+      title: t("slide_order_settings"),
       icon: <OrderIcon />,
       container: <Order />,
     },
     settings: {
-      name: "Settings",
-      title: "General Settings",
+      name: t("settings"),
+      title: t("general_settings"),
       icon: <SettingsIcon />,
       container: <Settings />,
     },
     randomize: {
-      name: "Randomize",
-      title: "Randomize",
+      name: t("randomize"),
+      title: t("randomize"),
       icon: <Shuffle className="h-5 w-5" />,
       container: <Randomize />,
     },
     my_carousels: {
-      name: "My Carousels",
-      title: "My Carousels",
+      name: t("my_carousels"),
+      title: t("my_carousels"),
       icon: <MyCarouselsIcon />,
       container: <MyCarousels />,
     },
@@ -252,7 +254,7 @@ const AiGenerator: FC = () => {
               {items[activeNavPanel].name}
             </DrawerDescription>
             <DrawerClose asChild className="ml-auto">
-              <Button variant="ghost">Close</Button>
+              <Button variant="ghost">{t("close")}</Button>
             </DrawerClose>
           </DrawerHeader>
 

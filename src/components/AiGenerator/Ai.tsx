@@ -26,11 +26,12 @@ import {
   setAiURL,
   setSlides,
 } from "@/store/carousels.slice";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 
 const Ai: FC = () => {
   const dispatch = useDispatch();
+  const t = useTranslations();
 
   const defaultLocale = useLocale();
 
@@ -62,7 +63,9 @@ const Ai: FC = () => {
         : selectedTab === "url"
         ? `about article or blog from url ${url}`
         : ""
-    } , give me response in ${language.name} as json object array only, have subTitle, title and description, show only array no need any details`;
+    } , give me response in ${
+      language.name
+    } as json object array only, have subTitle, title and description, show only array no need any details`;
     try {
       setLoading(true);
       const response = await axios.post(
@@ -116,18 +119,18 @@ const Ai: FC = () => {
             onValueChange={(value) => dispatch(setAiPanelSelectedTab(value))}
           >
             <TabsList>
-              <TabsTrigger value="topic">Topic</TabsTrigger>
-              <TabsTrigger value="text">Text</TabsTrigger>
+              <TabsTrigger value="topic">{t("topic")}</TabsTrigger>
+              <TabsTrigger value="text">{t("text")}</TabsTrigger>
               <TabsTrigger value="url">URL</TabsTrigger>
             </TabsList>
             <TabsContent value="topic">
               <div className="space-y-2">
                 <Input
-                  label="Topic"
+                  label={t("topic")}
                   type="text"
                   value={topic}
                   onChange={(e) => dispatch(setAiTopic(e.target.value))}
-                  placeholder="Enter a topic"
+                  placeholder={t("enter_a_topic")}
                 />
               </div>
             </TabsContent>
@@ -137,7 +140,7 @@ const Ai: FC = () => {
                 onChange={(e) => dispatch(setAiText(e.target.value))}
                 rows={5}
                 maxLength={textMaxLength}
-                placeholder="Paste your text content here, not URLs (e.g., article, notes)"
+                placeholder={t("paste_your_text_content_here")}
               />
               <p className="text-[0.8rem] text-muted-foreground">
                 {text.length}/{textMaxLength}
@@ -146,11 +149,11 @@ const Ai: FC = () => {
             <TabsContent value="url">
               <div className="space-y-2">
                 <Input
-                  label="Article or Blog URL"
+                  label={t("article_or_blog_url")}
                   type="text"
                   value={url}
                   onChange={(e) => dispatch(setAiURL(e.target.value))}
-                  placeholder="Article or Blog URL"
+                  placeholder={t("article_or_blog_url")}
                 />
               </div>
             </TabsContent>
@@ -161,9 +164,9 @@ const Ai: FC = () => {
           <div className="flex-1">
             <div className="space-y-2">
               <Input
-                label="Total Slides"
+                label={t("total_slides")}
                 type="number"
-                placeholder="How many slides?"
+                placeholder={t("how_many_slides")}
                 min={4}
                 value={totalSlides}
                 onChange={(e) => dispatch(setAiTotalSlides(+e.target.value))}
@@ -173,7 +176,7 @@ const Ai: FC = () => {
           <div className="flex-1">
             <div className="space-y-2">
               <Combobox
-                label="Language"
+                label={t("language")}
                 value={locale}
                 onValueChange={(value) => setLocale(value)}
                 icon={
@@ -188,10 +191,10 @@ const Ai: FC = () => {
                     className="size-5 rounded-full"
                   />
                 }
-                text={languages.find((lang) => lang.locale === locale)!.label}
+                text={language.label}
                 tickSide="left"
                 emptyMessage="No language found"
-                placeholder="Select Language"
+                placeholder={t("select_language")}
                 size="md"
                 className="w-full"
               >
@@ -224,10 +227,10 @@ const Ai: FC = () => {
           {isLoading && (
             <>
               <Loader2 className="animate-spin" />
-              &nbsp;Generating...
+              &nbsp;{t("generating")}
             </>
           )}
-          {!isLoading && "Generate carousel with AI"}
+          {!isLoading && t("generate_carousel_with_ai")}
         </Button>
       </form>
     </div>

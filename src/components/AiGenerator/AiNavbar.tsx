@@ -100,7 +100,7 @@ const AiNavbar: FC = () => {
     try {
       setIsPDFGenerating(true);
       const filename = ratioId.includes("linkedIn")
-        ? "Linked"
+        ? "LinkedIn"
         : ratioId.includes("instaFeed")
         ? "Instagram-Feed"
         : ratioId.includes("instaStories")
@@ -124,7 +124,7 @@ const AiNavbar: FC = () => {
         link.href = URL.createObjectURL(blob);
         link.download = `${filename}-Carousel.pdf`;
         link.click();
-        toast.success("Carousel successfully generated");
+        toast.success(t("carousel_successfully_generated"));
       } else {
         toast.error(
           "Failed to generate, maybe chromium not installed, check version of chromium"
@@ -164,7 +164,7 @@ const AiNavbar: FC = () => {
       setIsDialogOpen(true);
     } else {
       try {
-        dispatch(setLoading({ isLoading: true, title: "Saving..." }));
+        dispatch(setLoading({ isLoading: true, title: t("saving") }));
         const formData = new FormData();
         formData.append("carousel_id", carouselId ? String(carouselId) : "");
         formData.append("title", carouselTitle.trim());
@@ -352,7 +352,7 @@ const AiNavbar: FC = () => {
               {isPDFGenerating && (
                 <>
                   <Loader2 className="animate-spin" />
-                  <span className="hidden sm:inline">Generating...</span>
+                  <span className="hidden sm:inline">{t("generating")}</span>
                 </>
               )}
 

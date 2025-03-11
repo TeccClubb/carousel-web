@@ -52,7 +52,7 @@ const Dashboard: FC = () => {
                   />
                   <ReportCard
                     title={t("subscription")}
-                    value={`${remainingDays} days left`}
+                    value={`${remainingDays} ${t("days_left")}`}
                     icon={<PlanIcon className="w-10 h-10" />}
                     valueClassName={`${
                       remainingDays < 3

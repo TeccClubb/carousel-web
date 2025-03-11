@@ -41,7 +41,7 @@ const DashboardNavbar: FC = () => {
               <SheetHeader className="hidden">
                 <SheetTitle>{t("dashboard")}</SheetTitle>
                 <SheetDescription>
-                  {t("dashboard")} {t("description")}
+                  {t("dashboard_description")}
                 </SheetDescription>
               </SheetHeader>
               <SideBar />

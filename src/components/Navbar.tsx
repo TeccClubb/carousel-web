@@ -60,11 +60,7 @@ const Navbar: FC = () => {
               className="[&_svg]:size-6 p-0.5"
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? (
-                <CloseIcon />
-              ) : (
-                <LogoIcon />
-              )}
+              {isMobileMenuOpen ? <CloseIcon /> : <LogoIcon />}
             </Button>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -113,9 +109,7 @@ const Navbar: FC = () => {
               className="bg-blue dark:text-white md:h-10 md:px-4 md:py-2"
             >
               <span className="sm:hidden">{t("generate")}</span>
-              <span className="hidden sm:inline">
-                {t("generate")} {t("carousel")}
-              </span>
+              <span className="hidden sm:inline">{t("generate_carousel")}</span>
               <LongRightArrow className="hidden sm:inline" />
             </LinkButton>
 

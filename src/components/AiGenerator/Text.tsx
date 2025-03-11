@@ -21,9 +21,9 @@ const Text: FC = () => {
     alignment: "left" | "center" | "right";
     text: string;
   }[] = [
-    { alignment: "left", text: "Left" },
-    { alignment: "center", text: "Center" },
-    { alignment: "right", text: "Right" },
+    { alignment: "left", text: t("left") },
+    { alignment: "center", text: t("center") },
+    { alignment: "right", text: t("right") },
   ];
 
   const {

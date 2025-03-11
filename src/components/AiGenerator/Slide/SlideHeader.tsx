@@ -105,7 +105,7 @@ const SlideHeader: FC<{
               </PopoverTrigger>
             </TooltipTrigger>
             <TooltipContent side="bottom" className="z-[1000]">
-              Background Image
+              {t("background_image")}
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -229,16 +229,16 @@ const SlideHeader: FC<{
                 </DialogTrigger>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="z-[1000]">
-                Add Slide
+                {t("add_slide")}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
           <DialogContent>
             <form className="grid gap-4" onSubmit={handleAddSlide}>
               <DialogHeader>
-                <DialogTitle>Add new Slide</DialogTitle>
+                <DialogTitle>{t("add_new_slide")}</DialogTitle>
                 <DialogDescription className="hidden">
-                  add new slide
+                  {t("add_new_slide")}
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-2">
@@ -246,7 +246,7 @@ const SlideHeader: FC<{
                   <Switch
                     checked={isSubTitleEnabled}
                     onCheckedChange={() => dispatch(toggleNewSlideSubTitle())}
-                    label="Sub Title"
+                    label={t("sub_title")}
                   />
                 </div>
                 <Input
@@ -255,7 +255,7 @@ const SlideHeader: FC<{
                     dispatch(setNewSlideSubTitle(e.target.value))
                   }
                   type="text"
-                  placeholder="Enter your sub title"
+                  placeholder={t("enter_your_sub_title")}
                 />
               </div>
 
@@ -264,14 +264,14 @@ const SlideHeader: FC<{
                   <Switch
                     checked={isTitleEnabled}
                     onCheckedChange={() => dispatch(toggleNewSlideTitle())}
-                    label="Title"
+                    label={t("title")}
                   />
                 </div>
                 <Input
                   value={title}
                   onChange={(e) => dispatch(setNewSlideTitle(e.target.value))}
                   type="text"
-                  placeholder="Enter your title"
+                  placeholder={t("enter_your_title")}
                 />
               </div>
 
@@ -282,7 +282,7 @@ const SlideHeader: FC<{
                     onCheckedChange={() =>
                       dispatch(toggleNewSlideDescription())
                     }
-                    label="Description"
+                    label={t("description")}
                   />
                 </div>
                 <Textarea
@@ -291,7 +291,7 @@ const SlideHeader: FC<{
                   onChange={(e) =>
                     dispatch(setNewSlideDescription(e.target.value))
                   }
-                  placeholder="Enter your description"
+                  placeholder={t("enter_your_description")}
                   className="resize-none"
                 />
               </div>
@@ -301,7 +301,7 @@ const SlideHeader: FC<{
                   <Switch
                     checked={isImageEnabled}
                     onCheckedChange={() => dispatch(toggleNewSlideImage())}
-                    label="Image"
+                    label={t("image")}
                   />
                 </div>
                 <ImageInput
@@ -328,7 +328,7 @@ const SlideHeader: FC<{
                 <Button
                   disabled={!subTitle && !title && !description && !imageSrc}
                 >
-                  Add New Slide
+                  {t("add_new_slide")}
                 </Button>
               </DialogFooter>
             </form>
@@ -348,7 +348,7 @@ const SlideHeader: FC<{
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="z-[1000]">
-                Delete Slide
+                {t("delete_slide")}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
