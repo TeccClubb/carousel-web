@@ -129,7 +129,7 @@ const SlideHeader: FC<{
               disabled={!isBackgroundImageEnabled}
             />
           </div>
-          {backgroundImageSrc && (
+          {backgroundImageSrc != "" && (
             <div
               className="flex gap-2 aria-disabled:opacity-60 aria-disabled:pointer-events-none"
               aria-disabled={!isBackgroundImageEnabled}

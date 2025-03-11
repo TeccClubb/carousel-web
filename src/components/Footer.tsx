@@ -2,6 +2,7 @@
 import React, { FC, memo } from "react";
 import { Link } from "@/i18n/navigation";
 import {
+  CarouselBuilderLogo,
   FacebookIcon,
   InstagramIcon,
   LinkedInIcon,
@@ -9,21 +10,21 @@ import {
   XTwitterIcon,
 } from "@/icons";
 import {
-  FACEBOOK_CAROUSEL_GENERATE_URL,
-  INSTAGRAM_CAROUSEL_GENERATE_URL,
-  LINKEDIN_BANNER_GENERATE_URL,
-  LINKEDIN_CAROUSEL_GENERATE_URL,
-  LINKEDIN_POST_IMAGE_GENERATE_URL,
-  TIKTOK_CAROUSEL_GENERATE_URL,
-  TWITTER_CAROUSEL_GENERATE_URL,
+  FACEBOOK_CAROUSEL_URL,
+  INSTAGRAM_CAROUSEL_URL,
+  LINKEDIN_CAROUSEL_URL,
+  TIKTOK_CAROUSEL_URL,
+  TWITTER_CAROUSEL_URL,
 } from "@/links";
 import {
   ABOUT_US_PAGE_PATH,
-  BLOG_ARTICLES_PAGE_PATH,
+  AFFILIATE_DASHBOARD_PAGE_PATH,
+  AFFILIATE_PROGRAM_PAGE_PATH,
+  BECOME_AN_AFFILIATE_PAGE_PATH,
   BLOG_PAGE_PATH,
+  CONTACT_PAGE_PATH,
   CREATORS_PAGE_PATH,
   FEATURES_PAGE_PATH,
-  HOME_PAGE_PATH,
   PRIVACY_POLICY_PAGE_PATH,
   REFUND_POLICY_PAGE_PATH,
   SITE_MAP_PAGE_PATH,
@@ -36,7 +37,7 @@ const FooterSlice: FC<{
   links: { text: string; href: string }[];
 }> = ({ title, links = [] }) => (
   <div className="w-full md:w-1/3 sm:w-1/2">
-    <h3 className="text-gray-900 dark:text-white font-semibold text-sm leading-6">
+    <h3 className="text-gray-900 dark:text-white font-semibold text-sm leading-8">
       {title}
     </h3>
     <ul role="list" className="mt-6 list-none">
@@ -66,19 +67,19 @@ const Footer: FC = () => {
 
   const socialIcons = [
     {
-      href: FACEBOOK_CAROUSEL_GENERATE_URL,
+      href: FACEBOOK_CAROUSEL_URL,
       icon: <FacebookIcon size={socialIconSize} />,
     },
     {
-      href: TWITTER_CAROUSEL_GENERATE_URL,
+      href: TWITTER_CAROUSEL_URL,
       icon: <XTwitterIcon size={socialIconSize} />,
     },
     {
-      href: INSTAGRAM_CAROUSEL_GENERATE_URL,
+      href: INSTAGRAM_CAROUSEL_URL,
       icon: <InstagramIcon size={socialIconSize} />,
     },
     {
-      href: LINKEDIN_CAROUSEL_GENERATE_URL,
+      href: LINKEDIN_CAROUSEL_URL,
       icon: <LinkedInIcon size={socialIconSize} />,
     },
   ];
@@ -93,49 +94,37 @@ const Footer: FC = () => {
               title={t("products")}
               links={[
                 {
-                  text: `Linkedin ${t("carousel_generate")}`,
-                  href: LINKEDIN_CAROUSEL_GENERATE_URL,
+                  text: "Linkedin Carousel",
+                  href: LINKEDIN_CAROUSEL_URL,
                 },
                 {
-                  text: `TikTok ${t("carousel_generate")}`,
-                  href: TIKTOK_CAROUSEL_GENERATE_URL,
+                  text: "TikTok Carousel",
+                  href: TIKTOK_CAROUSEL_URL,
                 },
                 {
-                  text: `Instagram ${t("carousel_generate")}`,
-                  href: INSTAGRAM_CAROUSEL_GENERATE_URL,
+                  text: "Instagram Carousel",
+                  href: INSTAGRAM_CAROUSEL_URL,
                 },
                 {
-                  text: `Facebook ${t("carousel_generate")}`,
-                  href: FACEBOOK_CAROUSEL_GENERATE_URL,
+                  text: "Facebook Carousel",
+                  href: FACEBOOK_CAROUSEL_URL,
                 },
               ]}
             />
             <FooterSlice
-              title={t("free_tools")}
+              title={t("affiliates")}
               links={[
                 {
-                  text: `Linkedin ${t("banner_generate")}`,
-                  href: LINKEDIN_BANNER_GENERATE_URL,
+                  text: t("affiliate_program"),
+                  href: AFFILIATE_PROGRAM_PAGE_PATH,
                 },
                 {
-                  text: `Linkedin ${t("post_image_generate")}`,
-                  href: LINKEDIN_POST_IMAGE_GENERATE_URL,
+                  text: t("become_an_affiliates"),
+                  href: BECOME_AN_AFFILIATE_PAGE_PATH,
                 },
                 {
-                  text: t("homepage"),
-                  href: HOME_PAGE_PATH,
-                },
-                {
-                  text: t("about_us"),
-                  href: ABOUT_US_PAGE_PATH,
-                },
-                {
-                  text: t("creators"),
-                  href: CREATORS_PAGE_PATH,
-                },
-                {
-                  text: t("blog_articles"),
-                  href: BLOG_ARTICLES_PAGE_PATH,
+                  text: t("affiliate_dashboard"),
+                  href: AFFILIATE_DASHBOARD_PAGE_PATH,
                 },
               ]}
             />
@@ -154,11 +143,27 @@ const Footer: FC = () => {
                   text: t("refund_policy"),
                   href: REFUND_POLICY_PAGE_PATH,
                 },
+                {
+                  text: t("about_us"),
+                  href: ABOUT_US_PAGE_PATH,
+                },
+                {
+                  text: t("creators"),
+                  href: CREATORS_PAGE_PATH,
+                },
+                {
+                  text: t("contact"),
+                  href: CONTACT_PAGE_PATH,
+                },
               ]}
             />
           </div>
           <div className="w-full lg:w-2/5 flex flex-col gap-y-4 items-center justify-center lg:items-start lg:justify-start px-4 order-1 lg:order-2">
-            <LogoIcon className="w-56 h-auto" />
+            <div className="flex items-center justify-center gap-2 h-16 md:mb-6 mb-4">
+              <LogoIcon />
+              <CarouselBuilderLogo className="w-60" />
+            </div>
+
             <p className="text-gray-600 text-sm leading-6 space-y-8">
               {t("footer_description")}
             </p>

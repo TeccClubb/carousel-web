@@ -169,8 +169,12 @@ const carouselsSlice = createSlice({
       state.isOnceCarouselsFetched = true;
     },
 
-    setActiveNavPanel: (state, action: PayloadAction<NavPanel>) => {
-      state.activeNavPanel = action.payload;
+    setActiveNavPanel: (
+      state,
+      action: PayloadAction<{ index: number; navPanel: NavPanel }>
+    ) => {
+      state.currentIndex = action.payload.index;
+      state.activeNavPanel = action.payload.navPanel;
     },
 
     setAiTotalSlides: (state, action: PayloadAction<number>) => {

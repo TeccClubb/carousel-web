@@ -1,6 +1,6 @@
 "use client";
 import React, { FC, memo } from "react";
-import { LogoIcon } from "@/icons";
+import { Logo } from "@/icons";
 import { Link } from "@/i18n/navigation";
 import {
   Button,
@@ -32,7 +32,7 @@ const DashboardNavbar: FC = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="lg:hidden [&_svg]:size-7 text-white p-2.5 -m-2.5"
+                className="lg:hidden [&_svg]:size-7 p-2.5 -m-2.5"
               >
                 <Menu />
               </Button>
@@ -51,7 +51,7 @@ const DashboardNavbar: FC = () => {
           <Separator orientation="vertical" className="h-6 lg:hidden" />
 
           <Link href={HOME_PAGE_PATH} className="px-3 py-2" aria-current="page">
-            <LogoIcon className="w-60 h-auto" />
+            <Logo />
           </Link>
         </div>
         {!isLoading && isLoggedIn && <AvatarProfile />}

@@ -123,7 +123,7 @@ const BgOverlay: FC<{
         />
       )}
 
-      {isBackgroundImageEnabled && backgroundImageSrc && (
+      {backgroundImageSrc !== "" && isBackgroundImageEnabled && (
         <div
           className="w-full h-full absolute left-0 top-0 overflow-hidden inline-block bg-cover bg-no-repeat z-0"
           style={{

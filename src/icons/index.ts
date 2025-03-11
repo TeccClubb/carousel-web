@@ -1,7 +1,8 @@
+import Logo from "./Logo";
+import CarouselBuilderLogo from "./CarouselBuilderLogo";
 import LogoIcon from "./LogoIcon";
 import LongRightArrow from "./LongRightArrow";
 import TickIcon from "./TickIcon";
-import MenuIcon from "./MenuIcon";
 import CloseIcon from "./CloseIcon";
 import FeatureIcon1 from "./FeatureIcon1";
 import FeatureIcon2 from "./FeatureIcon2";
@@ -52,11 +53,12 @@ import InfoIcon from "./InfoIcon";
 import CheckedCircleIcon from "./CheckedCircleIcon";
 
 export {
+  Logo,
+  CarouselBuilderLogo,
   LogoIcon,
   LongRightArrow,
   TickIcon,
   CloseIcon,
-  MenuIcon,
   FeatureIcon1,
   FeatureIcon2,
   FeatureIcon3,

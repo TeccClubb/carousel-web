@@ -6,6 +6,7 @@ import {
   TikTokGradientIcon,
   LockIcon,
   LogoIcon,
+  Logo,
 } from "@/icons";
 import { Link } from "@/i18n/navigation";
 import {
@@ -32,9 +33,8 @@ import {
   HOME_PAGE_PATH,
   LOGIN_PAGE_PATH,
   PRICING_PAGE_PATH,
-  SIGNUP_PAGE_PATH,
 } from "@/pathNames";
-import { useRouter, usePathname } from "@/i18n/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useDispatch } from "react-redux";
 import { AvatarProfile, Toast } from "../elements";
 import { DownloadIcon, Loader2, Save } from "lucide-react";
@@ -56,7 +56,6 @@ import { useTranslations } from "next-intl";
 
 const AiNavbar: FC = () => {
   const dispatch = useDispatch();
-  const pathname = usePathname();
   const router = useRouter();
   const toast = useToast();
   const t = useTranslations();
@@ -224,11 +223,21 @@ const AiNavbar: FC = () => {
     <nav className="bg-slate-50 dark:bg-gray-800">
       <div className="px-1 sm:px-2 lg:px-6">
         <div className="flex h-16 items-center justify-start sm:justify-between gap-6">
+          <LinkButton
+            href={HOME_PAGE_PATH}
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            aria-label="Bottom Panel"
+            aria-current="page"
+          >
+            <LogoIcon />
+          </LinkButton>
           <Link href={HOME_PAGE_PATH} aria-current="page">
-            <LogoIcon className="w-32 sm:w-40 md:w-60 h-auto" />
+            <Logo className="hidden md:flex" />
           </Link>
 
-          <div className="flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-1 sm:gap-4">
+          <div className="flex flex-1 items-center justify-end pr-2 sm:inset-auto sm:ml-6 sm:pr-0 gap-1 sm:gap-4">
             {!isLoading && (
               <Button size="sm" onClick={handleSave}>
                 {!isLoggedIn && <LockIcon />}
@@ -293,7 +302,7 @@ const AiNavbar: FC = () => {
               value={carouselData.slideRatio.ratioId}
               onValueChange={handleSlideRatioChange}
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-auto">
                 <SelectValue placeholder={t("carousel_type")} />
               </SelectTrigger>
               <SelectContent>
@@ -353,13 +362,11 @@ const AiNavbar: FC = () => {
 
             {!isLoading && !isLoggedIn && (
               <LinkButton
-                href={
-                  pathname !== LOGIN_PAGE_PATH
-                    ? LOGIN_PAGE_PATH
-                    : SIGNUP_PAGE_PATH
-                }
+                href={LOGIN_PAGE_PATH}
+                size="sm"
+                className="md:h-10 md:px-4 md:py-2"
               >
-                {pathname !== LOGIN_PAGE_PATH ? t("login") : t("signup")}
+                {t("login")}
               </LinkButton>
             )}
           </div>

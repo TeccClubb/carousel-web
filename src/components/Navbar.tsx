@@ -1,6 +1,6 @@
 "use client";
 import React, { FC, memo, useState } from "react";
-import { CloseIcon, LogoIcon, LongRightArrow, MenuIcon } from "@/icons";
+import { CloseIcon, Logo, LogoIcon, LongRightArrow } from "@/icons";
 import { Link } from "@/i18n/navigation";
 import { Button, LinkButton } from "./ui";
 import {
@@ -49,30 +49,34 @@ const Navbar: FC = () => {
 
   return (
     <nav className="bg-slate-50 dark:bg-gray-800">
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-2 sm:px-6">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
             {/* <!-- Mobile menu button--> */}
             <Button
               onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
-              variant="outline"
+              variant="ghost"
               size="icon"
-              className="[&_svg]:size-6 bg-transparent"
+              className="[&_svg]:size-6 p-0.5"
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+              {isMobileMenuOpen ? (
+                <CloseIcon />
+              ) : (
+                <LogoIcon />
+              )}
             </Button>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="hidden sm:ml-6 md:block">
+            <div className="hidden md:block">
               <div className="flex items-center justify-center space-x-4">
                 <Link
                   href={HOME_PAGE_PATH}
                   onClick={() => setActivePath(HOME_PAGE_PATH)}
-                  className="px-3 py-2"
+                  className="pr-3"
                   aria-current="page"
                 >
-                  <LogoIcon className="w-60 h-auto" />
+                  <Logo />
                 </Link>
                 {navItems.map(
                   (item) =>
@@ -105,7 +109,8 @@ const Navbar: FC = () => {
 
             <LinkButton
               href={CAROUSEL_GENERATOR_PAGE_PATH}
-              className="bg-blue dark:text-white"
+              size="sm"
+              className="bg-blue dark:text-white md:h-10 md:px-4 md:py-2"
             >
               <span className="sm:hidden">{t("generate")}</span>
               <span className="hidden sm:inline">
@@ -123,6 +128,8 @@ const Navbar: FC = () => {
                     ? LOGIN_PAGE_PATH
                     : SIGNUP_PAGE_PATH
                 }
+                size="sm"
+                className="md:h-10 md:px-4 md:py-2"
               >
                 {pathname !== LOGIN_PAGE_PATH ? t("login") : t("signup")}
               </LinkButton>

@@ -7,17 +7,15 @@ import SlideHeader from "./SlideHeader";
 import SlideContent from "./SlideContent";
 import ArrowText from "./ArrowText";
 import { CarouselData, SlideContent as SlideContentType, User } from "@/types";
-import { useDispatch } from "react-redux";
-import { setActiveNavPanel, setCurrentIndex } from "@/store/carousels.slice";
 
 const Slide: FC<{
   slide: SlideContentType;
   index: number;
   carouselData: CarouselData;
   user: User | null;
+  onClick?: () => void;
   isDownloadRequest?: boolean;
-}> = ({ slide, index, carouselData, user, isDownloadRequest }) => {
-  const dispatch = useDispatch();
+}> = ({ slide, index, carouselData, user, onClick, isDownloadRequest }) => {
   const {
     colors: { isAlternateSlideColors, backgroundColor, textColor, accentColor },
     brand: { isShowInIntroSlide, isShowInOutroSlide, isShowInRegularSlide },
@@ -48,10 +46,7 @@ const Slide: FC<{
 
   return (
     <div
-      onClick={() => {
-        dispatch(setCurrentIndex(index));
-        dispatch(setActiveNavPanel("content"));
-      }}
+      onClick={onClick}
       className="h-full float-left outline-none select-none cursor-default"
     >
       {!isDownloadRequest && (

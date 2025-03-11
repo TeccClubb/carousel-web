@@ -13,7 +13,7 @@ import Slide from "./Slide/Slide";
 import { useAppState } from "@/hooks/use-app-state";
 import { useDispatch } from "react-redux";
 import { zoomIn, zoomOut } from "@/store/app.slice";
-import { setCurrentIndex } from "@/store/carousels.slice";
+import { setActiveNavPanel, setCurrentIndex } from "@/store/carousels.slice";
 import { Minus, Plus } from "lucide-react";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { useUserState } from "@/hooks/use-user-state";
@@ -85,11 +85,7 @@ const CarouselSlider: FC = () => {
       className="min-h-[calc(100vh-4rem)] mx-4 py-6 lg:mx-8 flex flex-col items-center justify-start gap-y-3"
       style={{ fontSize: `${zoomValue}%` }}
     >
-      <Carousel
-        setApi={setApi}
-        opts={{ align: "start", }}
-        className="w-full"
-      >
+      <Carousel setApi={setApi} opts={{ align: "start" }} className="w-full">
         <div className="overflow-hidden w-full flex items-center justify-center">
           <CarouselContent className="w-[68em]">
             {slides.map((slide, index) => (
@@ -99,6 +95,9 @@ const CarouselSlider: FC = () => {
                   index={index}
                   carouselData={carouselData}
                   user={user}
+                  onClick={() =>
+                    dispatch(setActiveNavPanel({ index, navPanel: "content" }))
+                  }
                 />
               </CarouselItem>
             ))}
