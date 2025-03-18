@@ -3,5 +3,6 @@
         "messages",
         "src/i18n",
         "src/locales"
-    ]
+    ],
+    "i18n-ally.keystyle": "nested"
 }

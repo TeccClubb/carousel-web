@@ -10,24 +10,21 @@ import {
   HOME_PAGE_PATH,
   LOGIN_PAGE_PATH,
   PRICING_PAGE_PATH,
-  SIGNUP_PAGE_PATH,
 } from "@/pathNames";
-import { usePathname } from "@/i18n/navigation";
 import { AvatarProfile, LanguageChanger } from "./elements";
-import { useSyncAuthStatus } from "@/hooks/use-auth-status";
 import { useTranslations } from "next-intl";
-import { usePlansState } from "@/hooks/use-plans.state";
+import { useActivePlanCookie, useUserCookie } from "@/hooks/use-cookie";
+import { useAppState } from "@/hooks/use-app-state";
 
 const Navbar: FC = () => {
+  const { isClient } = useAppState();
   const t = useTranslations();
-  const { isLoading, isLoggedIn } = useSyncAuthStatus();
-  const { activePlan } = usePlansState();
+  const { user } = useUserCookie();
+  const { activePlan } = useActivePlanCookie();
 
   const [activePath, setActivePath] = useState<string>(HOME_PAGE_PATH);
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-
-  const pathname = usePathname();
 
   const navItems = [
     {
@@ -43,7 +40,7 @@ const Navbar: FC = () => {
     {
       name: t("dashboard"),
       href: DASHBOARD_PAGE_PATH,
-      auth: !isLoading && isLoggedIn,
+      auth: isClient && user != null,
     },
   ];
 
@@ -106,26 +103,22 @@ const Navbar: FC = () => {
             <LinkButton
               href={CAROUSEL_GENERATOR_PAGE_PATH}
               size="sm"
-              className="bg-blue dark:text-white md:h-10 md:px-4 md:py-2"
+              className="bg-blue hover:bg-blue/90 dark:text-white md:h-10 md:px-4 md:py-2"
             >
               <span className="sm:hidden">{t("generate")}</span>
               <span className="hidden sm:inline">{t("generate_carousel")}</span>
               <LongRightArrow className="hidden sm:inline" />
             </LinkButton>
 
-            {!isLoading && isLoggedIn && <AvatarProfile />}
+            {isClient && user && <AvatarProfile />}
 
-            {!isLoading && !isLoggedIn && (
+            {isClient && !user && (
               <LinkButton
-                href={
-                  pathname !== LOGIN_PAGE_PATH
-                    ? LOGIN_PAGE_PATH
-                    : SIGNUP_PAGE_PATH
-                }
+                href={LOGIN_PAGE_PATH}
                 size="sm"
                 className="md:h-10 md:px-4 md:py-2"
               >
-                {pathname !== LOGIN_PAGE_PATH ? t("login") : t("signup")}
+                {t("login")}
               </LinkButton>
             )}
           </div>

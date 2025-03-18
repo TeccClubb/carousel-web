@@ -2,7 +2,8 @@ export const DEFAULT_BRAND_NAME = "John Doe";
 export const DEFAULT_BRAND_HANDLE = "https://carouselbuilder.io";
 export const DEFAULT_BRAND_IMAGE_SRC = "/john.jpg";
 
-export const TOKEN_LOCAL_STORAGE_KEY = "CAROUSEL_BUILDER_USER";
+export const USER_COOKIE_KEY = "carousel_builder_user";
+export const ACTIVE_PLAN_COOKIE_KEY = "carousel_builder_active_plan";
 
 export const GOOGLE_API_GET_USER_INFO =
   "https://www.googleapis.com/oauth2/v3/userinfo";
@@ -23,6 +24,7 @@ export const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL!;
 export const LOGIN_ROUTE = `${BACKEND_API_URL}/auth/google`;
 export const LOGOUT_ROUTE = `${BACKEND_API_URL}/logout`;
 export const GET_USER_ROUTE = `${BACKEND_API_URL}/user`;
+export const PUT_AI_GENERATED_CAROUSELS_ROUTE = `${BACKEND_API_URL}/user/ai-creations`;
 
 export const GET_PLANS_ROUTE = `${BACKEND_API_URL}/plans`;
 export const GET_ACTIVE_PURCHASE_PLAN_ROUTE = `${BACKEND_API_URL}/purchase/active`;

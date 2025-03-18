@@ -1,3 +1,4 @@
+import ConfigureStore from "@/store/ConfigureStore";
 import { Metadata } from "next";
 import { FC, memo, ReactNode } from "react";
 
@@ -7,6 +8,8 @@ export const metadata: Metadata = {
   icons: ["/logo.jpeg"],
 };
 
-const RootLayout: FC<{ children: ReactNode }> = ({ children }) => children;
+const RootLayout: FC<{ children: ReactNode }> = ({ children }) => (
+  <ConfigureStore>{children}</ConfigureStore>
+);
 
 export default memo(RootLayout);

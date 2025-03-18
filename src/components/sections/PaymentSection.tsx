@@ -6,22 +6,18 @@ import { LinkButton } from "../ui";
 import { HOME_PAGE_PATH } from "@/pathNames";
 import { notFound, useSearchParams } from "next/navigation";
 import Stripe from "stripe";
-import {
-  ADD_PURCHASE_PLAN_ROUTE,
-  STRIPE_SECRET_KEY,
-  TOKEN_LOCAL_STORAGE_KEY,
-} from "@/constant";
+import { ADD_PURCHASE_PLAN_ROUTE, STRIPE_SECRET_KEY } from "@/constant";
 import { useToast } from "@/hooks/use-sonner-toast";
 import { useTranslations } from "next-intl";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setActivePlan } from "@/store/plans.slice";
+import { useActivePlanCookie, useUserCookie } from "@/hooks/use-cookie";
 
 const PaymentSection: FC = () => {
-  const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const t = useTranslations();
   const toast = useToast();
+  const { user } = useUserCookie();
+  const { setActivePlanCookie } = useActivePlanCookie();
   const [isPaymentSuccessful, setPaymentStatus] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(true);
 
@@ -47,7 +43,6 @@ const PaymentSection: FC = () => {
             };
           };
 
-          const access_token = localStorage.getItem(TOKEN_LOCAL_STORAGE_KEY);
           const res = await axios
             .post<ResponseData>(
               ADD_PURCHASE_PLAN_ROUTE,
@@ -57,24 +52,20 @@ const PaymentSection: FC = () => {
               {
                 headers: {
                   Accept: "application/json",
-                  Authorization: `Bearer ${access_token}`,
+                  Authorization: `Bearer ${user.access_token}`,
                 },
               }
             )
             .then((res) => res.data);
 
-          console.log(res);
-
           if (res.status) {
-            dispatch(
-              setActivePlan({
-                id: res.purchase.plan_id,
-                amount_paid: res.purchase.amount_paid,
-                start_date: res.purchase.start_date,
-                end_date: res.purchase.end_date,
-                status: res.purchase.status,
-              })
-            );
+            setActivePlanCookie({
+              id: res.purchase.plan_id,
+              amount_paid: res.purchase.amount_paid,
+              start_date: res.purchase.start_date,
+              end_date: res.purchase.end_date,
+              status: res.purchase.status,
+            });
           }
         } else {
           setPaymentStatus(false);

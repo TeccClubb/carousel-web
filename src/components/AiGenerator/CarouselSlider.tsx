@@ -19,7 +19,7 @@ import {
 } from "@/store/carousels.slice";
 import { Minus, Plus } from "lucide-react";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
-import { useUserState } from "@/hooks/use-user-state";
+import { useUserCookie } from "@/hooks/use-cookie";
 
 const CarouselSlider: FC = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,8 @@ const CarouselSlider: FC = () => {
 
   const { zoomValue } = useAppState();
 
-  const { userData: user } = useUserState();
+  const { isClient } = useAppState();
+  const { user } = useUserCookie();
 
   const {
     currentIndex,
@@ -98,6 +99,7 @@ const CarouselSlider: FC = () => {
                   index={index}
                   carouselData={carouselData}
                   user={user}
+                  isClient={isClient}
                   onClick={() =>
                     dispatch(
                       setActiveNavPanelAndIndex({ index, navPanel: "content" })

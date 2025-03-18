@@ -8,7 +8,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../CheckoutForm";
 import { usePlans } from "@/hooks/use-plans.state";
 import { SkeletonCard } from "../elements";
-import { useUserState } from "@/hooks/use-user-state";
+import { useUserCookie } from "@/hooks/use-cookie";
 import { useRouter } from "@/i18n/navigation";
 import { LOGIN_PAGE_PATH } from "@/pathNames";
 
@@ -24,7 +24,7 @@ const PriceSection: FC<{
     heading: string;
     price: number;
   }>();
-  const { userData: user } = useUserState();
+  const { user } = useUserCookie();
 
   const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
   const options: StripeElementsOptionsMode = {

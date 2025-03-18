@@ -13,9 +13,18 @@ const Slide: FC<{
   index: number;
   carouselData: CarouselData;
   user: User | null;
+  isClient: boolean;
   onClick?: () => void;
   isDownloadRequest?: boolean;
-}> = ({ slide, index, carouselData, user, onClick, isDownloadRequest }) => {
+}> = ({
+  slide,
+  index,
+  carouselData,
+  user,
+  isClient,
+  onClick,
+  isDownloadRequest,
+}) => {
   const {
     colors: { isAlternateSlideColors, backgroundColor, textColor, accentColor },
     brand: { isShowInIntroSlide, isShowInOutroSlide, isShowInRegularSlide },
@@ -107,7 +116,12 @@ const Slide: FC<{
               {(isIntroSlide && isShowInIntroSlide) ||
               (isOutroSlide && isShowInOutroSlide) ||
               (isShowInRegularSlide && !isIntroSlide && !isOutroSlide) ? (
-                <Brand color={color} carouselData={carouselData} user={user} />
+                <Brand
+                  color={color}
+                  carouselData={carouselData}
+                  user={user}
+                  isClient={isClient}
+                />
               ) : null}
             </div>
           </div>

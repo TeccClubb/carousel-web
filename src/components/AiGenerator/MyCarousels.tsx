@@ -22,7 +22,7 @@ import {
 } from "../ui";
 import { LOGIN_PAGE_PATH } from "@/pathNames";
 import { Edit2Icon, Plus, Save, Trash2Icon } from "lucide-react";
-import { useUserState } from "@/hooks/use-user-state";
+import { useUserCookie } from "@/hooks/use-cookie";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { useDispatch } from "react-redux";
 import {
@@ -39,11 +39,13 @@ import { DELETE_CAROUSEL_ROUTE, SAVE_CAROUSEL_ROUTE } from "@/constant";
 import { Carousel } from "@/types";
 import { setLoading } from "@/store/app.slice";
 import { useTranslations } from "next-intl";
+import { useAppState } from "@/hooks/use-app-state";
 
 const MyCarousels: FC = () => {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const { userData: user } = useUserState();
+  const { isClient } = useAppState();
+  const { user } = useUserCookie();
   const {
     carousels,
     carousel: { carouselId },
@@ -299,7 +301,7 @@ const MyCarousels: FC = () => {
             </Dialog>
           </div>
 
-          {!user && (
+          {isClient && !user && (
             <div className="border rounded p-2 flex flex-col items-center">
               <div className="text-center text-muted-foreground">
                 {t("login_to_save_and_view_carousels")}
@@ -308,13 +310,14 @@ const MyCarousels: FC = () => {
             </div>
           )}
 
-          {user && carousels.length === 0 && (
+          {isClient && user && carousels.length === 0 && (
             <div className="text-center text-muted-foreground">
               {t("no_carousels_found")}
             </div>
           )}
 
-          {user &&
+          {isClient &&
+            user &&
             carousels.length !== 0 &&
             Array.from(carousels)
               .reverse()

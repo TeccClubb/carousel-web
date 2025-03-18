@@ -9,10 +9,10 @@ import { Label } from "./label";
 const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> & {
-    label?: string;
-    labelIcon?: React.ReactNode
+    label?: React.ReactNode;
+    labelClassName?: string;
   }
->(({ label, labelIcon, className, ...props }, ref) => {
+>(({ label, className, labelClassName, ...props }, ref) => {
   const id = React.useId();
   return (
     <>
@@ -31,7 +31,11 @@ const Switch = React.forwardRef<
           )}
         />
       </SwitchPrimitives.Root>
-      {label && <Label htmlFor={id}>{labelIcon && labelIcon} {label}</Label>}
+      {label && (
+        <Label htmlFor={id} className={cn("flex gap-1", labelClassName)}>
+          {label}
+        </Label>
+      )}
     </>
   );
 });

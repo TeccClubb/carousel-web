@@ -15,12 +15,14 @@ import {
 import { HOME_PAGE_PATH } from "@/pathNames";
 import { AvatarProfile } from "../elements";
 import { Menu } from "lucide-react";
-import { useSyncAuthStatus } from "@/hooks/use-auth-status";
+import { useUserCookie } from "@/hooks/use-cookie";
 import SideBar from "./SideBar";
 import { useTranslations } from "next-intl";
+import { useAppState } from "@/hooks/use-app-state";
 
 const DashboardNavbar: FC = () => {
-  const { isLoading, isLoggedIn } = useSyncAuthStatus();
+  const { isClient } = useAppState();
+  const { user } = useUserCookie();
   const t = useTranslations();
 
   return (
@@ -54,7 +56,7 @@ const DashboardNavbar: FC = () => {
             <Logo />
           </Link>
         </div>
-        {!isLoading && isLoggedIn && <AvatarProfile />}
+        {isClient && user && <AvatarProfile />}
       </div>
     </nav>
   );

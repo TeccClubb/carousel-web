@@ -150,3 +150,7 @@ export {
   SheetTitle,
   SheetDescription,
 } from "./sheet";
+
+export { Progress } from "./progress";
+
+export { Badge, badgeVariants } from "./badge";

@@ -13,6 +13,13 @@ export type NavPanel =
   | "randomize"
   | "my_carousels";
 
+export type AiGeneratedData = {
+  subTitle: string;
+  title: string;
+  description: string;
+  cta_text?: string;
+};
+
 export type SlideContent = {
   type?: "intro" | "regular" | "outro";
   selectedTab?: string;
@@ -42,14 +49,6 @@ export type SlideContent = {
     opacity?: number;
     backgroundPosition?: ImageBackgroundPosition;
   };
-};
-
-type AiPanel = {
-  totalSlides: number;
-  selectedTab: string;
-  topic: string;
-  text: string;
-  url: string;
 };
 
 type ContentText = {
@@ -121,7 +120,9 @@ export type Carousel = {
 export type CarouselsState = {
   isOnceCarouselsFetched: boolean;
   activeNavPanel: NavPanel;
-  aiPanel: AiPanel;
+  signUpFirstDialogIsOpen: boolean;
+  upgradeProDialogIsOpen: boolean;
+  aiPanelSelectedTab: "topic" | "text" | "url";
   carousel: Carousel;
   carousels: Carousel[];
   currentIndex: number;

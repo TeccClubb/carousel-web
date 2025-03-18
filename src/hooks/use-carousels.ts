@@ -4,11 +4,12 @@ import { RootState } from "@/store/store";
 import axios, { AxiosError } from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useUserCookie } from "./use-cookie";
 
 export const useCarousels = () => {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState<boolean>(true);
-  const { userData: user } = useSelector((state: RootState) => state.user);
+  const { user } = useUserCookie();
   const { carousel, carousels, isOnceCarouselsFetched } = useSelector(
     (state: RootState) => state.carousels
   );

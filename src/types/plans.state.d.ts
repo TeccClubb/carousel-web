@@ -20,5 +20,4 @@ export type ActivePlan = {
 export type PlansState = {
   isPlansLoadedOnce: boolean;
   plans: Plan[];
-  activePlan: ActivePlan | null;
 };

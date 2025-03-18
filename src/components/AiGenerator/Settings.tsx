@@ -1,7 +1,5 @@
 import React, { FC, memo } from "react";
 import { Switch } from "../ui";
-import { LockIcon } from "@/icons";
-import { useUserState } from "@/hooks/use-user-state";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { useDispatch } from "react-redux";
 import {
@@ -15,12 +13,14 @@ import { Toast } from "../elements";
 import { useRouter } from "@/i18n/navigation";
 import { PRICING_PAGE_PATH } from "@/pathNames";
 import { useTranslations } from "next-intl";
+import { LockKeyhole } from "lucide-react";
+import { useActivePlanCookie } from "@/hooks/use-cookie";
 
 const Settings: FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const t = useTranslations();
-  const { userData: user } = useUserState();
+  const { activePlan } = useActivePlanCookie();
 
   const {
     carousel: {
@@ -36,7 +36,7 @@ const Settings: FC = () => {
   } = useCarouselsState();
 
   const handleToggleShowWatermark = () => {
-    if (!user) {
+    if (!activePlan) {
       const toastId = toast(
         <Toast
           action={{
@@ -47,7 +47,7 @@ const Settings: FC = () => {
             },
           }}
         >
-          <LockIcon />
+          <LockKeyhole className="size-3.5" />
           <div>
             {t("upgrade_to")} <b>{t("pro_plan")}</b> {t("to_remove_watermark")}
           </div>
@@ -62,12 +62,16 @@ const Settings: FC = () => {
     <div className="p-4 pb-12 flex flex-col w-full">
       <div className="space-y-6">
         <div className="space-y-2">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-row items-center gap-2">
             <Switch
               checked={isShowWaterMark}
               onCheckedChange={handleToggleShowWatermark}
-              label={t("show_watermark")}
-              labelIcon={!user ? <LockIcon /> : undefined}
+              label={
+                <>
+                  {!activePlan && <LockKeyhole className="size-3.5" />}
+                  {t("show_watermark")}
+                </>
+              }
             />
           </div>
           <p className="text-sm text-muted-foreground">

@@ -11,16 +11,15 @@ import { useAppState } from "@/hooks/use-app-state";
 import { useDispatch } from "react-redux";
 import { setCarousel } from "@/store/carousels.slice";
 import { useCarousels } from "@/hooks/use-carousels";
-import { useUserState } from "@/hooks/use-user-state";
+import { useActivePlanCookie, useUserCookie } from "@/hooks/use-cookie";
 import { useTranslations } from "next-intl";
-import { usePlansState } from "@/hooks/use-plans.state";
 
 const Dashboard: FC = () => {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const { userData: user } = useUserState();
-  const { activePlan } = usePlansState();
-  const { dashboardActiveItem } = useAppState();
+  const { user } = useUserCookie();
+  const { activePlan } = useActivePlanCookie();
+  const { dashboardActiveItem, isClient } = useAppState();
   const { isLoading, carousels } = useCarousels();
 
   // const startDate = new Date(activePlan!.start_date);
@@ -100,16 +99,18 @@ const Dashboard: FC = () => {
                 {t("your_profile")}
               </h2>
 
-              <div className="flex gap-6 items-center">
-                <Avatar className="size-36 transition-all hover:scale-105">
-                  {user && user.avatar && <AvatarImage src={user.avatar} />}
-                  <AvatarFallback>{user?.name}</AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col text-3xl">
-                  <span className="font-bold">{user?.name}</span>
-                  <span>{user?.email}</span>
+              {isClient && user && (
+                <div className="flex gap-6 items-center">
+                  <Avatar className="size-36 transition-all hover:scale-105">
+                    <AvatarImage src={user.avatar} />
+                    <AvatarFallback>{user.name}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col text-3xl">
+                    <span className="font-bold">{user.name}</span>
+                    <span>{user.email}</span>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           )}
         </div>

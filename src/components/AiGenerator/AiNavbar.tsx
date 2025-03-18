@@ -3,7 +3,6 @@ import React, { FC, FormEvent, memo, MouseEvent, useState } from "react";
 import {
   InstagramGradientIcon,
   TikTokGradientIcon,
-  LockIcon,
   LogoIcon,
   Logo,
   FacebookIcon,
@@ -38,7 +37,7 @@ import {
 import { useRouter } from "@/i18n/navigation";
 import { useDispatch } from "react-redux";
 import { AvatarProfile, Toast } from "../elements";
-import { DownloadIcon, Loader2, Save } from "lucide-react";
+import { DownloadIcon, Loader2, LockKeyhole, Save } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { SAVE_CAROUSEL_ROUTE } from "@/constant";
 import {
@@ -51,17 +50,20 @@ import { useToast } from "@/hooks/use-sonner-toast";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { Carousel } from "@/types";
 import { setLoading } from "@/store/app.slice";
-import { useSyncAuthStatus } from "@/hooks/use-auth-status";
+import { useActivePlanCookie, useUserCookie } from "@/hooks/use-cookie";
 import { ratios } from "@/assets/ratios";
 import { useTranslations } from "next-intl";
+import { useAppState } from "@/hooks/use-app-state";
 
 const AiNavbar: FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const toast = useToast();
   const t = useTranslations();
+  const { isClient } = useAppState();
+  const { user } = useUserCookie();
+  const { activePlan } = useActivePlanCookie();
 
-  const { isLoading, isLoggedIn, user } = useSyncAuthStatus();
   const [isPDFGenerating, setIsPDFGenerating] = useState<boolean>(false);
 
   const {
@@ -145,7 +147,7 @@ const AiNavbar: FC = () => {
     event: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
-    if (!user) {
+    if (!activePlan) {
       const toastId = toast.custom(
         <Toast
           action={{
@@ -156,7 +158,7 @@ const AiNavbar: FC = () => {
             },
           }}
         >
-          <LockIcon />
+          <LockKeyhole className="size-3.5" />
           {t("upgrade_to_pro_to_save")}
         </Toast>
       );
@@ -188,7 +190,7 @@ const AiNavbar: FC = () => {
           .post<ResponseData>(SAVE_CAROUSEL_ROUTE, formData, {
             headers: {
               Accept: "application/json",
-              Authorization: `Bearer ${user.access_token}`,
+              Authorization: `Bearer ${user?.access_token}`,
             },
           })
           .then((res) => res.data);
@@ -243,13 +245,11 @@ const AiNavbar: FC = () => {
           </Link>
 
           <div className="flex flex-1 items-center justify-end pr-2 sm:inset-auto sm:ml-6 sm:pr-0 gap-1 sm:gap-4">
-            {!isLoading && (
-              <Button size="sm" onClick={handleSave}>
-                {!isLoggedIn && <LockIcon />}
-                {isLoggedIn && <Save />}
-                <span className="hidden sm:inline">{t("save")}</span>
-              </Button>
-            )}
+            <Button size="sm" onClick={handleSave}>
+              {!activePlan && <LockKeyhole className="size-4" />}
+              {activePlan && <Save />}
+              <span className="hidden sm:inline">{t("save")}</span>
+            </Button>
 
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild></DialogTrigger>
@@ -366,9 +366,9 @@ const AiNavbar: FC = () => {
 
             <Separator orientation="vertical" className="h-6" />
 
-            {!isLoading && isLoggedIn && <AvatarProfile />}
+            {isClient && user && <AvatarProfile />}
 
-            {!isLoading && !isLoggedIn && (
+            {isClient && !user && (
               <LinkButton
                 href={LOGIN_PAGE_PATH}
                 size="sm"

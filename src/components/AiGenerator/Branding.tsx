@@ -19,7 +19,7 @@ import {
   toggleBrandShowInOutroSlide,
   toggleBrandShowInRegularSlide,
 } from "@/store/carousels.slice";
-import { useUserState } from "@/hooks/use-user-state";
+import { useUserCookie } from "@/hooks/use-cookie";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 import {
   DEFAULT_BRAND_HANDLE,
@@ -27,6 +27,7 @@ import {
   DEFAULT_BRAND_NAME,
 } from "@/constant";
 import { useTranslations } from "next-intl";
+import { useAppState } from "@/hooks/use-app-state";
 
 const Branding: FC = () => {
   const dispatch = useDispatch();
@@ -46,7 +47,8 @@ const Branding: FC = () => {
     },
   } = useCarouselsState();
 
-  const { userData: user } = useUserState();
+  const { isClient } = useAppState();
+  const { user } = useUserCookie();
 
   const brandName =
     user === null ? name.text ?? DEFAULT_BRAND_NAME : name.text ?? user.name;
@@ -70,12 +72,14 @@ const Branding: FC = () => {
               label={t("name")}
             />
           </div>
-          <Input
-            value={brandName}
-            onChange={(e) => dispatch(setBrandName(e.target.value))}
-            type="text"
-            placeholder={user !== null ? user.name : DEFAULT_BRAND_NAME}
-          />
+          {isClient && (
+            <Input
+              value={brandName}
+              onChange={(e) => dispatch(setBrandName(e.target.value))}
+              type="text"
+              placeholder={user !== null ? user.name : DEFAULT_BRAND_NAME}
+            />
+          )}
         </div>
 
         <div className="grid gap-2">
@@ -86,12 +90,14 @@ const Branding: FC = () => {
               label={t("handle")}
             />
           </div>
-          <Input
-            value={brandHandle}
-            onChange={(e) => dispatch(setBrandHandle(e.target.value))}
-            type="text"
-            placeholder={user !== null ? user.email : DEFAULT_BRAND_HANDLE}
-          />
+          {isClient && (
+            <Input
+              value={brandHandle}
+              onChange={(e) => dispatch(setBrandHandle(e.target.value))}
+              type="text"
+              placeholder={user !== null ? user.email : DEFAULT_BRAND_HANDLE}
+            />
+          )}
         </div>
 
         <div className="grid gap-2">
@@ -102,18 +108,23 @@ const Branding: FC = () => {
               label={t("profile_picture")}
             />
           </div>
-          <ImageInput
-            id="brand_image_input"
-            oldImageUrl={brandImageSrc}
-            onImageSelect={(imageSrc) => dispatch(setBrandProfileSrc(imageSrc))}
-          />
-
-          <Avatar className="size-16 transition-all hover:scale-105">
-            <label htmlFor="brand_image_input">
-              <AvatarImage src={brandImageSrc} />
-            </label>
-            <AvatarFallback>{brandName}</AvatarFallback>
-          </Avatar>
+          {isClient && (
+            <>
+              <ImageInput
+                id="brand_image_input"
+                oldImageUrl={brandImageSrc}
+                onImageSelect={(imageSrc) =>
+                  dispatch(setBrandProfileSrc(imageSrc))
+                }
+              />
+              <Avatar className="size-16 transition-all hover:scale-105">
+                <label htmlFor="brand_image_input">
+                  <AvatarImage src={brandImageSrc} />
+                </label>
+                <AvatarFallback>{brandName}</AvatarFallback>
+              </Avatar>
+            </>
+          )}
         </div>
 
         <div className="flex items-center gap-2">

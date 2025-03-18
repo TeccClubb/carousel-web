@@ -5,30 +5,35 @@ import { Button } from "../ui";
 import { GoogleIcon } from "@/icons";
 import axios, { AxiosError } from "axios";
 import { User } from "@/types";
-import { LOGIN_ROUTE, TOKEN_LOCAL_STORAGE_KEY } from "@/constant";
+import { LOGIN_ROUTE } from "@/constant";
 import { useToast } from "@/hooks/use-sonner-toast";
 import { useDispatch } from "react-redux";
 import { setLoading } from "@/store/app.slice";
-import { setUserData } from "@/store/user.slice";
+import { useActivePlanCookie, useUserCookie } from "@/hooks/use-cookie";
 import { useTranslations } from "next-intl";
-import { setActivePlan } from "@/store/plans.slice";
+import { useRouter } from "@/i18n/navigation";
+import { HOME_PAGE_PATH } from "@/pathNames";
 
 const AuthWithGoogle: FC<{ text: string }> = ({ text }) => {
   const dispatch = useDispatch();
   const t = useTranslations();
   const toast = useToast();
+  const router = useRouter();
+  const { setUserCookie } = useUserCookie();
+  const { setActivePlanCookie } = useActivePlanCookie();
 
   type LoginResponse = {
     status: boolean;
     message: string;
     user: User & {
+      carousels_count: number;
       active_plan: {
         plan_id: number;
         amount_paid: string;
         start_date: string;
         end_date: string;
         status: "active";
-      };
+      } | null;
     };
     access_token: string;
     token_type: string;
@@ -45,24 +50,24 @@ const AuthWithGoogle: FC<{ text: string }> = ({ text }) => {
           })
           .then((res) => res.data);
         if (res.status) {
-          dispatch(
-            setUserData({
-              name: res.user.name,
-              email: res.user.email,
-              avatar: res.user.avatar,
-              access_token: res.access_token,
-            })
-          );
-          localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, res.access_token);
-          dispatch(
-            setActivePlan({
+          setUserCookie({
+            name: res.user.name,
+            email: res.user.email,
+            avatar: res.user.avatar,
+            // freeGenerations: res.user.carousels_count,
+            freeGenerations: 0,
+            access_token: res.access_token,
+          });
+          if (res.user.active_plan) {
+            setActivePlanCookie({
               id: res.user.active_plan.plan_id,
               start_date: res.user.active_plan.start_date,
               end_date: res.user.active_plan.end_date,
               amount_paid: res.user.active_plan.amount_paid,
               status: res.user.active_plan.status,
-            })
-          );
+            });
+          }
+          router.replace(HOME_PAGE_PATH)
         } else toast.error(res.message);
       } catch (error) {
         console.log(error);

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Carousel, CarouselsState, NavPanel } from "@/types";
+import { AiGeneratedData, Carousel, CarouselsState, NavPanel } from "@/types";
 import { fontPairs } from "@/assets/fonts";
 import { darkColors, lightColors } from "@/assets/slide-colors";
 import { ImageBackgroundPosition } from "@/assets/imageBackgroundPositions";
@@ -141,14 +141,10 @@ export const defaultCarousel: Carousel = {
 const initialState: CarouselsState = {
   isOnceCarouselsFetched: false,
   activeNavPanel: "ai",
+  signUpFirstDialogIsOpen: false,
+  upgradeProDialogIsOpen: false,
   currentIndex: 0,
-  aiPanel: {
-    totalSlides: 6,
-    selectedTab: "topic",
-    topic: "",
-    text: "",
-    url: "",
-  },
+  aiPanelSelectedTab: "topic",
   carousels: [],
   carousel: defaultCarousel,
   newSlide: {
@@ -173,6 +169,14 @@ const carouselsSlice = createSlice({
       state.activeNavPanel = action.payload;
     },
 
+    setSignUpFirstDialogIsOpen: (state, action: PayloadAction<boolean>) => {
+      state.signUpFirstDialogIsOpen = action.payload;
+    },
+
+    setUpgradeProDialogIsOpen: (state, action: PayloadAction<boolean>) => {
+      state.upgradeProDialogIsOpen = action.payload;
+    },
+
     setActiveNavPanelAndIndex: (
       state,
       action: PayloadAction<{ index: number; navPanel: NavPanel }>
@@ -181,20 +185,11 @@ const carouselsSlice = createSlice({
       state.activeNavPanel = action.payload.navPanel;
     },
 
-    setAiTotalSlides: (state, action: PayloadAction<number>) => {
-      state.aiPanel.totalSlides = action.payload;
-    },
-    setAiPanelSelectedTab: (state, action: PayloadAction<string>) => {
-      state.aiPanel.selectedTab = action.payload;
-    },
-    setAiTopic: (state, action: PayloadAction<string>) => {
-      state.aiPanel.topic = action.payload;
-    },
-    setAiText: (state, action: PayloadAction<string>) => {
-      state.aiPanel.text = action.payload;
-    },
-    setAiURL: (state, action: PayloadAction<string>) => {
-      state.aiPanel.url = action.payload;
+    setAiPanelSelectedTab: (
+      state,
+      action: PayloadAction<"topic" | "text" | "url">
+    ) => {
+      state.aiPanelSelectedTab = action.payload;
     },
 
     setCarousels: (state, action: PayloadAction<Carousel[]>) => {
@@ -347,12 +342,7 @@ const carouselsSlice = createSlice({
       slides.splice(action.payload.destinationIndex, 0, removed);
     },
 
-    setSlides: (
-      state,
-      action: PayloadAction<
-        { subTitle: string; title: string; description: string }[]
-      >
-    ) => {
+    setSlides: (state, action: PayloadAction<AiGeneratedData[]>) => {
       state.currentIndex = 0;
       state.newSlide.subTitle.text = "";
       state.newSlide.subTitle.isEnabled = true;
@@ -377,10 +367,7 @@ const carouselsSlice = createSlice({
         title: { text: slide.title, isEnabled: true },
         description: { text: slide.description, isEnabled: true },
         ctaButton: {
-          text:
-            index === action.payload.length - 1
-              ? "Follow for More Inspiration"
-              : "",
+          text: index === action.payload.length - 1 ? slide.cta_text! : "",
           isEnabled: index === action.payload.length - 1,
         },
         image: { src: "", isEnabled: true },
@@ -748,12 +735,10 @@ const carouselsSlice = createSlice({
 export const {
   setOnceCarouselsFetched,
   setActiveNavPanel,
+  setSignUpFirstDialogIsOpen,
+  setUpgradeProDialogIsOpen,
   setActiveNavPanelAndIndex,
-  setAiTotalSlides,
   setAiPanelSelectedTab,
-  setAiTopic,
-  setAiText,
-  setAiURL,
   setCarousels,
   addNewCarousel,
   updateCarousel,

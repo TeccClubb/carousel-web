@@ -1,11 +1,3 @@
-"use client";
-import React, { FC } from "react";
-import { AuthLayout, Signup } from "@/components";
+import { Signup } from "@/components";
 
-const SignupPage: FC = () => (
-  <AuthLayout authentication={false}>
-    <Signup />
-  </AuthLayout>
-);
-
-export default SignupPage;
+export default Signup;

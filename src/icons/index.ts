@@ -34,7 +34,6 @@ import SwipeIcon from "./SwipeIcon";
 import OrderIcon from "./OrderIcon";
 import SettingsIcon from "./SettingsIcon";
 import MyCarouselsIcon from "./MyCarouselsIcon";
-import LockIcon from "./LockIcon";
 import InstagramGradientIcon from "./InstagramGradientIcon";
 import TikTokGradientIcon from "./TikTokGradientIcon";
 import DragHandleIcon from "./DragHandleIcon";
@@ -88,7 +87,6 @@ export {
   OrderIcon,
   SettingsIcon,
   MyCarouselsIcon,
-  LockIcon,
   InstagramGradientIcon,
   TikTokGradientIcon,
   DragHandleIcon,

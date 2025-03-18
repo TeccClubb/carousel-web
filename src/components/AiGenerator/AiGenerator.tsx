@@ -13,7 +13,14 @@ import {
   TextIcon,
 } from "@/icons";
 import {
+  Badge,
   Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
   Drawer,
   DrawerClose,
   DrawerContent,
@@ -21,6 +28,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
+  LinkButton,
   ScrollArea,
   Separator,
   Tooltip,
@@ -40,19 +48,27 @@ import Settings from "./Settings";
 import MyCarousels from "./MyCarousels";
 import Randomize from "./Randomize";
 import CarouselSlider from "./CarouselSlider";
-import { Shuffle } from "lucide-react";
+import { Check, Shuffle, Zap } from "lucide-react";
 import { useCarousels } from "@/hooks/use-carousels";
 import { useDispatch } from "react-redux";
 import { setZoomValue } from "@/store/app.slice";
 import { NavPanel } from "@/types";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
-import { setActiveNavPanel } from "@/store/carousels.slice";
+import {
+  setActiveNavPanel,
+  setSignUpFirstDialogIsOpen,
+  setUpgradeProDialogIsOpen,
+} from "@/store/carousels.slice";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
+import { PRICING_PAGE_PATH, SIGNUP_PAGE_PATH } from "@/pathNames";
 
 const AiGenerator: FC = () => {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const { activeNavPanel } = useCarouselsState();
+  const router = useRouter();
+  const { activeNavPanel, signUpFirstDialogIsOpen, upgradeProDialogIsOpen } =
+    useCarouselsState();
   const {
     carousel: {
       data: {
@@ -62,8 +78,6 @@ const AiGenerator: FC = () => {
   } = useCarousels();
 
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [divWidth, setDivWidth] = useState<number>(0);
-  const [divHeight, setDivHeight] = useState<number>(0);
   const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
 
   const navPanels: NavPanel[] = [
@@ -149,6 +163,27 @@ const AiGenerator: FC = () => {
     },
   };
 
+  const signupFirstOfferOptions: string[] = [
+    t("ai_carousel_generator_10_free_credits"),
+    t("topic_to_carousel_using_aI"),
+    t("custom_text_to_carousel_using_ai"),
+    t("url_to_carousel_using_ai"),
+    t("media_upload_feature"),
+    t("custom_font_pairing"),
+    t("custom_color_palettes"),
+  ];
+
+  const upgradeOfferOptions: string[] = [
+    t("unlimited_ai_carousel_generator"),
+    t("carousel_with_20_slides"),
+    t("unlimited_downloads"),
+    t("remove_watermark"),
+    t("custom_font_pair"),
+    t("custom_color_palette"),
+    t("save_and_continue_carousel"),
+    t("priority_support"),
+  ];
+
   useEffect(() => {
     const link = document.createElement("link");
     link.rel = "stylesheet";
@@ -174,26 +209,18 @@ const AiGenerator: FC = () => {
       setIsMobile(window.innerWidth < 768);
       const sliderDiv = document.getElementById("carousel-slider");
       if (sliderDiv) {
-        setDivWidth(sliderDiv.offsetWidth);
-        setDivHeight(sliderDiv.offsetHeight);
+        const width = sliderDiv.offsetWidth;
+        const height = sliderDiv.offsetHeight;
+        const area = width * height;
+        const fontSize = Math.round(Math.sqrt(area) / 23.42);
+        dispatch(setZoomValue(Math.min(Math.max(fontSize, 20), 100)));
       }
     };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    const fontSize = Math.round((divWidth / divHeight) * 17.26);
-    dispatch(setZoomValue(fontSize));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [divWidth]);
-
-  useEffect(() => {
-    const fontSize = Math.round((divWidth / divHeight) * 17.26);
-    dispatch(setZoomValue(fontSize));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [divHeight]);
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-start gap-0 overflow-hidden">
@@ -275,6 +302,75 @@ const AiGenerator: FC = () => {
       >
         <CarouselSlider />
       </ScrollArea>
+
+      <Dialog
+        open={signUpFirstDialogIsOpen}
+        onOpenChange={(isOpen) => dispatch(setSignUpFirstDialogIsOpen(isOpen))}
+      >
+        <DialogContent className="w-full max-w-lg p-6">
+          <DialogHeader>
+            <DialogTitle className="self-center font-bold text-xl">
+              {t("signup_to_unlock_special_features")}
+            </DialogTitle>
+            <DialogDescription className="hidden">
+              {t("signup_to_unlock_special_features")}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            {signupFirstOfferOptions.map((option) => (
+              <div key={option} className="flex items-center">
+                <Check className="size-5 text-green-600 m-2" />
+                <div className="font-semibold text-sm">{option}</div>
+              </div>
+            ))}
+          </div>
+          <DialogFooter>
+            <Button
+              onClick={() => router.push(SIGNUP_PAGE_PATH)}
+              type="submit"
+              className="w-full"
+            >
+              {t("sign_up_for_free")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={upgradeProDialogIsOpen}
+        onOpenChange={(isOpen) => dispatch(setUpgradeProDialogIsOpen(isOpen))}
+      >
+        <DialogContent className="w-full max-w-lg p-6">
+          <DialogHeader>
+            <DialogTitle className="self-center font-bold text-xl">
+              {t("upgrade_to_carousel_builder")}
+              <Badge className="rounded-md bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 border-0 uppercase text-sm py-1 ml-2">
+                Pro
+              </Badge>
+            </DialogTitle>
+            <DialogDescription className="hidden">
+              {t("upgrade_to_carousel_builder")}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            {upgradeOfferOptions.map((option) => (
+              <div key={option} className="flex items-center">
+                <Check className="size-5 text-green-600 m-2" />
+                <div className="font-semibold text-sm">{option}</div>
+              </div>
+            ))}
+          </div>
+          <DialogFooter>
+            <LinkButton
+              href={PRICING_PAGE_PATH}
+              size="sm"
+              className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-xs w-full"
+            >
+              {t("upgrade_to_pro")} <Zap className="fill-primary-foreground" />
+            </LinkButton>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

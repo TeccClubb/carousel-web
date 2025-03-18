@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, memo, ReactNode } from "react";
+import React, { FC, memo, ReactNode, useEffect } from "react";
 import { CAROUSEL_GENERATOR_PAGE_PATH, DASHBOARD_PAGE_PATH } from "@/pathNames";
 import Navbar from "./Navbar";
 import { ScrollArea, Toaster } from "./ui";
@@ -10,15 +10,21 @@ import { GOOGLE_OAUTH_CLIENT_ID } from "@/constant";
 import { usePathname } from "@/i18n/navigation";
 import { Loader } from "./elements";
 import DashboardNavbar from "./Dashboard/DashboardNavbar";
-import { Provider } from "react-redux";
-import store from "@/store/store";
+import { CookiesProvider } from "react-cookie";
+import { useDispatch } from "react-redux";
+import { setIsClient } from "@/store/app.slice";
 
 const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
+  const dispatch = useDispatch();
   const pathName = usePathname();
+
+  useEffect(() => {
+    dispatch(setIsClient());
+  }, [dispatch]);
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CLIENT_ID}>
-      <Provider store={store}>
+      <CookiesProvider>
         <ScrollArea className="h-screen w-full">
           <Loader />
           {pathName === CAROUSEL_GENERATOR_PAGE_PATH && <AiNavbar />}
@@ -45,7 +51,7 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
           {pathName !== CAROUSEL_GENERATOR_PAGE_PATH &&
             pathName !== DASHBOARD_PAGE_PATH && <Footer />}
         </ScrollArea>
-      </Provider>
+      </CookiesProvider>
     </GoogleOAuthProvider>
   );
 };
