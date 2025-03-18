@@ -75,7 +75,7 @@ const PriceSection: FC<{
                 duration={plan.duration}
                 durationUnit={plan.duration_unit}
                 features={plan.description.replace(/, /g, ",").split(",")}
-                isBestPrice={plan.isBestPrice}
+                isBestPrice={plan.is_best}
                 onGetPlan={(heading, price) => {
                   if (!user) {
                     router.push(LOGIN_PAGE_PATH);

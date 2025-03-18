@@ -33,6 +33,10 @@ const AuthWithGoogle: FC<{ text: string }> = ({ text }) => {
         start_date: string;
         end_date: string;
         status: "active";
+        plan: {
+          duration: number;
+          duration_unit: string;
+        };
       } | null;
     };
     access_token: string;
@@ -63,6 +67,8 @@ const AuthWithGoogle: FC<{ text: string }> = ({ text }) => {
               start_date: res.user.active_plan.start_date,
               end_date: res.user.active_plan.end_date,
               amount_paid: res.user.active_plan.amount_paid,
+              duration: res.user.active_plan.plan.duration,
+              duration_unit: res.user.active_plan.plan.duration_unit,
               status: res.user.active_plan.status,
             });
           }

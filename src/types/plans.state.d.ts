@@ -6,7 +6,7 @@ export type Plan = {
   name: string;
   price: number;
   slug: string;
-  isBestPrice: boolean;
+  is_best: boolean;
 };
 
 export type ActivePlan = {
@@ -14,6 +14,8 @@ export type ActivePlan = {
   amount_paid: string;
   start_date: string;
   end_date: string;
+  duration: number;
+  duration_unit: string;
   status: "active" | "cancelled" | "expired";
 };
 

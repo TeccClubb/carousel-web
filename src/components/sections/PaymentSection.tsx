@@ -40,6 +40,10 @@ const PaymentSection: FC = () => {
               start_date: string;
               end_date: string;
               status: "active";
+              plan: {
+                duration: number;
+                duration_unit: string;
+              };
             };
           };
 
@@ -64,6 +68,8 @@ const PaymentSection: FC = () => {
               amount_paid: res.purchase.amount_paid,
               start_date: res.purchase.start_date,
               end_date: res.purchase.end_date,
+              duration: res.purchase.plan.duration,
+              duration_unit: res.purchase.plan.duration_unit,
               status: res.purchase.status,
             });
           }
