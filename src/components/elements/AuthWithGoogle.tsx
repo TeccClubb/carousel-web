@@ -26,7 +26,7 @@ const AuthWithGoogle: FC<{ text: string }> = ({ text }) => {
     status: boolean;
     message: string;
     user: User & {
-      carousels_count: number;
+      ai_creations: number;
       active_plan: {
         plan_id: number;
         amount_paid: string;
@@ -54,8 +54,7 @@ const AuthWithGoogle: FC<{ text: string }> = ({ text }) => {
             name: res.user.name,
             email: res.user.email,
             avatar: res.user.avatar,
-            // freeGenerations: res.user.carousels_count,
-            freeGenerations: 0,
+            freeGenerations: res.user.ai_creations,
             access_token: res.access_token,
           });
           if (res.user.active_plan) {
@@ -67,7 +66,7 @@ const AuthWithGoogle: FC<{ text: string }> = ({ text }) => {
               status: res.user.active_plan.status,
             });
           }
-          router.replace(HOME_PAGE_PATH)
+          router.replace(HOME_PAGE_PATH);
         } else toast.error(res.message);
       } catch (error) {
         console.log(error);

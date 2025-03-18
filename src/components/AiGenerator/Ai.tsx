@@ -29,7 +29,11 @@ import {
 } from "../ui";
 import { languages } from "@/assets/languages";
 import axios, { AxiosError } from "axios";
-import { OPENAI_API_ENDPOINT, OPENAI_API_KEY } from "@/constant";
+import {
+  OPENAI_API_ENDPOINT,
+  OPENAI_API_KEY,
+  PUT_AI_GENERATED_CAROUSELS_ROUTE,
+} from "@/constant";
 import { useToast } from "@/hooks/use-sonner-toast";
 import { Loader2, LockKeyhole, Zap } from "lucide-react";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
@@ -188,6 +192,16 @@ const Ai: FC = () => {
       if (!activePlan) {
         setUserCookie({ ...user, freeGenerations: freeGenerations + 1 });
         setFreeGenerations((prev) => ++prev);
+        await axios.put(
+          PUT_AI_GENERATED_CAROUSELS_ROUTE,
+          {},
+          {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${user.access_token}`,
+            },
+          }
+        );
       }
     } catch (error) {
       toast.error(
