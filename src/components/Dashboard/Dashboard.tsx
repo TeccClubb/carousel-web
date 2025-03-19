@@ -5,7 +5,19 @@ import ReportCard from "./ReportCard";
 import ProjectCard from "./ProjectCard";
 import SideBar from "./SideBar";
 import { CAROUSEL_GENERATOR_PAGE_PATH } from "@/pathNames";
-import { Avatar, AvatarFallback, AvatarImage, ScrollArea } from "../ui";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Label,
+  ScrollArea,
+  Separator,
+} from "../ui";
 import { SkeletonCard } from "../elements";
 import { useAppState } from "@/hooks/use-app-state";
 import { useDispatch } from "react-redux";
@@ -24,7 +36,7 @@ const Dashboard: FC = () => {
 
   // const startDate = new Date(activePlan!.start_date);
   const today = new Date();
-  const endDate = new Date(activePlan!.end_date);
+  const endDate = isClient ? new Date(activePlan!.end_date) : new Date();
 
   const remainingDays = Math.floor(
     (endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
@@ -48,11 +60,13 @@ const Dashboard: FC = () => {
                     title={t("total_projects")}
                     value={0}
                     icon={<ProjectIcon />}
+                    isLoading={!isClient}
                   />
                   <ReportCard
                     title={t("subscription")}
                     value={`${remainingDays} ${t("days_left")}`}
                     icon={<PlanIcon className="w-10 h-10" />}
+                    isLoading={isLoading}
                     valueClassName={`${
                       remainingDays < 3
                         ? "text-red-600"
@@ -100,16 +114,89 @@ const Dashboard: FC = () => {
               </h2>
 
               {isClient && user && (
-                <div className="flex gap-6 items-center">
+                <div className="flex sm:flex-row flex-col gap-6 items-center">
                   <Avatar className="size-36 transition-all hover:scale-105">
                     <AvatarImage src={user.avatar} />
                     <AvatarFallback>{user.name}</AvatarFallback>
                   </Avatar>
-                  <div className="flex flex-col text-3xl">
+                  <div className="flex items-center sm:items-start flex-col sm:text-3xl text-2xl">
                     <span className="font-bold">{user.name}</span>
                     <span>{user.email}</span>
                   </div>
                 </div>
+              )}
+            </div>
+          )}
+
+          {dashboardActiveItem === "billing_details" && (
+            <div className="w-full">
+              <h2 className="w-full text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                {t("billing_details")}
+              </h2>
+
+              {isClient && user && (
+                <Card>
+                  <CardHeader className="hidden">
+                    <CardTitle>Billing Details</CardTitle>
+                    <CardDescription>
+                      Billing Details Description
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="md:p-24 p-6">
+                    <div className="flex flex-col sm:flex-row sm:gap-16 gap-8">
+                      {isClient && user && (
+                        <div className="flex flex-col items-center justify-center gap-4">
+                          <Avatar className="size-32 transition-all hover:scale-105">
+                            <AvatarImage src={user.avatar} />
+                            <AvatarFallback>{user.name}</AvatarFallback>
+                          </Avatar>
+                          <Label asSpan>{user.name}</Label>
+                        </div>
+                      )}
+                      <Separator className="sm:hidden" />
+                      <Separator
+                        orientation="vertical"
+                        className="h-auto hidden sm:block"
+                      />
+                      <div className="flex flex-col space-y-4 p-4">
+                        {[
+                          { name: "Email", value: user.email },
+                          { name: "Name", value: user.name },
+                          { name: "Subscription Type", value: "Paid" },
+                          {
+                            name: "Subscription Status",
+                            value: activePlan.status,
+                          },
+                          {
+                            name: "Billing Cycle",
+                            value: `${
+                              activePlan.duration > 1 && activePlan.duration
+                            } ${activePlan.duration_unit}`,
+                          },
+                          {
+                            name: "Expires On",
+                            value: new Intl.DateTimeFormat("en-US", {
+                              weekday: "long",
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            }).format(new Date(activePlan.end_date)),
+                          },
+                        ].map(({ name, value }) => (
+                          <div
+                            key={name}
+                            className="sm:flex space-x-0 space-y-1 sm:space-x-3 sm:space-y-0"
+                          >
+                            <p className="text-sm font-medium">{name}:</p>
+                            <p className="text-sm text-muted-foreground">
+                              {value}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               )}
             </div>
           )}

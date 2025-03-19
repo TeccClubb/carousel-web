@@ -51,7 +51,19 @@ const SideBar: FC = () => {
                 <ProfileIcon />
                 {t("profile")}
               </li>
-
+              <li
+                onClick={() =>
+                  dispatch(setDashboardActiveItem("billing_details"))
+                }
+                className={`${
+                  dashboardActiveItem === "billing_details"
+                    ? "text-white bg-[#0139FF]"
+                    : "hover:text-white hover:bg-[#0139FF]"
+                } flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3`}
+              >
+                <PlanIcon />
+                {t("billing_details")}
+              </li>
               <li>
                 <Link
                   href={PRICING_PAGE_PATH}
