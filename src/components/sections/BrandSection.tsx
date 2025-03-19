@@ -2,6 +2,8 @@ import React, { FC, memo, ReactNode } from "react";
 import Section from "./Section";
 import { BrandIcon1, BrandIcon2, BrandIcon3 } from "@/icons";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { brandSectionBlurImageSrc } from "@/assets/brand-section-base64-image";
 
 const BrandSection: FC<{
   isHeroSection?: boolean;
@@ -14,11 +16,11 @@ const BrandSection: FC<{
     description: string;
     children: ReactNode;
   }> = ({ title, description, children }) => (
-    <div className="bg-white dark:bg-gray-900 pr-20 flex w-full p-6 items-start gap-6 rounded-2xl shadow-xl transition duration-200">
+    <div className="bg-white dark:bg-gray-900 sm:pr-20 flex sm:flex-row flex-col w-full p-6 sm:items-start items-center gap-6 rounded-2xl shadow-xl transition duration-200">
       <div className="p-3 bg-[#0F73F6] rounded-xl flex items-center justify-center">
         {children}
       </div>
-      <div>
+      <div className="sm:text-start text-center space-y-2">
         <span className="text-gray-900 dark:text-white text-lg font-semibold">
           {title}
         </span>
@@ -43,6 +45,16 @@ const BrandSection: FC<{
         <h1 className="text-gray-900 dark:text-white lg:text-5xl md:text-4xl text-3xl font-semibold lg:leading-[58px]">
           {t("brand_section_heading")}
         </h1>
+        <Image
+          className="w-full h-auto mt-8 rounded-md"
+          src="/brand-section-image.png"
+          alt={t("image_not_founded")}
+          width={0}
+          height={0}
+          sizes="100vw"
+          placeholder="blur"
+          blurDataURL={brandSectionBlurImageSrc}
+        />
       </div>
 
       <div className="lg:w-1/2 px-4 flex flex-col xl:gap-y-8 gap-y-4 relative">

@@ -18,7 +18,7 @@ const DesignToolsSection: FC<{
     isIconLarge?: boolean;
     children: ReactNode;
   }> = ({ title, description, isIconLarge, children }) => (
-    <div className="bg-white dark:bg-gray-900 pr-16 flex w-full p-6 items-center gap-6 rounded-2xl shadow-xl transition duration-200">
+    <div className="bg-white dark:bg-gray-900 pr-16 flex sm:flex-row flex-col w-full p-6 items-center gap-6 rounded-2xl shadow-xl transition duration-200">
       <div
         className={`${
           isIconLarge ? "" : "p-4"
@@ -26,7 +26,7 @@ const DesignToolsSection: FC<{
       >
         {children}
       </div>
-      <div>
+      <div className="text-center sm:text-start space-y-2">
         <span className="text-gray-900 dark:text-white text-lg font-semibold">
           {title}
         </span>
@@ -44,7 +44,7 @@ const DesignToolsSection: FC<{
       cornerGradient={cornerGradient}
       containerClassName="flex-col lg:flex-row gap-y-4"
     >
-      <div className="lg:w-1/2 px-4 pr-16 flex flex-col gap-y-4">
+      <div className="lg:w-1/2 px-4 sm:pr-16 flex flex-col gap-y-4">
         <div className="text-center lg:text-left">
           <span className="text-[#0F73F6] text-base font-medium">
             {t("design_tool_section_description")}

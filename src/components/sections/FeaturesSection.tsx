@@ -22,11 +22,11 @@ const FeaturesSection: FC<{
     children: ReactNode;
     className?: string;
   }> = ({ title, description, children, className }) => (
-    <div className={`flex gap-x-4 my-8 lg:my-0 ${className}`}>
+    <div className={`flex sm:flex-row flex-col sm:items-start items-center gap-4 my-8 lg:my-0 ${className}`}>
       <div className="bg-[#E2E8F0] w-16 h-16 px-3 rounded-full flex items-center justify-center">
         {children}
       </div>
-      <div className="flex flex-col gap-y-4">
+      <div className="flex flex-col sm:text-start text-center gap-y-4">
         <span className="text-gray-900 dark:text-white text-lg font-semibold">
           {title}
         </span>
@@ -50,10 +50,10 @@ const FeaturesSection: FC<{
       <h2 className="text-blue text-center text-4xl font-medium">
         {t("features_section_description")}
       </h2>
-      <div className="flex flex-wrap flex-col lg:flex-row w-full">
-        <div className="w-full lg:w-1/3 px-14 md:px-24 lg:px-0 lg:relative order-2 lg:order-1">
+      <div className="flex items-center justify-center lg:relative flex-wrap flex-col lg:flex-row w-full">
+        <div className="w-full lg:absolute lg:left-0 lg:w-1/3 px-14 md:px-24 lg:px-0 order-2 lg:order-1">
           <Feature
-            className="lg:absolute left-0 top-24"
+            className="lg:absolute lg:left-0 lg:top-40"
             title={t("feature1_title")}
             description={t("feature1_description")}
           >
@@ -61,7 +61,7 @@ const FeaturesSection: FC<{
           </Feature>
 
           <Feature
-            className="lg:absolute left-0 lg:bottom-24 xl:bottom-32"
+            className="lg:absolute left-0 lg:bottom-28 xl:bottom-32"
             title={t("feature2_title")}
             description={t("feature2_description")}
           >
@@ -69,9 +69,9 @@ const FeaturesSection: FC<{
           </Feature>
         </div>
 
-        <div className="w-full lg:w-1/3 px-4 order-1 lg:order-2">
+        <div className="w-full max-w-xl px-4 order-1 lg:order-2">
           <Image
-            className="rounded-xl mx-auto w-80 h-auto"
+            className="rounded-xl mx-auto w-full h-auto"
             src="/feature-image.png"
             alt={t("image_not_founded")}
             width={0}
@@ -83,9 +83,9 @@ const FeaturesSection: FC<{
           />
         </div>
 
-        <div className="w-full lg:w-1/3 px-14 md:px-24 lg:px-0 lg:relative order-3">
+        <div className="w-full lg:absolute lg:right-0 lg:w-1/3 px-14 md:px-24 lg:px-0 order-3">
           <Feature
-            className="lg:absolute lg:right-0 lg:top-36 xl:top-60"
+            className="lg:absolute lg:right-0 lg:top-44"
             title={t("feature3_title")}
             description={t("feature3_description")}
           >
@@ -93,7 +93,7 @@ const FeaturesSection: FC<{
           </Feature>
 
           <Feature
-            className="lg:absolute lg:right-0 lg:bottom-0"
+            className="lg:absolute lg:right-0 lg:bottom-28"
             title={t("feature4_title")}
             description={t("feature4_description")}
           >

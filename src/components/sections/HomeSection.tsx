@@ -29,7 +29,7 @@ const HomeSection: FC<{ showGradient?: boolean }> = ({ showGradient }) => {
       <div className="w-full lg:w-1/2">
         <Image
           className="rounded-xl w-full h-auto"
-          src="/home-section-image.jpg"
+          src="/home-section-image.png"
           alt={t("image_not_founded")}
           width={0}
           height={0}
