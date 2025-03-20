@@ -39,3 +39,5 @@ export const AFFILIATE_PROGRAM_PAGE_PATH = "/affiliate_program";
 export const BECOME_AN_AFFILIATE_PAGE_PATH = "/become_an_affiliate";
 
 export const AFFILIATE_DASHBOARD_PAGE_PATH = "/affiliate_dashboard";
+
+export const BILLING_DETAILS_PAGE_PATH = "/billing-details";
