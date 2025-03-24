@@ -1,6 +1,6 @@
 "use client";
 import React, { FC, memo, useTransition } from "react";
-import { Combobox, ComboboxItem } from "../ui";
+import { Combobox, ComboboxItem } from "../ui/combobox";
 import { languages } from "@/assets/languages";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";

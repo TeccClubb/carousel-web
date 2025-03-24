@@ -7,7 +7,7 @@ import { STRIPE_PUBLISHABLE_KEY } from "@/constant";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../CheckoutForm";
 import { usePlans } from "@/hooks/use-plans.state";
-import { SkeletonCard } from "../elements";
+import { ApplyReferralCode, SkeletonCard } from "../elements";
 import { useUserCookie } from "@/hooks/use-cookie";
 import { useRouter } from "@/i18n/navigation";
 import { LOGIN_PAGE_PATH } from "@/pathNames";
@@ -50,6 +50,12 @@ const PriceSection: FC<{
       cornerGradient={cornerGradient}
       className={plan ? "items-start" : ""}
     >
+      {user && (
+        <div className="w-full">
+          <ApplyReferralCode />
+        </div>
+      )}
+
       <div className="flex flex-col gap-y-8 w-full">
         <div className="text-center">
           <span className="text-[#0F73F6] text-base font-medium">

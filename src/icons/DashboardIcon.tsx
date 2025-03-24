@@ -3,19 +3,23 @@ import React, { FC } from "react";
 const DashboardIcon: FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
+    width="22"
+    height="22"
+    viewBox="0 0 22 22"
     fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth="1.5"
-    stroke="currentColor"
-    aria-hidden="true"
-    data-slot="icon"
-    className="w-6 h-6"
   >
     <path
+      d="M21 11.2039V12.725C21 16.6258 21 18.5763 19.8284 19.7881C18.6569 21 16.7712 21 13 21H9C5.22876 21 3.34315 21 2.17157 19.7881C1 18.5763 1 16.6258 1 12.725V11.2039C1 8.91549 1 7.77128 1.5192 6.82274C2.0384 5.87421 2.98695 5.28551 4.88403 4.10813L6.88403 2.86687C8.88939 1.62229 9.8921 1 11 1C12.1079 1 13.1106 1.62229 15.116 2.86687L17.116 4.10812C19.0131 5.28551 19.9616 5.87421 20.4808 6.82274"
+      stroke="currentColor"
+      strokeWidth="2"
       strokeLinecap="round"
-      strokeLinejoin="round"
-      d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-    ></path>
+    />
+    <path
+      d="M14 17H8"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
   </svg>
 );
 

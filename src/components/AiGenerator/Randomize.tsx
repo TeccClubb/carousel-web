@@ -1,5 +1,5 @@
 import React, { FC, memo } from "react";
-import { Button } from "../ui";
+import { Button } from "../ui/button";
 import { Shuffle } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { randomize } from "@/store/carousels.slice";

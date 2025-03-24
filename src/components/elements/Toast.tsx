@@ -1,6 +1,5 @@
 import React, { memo, ReactNode } from "react";
-import { Button } from "../ui";
-import { ButtonProps } from "../ui/button";
+import { Button, ButtonProps } from "../ui/button";
 import { cn } from "@/lib/utils";
 
 const Toast: React.FC<{

@@ -1,5 +1,5 @@
 import React, { FC, memo } from "react";
-import { Skeleton } from "../ui";
+import { Skeleton } from "../ui/skeleton";
 import { cn } from "@/lib/utils";
 
 const SkeletonCard: FC<{ className?: string }> = ({ className }) => (

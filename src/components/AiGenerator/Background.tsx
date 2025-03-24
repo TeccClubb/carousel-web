@@ -1,5 +1,7 @@
 import React, { FC, memo } from "react";
-import { Checkbox, Label, Slider } from "../ui";
+import { Checkbox } from "../ui/checkbox";
+import { Label } from "../ui/label";
+import { Slider } from "../ui/slider";
 import { backgroundPattern } from "@/assets/slide-backgrounds";
 import {
   setBackgroundId,

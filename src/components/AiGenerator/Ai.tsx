@@ -9,24 +9,21 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-  Button,
-  Combobox,
-  ComboboxItem,
+} from "../ui/alert-dialog";
+import { Button, LinkButton } from "../ui/button";
+import { Combobox, ComboboxItem } from "../ui/combobox";
+import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
-  LinkButton,
-  Progress,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Textarea,
-} from "../ui";
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { Progress } from "../ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Textarea } from "../ui/textarea";
 import { languages } from "@/assets/languages";
 import axios, { AxiosError } from "axios";
 import {
@@ -61,7 +58,7 @@ const Ai: FC = () => {
   const dispatch = useDispatch();
   const t = useTranslations();
   const router = useRouter();
-  const { isClient } = useAppState();
+  const { isAppMounted } = useAppState();
   const { user, setUserCookie } = useUserCookie();
   const { activePlan } = useActivePlanCookie();
 
@@ -403,7 +400,7 @@ const Ai: FC = () => {
         </form>
       </Form>
 
-      {isClient && user && !activePlan && (
+      {isAppMounted && user && !activePlan && (
         <div className="mt-auto pt-24 py-4">
           <div className="text-center text-sm mb-4 space-y-2">
             <p>

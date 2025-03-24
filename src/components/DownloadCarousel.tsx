@@ -46,7 +46,7 @@ const DownloadCarousel: FC = () => {
             index={index}
             carouselData={carouselData}
             user={user}
-            isClient
+            isAppMounted
             isDownloadRequest
           />
         ))}

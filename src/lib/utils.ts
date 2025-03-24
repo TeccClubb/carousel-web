@@ -5,6 +5,26 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const passwordPattern = new RegExp(
+  "^" +
+    "(?=.*[0-9])" + //at least 1 digit
+    // "(?=.*[a-z])" + //at least 1 lower case letter
+    // "(?=.*[A-Z])" + //at least 1 upper case letter
+    "(?=.*[a-zA-Z])" + //any letter
+    // "(?=.*[@#$%^&+=])" + //at least 1 spacial character
+    // "(?=\\S+$)" + //no white spaces
+    ".{8,}" + //at least 8 characters , (maximum 15)
+    "$"
+);
+
+export const getFormattedDate = (date: string) =>
+  new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(date));
+
 // const hexToRgb = (hex: string): { r: number; g: number; b: number } | null => {
 //   // Remove '#' if it exists
 //   hex = hex.replace(/^#/, '');

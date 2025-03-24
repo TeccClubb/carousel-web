@@ -1,15 +1,56 @@
-import React, { FC } from "react";
+"use client";
+import React, { FC, useEffect, useState } from "react";
 import Section from "@/components/sections/Section";
+import axios, { AxiosError } from "axios";
+import { TERMS_AND_CONDITIONS_AND_PRIVACY_POLICY_ROUTE } from "@/constant";
+import { useToast } from "@/hooks/use-sonner-toast";
+import { Loader2 } from "lucide-react";
 const TermsAndConditions: FC = () => {
-  const str =
-    "1. Introduction \nThese Terms of Service (“Terms”, “Terms of Service”) govern your use of our website located at CarouselBuilder.io (together or individually “Service”) operated by CarouselBuilder. \nOur Privacy Policy also governs your use of our Service and explains how we collect, safeguard and disclose information that results from your use of our web pages. \nYour agreement with us includes these Terms and our Privacy Policy (“Agreements”). You acknowledge that you have read and understood Agreements, and agree to be bound of them. \nIf you do not agree with (or cannot comply with) Agreements, then you may not use the Service, but please let us know by emailing at support@CarouselBuilder.co so we can try to find a solution. These Terms apply to all visitors, users and others who wish to access or use Service. \n2. Communications \nBy using our Service, you agree to subscribe to newsletters, marketing or promotional materials and other information we may send. However, you may opt out of receiving any, or all, of these communications from us by following the unsubscribe link or by emailing at support@CarouselBuilder.co.";
+  const toast = useToast();
+  const [termsAndConditions, setTermsAndConditions] = useState<string>("");
+  const [isLoading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchTermsAndConditions = async () => {
+      try {
+        const res = await axios.get<{
+          privacy_policy: string;
+          tos: string;
+        }>(TERMS_AND_CONDITIONS_AND_PRIVACY_POLICY_ROUTE, {
+          headers: {
+            Accept: "application/json",
+          },
+        });
+        if (res.status) {
+          setTermsAndConditions(res.data.tos);
+        } else {
+          toast.error("Something went wrong");
+        }
+      } catch (error) {
+        const errorMessage =
+          error instanceof AxiosError
+            ? error.response
+              ? error.response.data.message
+              : error.message
+            : "Something went wrong";
+
+        toast.error(errorMessage);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTermsAndConditions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <Section showGradient isHeroSection>
+    <Section showGradient isHeroSection containerClassName="flex-col gap-4">
       <h2 className="text-[40px] font-semibold">Terms of Service</h2>
-      <p
+      {isLoading && <Loader2 className="animate-spin size-12" />}
+      <article
         className="text-[20px] font-medium"
-        dangerouslySetInnerHTML={{ __html: str }}
-      ></p>
+        dangerouslySetInnerHTML={{ __html: termsAndConditions }}
+      ></article>
     </Section>
   );
 };

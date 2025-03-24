@@ -1,5 +1,9 @@
 import React, { FC, memo } from "react";
-import { Button, Combobox, ComboboxItem, Label, Slider, Switch } from "../ui";
+import { Button } from "../ui/button";
+import { Combobox, ComboboxItem } from "../ui/combobox";
+import { Label } from "../ui/label";
+import { Slider } from "../ui/slider";
+import { Switch } from "../ui/switch";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 import {
   setContentFontSize,

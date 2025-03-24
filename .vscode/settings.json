@@ -4,5 +4,8 @@
         "src/i18n",
         "src/locales"
     ],
-    "i18n-ally.keystyle": "nested"
+    "i18n-ally.keystyle": "nested",
+    "cSpell.words": [
+        "carouselbuilder"
+    ]
 }

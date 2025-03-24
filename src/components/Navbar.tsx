@@ -1,26 +1,26 @@
 "use client";
 import React, { FC, memo, useState } from "react";
 import { CloseIcon, Logo, LogoIcon, LongRightArrow } from "@/icons";
-import { Link } from "@/i18n/navigation";
-import { Button, LinkButton } from "./ui";
+import { Link, usePathname } from "@/i18n/navigation";
+import { Button, LinkButton } from "./ui/button";
 import {
   BLOG_PAGE_PATH,
   CAROUSEL_GENERATOR_PAGE_PATH,
-  DASHBOARD_PAGE_PATH,
   HOME_PAGE_PATH,
   LOGIN_PAGE_PATH,
   PRICING_PAGE_PATH,
+  SIGNUP_PAGE_PATH,
 } from "@/pathNames";
 import { AvatarProfile, LanguageChanger } from "./elements";
 import { useTranslations } from "next-intl";
-import { useActivePlanCookie, useUserCookie } from "@/hooks/use-cookie";
+import { useUserCookie } from "@/hooks/use-cookie";
 import { useAppState } from "@/hooks/use-app-state";
 
 const Navbar: FC = () => {
-  const { isClient } = useAppState();
+  const { isAppMounted } = useAppState();
   const t = useTranslations();
+  const pathname = usePathname();
   const { user } = useUserCookie();
-  const { activePlan } = useActivePlanCookie();
 
   const [activePath, setActivePath] = useState<string>(HOME_PAGE_PATH);
 
@@ -36,11 +36,6 @@ const Navbar: FC = () => {
       name: t("blog"),
       href: BLOG_PAGE_PATH,
       auth: true,
-    },
-    {
-      name: t("dashboard"),
-      href: DASHBOARD_PAGE_PATH,
-      auth: isClient && user != null,
     },
   ];
 
@@ -82,12 +77,9 @@ const Navbar: FC = () => {
                           activePath === item.href
                             ? "text-gray-900 dark:text-white dark:bg-gray-900 border-indigo-500"
                             : "border-transparent hover:border-gray-300 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-                        } border-b-2 border-solid dark:border-none px-3 py-2 text-sm font-medium dark:rounded-md aria-disabled:opacity-60 aria-disabled:cursor-default aria-disabled:pointer-events-none`}
+                        } border-b-2 border-solid dark:border-none px-3 py-2 text-sm font-medium dark:rounded-md`}
                         aria-current={
                           activePath === item.href ? "page" : undefined
-                        }
-                        aria-disabled={
-                          item.href === DASHBOARD_PAGE_PATH && !activePlan
                         }
                       >
                         {item.name}
@@ -103,22 +95,27 @@ const Navbar: FC = () => {
             <LinkButton
               href={CAROUSEL_GENERATOR_PAGE_PATH}
               size="sm"
-              className="bg-blue hover:bg-blue/90 dark:text-white md:h-10 md:px-4 md:py-2"
+              variant="blue"
+              className="md:h-10 md:px-4 md:py-2"
             >
               <span className="sm:hidden">{t("generate")}</span>
               <span className="hidden sm:inline">{t("generate_carousel")}</span>
               <LongRightArrow className="hidden sm:inline" />
             </LinkButton>
 
-            {isClient && user && <AvatarProfile />}
+            {isAppMounted && user && <AvatarProfile />}
 
-            {isClient && !user && (
+            {isAppMounted && !user && (
               <LinkButton
-                href={LOGIN_PAGE_PATH}
+                href={
+                  pathname === LOGIN_PAGE_PATH
+                    ? SIGNUP_PAGE_PATH
+                    : LOGIN_PAGE_PATH
+                }
                 size="sm"
                 className="md:h-10 md:px-4 md:py-2"
               >
-                {t("login")}
+                {pathname === LOGIN_PAGE_PATH ? t("signup") : t("login")}
               </LinkButton>
             )}
           </div>
@@ -136,10 +133,9 @@ const Navbar: FC = () => {
                 className={`${
                   activePath === item.href
                     ? "text-indigo-700 bg-indigo-50 border-indigo-500 dark:text-white dark:bg-gray-900 border-l-4 border-solid dark:border-none"
-                    : "text-gray-500 active:text-indigo-700 active:bg-indigo-50 dark:text-gray-300 dark:active:bg-gray-700 dark:active:text-white aria-disabled:opacity-60 aria-disabled:cursor-default aria-disabled:pointer-events-none"
+                    : "text-gray-500 active:text-indigo-700 active:bg-indigo-50 dark:text-gray-300 dark:active:bg-gray-700 dark:active:text-white"
                 } px-3 py-2 block text-base font-medium dark:rounded-md`}
                 aria-current={activePath === item.href ? "page" : undefined}
-                aria-disabled={item.href === DASHBOARD_PAGE_PATH && !activePlan}
               >
                 {item.name}
               </Link>

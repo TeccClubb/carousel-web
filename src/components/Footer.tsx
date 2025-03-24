@@ -20,7 +20,7 @@ import {
   ABOUT_US_PAGE_PATH,
   AFFILIATE_DASHBOARD_PAGE_PATH,
   AFFILIATE_PROGRAM_PAGE_PATH,
-  BECOME_AN_AFFILIATE_PAGE_PATH,
+  AFFILIATE_SIGNUP_PAGE_PATH,
   BLOG_PAGE_PATH,
   CONTACT_PAGE_PATH,
   CREATORS_PAGE_PATH,
@@ -120,7 +120,7 @@ const Footer: FC = () => {
                 },
                 {
                   text: t("become_an_affiliates"),
-                  href: BECOME_AN_AFFILIATE_PAGE_PATH,
+                  href: AFFILIATE_SIGNUP_PAGE_PATH,
                 },
                 {
                   text: t("affiliate_dashboard"),

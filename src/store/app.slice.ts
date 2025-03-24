@@ -4,7 +4,7 @@ import { AppState } from "@/types";
 const initialState: AppState = {
   zoomValue: 39,
   isLoading: false,
-  isClient: false,
+  isAppMounted: false,
   loaderTitle: "Loading...",
   dashboardActiveItem: "dashboard",
 };
@@ -40,8 +40,8 @@ const appSlice = createSlice({
       state.loaderTitle = action.payload.title ?? "Loading...";
     },
 
-    setIsClient: (state) => {
-      state.isClient = true;
+    setIsAppMounted: (state) => {
+      state.isAppMounted = true;
     },
 
     setDashboardActiveItem: (state, action: PayloadAction<string>) => {
@@ -55,7 +55,7 @@ export const {
   zoomOut,
   setZoomValue,
   setLoading,
-  setIsClient,
+  setIsAppMounted,
   setDashboardActiveItem,
 } = appSlice.actions;
 

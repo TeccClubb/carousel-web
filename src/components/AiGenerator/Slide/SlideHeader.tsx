@@ -1,8 +1,8 @@
 import React, { FC, FormEvent, memo, useState } from "react";
 import { BackgroundIcon } from "@/icons";
 import { PlusCircleIcon, Trash2Icon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogDescription,
@@ -10,20 +10,23 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  ImageInput,
-  Input,
-  Label,
+} from "@/components/ui/dialog";
+import { ImageInput, Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-  Slider,
-  Switch,
-  Textarea,
+} from "@/components/ui/popover";
+import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui";
+} from "@/components/ui/tooltip";
 import { useDispatch } from "react-redux";
 import {
   addNewSlide,

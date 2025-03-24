@@ -1,48 +1,65 @@
 import React, { FC, memo } from "react";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../ui";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useUserCookie } from "@/hooks/use-cookie";
 import { useTranslations } from "next-intl";
-import LogoutButton from "./LogoutButton";
 import { useAppState } from "@/hooks/use-app-state";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { PRICING_PAGE_PATH } from "@/pathNames";
+import { Link } from "@/i18n/navigation";
+import { useLogout } from "@/hooks/use-logout";
+import { LogOut } from "lucide-react";
+import BillingIcon from "@/icons/BillingIcon";
 
 const AvatarProfile: FC = () => {
   const t = useTranslations();
-  const { isClient } = useAppState();
+  const { isAppMounted } = useAppState();
   const { user } = useUserCookie();
+  const { handleUserLogout } = useLogout();
 
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        {isClient && user && (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        {isAppMounted && user && (
           <Avatar className="cursor-pointer">
             <AvatarImage src={user.avatar} />
             <AvatarFallback>{user.name}</AvatarFallback>
           </Avatar>
         )}
-      </PopoverTrigger>
-      <PopoverContent className="flex items-center justify-start gap-3">
-        {isClient && user && (
-          <>
-            <Avatar className="size-16 transition-all hover:scale-105">
-              <AvatarImage src={user.avatar} />
-              <AvatarFallback>{user.name}</AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col">
-              <span className="font-bold">{user.name}</span>
-              <span>{user.email}</span>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+        <div className="flex items-center justify-start gap-2 p-2">
+          {isAppMounted && user && (
+            <div className="flex flex-col space-y-1 leading-none">
+              <p className="font-medium">{user.name}</p>
+              <p className="w-[200px] truncate text-sm text-muted-foreground">
+                {user.email}
+              </p>
             </div>
-            <LogoutButton className="ml-3">{t("logout")}</LogoutButton>
-          </>
-        )}
-      </PopoverContent>
-    </Popover>
+          )}
+        </div>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href={PRICING_PAGE_PATH}>
+            <BillingIcon />
+            {t("billing")}
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={handleUserLogout}
+          className="text-destructive"
+        >
+          <LogOut className="-scale-100" />
+          {t("signout")}
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

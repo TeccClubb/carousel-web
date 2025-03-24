@@ -1,5 +1,5 @@
 import React, { FC, memo } from "react";
-import { Button } from "../ui";
+import { Button } from "../ui/button";
 import Image from "next/image";
 import Section from "./Section";
 import { homeSectionBlurImageSrc } from "@/assets/home-section-base64-image";

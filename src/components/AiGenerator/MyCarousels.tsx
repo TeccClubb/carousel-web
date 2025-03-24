@@ -9,7 +9,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-  Button,
+} from "../ui/alert-dialog";
+import { Button, LinkButton } from "../ui/button";
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -17,9 +19,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  Input,
-  LinkButton,
-} from "../ui";
+} from "../ui/dialog";
+import { Input } from "../ui/input";
 import { LOGIN_PAGE_PATH } from "@/pathNames";
 import { Edit2Icon, Plus, Save, Trash2Icon } from "lucide-react";
 import { useUserCookie } from "@/hooks/use-cookie";
@@ -44,7 +45,7 @@ import { useAppState } from "@/hooks/use-app-state";
 const MyCarousels: FC = () => {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const { isClient } = useAppState();
+  const { isAppMounted } = useAppState();
   const { user } = useUserCookie();
   const {
     carousels,
@@ -301,7 +302,7 @@ const MyCarousels: FC = () => {
             </Dialog>
           </div>
 
-          {isClient && !user && (
+          {isAppMounted && !user && (
             <div className="border rounded p-2 flex flex-col items-center">
               <div className="text-center text-muted-foreground">
                 {t("login_to_save_and_view_carousels")}
@@ -310,13 +311,13 @@ const MyCarousels: FC = () => {
             </div>
           )}
 
-          {isClient && user && carousels.length === 0 && (
+          {isAppMounted && user && carousels.length === 0 && (
             <div className="text-center text-muted-foreground">
               {t("no_carousels_found")}
             </div>
           )}
 
-          {isClient &&
+          {isAppMounted &&
             user &&
             carousels.length !== 0 &&
             Array.from(carousels)

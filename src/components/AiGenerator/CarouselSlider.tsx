@@ -1,14 +1,14 @@
 import React, { FC, memo, useEffect, useState } from "react";
+import { Button } from "../ui/button";
 import {
-  Button,
   Carousel,
   CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-  Label,
-} from "../ui";
+} from "../ui/carousel";
+import { Label } from "../ui/label";
 import Slide from "./Slide/Slide";
 import { useAppState } from "@/hooks/use-app-state";
 import { useDispatch } from "react-redux";
@@ -28,7 +28,7 @@ const CarouselSlider: FC = () => {
 
   const { zoomValue } = useAppState();
 
-  const { isClient } = useAppState();
+  const { isAppMounted } = useAppState();
   const { user } = useUserCookie();
 
   const {
@@ -99,7 +99,7 @@ const CarouselSlider: FC = () => {
                   index={index}
                   carouselData={carouselData}
                   user={user}
-                  isClient={isClient}
+                  isAppMounted={isAppMounted}
                   onClick={() =>
                     dispatch(
                       setActiveNavPanelAndIndex({ index, navPanel: "content" })

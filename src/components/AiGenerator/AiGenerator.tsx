@@ -12,15 +12,17 @@ import {
   SwipeIcon,
   TextIcon,
 } from "@/icons";
+import { Badge } from "../ui/badge";
+import { Button, LinkButton } from "../ui/button";
 import {
-  Badge,
-  Button,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+} from "../ui/dialog";
+import {
   Drawer,
   DrawerClose,
   DrawerContent,
@@ -28,14 +30,15 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-  LinkButton,
-  ScrollArea,
-  Separator,
+} from "../ui/drawer";
+import { ScrollArea } from "../ui/scroll-area";
+import { Separator } from "../ui/separator";
+import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../ui";
+} from "../ui/tooltip";
 import Ai from "./Ai";
 import Content from "./Content";
 import Text from "./Text";

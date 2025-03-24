@@ -1,5 +1,7 @@
 import React, { FC, memo } from "react";
-import { Input, Switch, Tabs, TabsContent, TabsList, TabsTrigger } from "../ui";
+import { Input } from "../ui/input";
+import { Switch } from "../ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { getArrow } from "@/icons/arrows";
 import {
   setArrowId,

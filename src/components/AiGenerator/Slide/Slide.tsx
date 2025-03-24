@@ -13,7 +13,7 @@ const Slide: FC<{
   index: number;
   carouselData: CarouselData;
   user: User | null;
-  isClient: boolean;
+  isAppMounted: boolean;
   onClick?: () => void;
   isDownloadRequest?: boolean;
 }> = ({
@@ -21,7 +21,7 @@ const Slide: FC<{
   index,
   carouselData,
   user,
-  isClient,
+  isAppMounted,
   onClick,
   isDownloadRequest,
 }) => {
@@ -120,7 +120,7 @@ const Slide: FC<{
                   color={color}
                   carouselData={carouselData}
                   user={user}
-                  isClient={isClient}
+                  isAppMounted={isAppMounted}
                 />
               ) : null}
             </div>

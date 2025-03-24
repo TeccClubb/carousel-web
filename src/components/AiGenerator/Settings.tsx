@@ -1,5 +1,5 @@
 import React, { FC, memo } from "react";
-import { Switch } from "../ui";
+import { Switch } from "../ui/switch";
 import { useCarouselsState } from "@/hooks/use-carousels-state";
 import { useDispatch } from "react-redux";
 import {

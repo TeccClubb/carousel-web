@@ -1,6 +1,6 @@
 import { TickIcon } from "@/icons";
 import React, { FC, memo } from "react";
-import { Button } from "../ui";
+import { Button } from "../ui/button";
 
 const PriceCard: FC<{
   heading: string;

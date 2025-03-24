@@ -9,8 +9,8 @@ import {
   LinkedInIcon,
 } from "@/icons";
 import { Link } from "@/i18n/navigation";
+import { Button, LinkButton } from "../ui/button";
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogDescription,
@@ -18,8 +18,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  Input,
-  LinkButton,
+} from "../ui/dialog";
+import { Input } from "../ui/input";
+import {
   Select,
   SelectContent,
   SelectGroup,
@@ -27,8 +28,8 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-  Separator,
-} from "../ui";
+} from "../ui/select";
+import { Separator } from "../ui/separator";
 import {
   HOME_PAGE_PATH,
   LOGIN_PAGE_PATH,
@@ -60,7 +61,7 @@ const AiNavbar: FC = () => {
   const router = useRouter();
   const toast = useToast();
   const t = useTranslations();
-  const { isClient } = useAppState();
+  const { isAppMounted } = useAppState();
   const { user } = useUserCookie();
   const { activePlan } = useActivePlanCookie();
 
@@ -246,8 +247,10 @@ const AiNavbar: FC = () => {
 
           <div className="flex flex-1 items-center justify-end pr-2 sm:inset-auto sm:ml-6 sm:pr-0 gap-1 sm:gap-4">
             <Button size="sm" onClick={handleSave}>
-              {!activePlan && <LockKeyhole className="size-4" />}
-              {activePlan && <Save />}
+              {isAppMounted && !activePlan && (
+                <LockKeyhole className="size-4" />
+              )}
+              {isAppMounted && activePlan && <Save />}
               <span className="hidden sm:inline">{t("save")}</span>
             </Button>
 
@@ -366,9 +369,9 @@ const AiNavbar: FC = () => {
 
             <Separator orientation="vertical" className="h-6" />
 
-            {isClient && user && <AvatarProfile />}
+            {isAppMounted && user && <AvatarProfile />}
 
-            {isClient && !user && (
+            {isAppMounted && !user && (
               <LinkButton
                 href={LOGIN_PAGE_PATH}
                 size="sm"

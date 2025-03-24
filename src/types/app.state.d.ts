@@ -1,7 +1,7 @@
 export type AppState = {
   zoomValue: number;
   isLoading: boolean;
-  isClient: boolean;
+  isAppMounted: boolean;
   loaderTitle: string;
   dashboardActiveItem: string;
 };

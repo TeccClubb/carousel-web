@@ -7,7 +7,7 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import Stripe from "stripe";
-import { Button } from "./ui";
+import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-sonner-toast";
 import { STRIPE_SECRET_KEY } from "@/constant";
 import { PAYMENT_SUCCESSFUL_PAGE_PATH } from "@/pathNames";

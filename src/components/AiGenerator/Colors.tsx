@@ -1,5 +1,6 @@
 import React, { FC, memo } from "react";
-import { InputColor, Switch } from "../ui";
+import { InputColor } from "../ui/InputColor";
+import { Switch } from "../ui/switch";
 import { darkColors, lightColors } from "@/assets/slide-colors";
 import { useDispatch } from "react-redux";
 import {

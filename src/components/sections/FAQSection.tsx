@@ -7,16 +7,18 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  Button,
+} from "../ui/accordion";
+import { Button } from "../ui/button";
+import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
-  Textarea,
-} from "../ui";
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -63,7 +65,7 @@ const FAQSection: FC<{
     email: z
       .string()
       .min(1, {
-        message: t("email_empty_error"),
+        message: t("enter_your_email_address"),
       })
       .email({
         message: t("email_invalid_error"),

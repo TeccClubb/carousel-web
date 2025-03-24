@@ -2,7 +2,7 @@
 import React, { FC, memo, useEffect, useState } from "react";
 import Section from "./Section";
 import { CheckCircle2, ShieldClose } from "lucide-react";
-import { LinkButton } from "../ui";
+import { LinkButton } from "../ui/button";
 import { HOME_PAGE_PATH } from "@/pathNames";
 import { notFound, useSearchParams } from "next/navigation";
 import Stripe from "stripe";

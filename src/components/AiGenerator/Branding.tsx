@@ -1,12 +1,7 @@
 import React, { FC, memo } from "react";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  ImageInput,
-  Input,
-  Switch,
-} from "../ui";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { ImageInput, Input } from "../ui/input";
+import { Switch } from "../ui/switch";
 import { useDispatch } from "react-redux";
 import {
   setBrandHandle,
@@ -47,7 +42,7 @@ const Branding: FC = () => {
     },
   } = useCarouselsState();
 
-  const { isClient } = useAppState();
+  const { isAppMounted } = useAppState();
   const { user } = useUserCookie();
 
   const brandName =
@@ -72,7 +67,7 @@ const Branding: FC = () => {
               label={t("name")}
             />
           </div>
-          {isClient && (
+          {isAppMounted && (
             <Input
               value={brandName}
               onChange={(e) => dispatch(setBrandName(e.target.value))}
@@ -90,7 +85,7 @@ const Branding: FC = () => {
               label={t("handle")}
             />
           </div>
-          {isClient && (
+          {isAppMounted && (
             <Input
               value={brandHandle}
               onChange={(e) => dispatch(setBrandHandle(e.target.value))}
@@ -108,7 +103,7 @@ const Branding: FC = () => {
               label={t("profile_picture")}
             />
           </div>
-          {isClient && (
+          {isAppMounted && (
             <>
               <ImageInput
                 id="brand_image_input"

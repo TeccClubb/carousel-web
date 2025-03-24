@@ -1,7 +1,7 @@
 "use client";
 import React, { FC, memo } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
-import { Button } from "../ui";
+import { Button } from "../ui/button";
 import { GoogleIcon } from "@/icons";
 import axios, { AxiosError } from "axios";
 import { User } from "@/types";

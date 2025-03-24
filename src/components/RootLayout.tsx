@@ -1,8 +1,9 @@
 "use client";
 import React, { FC, memo, ReactNode, useEffect } from "react";
-import { CAROUSEL_GENERATOR_PAGE_PATH, DASHBOARD_PAGE_PATH } from "@/pathNames";
+import { CAROUSEL_GENERATOR_PAGE_PATH } from "@/pathNames";
 import Navbar from "./Navbar";
-import { ScrollArea, Toaster } from "./ui";
+import { ScrollArea } from "./ui/scroll-area";
+import { Toaster } from "./ui/sonner";
 import Footer from "./Footer";
 import AiNavbar from "./AiGenerator/AiNavbar";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -12,14 +13,14 @@ import { Loader } from "./elements";
 import DashboardNavbar from "./Dashboard/DashboardNavbar";
 import { CookiesProvider } from "react-cookie";
 import { useDispatch } from "react-redux";
-import { setIsClient } from "@/store/app.slice";
+import { setIsAppMounted } from "@/store/app.slice";
 
 const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
   const dispatch = useDispatch();
   const pathName = usePathname();
 
   useEffect(() => {
-    dispatch(setIsClient());
+    dispatch(setIsAppMounted());
   }, [dispatch]);
 
   return (
@@ -28,9 +29,9 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
         <ScrollArea className="h-screen w-full">
           <Loader />
           {pathName === CAROUSEL_GENERATOR_PAGE_PATH && <AiNavbar />}
-          {pathName === DASHBOARD_PAGE_PATH && <DashboardNavbar />}
+          {pathName.includes("affiliate") && <DashboardNavbar />}
           {pathName !== CAROUSEL_GENERATOR_PAGE_PATH &&
-            pathName !== DASHBOARD_PAGE_PATH && <Navbar />}
+            !pathName.includes("affiliate") && <Navbar />}
 
           <main
             className={`flex-1 flex-shrink-0 ${
@@ -49,7 +50,7 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
             duration={3000}
           />
           {pathName !== CAROUSEL_GENERATOR_PAGE_PATH &&
-            pathName !== DASHBOARD_PAGE_PATH && <Footer />}
+            !pathName.includes("affiliate") && <Footer />}
         </ScrollArea>
       </CookiesProvider>
     </GoogleOAuthProvider>

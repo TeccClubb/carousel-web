@@ -2,20 +2,21 @@
 import React, { FC, memo } from "react";
 import Section from "./Section";
 import { useTranslations } from "next-intl";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { LinkButton } from "../ui/button";
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-  Label,
-  Separator,
-} from "../ui";
+} from "../ui/card";
+import { Label } from "../ui/label";
+import { Separator } from "../ui/separator";
 import { useActivePlanCookie, useUserCookie } from "@/hooks/use-cookie";
 import { useAppState } from "@/hooks/use-app-state";
+import { getFormattedDate } from "@/lib/utils";
+import { PRICING_PAGE_PATH } from "@/pathNames";
 
 const BillingDetailsSection: FC<{
   isHeroSection?: boolean;
@@ -23,7 +24,7 @@ const BillingDetailsSection: FC<{
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
   const t = useTranslations();
-  const { isClient } = useAppState();
+  const { isAppMounted } = useAppState();
   const { user } = useUserCookie();
   const { activePlan } = useActivePlanCookie();
 
@@ -38,7 +39,7 @@ const BillingDetailsSection: FC<{
           {t("billing_details")}
         </h1>
 
-        {isClient && user && (
+        {isAppMounted && user && (
           <Card className="bg-transparent">
             <CardHeader className="hidden">
               <CardTitle>Billing Details</CardTitle>
@@ -46,7 +47,7 @@ const BillingDetailsSection: FC<{
             </CardHeader>
             <CardContent className="md:p-24 p-6">
               <div className="flex flex-col sm:flex-row sm:gap-16 gap-8">
-                {isClient && user && (
+                {isAppMounted && user && (
                   <div className="flex flex-col items-center justify-center gap-4">
                     <Avatar className="size-32 transition-all hover:scale-105">
                       <AvatarImage src={user.avatar} />
@@ -75,12 +76,7 @@ const BillingDetailsSection: FC<{
                     },
                     {
                       name: t("expires_on"),
-                      value: new Intl.DateTimeFormat("en-US", {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      }).format(new Date(activePlan.end_date)),
+                      value: getFormattedDate(activePlan.end_date),
                     },
                   ].map(({ name, value }) => (
                     <div
@@ -91,6 +87,13 @@ const BillingDetailsSection: FC<{
                       <p className="text-sm text-muted-foreground">{value}</p>
                     </div>
                   ))}
+                  <LinkButton
+                    href={PRICING_PAGE_PATH}
+                    variant="blue"
+                    className="w-full rounded-full"
+                  >
+                    {t("upgrade")}
+                  </LinkButton>
                 </div>
               </div>
             </CardContent>

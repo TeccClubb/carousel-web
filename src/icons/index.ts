@@ -37,18 +37,19 @@ import MyCarouselsIcon from "./MyCarouselsIcon";
 import InstagramGradientIcon from "./InstagramGradientIcon";
 import TikTokGradientIcon from "./TikTokGradientIcon";
 import DragHandleIcon from "./DragHandleIcon";
-import ProjectIcon from "./ProjectIcon";
+import UsersIcon from "./UsersIcon";
 import DashboardIcon from "./DashboardIcon";
-import SearchIcon from "./SearchIcon";
-import ProfileIcon from "./ProfileIcon";
+import ReferralIcon from "./ReferralIcon";
 import PowerOffIcon from "./PowerOffIcon";
-import PlanIcon from "./PlanIcon";
+import TotalEarningIcon from "./TotalEarningIcon";
+import EarningIcon from "./EarningIcon";
 import HorizontalIcon from "./HorizontalIcon";
 import HorizontalReverseIcon from "./HorizontalReverseIcon";
 import VerticalIcon from "./VerticalIcon";
 import VerticalReverseIcon from "./VerticalReverseIcon";
 import InfoIcon from "./InfoIcon";
 import CheckedCircleIcon from "./CheckedCircleIcon";
+import PayPalIcon from "./PayPalIcon";
 
 export {
   Logo,
@@ -90,16 +91,17 @@ export {
   InstagramGradientIcon,
   TikTokGradientIcon,
   DragHandleIcon,
-  ProjectIcon,
+  UsersIcon,
   DashboardIcon,
-  SearchIcon,
-  ProfileIcon,
+  ReferralIcon,
   PowerOffIcon,
-  PlanIcon,
+  TotalEarningIcon,
+  EarningIcon,
   HorizontalIcon,
   HorizontalReverseIcon,
   VerticalIcon,
   VerticalReverseIcon,
   InfoIcon,
   CheckedCircleIcon,
+  PayPalIcon,
 };
