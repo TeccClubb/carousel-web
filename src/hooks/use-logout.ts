@@ -12,7 +12,6 @@ import { useDispatch } from "react-redux";
 import { setLoading } from "@/store/app.slice";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
-import { AFFILIATE_LOGIN_PAGE_PATH } from "@/pathNames";
 
 export const useLogout = () => {
   const dispatch = useDispatch();
@@ -71,8 +70,8 @@ export const useLogout = () => {
         .then((res) => res.data);
       if (res.status) {
         toast.success(res.message);
-        removeAffiliateUserCookie();
-        router.replace(AFFILIATE_LOGIN_PAGE_PATH);
+        // removeAffiliateUserCookie();
+        // router.refresh();
       } else toast.error(res.message);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -81,7 +80,7 @@ export const useLogout = () => {
     } finally {
       dispatch(setLoading({ isLoading: false }));
       removeAffiliateUserCookie();
-      router.replace(AFFILIATE_LOGIN_PAGE_PATH);
+      router.refresh();
     }
   };
 

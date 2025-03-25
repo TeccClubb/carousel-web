@@ -23,7 +23,7 @@ export const useUserCookie = () => {
   };
 
   const removeUserCookie = () => {
-    removeCookie(USER_COOKIE_KEY);
+    removeCookie(USER_COOKIE_KEY, { path: "/" });
   };
 
   return { user, setUserCookie, removeUserCookie } as const;
@@ -47,7 +47,7 @@ export const useActivePlanCookie = () => {
   };
 
   const removeActivePlanCookie = () => {
-    removeCookie(ACTIVE_PLAN_COOKIE_KEY);
+    removeCookie(ACTIVE_PLAN_COOKIE_KEY, { path: "/" });
   };
 
   return { activePlan, setActivePlanCookie, removeActivePlanCookie } as const;
@@ -71,7 +71,7 @@ export const useAffiliateUserCookie = () => {
   };
 
   const removeAffiliateUserCookie = () => {
-    removeCookie(AFFILIATE_USER_COOKIE_KEY);
+    removeCookie(AFFILIATE_USER_COOKIE_KEY, { path: "/" });
   };
 
   return {
