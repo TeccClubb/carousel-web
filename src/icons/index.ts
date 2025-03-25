@@ -22,6 +22,7 @@ import FacebookIcon from "./FacebookIcon";
 import XTwitterIcon from "./XTwitterIcon";
 import InstagramIcon from "./InstagramIcon";
 import LinkedInIcon from "./LinkedInIcon";
+import YoutubeIcon from "./YoutubeIcon";
 import WelcomeIcon from "./WelcomeIcon";
 import GoogleIcon from "./GoogleIcon";
 import AiIcon from "./AiIcon";
@@ -76,6 +77,7 @@ export {
   XTwitterIcon,
   InstagramIcon,
   LinkedInIcon,
+  YoutubeIcon,
   WelcomeIcon,
   GoogleIcon,
   AiIcon,

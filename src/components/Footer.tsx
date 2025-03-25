@@ -8,6 +8,7 @@ import {
   LinkedInIcon,
   LogoIcon,
   XTwitterIcon,
+  YoutubeIcon,
 } from "@/icons";
 import {
   FACEBOOK_CAROUSEL_URL,
@@ -15,6 +16,7 @@ import {
   LINKEDIN_CAROUSEL_URL,
   TIKTOK_CAROUSEL_URL,
   TWITTER_CAROUSEL_URL,
+  YOUTUBE_CAROUSEL_URL,
 } from "@/links";
 import {
   ABOUT_US_PAGE_PATH,
@@ -81,6 +83,10 @@ const Footer: FC = () => {
     {
       href: LINKEDIN_CAROUSEL_URL,
       icon: <LinkedInIcon size={socialIconSize} />,
+    },
+    {
+      href: YOUTUBE_CAROUSEL_URL,
+      icon: <YoutubeIcon size={socialIconSize} />,
     },
   ];
 
