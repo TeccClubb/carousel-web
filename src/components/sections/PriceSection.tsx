@@ -11,6 +11,7 @@ import { ApplyReferralCode, SkeletonCard } from "../elements";
 import { useUserCookie } from "@/hooks/use-cookie";
 import { useRouter } from "@/i18n/navigation";
 import { LOGIN_PAGE_PATH } from "@/pathNames";
+import { useAppState } from "@/hooks/use-app-state";
 
 const PriceSection: FC<{
   isHeroSection?: boolean;
@@ -18,6 +19,7 @@ const PriceSection: FC<{
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
   const router = useRouter();
+  const { isAppMounted } = useAppState();
   const { isPlansLoading, plans } = usePlans();
   const [plan, setPlan] = useState<{
     id: number;
@@ -50,7 +52,7 @@ const PriceSection: FC<{
       cornerGradient={cornerGradient}
       className={plan ? "items-start" : ""}
     >
-      {user && (
+      {isAppMounted && user && (
         <div className="w-full">
           <ApplyReferralCode />
         </div>

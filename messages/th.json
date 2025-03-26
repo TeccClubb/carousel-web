@@ -345,5 +345,6 @@
   "paypal_account": "บัญชี PayPal",
   "add_paypal_account_description": "ป้อนที่อยู่อีเมลที่เชื่อมโยงกับบัญชี PayPal ที่คุณต้องการใช้สำหรับการถอนเงิน รหัสยืนยันจะถูกส่งไปยังหมายเลขโทรศัพท์ที่เชื่อมโยงกับบัญชีของคุณ",
   "withdrawal_error": "ข้อผิดพลาดในการถอนเงิน",
-  "minimum_withdrawal_amount_error": "จำนวนเงินถอนขั้นต่ำคือ"
+  "minimum_withdrawal_amount_error": "จำนวนเงินถอนขั้นต่ำคือ",
+  "home": "หน้าแรก"
 }

@@ -345,5 +345,6 @@
   "paypal_account": "PayPal-konto",
   "add_paypal_account_description": "Skriv inn e-postadressen knyttet til PayPal-kontoen du vil bruke for å ta ut midler. En verifikasjonskode vil bli sendt til telefonnummeret knyttet til kontoen din.",
   "withdrawal_error": "Feil ved Uttak",
-  "minimum_withdrawal_amount_error": "Minimum uttaksbeløp er"
+  "minimum_withdrawal_amount_error": "Minimum uttaksbeløp er",
+  "home": "Hjem"
 }

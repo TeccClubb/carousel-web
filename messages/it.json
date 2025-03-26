@@ -345,5 +345,6 @@
   "paypal_account": "Conto PayPal",
   "add_paypal_account_description": "Inserisci l'indirizzo email collegato al conto PayPal che desideri utilizzare per prelevare fondi. Un codice di verifica sarà inviato al numero di telefono collegato al tuo account.",
   "withdrawal_error": "Errore di Prelievo",
-  "minimum_withdrawal_amount_error": "L'importo minimo di prelievo è"
+  "minimum_withdrawal_amount_error": "L'importo minimo di prelievo è",
+  "home": "Home"
 }

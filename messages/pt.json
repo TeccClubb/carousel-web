@@ -345,5 +345,6 @@
   "paypal_account": "Conta do PayPal",
   "add_paypal_account_description": "Digite o endereço de email vinculado à conta do PayPal que você deseja usar para sacar fundos. Um código de verificação será enviado para o número de telefone vinculado à sua conta.",
   "withdrawal_error": "Erro de Saque",
-  "minimum_withdrawal_amount_error": "O valor mínimo de saque é"
+  "minimum_withdrawal_amount_error": "O valor mínimo de saque é",
+  "home": "Início"
 }

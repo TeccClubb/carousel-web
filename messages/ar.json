@@ -345,5 +345,6 @@
   "paypal_account": "حساب PayPal",
   "add_paypal_account_description": "أدخل عنوان البريد الإلكتروني المرتبط بحساب PayPal الذي تريد استخدامه لسحب الأموال. سيتم إرسال رمز التحقق إلى رقم الهاتف المرتبط بحسابك.",
   "withdrawal_error": "خطأ في السحب",
-  "minimum_withdrawal_amount_error": "الحد الأدنى لمبلغ السحب هو"
+  "minimum_withdrawal_amount_error": "الحد الأدنى لمبلغ السحب هو",
+  "home": "الرئيسية"
 }

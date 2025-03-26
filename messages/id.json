@@ -345,5 +345,6 @@
   "paypal_account": "Akun PayPal",
   "add_paypal_account_description": "Masukkan alamat email yang terkait dengan akun PayPal yang ingin Anda gunakan untuk menarik dana. Kode verifikasi akan dikirim ke nomor telepon yang terkait dengan akun Anda.",
   "withdrawal_error": "Kesalahan Penarikan",
-  "minimum_withdrawal_amount_error": "Jumlah penarikan minimum adalah"
+  "minimum_withdrawal_amount_error": "Jumlah penarikan minimum adalah",
+  "home": "Beranda"
 }

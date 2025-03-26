@@ -3,7 +3,6 @@ import CarouselBuilderLogo from "./CarouselBuilderLogo";
 import LogoIcon from "./LogoIcon";
 import LongRightArrow from "./LongRightArrow";
 import TickIcon from "./TickIcon";
-import CloseIcon from "./CloseIcon";
 import FeatureIcon1 from "./FeatureIcon1";
 import FeatureIcon2 from "./FeatureIcon2";
 import FeatureIcon3 from "./FeatureIcon3";
@@ -58,7 +57,6 @@ export {
   LogoIcon,
   LongRightArrow,
   TickIcon,
-  CloseIcon,
   FeatureIcon1,
   FeatureIcon2,
   FeatureIcon3,

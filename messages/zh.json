@@ -345,5 +345,6 @@
   "paypal_account": "PayPal账户",
   "add_paypal_account_description": "输入你想用来提取资金的PayPal账户链接的电子邮件地址。一个验证代码将被发送到你账户链接的电话号码。",
   "withdrawal_error": "提款错误",
-  "minimum_withdrawal_amount_error": "最低提款金额是"
+  "minimum_withdrawal_amount_error": "最低提款金额是",
+  "home": "首页"
 }

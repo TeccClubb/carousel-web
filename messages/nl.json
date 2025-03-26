@@ -345,5 +345,6 @@
   "paypal_account": "PayPal Account",
   "add_paypal_account_description": "Voer het emailadres in dat is gekoppeld aan het PayPal-account dat je wilt gebruiken voor het opnemen van tegoeden. Een verificatiecode wordt verzonden naar het telefoonnummer dat is gekoppeld aan je account.",
   "withdrawal_error": "Opnamefout",
-  "minimum_withdrawal_amount_error": "Het minimale opnamebedrag is"
+  "minimum_withdrawal_amount_error": "Het minimale opnamebedrag is",
+  "home": "Home"
 }

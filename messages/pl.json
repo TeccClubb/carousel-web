@@ -345,5 +345,6 @@
   "paypal_account": "Konto PayPal",
   "add_paypal_account_description": "Wprowadź adres e-mail powiązany z kontem PayPal, którego chcesz używać do wypłacania środków. Kod weryfikacyjny zostanie wysłany na numer telefonu powiązany z Twoim kontem.",
   "withdrawal_error": "Błąd wypłaty",
-  "minimum_withdrawal_amount_error": "Minimalna kwota wypłaty to"
+  "minimum_withdrawal_amount_error": "Minimalna kwota wypłaty to",
+  "home": "Strona główna"
 }

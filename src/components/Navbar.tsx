@@ -1,6 +1,11 @@
 "use client";
 import React, { FC, memo, useState } from "react";
-import { CloseIcon, Logo, LogoIcon, LongRightArrow } from "@/icons";
+import {
+  CarouselBuilderLogo,
+  Logo,
+  LogoIcon,
+  LongRightArrow,
+} from "@/icons";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Button, LinkButton } from "./ui/button";
 import {
@@ -15,6 +20,16 @@ import { AvatarProfile, LanguageChanger } from "./elements";
 import { useTranslations } from "next-intl";
 import { useUserCookie } from "@/hooks/use-cookie";
 import { useAppState } from "@/hooks/use-app-state";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
+import { Menu } from "lucide-react";
+import { Separator } from "./ui/separator";
 
 const Navbar: FC = () => {
   const { isAppMounted } = useAppState();
@@ -30,12 +45,10 @@ const Navbar: FC = () => {
     {
       name: t("pricing"),
       href: PRICING_PAGE_PATH,
-      auth: true,
     },
     {
       name: t("blog"),
       href: BLOG_PAGE_PATH,
-      auth: true,
     },
   ];
 
@@ -43,17 +56,95 @@ const Navbar: FC = () => {
     <nav className="bg-slate-50 dark:bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6">
         <div className="relative flex h-16 items-center justify-between">
-          <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
+          <div className="absolute inset-y-0 left-0 flex gap-1 sm:gap-3 items-center md:hidden">
             {/* <!-- Mobile menu button--> */}
-            <Button
-              onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
-              variant="ghost"
-              size="icon"
-              className="[&_svg]:size-6 p-0.5"
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? <CloseIcon /> : <LogoIcon />}
-            </Button>
+            <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="lg:hidden [&_svg]:size-7 p-2.5"
+                >
+                  <Menu />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="flex flex-col">
+                <SheetHeader className="hidden">
+                  <SheetTitle>nav side bar</SheetTitle>
+                  <SheetDescription>nav side bar description</SheetDescription>
+                </SheetHeader>
+                <nav className="flex flex-col flex-1 cursor-default select-none">
+                  <ul role="list" className="flex flex-col flex-1 gap-y-7">
+                    <li>
+                      <Logo className="justify-start" />
+                    </li>
+                    <li>
+                      <ul role="list" className="-mx-2">
+                        {[
+                          { name: t("home"), href: HOME_PAGE_PATH },
+                          ...navItems,
+                        ].map((item) => (
+                          <li key={item.href}>
+                            <LinkButton
+                              href={item.href}
+                              onClick={() => {
+                                setActivePath(item.href);
+                                setMobileMenuOpen(false);
+                              }}
+                              variant="ghost"
+                              className={`w-full justify-start hover:text-indigo-500 ${
+                                activePath === item.href
+                                  ? "text-indigo-500 bg-accent"
+                                  : ""
+                              }`}
+                              aria-current={
+                                activePath === item.href ? "page" : undefined
+                              }
+                            >
+                              {item.name}
+                            </LinkButton>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+
+                    <li>
+                      <div className="text-gray-400 text-xs leading-6 font-semibold">
+                        {t("language")}
+                      </div>
+                      <LanguageChanger
+                        onLanguageChange={() => setMobileMenuOpen(false)}
+                        className="w-full mt-2 h-10"
+                      />
+                    </li>
+                    {isAppMounted && !user && (
+                      <li>
+                        <LinkButton
+                          href={
+                            pathname === LOGIN_PAGE_PATH
+                              ? SIGNUP_PAGE_PATH
+                              : LOGIN_PAGE_PATH
+                          }
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="w-full"
+                        >
+                          {pathname === LOGIN_PAGE_PATH
+                            ? t("signup")
+                            : t("login")}
+                        </LinkButton>
+                      </li>
+                    )}
+                  </ul>
+                </nav>
+              </SheetContent>
+            </Sheet>
+
+            <Separator orientation="vertical" className="h-6 lg:hidden" />
+
+            <div className="flex items-center justify-center gap-2 h-6 sm:h-8">
+              <LogoIcon />
+              <CarouselBuilderLogo className="w-24 sm:w-32" />
+            </div>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="hidden md:block">
@@ -66,31 +157,26 @@ const Navbar: FC = () => {
                 >
                   <Logo />
                 </Link>
-                {navItems.map(
-                  (item) =>
-                    item.auth && (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={() => setActivePath(item.href)}
-                        className={`${
-                          activePath === item.href
-                            ? "text-gray-900 dark:text-white dark:bg-gray-900 border-indigo-500"
-                            : "border-transparent hover:border-gray-300 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-                        } border-b-2 border-solid dark:border-none px-3 py-2 text-sm font-medium dark:rounded-md`}
-                        aria-current={
-                          activePath === item.href ? "page" : undefined
-                        }
-                      >
-                        {item.name}
-                      </Link>
-                    )
-                )}
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setActivePath(item.href)}
+                    className={`${
+                      activePath === item.href
+                        ? "text-gray-900 dark:text-white dark:bg-gray-900 border-indigo-500"
+                        : "border-transparent hover:border-gray-300 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+                    } border-b-2 border-solid dark:border-none px-3 py-2 text-sm font-medium dark:rounded-md`}
+                    aria-current={activePath === item.href ? "page" : undefined}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-1 sm:gap-4">
-            <LanguageChanger />
+            <LanguageChanger className="hidden md:inline-flex" />
 
             <LinkButton
               href={CAROUSEL_GENERATOR_PAGE_PATH}
@@ -113,7 +199,7 @@ const Navbar: FC = () => {
                     : LOGIN_PAGE_PATH
                 }
                 size="sm"
-                className="md:h-10 md:px-4 md:py-2"
+                className="hidden md:inline-flex md:h-10 md:px-4 md:py-2"
               >
                 {pathname === LOGIN_PAGE_PATH ? t("signup") : t("login")}
               </LinkButton>
@@ -121,28 +207,6 @@ const Navbar: FC = () => {
           </div>
         </div>
       </div>
-
-      {isMobileMenuOpen && (
-        <div className="md:hidden">
-          <div className="space-y-1 px-2 pb-3 pt-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setActivePath(item.href)}
-                className={`${
-                  activePath === item.href
-                    ? "text-indigo-700 bg-indigo-50 border-indigo-500 dark:text-white dark:bg-gray-900 border-l-4 border-solid dark:border-none"
-                    : "text-gray-500 active:text-indigo-700 active:bg-indigo-50 dark:text-gray-300 dark:active:bg-gray-700 dark:active:text-white"
-                } px-3 py-2 block text-base font-medium dark:rounded-md`}
-                aria-current={activePath === item.href ? "page" : undefined}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
     </nav>
   );
 };

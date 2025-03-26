@@ -345,5 +345,6 @@
   "paypal_account": "Compte PayPal",
   "add_paypal_account_description": "Entrez l'adresse e-mail liée au compte PayPal que vous souhaitez utiliser pour retirer des fonds. Un code de vérification sera envoyé au numéro de téléphone lié à votre compte.",
   "withdrawal_error": "Erreur de Retrait",
-  "minimum_withdrawal_amount_error": "Le montant minimum de retrait est"
+  "minimum_withdrawal_amount_error": "Le montant minimum de retrait est",
+  "home": "Accueil"
 }

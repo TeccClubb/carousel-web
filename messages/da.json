@@ -345,5 +345,6 @@
   "paypal_account": "PayPal Konto",
   "add_paypal_account_description": "Indtast den emailadresse, der er knyttet til den PayPal-konto, du vil bruge til at trække midler. En bekræftelseskode vil blive sendt til det telefonnummer, der er knyttet til din konto.",
   "withdrawal_error": "Fejl ved Udbetaling",
-  "minimum_withdrawal_amount_error": "Minimum udbetalingsbeløb er"
+  "minimum_withdrawal_amount_error": "Minimum udbetalingsbeløb er",
+  "home": "Hjem"
 }

@@ -345,5 +345,6 @@
   "paypal_account": "PayPal Account",
   "add_paypal_account_description": "Enter the email address linked to the PayPal account you want to use for withdrawing funds. A verification code will be sent to the phone number linked to your account.",
   "withdrawal_error": "Withdrawal Error",
-  "minimum_withdrawal_amount_error": "Minimum withdrawal amount is"
+  "minimum_withdrawal_amount_error": "Minimum withdrawal amount is",
+  "home": "Home"
 }

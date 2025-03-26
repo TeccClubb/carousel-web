@@ -345,5 +345,6 @@
   "paypal_account": "PayPalアカウント",
   "add_paypal_account_description": "資金を引き出すために使用したいPayPalアカウントにリンクされているメールアドレスを入力してください。アカウントにリンクされている電話番号に確認コードが送信されます。",
   "withdrawal_error": "引き出しエラー",
-  "minimum_withdrawal_amount_error": "最低引き出し額は"
+  "minimum_withdrawal_amount_error": "最低引き出し額は",
+  "home": "ホーム"
 }

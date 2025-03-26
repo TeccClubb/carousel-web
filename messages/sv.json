@@ -345,5 +345,6 @@
   "paypal_account": "PayPal-konto",
   "add_paypal_account_description": "Ange e-postadressen kopplad till PayPal-kontot du vill använda för att ta ut medel. En verifieringskod kommer att skickas till telefonnumret kopplat till ditt konto.",
   "withdrawal_error": "Fel vid Uttag",
-  "minimum_withdrawal_amount_error": "Minsta uttagsbelopp är"
+  "minimum_withdrawal_amount_error": "Minsta uttagsbelopp är",
+  "home": "Hem"
 }

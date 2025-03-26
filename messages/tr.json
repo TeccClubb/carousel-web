@@ -345,5 +345,6 @@
   "paypal_account": "PayPal Hesabı",
   "add_paypal_account_description": "Fon çekmek için kullanmak istediğiniz PayPal hesabına bağlı e-posta adresini girin. Hesabınıza bağlı telefon numarasına doğrulama kodu gönderilecektir.",
   "withdrawal_error": "Para Çekme Hatası",
-  "minimum_withdrawal_amount_error": "Minimum çekim miktarı"
+  "minimum_withdrawal_amount_error": "Minimum çekim miktarı",
+  "home": "Ana Sayfa"
 }

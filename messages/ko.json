@@ -345,5 +345,6 @@
   "paypal_account": "PayPal 계정",
   "add_paypal_account_description": "자금을 인출하려는 PayPal 계정에 연결된 이메일 주소를 입력하세요. 계정에 연결된 전화번호로 확인 코드가 전송됩니다.",
   "withdrawal_error": "출금 오류",
-  "minimum_withdrawal_amount_error": "최소 출금 금액은"
+  "minimum_withdrawal_amount_error": "최소 출금 금액은",
+  "home": "홈"
 }

@@ -345,5 +345,6 @@
   "paypal_account": "Tài Khoản PayPal",
   "add_paypal_account_description": "Nhập địa chỉ email liên kết với tài khoản PayPal mà bạn muốn sử dụng để rút tiền. Một mã xác minh sẽ được gửi đến số điện thoại liên kết với tài khoản của bạn.",
   "withdrawal_error": "Lỗi Rút Tiền",
-  "minimum_withdrawal_amount_error": "Số tiền rút tối thiểu là"
+  "minimum_withdrawal_amount_error": "Số tiền rút tối thiểu là",
+  "home": "Trang chủ"
 }

@@ -345,5 +345,6 @@
   "paypal_account": "PayPal-Konto",
   "add_paypal_account_description": "Geben Sie die E-Mail-Adresse ein, die mit dem PayPal-Konto verknüpft ist, das Sie für Abhebungen verwenden möchten. Ein Bestätigungscode wird an die Telefonnummer gesendet, die mit Ihrem Konto verknüpft ist.",
   "withdrawal_error": "Abhebungsfehler",
-  "minimum_withdrawal_amount_error": "Der Mindestabhebungsbetrag beträgt"
+  "minimum_withdrawal_amount_error": "Der Mindestabhebungsbetrag beträgt",
+  "home": "Startseite"
 }
