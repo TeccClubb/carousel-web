@@ -1,3 +1,4 @@
+"use client";
 import React, { FC, memo, useEffect, useState } from "react";
 import BlogCard from "./BlogCard";
 import Section from "./Section";
@@ -15,7 +16,7 @@ const BlogSection: FC<{
   const t = useTranslations();
   type Blog = {
     link: string;
-    imageSrc: string;
+    image: string;
     category: string;
     title: string;
     created_at: string;
@@ -86,7 +87,7 @@ const BlogSection: FC<{
               <BlogCard
                 key={`${blog.link} ${index}`}
                 link={blog.link}
-                imageSrc={blog.imageSrc}
+                imageSrc={blog.image}
                 category={blog.category}
                 title={blog.title}
                 date={getFormattedDate(blog.created_at)}
