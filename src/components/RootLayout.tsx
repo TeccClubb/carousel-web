@@ -1,6 +1,9 @@
 "use client";
 import React, { FC, memo, ReactNode, useEffect } from "react";
-import { CAROUSEL_GENERATOR_PAGE_PATH } from "@/pathNames";
+import {
+  AFFILIATE_DASHBOARD_PAGE_PATH,
+  CAROUSEL_GENERATOR_PAGE_PATH,
+} from "@/pathNames";
 import Navbar from "./Navbar";
 import { ScrollArea } from "./ui/scroll-area";
 import { Toaster } from "./ui/sonner";
@@ -50,7 +53,7 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
             duration={3000}
           />
           {pathName !== CAROUSEL_GENERATOR_PAGE_PATH &&
-            !pathName.includes("affiliate") && <Footer />}
+            pathName !== AFFILIATE_DASHBOARD_PAGE_PATH && <Footer />}
         </ScrollArea>
       </CookiesProvider>
     </GoogleOAuthProvider>

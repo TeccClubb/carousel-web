@@ -3,10 +3,9 @@ import React, { FC, FormEvent, memo, MouseEvent, useState } from "react";
 import {
   InstagramGradientIcon,
   TikTokGradientIcon,
-  LogoIcon,
-  Logo,
   FacebookIcon,
   LinkedInIcon,
+  CarouselBuilderLogo,
 } from "@/icons";
 import { Link } from "@/i18n/navigation";
 import { Button, LinkButton } from "../ui/button";
@@ -38,7 +37,14 @@ import {
 import { useRouter } from "@/i18n/navigation";
 import { useDispatch } from "react-redux";
 import { AvatarProfile, Toast } from "../elements";
-import { DownloadIcon, Loader2, LockKeyhole, Save } from "lucide-react";
+import {
+  ArrowLeft,
+  DownloadIcon,
+  Loader2,
+  LockKeyhole,
+  Menu,
+  Save,
+} from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { SAVE_CAROUSEL_ROUTE } from "@/constant";
 import {
@@ -55,6 +61,12 @@ import { useActivePlanCookie, useUserCookie } from "@/hooks/use-cookie";
 import { ratios } from "@/assets/ratios";
 import { useTranslations } from "next-intl";
 import { useAppState } from "@/hooks/use-app-state";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 const AiNavbar: FC = () => {
   const dispatch = useDispatch();
@@ -231,18 +243,28 @@ const AiNavbar: FC = () => {
     <nav className="bg-slate-50 dark:bg-gray-800">
       <div className="px-1 sm:px-2 lg:px-6">
         <div className="flex h-16 items-center justify-start sm:justify-between gap-6">
-          <LinkButton
-            href={HOME_PAGE_PATH}
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            aria-label="Bottom Panel"
-            aria-current="page"
-          >
-            <LogoIcon />
-          </LinkButton>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden [&_svg]:size-7 p-2.5"
+              >
+                <Menu />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem asChild>
+                <Link href={HOME_PAGE_PATH}>
+                  <ArrowLeft />
+                  {t("back_to_home")}
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <Link href={HOME_PAGE_PATH} aria-current="page">
-            <Logo className="hidden md:flex" />
+                <CarouselBuilderLogo className="hidden md:inline" />
           </Link>
 
           <div className="flex flex-1 items-center justify-end pr-2 sm:inset-auto sm:ml-6 sm:pr-0 gap-1 sm:gap-4">

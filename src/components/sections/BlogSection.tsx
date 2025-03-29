@@ -1,7 +1,11 @@
-import React, { FC, memo } from "react";
+import React, { FC, memo, useEffect, useState } from "react";
 import BlogCard from "./BlogCard";
 import Section from "./Section";
 import { useTranslations } from "next-intl";
+import axios, { AxiosError } from "axios";
+import { GET_BLOGS_ROUTE } from "@/constant";
+import { getFormattedDate } from "@/lib/utils";
+import { SkeletonCard } from "../elements";
 
 const BlogSection: FC<{
   isHeroSection?: boolean;
@@ -9,29 +13,43 @@ const BlogSection: FC<{
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
   const t = useTranslations();
-  const blogs = [
-    {
-      link: "/blog-link",
-      imageSrc: "/apple-watches.jpg",
-      category: "TYPOGRAPHY",
-      title: "Mastering the Art of Typography: Tips for Eye-Catching Designs",
-      date: "5 APRIL 2024",
-    },
-    {
-      link: "/blog-link",
-      imageSrc: "/apple-watches.jpg",
-      category: "TYPOGRAPHY",
-      title: "Mastering the Art of Typography: Tips for Eye-Catching Designs",
-      date: "5 APRIL 2024",
-    },
-    {
-      link: "/blog-link",
-      imageSrc: "/apple-watches.jpg",
-      category: "TYPOGRAPHY",
-      title: "Mastering the Art of Typography: Tips for Eye-Catching Designs",
-      date: "5 APRIL 2024",
-    },
-  ];
+  type Blog = {
+    link: string;
+    imageSrc: string;
+    category: string;
+    title: string;
+    created_at: string;
+    updated_at: string;
+  };
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const res = await axios
+          .get<{
+            status: boolean;
+            message: string;
+            blogs: Blog[];
+          }>(GET_BLOGS_ROUTE, {
+            headers: { Accept: "application/json" },
+          })
+          .then((res) => res.data);
+
+        if (res.status) {
+          setBlogs(res.blogs);
+        }
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          //do something if needed
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBlogs();
+  }, []);
 
   return (
     <Section
@@ -51,16 +69,29 @@ const BlogSection: FC<{
 
         <div className="flex flex-wrap w-full relative">
           <div className="absolute left-1/2 top-[6%] right-1/2 transform -translate-x-1/2 w-full h-[25em] bg-[#0F73F6] opacity-10 blur-3xl rounded-full"></div>
-          {blogs.map((blog, index) => (
-            <BlogCard
-              key={`${blog.link} ${index}`}
-              link={blog.link}
-              imageSrc={blog.imageSrc}
-              category={blog.category}
-              title={blog.title}
-              date={blog.date}
-            />
-          ))}
+          {isLoading &&
+            Array.from({ length: 3 }).map((_, index) => (
+              <SkeletonCard key={index} />
+            ))}
+
+          {!isLoading && blogs.length === 0 && (
+            <div className="text-center text-muted-foreground">
+              {t("no_data_found")}
+            </div>
+          )}
+
+          {!isLoading &&
+            blogs.length !== 0 &&
+            blogs.map((blog, index) => (
+              <BlogCard
+                key={`${blog.link} ${index}`}
+                link={blog.link}
+                imageSrc={blog.imageSrc}
+                category={blog.category}
+                title={blog.title}
+                date={getFormattedDate(blog.created_at)}
+              />
+            ))}
         </div>
       </div>
     </Section>

@@ -1,11 +1,6 @@
 "use client";
 import React, { FC, memo, useState } from "react";
-import {
-  CarouselBuilderLogo,
-  Logo,
-  LogoIcon,
-  LongRightArrow,
-} from "@/icons";
+import { CarouselBuilderLogo, LongRightArrow } from "@/icons";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Button, LinkButton } from "./ui/button";
 import {
@@ -76,7 +71,7 @@ const Navbar: FC = () => {
                 <nav className="flex flex-col flex-1 cursor-default select-none">
                   <ul role="list" className="flex flex-col flex-1 gap-y-7">
                     <li>
-                      <Logo className="justify-start" />
+                      <CarouselBuilderLogo />
                     </li>
                     <li>
                       <ul role="list" className="-mx-2">
@@ -142,7 +137,6 @@ const Navbar: FC = () => {
             <Separator orientation="vertical" className="h-6 lg:hidden" />
 
             <div className="flex items-center justify-center gap-2 h-6 sm:h-8">
-              <LogoIcon />
               <CarouselBuilderLogo className="w-24 sm:w-32" />
             </div>
           </div>
@@ -155,7 +149,7 @@ const Navbar: FC = () => {
                   className="pr-3"
                   aria-current="page"
                 >
-                  <Logo />
+                  <CarouselBuilderLogo />
                 </Link>
                 {navItems.map((item) => (
                   <Link

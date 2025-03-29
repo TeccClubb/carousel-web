@@ -22,7 +22,9 @@ const FeaturesSection: FC<{
     children: ReactNode;
     className?: string;
   }> = ({ title, description, children, className }) => (
-    <div className={`flex sm:flex-row flex-col sm:items-start items-center gap-4 my-8 lg:my-0 ${className}`}>
+    <div
+      className={`flex sm:flex-row flex-col sm:items-start items-center gap-4 my-8 lg:my-0 ${className}`}
+    >
       <div className="bg-[#E2E8F0] w-16 h-16 px-3 rounded-full flex items-center justify-center">
         {children}
       </div>
@@ -43,8 +45,9 @@ const FeaturesSection: FC<{
       showGradient={showGradient}
       cornerGradient={cornerGradient}
       containerClassName="flex-col gap-y-6"
+      className="pb-12"
     >
-      <h1 className="text-gray-900 dark:text-white text-center text-6xl font-bold">
+      <h1 className="text-gray-900 dark:text-white text-center text-5xl font-bold">
         {t("features_section_heading")}
       </h1>
       <h2 className="text-blue text-center text-4xl font-medium">

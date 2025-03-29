@@ -1,7 +1,12 @@
 "use client";
 import React, { FC, memo, useState } from "react";
 import { useAppState } from "@/hooks/use-app-state";
-import { DashboardIcon, Logo, EarningIcon, PayPalIcon } from "@/icons";
+import {
+  DashboardIcon,
+  EarningIcon,
+  PayPalIcon,
+  CarouselBuilderLogo,
+} from "@/icons";
 import { HOME_PAGE_PATH } from "@/pathNames";
 import { setDashboardActiveItem } from "@/store/app.slice";
 import { Link } from "@/i18n/navigation";
@@ -35,7 +40,7 @@ const SideBar: FC<{ isSheet?: boolean }> = ({ isSheet }) => {
       <nav className="flex flex-col flex-1 cursor-default select-none">
         {isSheet && (
           <Link href={HOME_PAGE_PATH} className="my-6" aria-current="page">
-            <Logo />
+            <CarouselBuilderLogo />
           </Link>
         )}
         <ul role="list" className="flex flex-col flex-1">

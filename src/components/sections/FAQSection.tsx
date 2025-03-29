@@ -102,8 +102,12 @@ const FAQSection: FC<{
         <Accordion type="multiple" className="w-full">
           {faqs.map((faq, index) => (
             <AccordionItem key={`item-${index}`} value={`item-${index}`}>
-              <AccordionTrigger>{faq.question}</AccordionTrigger>
-              <AccordionContent>{faq.answer}</AccordionContent>
+              <AccordionTrigger className="text-start">
+                {faq.question}
+              </AccordionTrigger>
+              <AccordionContent className="text-start">
+                {faq.answer}
+              </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>

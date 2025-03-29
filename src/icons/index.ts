@@ -1,6 +1,4 @@
-import Logo from "./Logo";
 import CarouselBuilderLogo from "./CarouselBuilderLogo";
-import LogoIcon from "./LogoIcon";
 import LongRightArrow from "./LongRightArrow";
 import TickIcon from "./TickIcon";
 import FeatureIcon1 from "./FeatureIcon1";
@@ -22,6 +20,7 @@ import XTwitterIcon from "./XTwitterIcon";
 import InstagramIcon from "./InstagramIcon";
 import LinkedInIcon from "./LinkedInIcon";
 import YoutubeIcon from "./YoutubeIcon";
+import TikTokIcon from "./TikTokIcon";
 import WelcomeIcon from "./WelcomeIcon";
 import GoogleIcon from "./GoogleIcon";
 import AiIcon from "./AiIcon";
@@ -52,9 +51,7 @@ import CheckedCircleIcon from "./CheckedCircleIcon";
 import PayPalIcon from "./PayPalIcon";
 
 export {
-  Logo,
   CarouselBuilderLogo,
-  LogoIcon,
   LongRightArrow,
   TickIcon,
   FeatureIcon1,
@@ -76,6 +73,7 @@ export {
   InstagramIcon,
   LinkedInIcon,
   YoutubeIcon,
+  TikTokIcon,
   WelcomeIcon,
   GoogleIcon,
   AiIcon,

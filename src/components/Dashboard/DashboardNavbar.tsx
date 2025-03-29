@@ -1,6 +1,6 @@
 "use client";
 import React, { FC, memo } from "react";
-import { Logo } from "@/icons";
+import { CarouselBuilderLogo } from "@/icons";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Button, LinkButton } from "../ui/button";
 import { Separator } from "../ui/separator";
@@ -66,7 +66,7 @@ const DashboardNavbar: FC = () => {
           <Separator orientation="vertical" className="h-6 lg:hidden" />
 
           <Link href={HOME_PAGE_PATH} className="px-3 py-2" aria-current="page">
-            <Logo />
+            <CarouselBuilderLogo />
           </Link>
         </div>
 

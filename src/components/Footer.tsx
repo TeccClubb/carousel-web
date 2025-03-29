@@ -6,7 +6,7 @@ import {
   FacebookIcon,
   InstagramIcon,
   LinkedInIcon,
-  LogoIcon,
+  TikTokIcon,
   XTwitterIcon,
   YoutubeIcon,
 } from "@/icons";
@@ -24,6 +24,7 @@ import {
   AFFILIATE_PROGRAM_PAGE_PATH,
   AFFILIATE_SIGNUP_PAGE_PATH,
   BLOG_PAGE_PATH,
+  CAROUSEL_GENERATOR_PAGE_PATH,
   CONTACT_PAGE_PATH,
   CREATORS_PAGE_PATH,
   FEATURES_PAGE_PATH,
@@ -33,20 +34,23 @@ import {
   TERMS_AND_CONDITIONS_PAGE_PATH,
 } from "@/pathNames";
 import { useTranslations } from "next-intl";
+import { useDispatch } from "react-redux";
+import { setSlideRatio } from "@/store/carousels.slice";
 
 const FooterSlice: FC<{
   title: string;
-  links: { text: string; href: string }[];
+  links: { text: string; href: string; onClick?: () => void }[];
 }> = ({ title, links = [] }) => (
   <div className="w-full md:w-1/3 sm:w-1/2">
     <h3 className="text-gray-900 dark:text-white font-semibold text-sm leading-8">
       {title}
     </h3>
     <ul role="list" className="mt-6 list-none">
-      {links.map((link) => (
-        <li key={link.href} className="mb-4">
+      {links.map((link, index) => (
+        <li key={link.href + index} className="mb-4">
           <Link
             href={link.href}
+            onClick={link.onClick}
             target={
               link.href.startsWith("https://") ||
               link.href.startsWith("http://")
@@ -64,6 +68,7 @@ const FooterSlice: FC<{
 );
 
 const Footer: FC = () => {
+  const dispatch = useDispatch();
   const t = useTranslations();
   const socialIconSize = "1.5em";
 
@@ -88,6 +93,10 @@ const Footer: FC = () => {
       href: YOUTUBE_CAROUSEL_URL,
       icon: <YoutubeIcon size={socialIconSize} />,
     },
+    {
+      href: TIKTOK_CAROUSEL_URL,
+      icon: <TikTokIcon size={socialIconSize} />,
+    },
   ];
 
   return (
@@ -101,19 +110,51 @@ const Footer: FC = () => {
               links={[
                 {
                   text: "Linkedin Carousel",
-                  href: LINKEDIN_CAROUSEL_URL,
+                  href: CAROUSEL_GENERATOR_PAGE_PATH,
+                  onClick: () =>
+                    dispatch(
+                      setSlideRatio({
+                        ratioId: "linkedIn1",
+                        width: 4,
+                        height: 5,
+                      })
+                    ),
                 },
                 {
                   text: "TikTok Carousel",
-                  href: TIKTOK_CAROUSEL_URL,
+                  href: CAROUSEL_GENERATOR_PAGE_PATH,
+                  onClick: () =>
+                    dispatch(
+                      setSlideRatio({
+                        ratioId: "tikTok",
+                        width: 9,
+                        height: 16,
+                      })
+                    ),
                 },
                 {
                   text: "Instagram Carousel",
-                  href: INSTAGRAM_CAROUSEL_URL,
+                  href: CAROUSEL_GENERATOR_PAGE_PATH,
+                  onClick: () =>
+                    dispatch(
+                      setSlideRatio({
+                        ratioId: "instaFeed1",
+                        width: 4,
+                        height: 5,
+                      })
+                    ),
                 },
                 {
                   text: "Facebook Carousel",
-                  href: FACEBOOK_CAROUSEL_URL,
+                  href: CAROUSEL_GENERATOR_PAGE_PATH,
+                  onClick: () =>
+                    dispatch(
+                      setSlideRatio({
+                        ratioId: "facebookFeed1",
+                        width: 4,
+                        height: 5,
+                      })
+                    ),
                 },
               ]}
             />
@@ -166,7 +207,6 @@ const Footer: FC = () => {
           </div>
           <div className="w-full lg:w-2/5 flex flex-col gap-y-4 items-center justify-center lg:items-start lg:justify-start px-4 order-1 lg:order-2">
             <div className="flex items-center justify-center gap-2 h-16 md:mb-6 mb-4">
-              <LogoIcon />
               <CarouselBuilderLogo className="w-60" />
             </div>
 

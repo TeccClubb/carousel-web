@@ -28,6 +28,7 @@ export const LOGOUT_ROUTE = `${BACKEND_API_URL}/logout`;
 export const GET_USER_ROUTE = `${BACKEND_API_URL}/user`;
 export const PUT_AI_GENERATED_CAROUSELS_ROUTE = `${BACKEND_API_URL}/user/ai-creations`;
 
+export const GET_BLOGS_ROUTE = `${BACKEND_API_URL}/blogs`;
 export const GET_PLANS_ROUTE = `${BACKEND_API_URL}/plans`;
 export const GET_ACTIVE_PURCHASE_PLAN_ROUTE = `${BACKEND_API_URL}/purchase/active`;
 export const GET_PURCHASED_PLANS_HISTORY_ROUTE = `${BACKEND_API_URL}/purchase/history`;
