@@ -108,7 +108,7 @@ const InvitedUsersTable: FC<{ className: string }> = ({ className }) => {
         <CardTitle>{t("invited_users")}</CardTitle>
         <Separator className="mt-4" />
       </CardHeader>
-      <CardContent>
+      <CardContent className="lg:w-[calc(100vw-22rem)] md:w-[calc(100vw-3rem)] w-[calc(100vw-2rem)]">
         <div className="flex sm:flex-row flex-col gap-2 sm:items-center items-start justify-between">
           <div className="flex sm:flex-row-reverse items-center gap-4">
             <Input
