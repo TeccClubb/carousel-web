@@ -44,7 +44,7 @@ const SideBar: FC<{
       <nav className="flex flex-col flex-1 cursor-default select-none">
         {isSheet && (
           <Link href={HOME_PAGE_PATH} className="my-6" aria-current="page">
-            <CarouselBuilderLogo />
+            <CarouselBuilderLogo className="w-36" />
           </Link>
         )}
         <ul role="list" className="flex flex-col flex-1">

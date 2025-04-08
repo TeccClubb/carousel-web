@@ -261,7 +261,7 @@ const AiNavbar: FC = () => {
                 <ul role="list" className="flex flex-col flex-1 gap-y-7">
                   <li>
                     <Link href={HOME_PAGE_PATH}>
-                      <CarouselBuilderLogo />
+                      <CarouselBuilderLogo className="w-36" />
                     </Link>
                   </li>
 
@@ -323,7 +323,7 @@ const AiNavbar: FC = () => {
           </Sheet>
 
           <Link href={HOME_PAGE_PATH} aria-current="page">
-            <CarouselBuilderLogo className="hidden md:inline" />
+            <CarouselBuilderLogo className="hidden md:inline w-36" />
           </Link>
 
           <div className="flex flex-1 items-center justify-end pr-2 sm:inset-auto sm:pr-0 gap-1 md:gap-2 lg:gap-4">

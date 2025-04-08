@@ -205,7 +205,7 @@ const Footer: FC = () => {
             />
           </div>
           <div className="w-full lg:w-2/5 flex flex-col gap-y-4 items-center justify-center lg:items-start lg:justify-start px-4 order-1 lg:order-2">
-            <CarouselBuilderLogo />
+            <CarouselBuilderLogo className="w-36" />
 
             <p className="text-gray-600 text-sm leading-6 space-y-8">
               {t("footer_description")}

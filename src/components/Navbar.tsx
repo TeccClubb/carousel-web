@@ -71,7 +71,7 @@ const Navbar: FC = () => {
                 <nav className="flex flex-col flex-1 cursor-default select-none">
                   <ul role="list" className="flex flex-col flex-1 gap-y-7">
                     <li>
-                      <CarouselBuilderLogo />
+                      <CarouselBuilderLogo className="w-36" />
                     </li>
                     <li>
                       <ul role="list" className="-mx-2">
@@ -137,7 +137,7 @@ const Navbar: FC = () => {
             <Separator orientation="vertical" className="h-6 lg:hidden" />
 
             <div className="flex items-center justify-center gap-2 h-6 sm:h-8">
-              <CarouselBuilderLogo />
+              <CarouselBuilderLogo className="w-36" />
             </div>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -149,7 +149,7 @@ const Navbar: FC = () => {
                   className="pr-3"
                   aria-current="page"
                 >
-                  <CarouselBuilderLogo />
+                  <CarouselBuilderLogo className="w-36" />
                 </Link>
                 {navItems.map((item) => (
                   <Link

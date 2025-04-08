@@ -1,4 +1,5 @@
 import ConfigureStore from "@/store/ConfigureStore";
+import "./globals.css";
 import { Metadata } from "next";
 import { FC, memo, ReactNode } from "react";
 

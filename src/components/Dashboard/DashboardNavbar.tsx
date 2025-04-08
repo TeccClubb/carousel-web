@@ -73,7 +73,7 @@ const DashboardNavbar: FC = () => {
           )}
 
           <Link href={HOME_PAGE_PATH} aria-current="page">
-            <CarouselBuilderLogo />
+            <CarouselBuilderLogo className="w-36" />
           </Link>
         </div>
 
