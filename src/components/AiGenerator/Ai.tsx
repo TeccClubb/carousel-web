@@ -395,7 +395,7 @@ const Ai: FC = () => {
                 &nbsp;{t("generating")}
               </>
             )}
-            {!isLoading && t("generate_carousel_with_ai")}
+            {!isLoading && t("generate_ai_powered_carousel")}
           </Button>
         </form>
       </Form>

@@ -18,7 +18,7 @@ const AffiliateProgram: FC = () => {
             {t("earn_40_percent_commission_on_all_payments")}
           </span>
         </div>
-        <h1 className="text-5xl font-medium">{t("boost_your_earnings")}</h1>
+        <h1 className="text-4xl sm:text-5xl font-medium">{t("boost_your_earnings")}</h1>
         <p className="text-lg font-normal md:w-1/2">
           {t(
             "by_joining_our_program_you_have_the_opportunity_to_earn_a_40_percent"
@@ -40,11 +40,11 @@ const AffiliateProgram: FC = () => {
         <span className="text-[10px] font-medium text-[#0139FF] bg-white rounded-full px-1.5 hover:bg-indigo-200 cursor-default uppercase">
           {t("your_next_side_hustle")}
         </span>
-        <h1 className="text-5xl font-medium">
+        <h1 className="text-4xl sm:text-5xl font-medium">
           {t("get_1000_extra_each_month")}
         </h1>
 
-        <div className="flex flex-wrap mt-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mt-8">
           {[
             {
               emoji: "🖊️",
@@ -66,7 +66,7 @@ const AffiliateProgram: FC = () => {
               ),
             },
           ].map(({ emoji, heading, description }, index) => (
-            <div key={`item_${index}`} className="w-1/3  p-2 space-y-4">
+            <div key={`item_${index}`} className="w-full p-2 space-y-4">
               <span className="text-5xl font-semibold">{emoji}</span>
               <h5 className="text-lg font-semibold">
                 {index + 1}. {heading}
@@ -77,7 +77,7 @@ const AffiliateProgram: FC = () => {
         </div>
       </Section>
       <Section containerClassName="flex flex-col items-start gap-4">
-        <h1 className="text-5xl font-medium">
+        <h1 className="text-4xl sm:text-5xl font-medium">
           {t("start_earning_more_today")}
         </h1>
         <p className="text-lg font-normal">

@@ -36,15 +36,8 @@ import {
 } from "@/pathNames";
 import { useRouter } from "@/i18n/navigation";
 import { useDispatch } from "react-redux";
-import { AvatarProfile, Toast } from "../elements";
-import {
-  ArrowLeft,
-  DownloadIcon,
-  Loader2,
-  LockKeyhole,
-  Menu,
-  Save,
-} from "lucide-react";
+import { AvatarProfile, LanguageChanger, Toast } from "../elements";
+import { DownloadIcon, Loader2, LockKeyhole, Menu, Save } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { SAVE_CAROUSEL_ROUTE } from "@/constant";
 import {
@@ -62,11 +55,13 @@ import { ratios } from "@/assets/ratios";
 import { useTranslations } from "next-intl";
 import { useAppState } from "@/hooks/use-app-state";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet";
 
 const AiNavbar: FC = () => {
   const dispatch = useDispatch();
@@ -76,6 +71,7 @@ const AiNavbar: FC = () => {
   const { isAppMounted } = useAppState();
   const { user } = useUserCookie();
   const { activePlan } = useActivePlanCookie();
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   const [isPDFGenerating, setIsPDFGenerating] = useState<boolean>(false);
 
@@ -153,6 +149,7 @@ const AiNavbar: FC = () => {
       );
     } finally {
       setIsPDFGenerating(false);
+      setMobileMenuOpen(false);
     }
   };
 
@@ -160,6 +157,8 @@ const AiNavbar: FC = () => {
     event: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
+    setMobileMenuOpen(false);
+
     if (!activePlan) {
       const toastId = toast.custom(
         <Toast
@@ -241,10 +240,10 @@ const AiNavbar: FC = () => {
 
   return (
     <nav className="bg-slate-50 dark:bg-gray-800">
-      <div className="px-1 sm:px-2 lg:px-6">
-        <div className="flex h-16 items-center justify-start sm:justify-between gap-6">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+      <div className="pr-2 pl-2 lg:pl-[4.25rem] md:pr-6">
+        <div className="flex h-16 items-center justify-start sm:justify-between gap-2 lg:gap-6">
+          <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon"
@@ -252,28 +251,93 @@ const AiNavbar: FC = () => {
               >
                 <Menu />
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem asChild>
-                <Link href={HOME_PAGE_PATH}>
-                  <ArrowLeft />
-                  {t("back_to_home")}
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </SheetTrigger>
+            <SheetContent side="left" className="flex flex-col">
+              <SheetHeader className="hidden">
+                <SheetTitle>nav side bar</SheetTitle>
+                <SheetDescription>nav side bar description</SheetDescription>
+              </SheetHeader>
+              <nav className="flex flex-col flex-1 cursor-default select-none">
+                <ul role="list" className="flex flex-col flex-1 gap-y-7">
+                  <li>
+                    <Link href={HOME_PAGE_PATH}>
+                      <CarouselBuilderLogo />
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Button onClick={handleSave} className="w-full">
+                      {isAppMounted && !activePlan && (
+                        <LockKeyhole className="size-4" />
+                      )}
+                      {isAppMounted && activePlan && <Save />}
+                      {t("save")}
+                    </Button>
+                  </li>
+
+                  <li>
+                    <Button
+                      onClick={handleDownload}
+                      disabled={isPDFGenerating}
+                      className="w-full"
+                    >
+                      {isPDFGenerating && (
+                        <>
+                          <Loader2 className="animate-spin" />
+                          {t("generating")}
+                        </>
+                      )}
+
+                      {!isPDFGenerating && (
+                        <>
+                          <DownloadIcon />
+                          {t("download")}
+                        </>
+                      )}
+                    </Button>
+                  </li>
+
+                  <li>
+                    <div className="text-gray-400 text-xs leading-6 font-semibold">
+                      {t("language")}
+                    </div>
+                    <LanguageChanger
+                      onLanguageChange={() => setMobileMenuOpen(false)}
+                      className="w-full mt-2 h-10"
+                    />
+                  </li>
+                  {isAppMounted && !user && (
+                    <li>
+                      <LinkButton
+                        href={LOGIN_PAGE_PATH}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="w-full"
+                      >
+                        {t("login")}
+                      </LinkButton>
+                    </li>
+                  )}
+                </ul>
+              </nav>
+            </SheetContent>
+          </Sheet>
 
           <Link href={HOME_PAGE_PATH} aria-current="page">
-                <CarouselBuilderLogo className="hidden md:inline" />
+            <CarouselBuilderLogo className="hidden md:inline" />
           </Link>
 
-          <div className="flex flex-1 items-center justify-end pr-2 sm:inset-auto sm:ml-6 sm:pr-0 gap-1 sm:gap-4">
-            <Button size="sm" onClick={handleSave}>
+          <div className="flex flex-1 items-center justify-end pr-2 sm:inset-auto sm:pr-0 gap-1 md:gap-2 lg:gap-4">
+            <LanguageChanger className="hidden md:inline-flex" />
+            <Button
+              size="sm"
+              onClick={handleSave}
+              className="hidden md:inline-flex"
+            >
               {isAppMounted && !activePlan && (
                 <LockKeyhole className="size-4" />
               )}
               {isAppMounted && activePlan && <Save />}
-              <span className="hidden sm:inline">{t("save")}</span>
+              {t("save")}
             </Button>
 
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -359,9 +423,7 @@ const AiNavbar: FC = () => {
                         {ratio.ratioId.includes("tikTok") && (
                           <TikTokGradientIcon className="aspect-square h-4 w-4" />
                         )}
-                        <span className="hidden sm:inline">
-                          {ratio.name} ({ratio.width}:{ratio.height})
-                        </span>
+                        {ratio.name} ({ratio.width}:{ratio.height})
                       </span>
                     </SelectItem>
                   ))}
@@ -373,23 +435,29 @@ const AiNavbar: FC = () => {
               size="sm"
               onClick={handleDownload}
               disabled={isPDFGenerating}
+              className="hidden md:inline-flex"
             >
               {isPDFGenerating && (
                 <>
                   <Loader2 className="animate-spin" />
-                  <span className="hidden sm:inline">{t("generating")}</span>
+                  {t("generating")}
                 </>
               )}
 
               {!isPDFGenerating && (
                 <>
                   <DownloadIcon />
-                  <span className="hidden sm:inline">{t("download")}</span>
+                  {t("download")}
                 </>
               )}
             </Button>
 
-            <Separator orientation="vertical" className="h-6" />
+            <Separator
+              orientation="vertical"
+              className={`h-6 ${
+                isAppMounted && !user ? "hidden md:inline" : ""
+              }`}
+            />
 
             {isAppMounted && user && <AvatarProfile />}
 
@@ -397,7 +465,7 @@ const AiNavbar: FC = () => {
               <LinkButton
                 href={LOGIN_PAGE_PATH}
                 size="sm"
-                className="md:h-10 md:px-4 md:py-2"
+                className="hidden md:inline-flex lg:h-10 lg:px-4 lg:py-2"
               >
                 {t("login")}
               </LinkButton>

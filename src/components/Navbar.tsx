@@ -137,7 +137,7 @@ const Navbar: FC = () => {
             <Separator orientation="vertical" className="h-6 lg:hidden" />
 
             <div className="flex items-center justify-center gap-2 h-6 sm:h-8">
-              <CarouselBuilderLogo className="w-24 sm:w-32" />
+              <CarouselBuilderLogo />
             </div>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">

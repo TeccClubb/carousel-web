@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, memo, useState } from "react";
+import React, { FC, memo, useEffect, useState } from "react";
 import Section from "../sections/Section";
 import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
@@ -31,8 +31,13 @@ import { passwordPattern } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { AFFILIATE_RESET_PASSWORD_ROUTE } from "@/constant";
+import { notFound, useSearchParams } from "next/navigation";
 
 const AffiliateResetPassword: FC = () => {
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+  const token = searchParams.get("token");
+
   const t = useTranslations();
   const toast = useToast();
   const router = useRouter();
@@ -74,6 +79,8 @@ const AffiliateResetPassword: FC = () => {
         .post<{ status: boolean; message: string }>(
           AFFILIATE_RESET_PASSWORD_ROUTE,
           {
+            token,
+            email,
             password: values.password,
             password_confirmation: values.confirm_password,
           },
@@ -112,6 +119,14 @@ const AffiliateResetPassword: FC = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!email || !token) {
+      notFound();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Section
       isHeroSection

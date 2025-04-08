@@ -1,9 +1,10 @@
 import React, { FC, memo } from "react";
-import { Button } from "../ui/button";
+import { LinkButton } from "../ui/button";
 import Image from "next/image";
 import Section from "./Section";
 import { homeSectionBlurImageSrc } from "@/assets/home-section-base64-image";
 import { useTranslations } from "next-intl";
+import { CAROUSEL_GENERATOR_PAGE_PATH } from "@/pathNames";
 
 const HomeSection: FC<{ showGradient?: boolean }> = ({ showGradient }) => {
   const t = useTranslations();
@@ -22,9 +23,12 @@ const HomeSection: FC<{ showGradient?: boolean }> = ({ showGradient }) => {
         <p className="text-gray-900 dark:text-white text-lg font-normal opacity-70">
           {t("home_section_description")}
         </p>
-        <Button className="bg-blue hover:bg-blue/80 self-center sm:self-start">
-          {t("get_started")}
-        </Button>
+        <LinkButton
+          href={CAROUSEL_GENERATOR_PAGE_PATH}
+          className="bg-blue hover:bg-blue/80 self-center sm:self-start"
+        >
+          {t("start_for_free")}
+        </LinkButton>
       </div>
       <div className="w-full lg:w-1/2">
         <Image

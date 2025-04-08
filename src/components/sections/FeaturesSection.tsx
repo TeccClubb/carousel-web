@@ -53,7 +53,7 @@ const FeaturesSection: FC<{
       <h2 className="text-blue text-center text-4xl font-medium">
         {t("features_section_description")}
       </h2>
-      <div className="flex items-center justify-center lg:relative flex-wrap flex-col lg:flex-row w-full">
+      <div className="pt-4 lg:pt-8 flex items-center justify-center lg:relative flex-wrap flex-col lg:flex-row w-full">
         <div className="w-full lg:absolute lg:left-0 lg:w-1/3 px-14 md:px-24 lg:px-0 order-2 lg:order-1">
           <Feature
             className="lg:absolute lg:left-0 lg:top-40"

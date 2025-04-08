@@ -7,6 +7,9 @@ const initialState: AppState = {
   isAppMounted: false,
   loaderTitle: "Loading...",
   dashboardActiveItem: "dashboard",
+  isTocAndPrivacyPolicyLoadedOnce: false,
+  termsAndConditions: "",
+  privacyPolicy: "",
 };
 
 const appSlice = createSlice({
@@ -47,6 +50,28 @@ const appSlice = createSlice({
     setDashboardActiveItem: (state, action: PayloadAction<string>) => {
       state.dashboardActiveItem = action.payload;
     },
+
+    setTermsOfConditionsAndPrivacyPolicy: (
+      state,
+      action: PayloadAction<{
+        termsAndConditions: string;
+        privacyPolicy: string;
+      }>
+    ) => {
+      state.isTocAndPrivacyPolicyLoadedOnce = true;
+      state.termsAndConditions = action.payload.termsAndConditions;
+      state.privacyPolicy = action.payload.privacyPolicy;
+    },
+
+    setTermsOfConditions: (state, action: PayloadAction<string>) => {
+      state.isTocAndPrivacyPolicyLoadedOnce = true;
+      state.termsAndConditions = action.payload;
+    },
+
+    setPrivacyPolicy: (state, action: PayloadAction<string>) => {
+      state.isTocAndPrivacyPolicyLoadedOnce = true;
+      state.privacyPolicy = action.payload;
+    },
   },
 });
 
@@ -57,6 +82,9 @@ export const {
   setLoading,
   setIsAppMounted,
   setDashboardActiveItem,
+  setTermsOfConditionsAndPrivacyPolicy,
+  setTermsOfConditions,
+  setPrivacyPolicy,
 } = appSlice.actions;
 
 export default appSlice.reducer;

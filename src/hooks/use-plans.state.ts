@@ -6,6 +6,7 @@ import axios, { AxiosError } from "axios";
 import { GET_PLANS_ROUTE } from "@/constant";
 import { Plan } from "@/types";
 import { setPlans } from "@/store/plans.slice";
+import { useTranslate } from "./use-translate";
 
 export const usePlansState = () =>
   useSelector((state: RootState) => state.plans);
@@ -16,6 +17,14 @@ export const usePlans = () => {
   const { plans, isPlansLoadedOnce } = useSelector(
     (state: RootState) => state.plans
   );
+  const { isTranslating } = useTranslate({
+    data: JSON.stringify(plans),
+    requiredResponse: "json",
+    onTranslate: (translatedData) =>
+      dispatch(setPlans(JSON.parse(translatedData))),
+    extraDependencies: [isPlansLoadedOnce],
+  });
+
   const [isPlansLoading, setLoading] = useState<boolean>(true);
 
   const fetchPlans = useCallback(async () => {
@@ -41,5 +50,5 @@ export const usePlans = () => {
     fetchPlans();
   }, [fetchPlans]);
 
-  return { isPlansLoading, plans };
+  return { isPlansLoading, isTranslating, plans } as const;
 };

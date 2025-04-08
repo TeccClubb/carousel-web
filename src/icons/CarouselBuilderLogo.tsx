@@ -11,7 +11,7 @@ const CarouselBuilderLogo: FC<{ className?: string }> = ({ className }) => (
     sizes="100vw"
     placeholder="blur"
     blurDataURL="/carousel-builder-logo.png"
-    className={cn("h-auto w-32", className)}
+    className={cn("h-auto w-36", className)}
   />
 );
 

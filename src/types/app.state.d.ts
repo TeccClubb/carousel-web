@@ -4,4 +4,7 @@ export type AppState = {
   isAppMounted: boolean;
   loaderTitle: string;
   dashboardActiveItem: string;
+  isTocAndPrivacyPolicyLoadedOnce: boolean;
+  termsAndConditions: string;
+  privacyPolicy: string;
 };

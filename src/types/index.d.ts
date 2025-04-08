@@ -10,8 +10,6 @@ export type {
   CarouselsState,
 } from "./carousels.state";
 
-export type { FAQ } from "./FAQ";
-
 export type { User } from "./user";
 
 export type { Locale } from "./locale";

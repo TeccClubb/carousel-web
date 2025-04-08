@@ -1,7 +1,6 @@
 "use client";
 import React, { FC, memo } from "react";
 import Section from "./Section";
-import { FAQ } from "@/types";
 import {
   Accordion,
   AccordionContent,
@@ -31,27 +30,43 @@ const FAQSection: FC<{
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
   const t = useTranslations();
-  const faqs: FAQ[] = [
+
+  const faqs = [
     {
-      question: "Can I request a refund?",
-      answer: "",
+      question: t("faq_question_1"),
+      answer: t("faq_answer_1"),
     },
     {
-      question: "How do I access my purchased products?",
-      answer:
-        "Accessing your purchased products is seamless and hassle-free on our digital design marketplace. Simply log in to your account, navigate to the 'My Purchases' section.",
+      question: t("faq_question_2"),
+      answer: t("faq_answer_2"),
     },
     {
-      question: "Are there any discounts for bulk purchases?",
-      answer: "",
+      question: t("faq_question_3"),
+      answer: t("faq_answer_3"),
     },
     {
-      question: "What payment methods do you accept here?",
-      answer: "",
+      question: t("faq_question_4"),
+      answer: t("faq_answer_4"),
     },
     {
-      question: "Can I sell my digital products on this marketplace?",
-      answer: "",
+      question: t("faq_question_5"),
+      answer: t("faq_answer_5"),
+    },
+    {
+      question: t("faq_question_6"),
+      answer: t("faq_answer_6"),
+    },
+    {
+      question: t("faq_question_7"),
+      answer: t("faq_answer_7"),
+    },
+    {
+      question: t("faq_question_8"),
+      answer: t("faq_answer_8"),
+    },
+    {
+      question: t("faq_question_9"),
+      answer: t("faq_answer_9"),
     },
   ];
 
@@ -96,9 +111,9 @@ const FAQSection: FC<{
       isHeroSection={isHeroSection}
       showGradient={showGradient}
       cornerGradient={cornerGradient}
-      containerClassName="flex-col lg:flex-row gap-y-8"
+      containerClassName="flex-col lg:flex-row gap-y-8 items-start"
     >
-      <div className="w-full lg:w-1/2 px-4 lg:pr-16 self-start">
+      <div className="w-full lg:w-1/2 px-4 lg:pr-16">
         <Accordion type="multiple" className="w-full">
           {faqs.map((faq, index) => (
             <AccordionItem key={`item-${index}`} value={`item-${index}`}>
@@ -106,7 +121,17 @@ const FAQSection: FC<{
                 {faq.question}
               </AccordionTrigger>
               <AccordionContent className="text-start">
-                {faq.answer}
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: faq.answer.replace(/\*(.*?)\*/g, (_, text) => {
+                      const emailRegex =
+                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                      return emailRegex.test(text)
+                        ? `<strong><a href="mailto:${text}" class="text-blue-600">${text}</a></strong>`
+                        : `<strong>${text}</strong>`;
+                    }),
+                  }}
+                ></p>
               </AccordionContent>
             </AccordionItem>
           ))}

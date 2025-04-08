@@ -16,8 +16,12 @@ import { LogOut } from "lucide-react";
 import { Button } from "../ui/button";
 import { useLogout } from "@/hooks/use-logout";
 import AddPayPalAccountDialog from "./AddPayPalAccountDialog";
+import { LanguageChanger } from "../elements";
 
-const SideBar: FC<{ isSheet?: boolean }> = ({ isSheet }) => {
+const SideBar: FC<{
+  isSheet?: boolean;
+  setMobileMenuOpen?: (isOpen: boolean) => void;
+}> = ({ isSheet, setMobileMenuOpen }) => {
   const dispatch = useDispatch();
   const t = useTranslations();
   const { dashboardActiveItem } = useAppState();
@@ -49,7 +53,10 @@ const SideBar: FC<{ isSheet?: boolean }> = ({ isSheet }) => {
               {items.map(({ name, Icon }) => (
                 <li
                   key={name}
-                  onClick={() => dispatch(setDashboardActiveItem(name))}
+                  onClick={() => {
+                    dispatch(setDashboardActiveItem(name));
+                    if (setMobileMenuOpen) setMobileMenuOpen(false);
+                  }}
                   className={`${
                     dashboardActiveItem === name
                       ? "text-white bg-[#0139FF]"
@@ -70,6 +77,18 @@ const SideBar: FC<{ isSheet?: boolean }> = ({ isSheet }) => {
             <PayPalIcon />
             {t("paypal_account")}
           </li>
+
+          {isSheet && setMobileMenuOpen && (
+            <li className="mt-8">
+              <div className="text-gray-400 text-xs leading-6 font-semibold">
+                {t("language")}
+              </div>
+              <LanguageChanger
+                onLanguageChange={() => setMobileMenuOpen(false)}
+                className="w-full mt-2 h-10"
+              />
+            </li>
+          )}
 
           <li className="mt-auto -mx-2">
             <Button

@@ -30,7 +30,6 @@ import {
   FEATURES_PAGE_PATH,
   PRIVACY_POLICY_PAGE_PATH,
   REFUND_POLICY_PAGE_PATH,
-  SITE_MAP_PAGE_PATH,
   TERMS_AND_CONDITIONS_PAGE_PATH,
 } from "@/pathNames";
 import { useTranslations } from "next-intl";
@@ -206,9 +205,7 @@ const Footer: FC = () => {
             />
           </div>
           <div className="w-full lg:w-2/5 flex flex-col gap-y-4 items-center justify-center lg:items-start lg:justify-start px-4 order-1 lg:order-2">
-            <div className="flex items-center justify-center gap-2 h-16 md:mb-6 mb-4">
-              <CarouselBuilderLogo className="w-60" />
-            </div>
+            <CarouselBuilderLogo />
 
             <p className="text-gray-600 text-sm leading-6 space-y-8">
               {t("footer_description")}
@@ -236,8 +233,6 @@ const Footer: FC = () => {
             <Link href={TERMS_AND_CONDITIONS_PAGE_PATH}>
               {t("terms_and_condition")}
             </Link>
-            <span>|</span>
-            <Link href={SITE_MAP_PAGE_PATH}>{t("site_map")}</Link>
           </nav>
           <span className="text-white text-sm font-normal">
             {t("footer_copy_right_message")}
