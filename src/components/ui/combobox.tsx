@@ -22,6 +22,14 @@ import {
 } from "./command";
 import { cn } from "@/lib/utils";
 import { Label } from "./label";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./dialog";
 
 type ComboboxContextType = {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -102,6 +110,7 @@ const Combobox: FC<{
   emptyMessage?: string;
   tickSide?: "left" | "right";
   size?: "sm" | "md" | "lg";
+  asDialog?: boolean;
   className?: string;
   disabled?: boolean;
   children?: ReactNode;
@@ -115,6 +124,7 @@ const Combobox: FC<{
   emptyMessage = "No option found.",
   tickSide = "right",
   size = "md",
+  asDialog,
   className,
   disabled,
   children,
@@ -126,39 +136,85 @@ const Combobox: FC<{
   };
   const [open, setOpen] = useState<boolean>(false);
   const id = useId();
+
   return (
     <ComboboxContext.Provider
       value={{ setOpen, value, onValueChange, tickSide }}
     >
       {label && <Label htmlFor={id}>{label}</Label>}
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button
-            id={id}
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            disabled={disabled}
-            className={cn("w-[120px] justify-between", sizes[size], className)}
-          >
-            {icon && icon}
-            {text ? text : placeholder}
-            <ChevronsUpDown className="opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="p-0">
-          <Command>
-            <CommandInput
-              placeholder={placeholder}
-              className={`${sizes[size]}`}
-            />
-            <CommandList>
-              <CommandEmpty>{emptyMessage}</CommandEmpty>
-              <CommandGroup>{children}</CommandGroup>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
+      {!asDialog && (
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              id={id}
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              disabled={disabled}
+              className={cn(
+                "w-[120px] justify-between",
+                sizes[size],
+                className
+              )}
+            >
+              {icon && icon}
+              {text ? text : placeholder}
+              <ChevronsUpDown className="opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="p-0">
+            <Command>
+              <CommandInput
+                placeholder={placeholder}
+                className={`${sizes[size]}`}
+              />
+              <CommandList>
+                <CommandEmpty>{emptyMessage}</CommandEmpty>
+                <CommandGroup>{children}</CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+      )}
+
+      {asDialog && (
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <Button
+              id={id}
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              disabled={disabled}
+              className={cn(
+                "w-[120px] justify-between",
+                sizes[size],
+                className
+              )}
+            >
+              {icon && icon}
+              {text ? text : placeholder}
+              <ChevronsUpDown className="opacity-50" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader className="hidden">
+              <DialogTitle>Combobox Title</DialogTitle>
+              <DialogDescription>Combobox Description</DialogDescription>
+            </DialogHeader>
+            <Command>
+              <CommandInput
+                placeholder={placeholder}
+                className={`${sizes[size]}`}
+              />
+              <CommandList>
+                <CommandEmpty>{emptyMessage}</CommandEmpty>
+                <CommandGroup>{children}</CommandGroup>
+              </CommandList>
+            </Command>
+          </DialogContent>
+        </Dialog>
+      )}
     </ComboboxContext.Provider>
   );
 };

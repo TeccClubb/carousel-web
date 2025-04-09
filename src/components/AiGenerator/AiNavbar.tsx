@@ -304,6 +304,7 @@ const AiNavbar: FC = () => {
                     <LanguageChanger
                       onLanguageChange={() => setMobileMenuOpen(false)}
                       className="w-full mt-2 h-10"
+                      asDialog
                     />
                   </li>
                   {isAppMounted && !user && (

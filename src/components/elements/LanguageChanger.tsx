@@ -11,7 +11,8 @@ import Image from "next/image";
 const LanguageChanger: FC<{
   className?: string;
   onLanguageChange?: () => void;
-}> = ({ className, onLanguageChange }) => {
+  asDialog?: boolean;
+}> = ({ className, onLanguageChange, asDialog }) => {
   const router = useRouter();
   const t = useTranslations();
   const [isPending, startTransition] = useTransition();
@@ -54,6 +55,7 @@ const LanguageChanger: FC<{
       emptyMessage="No language found"
       placeholder={t("select_language")}
       size="sm"
+      asDialog={asDialog}
       className={className}
       disabled={isPending}
     >
