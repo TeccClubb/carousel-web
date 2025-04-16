@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { languages } from "@/assets/languages";
 import { useLocale } from "next-intl";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { OPENAI_API_ENDPOINT, OPENAI_API_KEY } from "@/constant";
 import { useToast } from "./use-sonner-toast";
 
@@ -22,6 +22,7 @@ export const useTranslate = ({
   const language = languages.find((lang) => lang.locale === locale)!;
   const [isTranslating, setIsTranslating] = useState<boolean>(false);
   const [translatedData, setTranslatedData] = useState<string>("[]");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const command = `${data} translate into ${
     language.name
@@ -38,6 +39,7 @@ export const useTranslate = ({
           return;
         }
 
+        setErrorMessage("");
         setIsTranslating(true);
         const res = await axios.post(
           OPENAI_API_ENDPOINT,
@@ -70,9 +72,14 @@ export const useTranslate = ({
 
         if (onTranslate) onTranslate(tData);
       } catch (error) {
-        toast.error(
-          error instanceof Error ? error.message : "Failed to translate"
-        );
+        const errorMessage =
+          error instanceof AxiosError
+            ? error.response
+              ? error.response.data.message
+              : error.message
+            : "Failed to translate";
+        setErrorMessage(errorMessage);
+        toast.error(errorMessage);
       } finally {
         setIsTranslating(false);
       }
@@ -81,5 +88,5 @@ export const useTranslate = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locale, ...extraDependencies]);
 
-  return { translatedData, isTranslating } as const;
+  return { translatedData, isTranslating, errorMessage } as const;
 };

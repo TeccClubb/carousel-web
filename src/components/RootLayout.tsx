@@ -5,7 +5,6 @@ import {
   CAROUSEL_GENERATOR_PAGE_PATH,
 } from "@/pathNames";
 import Navbar from "./Navbar";
-import { ScrollArea } from "./ui/scroll-area";
 import { Toaster } from "./ui/sonner";
 import Footer from "./Footer";
 import AiNavbar from "./AiGenerator/AiNavbar";
@@ -29,32 +28,30 @@ const RootLayout: FC<{ children: Readonly<ReactNode> }> = ({ children }) => {
   return (
     <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CLIENT_ID}>
       <CookiesProvider>
-        <ScrollArea className="h-screen w-full">
-          <Loader />
-          {pathName === CAROUSEL_GENERATOR_PAGE_PATH && <AiNavbar />}
-          {pathName.includes("affiliate") && <DashboardNavbar />}
-          {pathName !== CAROUSEL_GENERATOR_PAGE_PATH &&
-            !pathName.includes("affiliate") && <Navbar />}
+        <Loader />
+        {pathName === CAROUSEL_GENERATOR_PAGE_PATH && <AiNavbar />}
+        {pathName.includes("affiliate") && <DashboardNavbar />}
+        {pathName !== CAROUSEL_GENERATOR_PAGE_PATH &&
+          !pathName.includes("affiliate") && <Navbar />}
 
-          <main
-            className={`flex-1 flex-shrink-0 ${
-              pathName === CAROUSEL_GENERATOR_PAGE_PATH
-                ? "min-h-[calc(100vh-4rem)]"
-                : ""
-            }`}
-          >
-            {children}
-          </main>
+        <main
+          className={`flex-1 flex-shrink-0 ${
+            pathName === CAROUSEL_GENERATOR_PAGE_PATH
+              ? "min-h-[calc(100vh-4rem)]"
+              : ""
+          }`}
+        >
+          {children}
+        </main>
 
-          <Toaster
-            position="bottom-center"
-            expand
-            visibleToasts={10}
-            duration={3000}
-          />
-          {pathName !== CAROUSEL_GENERATOR_PAGE_PATH &&
-            pathName !== AFFILIATE_DASHBOARD_PAGE_PATH && <Footer />}
-        </ScrollArea>
+        <Toaster
+          position="bottom-center"
+          expand
+          visibleToasts={10}
+          duration={3000}
+        />
+        {pathName !== CAROUSEL_GENERATOR_PAGE_PATH &&
+          pathName !== AFFILIATE_DASHBOARD_PAGE_PATH && <Footer />}
       </CookiesProvider>
     </GoogleOAuthProvider>
   );

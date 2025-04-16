@@ -30,6 +30,18 @@ export const ratios = [
     height: 16,
   },
   {
+    ratioId: "pinterest1",
+    name: "Pinterest Feed",
+    width: 2,
+    height: 3,
+  },
+  {
+    ratioId: "pinterest2",
+    name: "Pinterest Feed",
+    width: 1,
+    height: 1,
+  },
+  {
     ratioId: "facebookFeed1",
     name: "Facebook Feed",
     width: 4,

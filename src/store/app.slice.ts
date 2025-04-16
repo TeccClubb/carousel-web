@@ -6,7 +6,6 @@ const initialState: AppState = {
   isLoading: false,
   isAppMounted: false,
   loaderTitle: "Loading...",
-  dashboardActiveItem: "dashboard",
   isTocAndPrivacyPolicyLoadedOnce: false,
   termsAndConditions: "",
   privacyPolicy: "",
@@ -47,10 +46,6 @@ const appSlice = createSlice({
       state.isAppMounted = true;
     },
 
-    setDashboardActiveItem: (state, action: PayloadAction<string>) => {
-      state.dashboardActiveItem = action.payload;
-    },
-
     setTermsOfConditionsAndPrivacyPolicy: (
       state,
       action: PayloadAction<{
@@ -81,7 +76,6 @@ export const {
   setZoomValue,
   setLoading,
   setIsAppMounted,
-  setDashboardActiveItem,
   setTermsOfConditionsAndPrivacyPolicy,
   setTermsOfConditions,
   setPrivacyPolicy,

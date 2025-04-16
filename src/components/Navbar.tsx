@@ -4,7 +4,7 @@ import { CarouselBuilderLogo, LongRightArrow } from "@/icons";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Button, LinkButton } from "./ui/button";
 import {
-  BLOG_PAGE_PATH,
+  BLOGS_PAGE_PATH,
   CAROUSEL_GENERATOR_PAGE_PATH,
   HOME_PAGE_PATH,
   LOGIN_PAGE_PATH,
@@ -43,7 +43,7 @@ const Navbar: FC = () => {
     },
     {
       name: t("blog"),
-      href: BLOG_PAGE_PATH,
+      href: BLOGS_PAGE_PATH,
     },
   ];
 

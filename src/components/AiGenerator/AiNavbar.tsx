@@ -6,6 +6,7 @@ import {
   FacebookIcon,
   LinkedInIcon,
   CarouselBuilderLogo,
+  PinterestIcon,
 } from "@/icons";
 import { Link } from "@/i18n/navigation";
 import { Button, LinkButton } from "../ui/button";
@@ -423,6 +424,9 @@ const AiNavbar: FC = () => {
                         )}
                         {ratio.ratioId.includes("tikTok") && (
                           <TikTokGradientIcon className="aspect-square h-4 w-4" />
+                        )}
+                        {ratio.ratioId.includes("pinterest") && (
+                          <PinterestIcon className="text-[#E60023] aspect-square h-4 w-4" />
                         )}
                         {ratio.name} ({ratio.width}:{ratio.height})
                       </span>

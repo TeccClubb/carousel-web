@@ -81,7 +81,7 @@ const PriceSection: FC<{
                   price={0.0}
                   duration={1}
                   durationUnit=""
-                  features={"description".replace(/, /g, ",").split(",")}
+                  features={"".replace(/, /g, ",").split(",")}
                 />
               ))}
 

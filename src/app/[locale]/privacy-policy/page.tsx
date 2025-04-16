@@ -1,7 +1,5 @@
 "use client";
 import React, { FC, memo, useEffect, useState } from "react";
-import Section from "@/components/sections/Section";
-import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-sonner-toast";
 import axios, { AxiosError } from "axios";
 import { TERMS_AND_CONDITIONS_AND_PRIVACY_POLICY_ROUTE } from "@/constant";
@@ -13,6 +11,7 @@ import {
   setPrivacyPolicy,
   setTermsOfConditionsAndPrivacyPolicy,
 } from "@/store/app.slice";
+import { ArticleSection } from "@/components/sections";
 
 const PrivacyPolicy: FC = () => {
   const dispatch = useDispatch();
@@ -21,7 +20,7 @@ const PrivacyPolicy: FC = () => {
   const { privacyPolicy, isTocAndPrivacyPolicyLoadedOnce } = useAppState();
   const [isLoading, setLoading] = useState<boolean>(true);
 
-  const { isTranslating } = useTranslate({
+  const { isTranslating, errorMessage } = useTranslate({
     data: JSON.stringify(privacyPolicy),
     requiredResponse: "html",
     onTranslate: (translatedData) => dispatch(setPrivacyPolicy(translatedData)),
@@ -68,20 +67,13 @@ const PrivacyPolicy: FC = () => {
   }, []);
 
   return (
-    <Section showGradient isHeroSection containerClassName="flex-col gap-4">
-      <h2 className="text-[40px] font-semibold">{t("privacy_policy")}</h2>
-      {(isLoading || isTranslating) && (
-        <span className="mt-4 flex items-center justify-center">
-          <Loader2 className="animate-spin size-8 mr-2" />
-          {isLoading && "Loading..."}
-          {isTranslating && "Translating..."}
-        </span>
-      )}
-      <article
-        className="space-y-3 mb-4"
-        dangerouslySetInnerHTML={{ __html: privacyPolicy }}
-      ></article>
-    </Section>
+    <ArticleSection
+      heading={t("privacy_policy")}
+      htmlContent={privacyPolicy}
+      errorMessage={errorMessage}
+      isLoading={isLoading}
+      isTranslating={isTranslating}
+    />
   );
 };
 

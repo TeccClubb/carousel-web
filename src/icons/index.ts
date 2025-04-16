@@ -19,6 +19,7 @@ import FacebookIcon from "./FacebookIcon";
 import XTwitterIcon from "./XTwitterIcon";
 import InstagramIcon from "./InstagramIcon";
 import LinkedInIcon from "./LinkedInIcon";
+import PinterestIcon from "./PinterestIcon";
 import YoutubeIcon from "./YoutubeIcon";
 import TikTokIcon from "./TikTokIcon";
 import WelcomeIcon from "./WelcomeIcon";
@@ -72,6 +73,7 @@ export {
   XTwitterIcon,
   InstagramIcon,
   LinkedInIcon,
+  PinterestIcon,
   YoutubeIcon,
   TikTokIcon,
   WelcomeIcon,

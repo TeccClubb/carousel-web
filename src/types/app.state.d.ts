@@ -3,7 +3,6 @@ export type AppState = {
   isLoading: boolean;
   isAppMounted: boolean;
   loaderTitle: string;
-  dashboardActiveItem: string;
   isTocAndPrivacyPolicyLoadedOnce: boolean;
   termsAndConditions: string;
   privacyPolicy: string;

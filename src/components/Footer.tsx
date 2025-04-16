@@ -23,11 +23,9 @@ import {
   AFFILIATE_DASHBOARD_PAGE_PATH,
   AFFILIATE_PROGRAM_PAGE_PATH,
   AFFILIATE_SIGNUP_PAGE_PATH,
-  BLOG_PAGE_PATH,
+  BLOGS_PAGE_PATH,
   CAROUSEL_GENERATOR_PAGE_PATH,
-  CONTACT_PAGE_PATH,
-  CREATORS_PAGE_PATH,
-  FEATURES_PAGE_PATH,
+  HOME_PAGE_PATH,
   PRIVACY_POLICY_PAGE_PATH,
   REFUND_POLICY_PAGE_PATH,
   TERMS_AND_CONDITIONS_PAGE_PATH,
@@ -155,6 +153,18 @@ const Footer: FC = () => {
                       })
                     ),
                 },
+                {
+                  text: "Pinterest Carousel",
+                  href: CAROUSEL_GENERATOR_PAGE_PATH,
+                  onClick: () =>
+                    dispatch(
+                      setSlideRatio({
+                        ratioId: "pinterest1",
+                        width: 2,
+                        height: 3,
+                      })
+                    ),
+                },
               ]}
             />
             <FooterSlice
@@ -179,11 +189,7 @@ const Footer: FC = () => {
               links={[
                 {
                   text: t("blog"),
-                  href: BLOG_PAGE_PATH,
-                },
-                {
-                  text: t("features"),
-                  href: FEATURES_PAGE_PATH,
+                  href: BLOGS_PAGE_PATH,
                 },
                 {
                   text: t("refund_policy"),
@@ -194,12 +200,8 @@ const Footer: FC = () => {
                   href: ABOUT_US_PAGE_PATH,
                 },
                 {
-                  text: t("creators"),
-                  href: CREATORS_PAGE_PATH,
-                },
-                {
                   text: t("contact"),
-                  href: CONTACT_PAGE_PATH,
+                  href: HOME_PAGE_PATH + "#faq-contact-form",
                 },
               ]}
             />

@@ -8,6 +8,7 @@ import PriceSection from "./PriceSection";
 import TemplatesSection from "./TemplatesSection";
 import PaymentSection from "./PaymentSection";
 import BillingDetailsSection from "./BillingDetailsSection";
+import ArticleSection from "./ArticleSection";
 
 export {
   HomeSection,
@@ -20,4 +21,5 @@ export {
   TemplatesSection,
   PaymentSection,
   BillingDetailsSection,
+  ArticleSection,
 };

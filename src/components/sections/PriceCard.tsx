@@ -57,7 +57,7 @@ const PriceCard: FC<{
             {isLoading || isTranslating ? (
               <Skeleton className="w-20 h-4" />
             ) : (
-              `/ ${duration > 1 && duration} ${durationUnit}`
+              `/ ${duration > 1 ? duration : ""} ${durationUnit}`
             )}
           </h5>
         </div>

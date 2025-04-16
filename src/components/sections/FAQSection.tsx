@@ -18,11 +18,14 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { toast } from "sonner";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import { htmlContent } from "@/lib/utils";
+import axios, { AxiosError } from "axios";
+import { POST_FAQ_ROUTE } from "@/constant";
+import { useToast } from "@/hooks/use-sonner-toast";
 
 const FAQSection: FC<{
   isHeroSection?: boolean;
@@ -30,6 +33,7 @@ const FAQSection: FC<{
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
   const t = useTranslations();
+  const toast = useToast();
 
   const faqs = [
     {
@@ -100,10 +104,32 @@ const FAQSection: FC<{
     },
   });
 
-  const submit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const submit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const res = await axios
+        .post<{
+          status: boolean;
+          message: string;
+        }>(POST_FAQ_ROUTE, values, {
+          headers: { Accept: "application/json" },
+        })
+        .then((res) => res.data);
 
-    toast(t("message_sent"));
+      if (res.status) {
+        toast.success(t("message_sent"));
+        form.reset();
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof AxiosError
+          ? error.response
+            ? error.response.data.message
+            : error.message
+          : t("something_went_wrong");
+      form.reset();
+      form.setError("root", { type: "manual", message: errorMessage });
+      toast.error(errorMessage);
+    }
   };
 
   return (
@@ -123,13 +149,7 @@ const FAQSection: FC<{
               <AccordionContent className="text-start">
                 <p
                   dangerouslySetInnerHTML={{
-                    __html: faq.answer.replace(/\*(.*?)\*/g, (_, text) => {
-                      const emailRegex =
-                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                      return emailRegex.test(text)
-                        ? `<strong><a href="mailto:${text}" class="text-blue-600">${text}</a></strong>`
-                        : `<strong>${text}</strong>`;
-                    }),
+                    __html: htmlContent(faq.answer),
                   }}
                 ></p>
               </AccordionContent>
@@ -138,7 +158,7 @@ const FAQSection: FC<{
         </Accordion>
       </div>
 
-      <div className="w-full lg:w-1/2 px-4">
+      <div id="faq-contact-form" className="w-full lg:w-1/2 px-4">
         <div className="text-center lg:text-left">
           <span className="text-[#0F73F6] text-base font-medium">
             {t("faq_section_description")}
@@ -205,6 +225,12 @@ const FAQSection: FC<{
                 </FormItem>
               )}
             />
+
+            {form.formState.errors.root && (
+              <div className="text-red-800 bg-red-300/50 border-2 border-solid border-red-300 p-2 rounded-md">
+                {form.formState.errors.root.message}
+              </div>
+            )}
 
             <Button
               type="submit"

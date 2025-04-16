@@ -106,3 +106,14 @@
 
   
 } */
+
+article p {
+  @apply text-muted-foreground;
+  @apply text-lg;
+  @apply text-justify;
+}
+
+article li {
+  @apply text-muted-foreground;
+  @apply text-justify;
+}

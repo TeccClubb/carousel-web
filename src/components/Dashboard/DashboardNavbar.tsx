@@ -14,7 +14,6 @@ import {
 } from "../ui/sheet";
 import {
   AFFILIATE_LOGIN_PAGE_PATH,
-  AFFILIATE_PROGRAM_PAGE_PATH,
   AFFILIATE_SIGNUP_PAGE_PATH,
   HOME_PAGE_PATH,
 } from "@/pathNames";
@@ -45,32 +44,28 @@ const DashboardNavbar: FC = () => {
     <nav className="dark:bg-gray-800">
       <div className="w-full max-w-7xl mx-auto px-4 flex h-16 items-center justify-between">
         <div className="flex items-center justify-start gap-4">
-          {pathname !== AFFILIATE_PROGRAM_PAGE_PATH && (
-            <>
-              <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-                <SheetTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="lg:hidden [&_svg]:size-7 p-2.5 -m-2.5"
-                  >
-                    <Menu />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="left" className="flex flex-col p-0">
-                  <SheetHeader className="hidden">
-                    <SheetTitle>{t("dashboard")}</SheetTitle>
-                    <SheetDescription>
-                      {t("dashboard_description")}
-                    </SheetDescription>
-                  </SheetHeader>
-                  <SideBar isSheet setMobileMenuOpen={setMobileMenuOpen} />
-                </SheetContent>
-              </Sheet>
+          <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="lg:hidden [&_svg]:size-7 p-2.5 -m-2.5"
+              >
+                <Menu />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="flex flex-col p-0">
+              <SheetHeader className="hidden">
+                <SheetTitle>{t("dashboard")}</SheetTitle>
+                <SheetDescription>
+                  {t("dashboard_description")}
+                </SheetDescription>
+              </SheetHeader>
+              <SideBar isSheet setMobileMenuOpen={setMobileMenuOpen} />
+            </SheetContent>
+          </Sheet>
 
-              <Separator orientation="vertical" className="h-6 lg:hidden" />
-            </>
-          )}
+          <Separator orientation="vertical" className="h-6 lg:hidden" />
 
           <Link href={HOME_PAGE_PATH} aria-current="page">
             <CarouselBuilderLogo className="w-36" />
@@ -78,13 +73,7 @@ const DashboardNavbar: FC = () => {
         </div>
 
         <div className="flex gap-2 sm:gap-4 items-center justify-end">
-          <LanguageChanger
-            className={
-              pathname !== AFFILIATE_PROGRAM_PAGE_PATH
-                ? "hidden lg:inline-flex"
-                : ""
-            }
-          />
+          <LanguageChanger className={"hidden lg:inline-flex"} />
 
           {isAppMounted && !affiliateUser && (
             <LinkButton

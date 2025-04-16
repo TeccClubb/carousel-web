@@ -1,3 +1,5 @@
+import { ParamValue } from "next/dist/server/request/params";
+
 export const DEFAULT_BRAND_NAME = "John Doe";
 export const DEFAULT_BRAND_HANDLE = "https://carouselbuilder.io";
 export const DEFAULT_BRAND_IMAGE_SRC = "/john.jpg";
@@ -27,7 +29,10 @@ export const LOGIN_ROUTE = `${BACKEND_API_URL}/auth/google`;
 export const LOGOUT_ROUTE = `${BACKEND_API_URL}/logout`;
 export const GET_USER_ROUTE = `${BACKEND_API_URL}/user`;
 export const PUT_AI_GENERATED_CAROUSELS_ROUTE = `${BACKEND_API_URL}/user/ai-creations`;
+export const POST_FAQ_ROUTE = `${BACKEND_API_URL}/faq/submit`;
 
+export const GET_BLOG_ROUTE = (slug: ParamValue) =>
+  `${BACKEND_API_URL}/blog/${slug}`;
 export const GET_BLOGS_ROUTE = `${BACKEND_API_URL}/blogs`;
 export const GET_PLANS_ROUTE = `${BACKEND_API_URL}/plans`;
 export const GET_ACTIVE_PURCHASE_PLAN_ROUTE = `${BACKEND_API_URL}/purchase/active`;

@@ -7,6 +7,9 @@ import axios, { AxiosError } from "axios";
 import { GET_BLOGS_ROUTE } from "@/constant";
 import { getFormattedDate } from "@/lib/utils";
 import { SkeletonCard } from "../elements";
+import { useToast } from "@/hooks/use-sonner-toast";
+import { BLOGS_PAGE_PATH } from "@/pathNames";
+import { Blog } from "@/types";
 
 const BlogSection: FC<{
   isHeroSection?: boolean;
@@ -14,14 +17,8 @@ const BlogSection: FC<{
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
   const t = useTranslations();
-  type Blog = {
-    link: string;
-    image: string;
-    category: string;
-    title: string;
-    created_at: string;
-    updated_at: string;
-  };
+  const toast = useToast();
+
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [isLoading, setLoading] = useState<boolean>(true);
 
@@ -30,26 +27,47 @@ const BlogSection: FC<{
       try {
         const res = await axios
           .get<{
-            status: boolean;
-            message: string;
-            blogs: Blog[];
+            data: Blog[];
+            links: {
+              first: string;
+              last: string;
+              next: string | null;
+              prev: string | null;
+            };
+            meta: {
+              current_page: number;
+              from: number;
+              to: number;
+              last_page: number;
+              path: string;
+              per_page: number;
+              total: number;
+              links: {
+                active: boolean;
+                label: string;
+                url: string | null;
+              }[];
+            };
           }>(GET_BLOGS_ROUTE, {
             headers: { Accept: "application/json" },
           })
           .then((res) => res.data);
 
-        if (res.status) {
-          setBlogs(res.blogs);
+        if (res) {
+          setBlogs(res.data);
         }
       } catch (error) {
         if (error instanceof AxiosError) {
-          //do something if needed
+          toast.error(
+            error.response?.data.message || t("something_went_wrong")
+          );
         }
       } finally {
         setLoading(false);
       }
     };
     fetchBlogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -83,14 +101,14 @@ const BlogSection: FC<{
 
           {!isLoading &&
             blogs.length !== 0 &&
-            blogs.map((blog, index) => (
+            blogs.map((blog) => (
               <BlogCard
-                key={`${blog.link} ${index}`}
-                link={blog.link}
+                key={blog.slug}
+                link={BLOGS_PAGE_PATH + "/" + blog.slug}
                 imageSrc={blog.image}
                 category={blog.category}
                 title={blog.title}
-                date={getFormattedDate(blog.created_at)}
+                date={getFormattedDate(blog.published_at)}
               />
             ))}
         </div>

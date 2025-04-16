@@ -17,3 +17,5 @@ export type { Locale } from "./locale";
 export type { Plan, PlansState } from "./plans.state";
 
 export type { AffiliateUser, AffiliateUserStats } from "./affiliate.user";
+
+export type { Blog } from "./blog";

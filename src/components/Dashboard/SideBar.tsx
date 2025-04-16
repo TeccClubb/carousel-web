@@ -7,32 +7,46 @@ import {
   PayPalIcon,
   CarouselBuilderLogo,
 } from "@/icons";
-import { HOME_PAGE_PATH } from "@/pathNames";
-import { setDashboardActiveItem } from "@/store/app.slice";
-import { Link } from "@/i18n/navigation";
-import { useDispatch } from "react-redux";
+import {
+  AFFILIATE_DASHBOARD_EARNINGS_PAGE_PATH,
+  AFFILIATE_DASHBOARD_PAGE_PATH,
+  HOME_PAGE_PATH,
+} from "@/pathNames";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { LogOut } from "lucide-react";
 import { Button } from "../ui/button";
 import { useLogout } from "@/hooks/use-logout";
 import AddPayPalAccountDialog from "./AddPayPalAccountDialog";
 import { LanguageChanger } from "../elements";
+import { useAffiliateUserCookie } from "@/hooks/use-cookie";
+import { cn } from "@/lib/utils";
 
 const SideBar: FC<{
   isSheet?: boolean;
   setMobileMenuOpen?: (isOpen: boolean) => void;
 }> = ({ isSheet, setMobileMenuOpen }) => {
-  const dispatch = useDispatch();
+  const pathname = usePathname();
+  const router = useRouter();
   const t = useTranslations();
-  const { dashboardActiveItem } = useAppState();
+  const { isAppMounted } = useAppState();
+  const { affiliateUser } = useAffiliateUserCookie();
   const { handleAffiliateUserLogout } = useLogout();
 
   const [addPayPalAccountDialogIsOpen, setAddPayPalAccountDialogIsOpen] =
     useState<boolean>(false);
 
   const items = [
-    { name: "dashboard", Icon: DashboardIcon },
-    { name: "earning", Icon: EarningIcon },
+    {
+      name: "dashboard",
+      Icon: DashboardIcon,
+      href: AFFILIATE_DASHBOARD_PAGE_PATH,
+    },
+    {
+      name: "earning",
+      Icon: EarningIcon,
+      href: AFFILIATE_DASHBOARD_EARNINGS_PAGE_PATH,
+    },
   ];
 
   return (
@@ -48,35 +62,40 @@ const SideBar: FC<{
           </Link>
         )}
         <ul role="list" className="flex flex-col flex-1">
-          <li>
-            <ul className="-mx-2 space-y-4">
-              {items.map(({ name, Icon }) => (
-                <li
-                  key={name}
-                  onClick={() => {
-                    dispatch(setDashboardActiveItem(name));
-                    if (setMobileMenuOpen) setMobileMenuOpen(false);
-                  }}
-                  className={`${
-                    dashboardActiveItem === name
-                      ? "text-white bg-[#0139FF]"
-                      : "hover:text-white hover:bg-[#0139FF]/60"
-                  }  flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3 cursor-pointer`}
-                >
-                  <Icon />
-                  {t(name)}
-                </li>
-              ))}
-            </ul>
-          </li>
+          {isAppMounted && affiliateUser && (
+            <>
+              <li>
+                <ul className="-mx-2 space-y-4">
+                  {items.map(({ name, Icon, href }) => (
+                    <li
+                      key={href}
+                      onClick={() => {
+                        router.push(href);
+                        if (setMobileMenuOpen) setMobileMenuOpen(false);
+                      }}
+                      className={cn(
+                        "flex flex-wrap font-semibold text-sm leading-6 p-2 rounded-md gap-x-3 cursor-pointer",
+                        pathname === href
+                          ? "text-white bg-[#0139FF]"
+                          : "hover:text-white hover:bg-[#0139FF]/60"
+                      )}
+                    >
+                      <Icon />
+                      {t(name)}
+                    </li>
+                  ))}
+                </ul>
+              </li>
 
-          <li
-            onClick={() => setAddPayPalAccountDialogIsOpen(true)}
-            className="hover:text-white hover:bg-[#0139FF]/60 flex flex-wrap font-semibold text-sm leading-6 -mx-2 mt-8 p-2 rounded-md gap-x-3 cursor-pointer"
-          >
-            <PayPalIcon />
-            {t("paypal_account")}
-          </li>
+              <li
+                onClick={() => setAddPayPalAccountDialogIsOpen(true)}
+                className="hover:text-white hover:bg-[#0139FF]/60 flex flex-wrap font-semibold text-sm leading-6 -mx-2 mt-8 p-2 rounded-md gap-x-3 cursor-pointer"
+              >
+                <PayPalIcon />
+                {t("paypal_account")}
+              </li>
+            </>
+          )}
 
           {isSheet && setMobileMenuOpen && (
             <li className="mt-8">
@@ -91,16 +110,18 @@ const SideBar: FC<{
             </li>
           )}
 
-          <li className="mt-auto -mx-2">
-            <Button
-              onClick={handleAffiliateUserLogout}
-              variant="destructive"
-              className="w-full rounded-full"
-            >
-              <LogOut className="-scale-100" />
-              {t("signout")}
-            </Button>
-          </li>
+          {isAppMounted && affiliateUser && (
+            <li className="mt-auto -mx-2">
+              <Button
+                onClick={handleAffiliateUserLogout}
+                variant="destructive"
+                className="w-full rounded-full"
+              >
+                <LogOut className="-scale-100" />
+                {t("signout")}
+              </Button>
+            </li>
+          )}
         </ul>
       </nav>
     </div>

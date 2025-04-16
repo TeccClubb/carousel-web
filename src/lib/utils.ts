@@ -5,6 +5,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// export const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export const passwordPattern = new RegExp(
   "^" +
     "(?=.*[0-9])" + //at least 1 digit
@@ -24,6 +27,14 @@ export const getFormattedDate = (date: string) =>
     month: "long",
     day: "numeric",
   }).format(new Date(date));
+
+export const htmlContent = (value: string) =>
+  value.replace(/\*(.*?)\*/g, (_, text) => {
+    const match = text.match(EMAIL_REGEX);
+    return match
+      ? `<b><a href="mailto:${match[0]}" class="text-blue-600">${match[0]}</a></b>`
+      : `<b>${text}</b>`;
+  });
 
 // const hexToRgb = (hex: string): { r: number; g: number; b: number } | null => {
 //   // Remove '#' if it exists
