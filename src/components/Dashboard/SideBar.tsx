@@ -48,6 +48,7 @@ const SideBar: FC<{
       href: AFFILIATE_DASHBOARD_EARNINGS_PAGE_PATH,
     },
   ];
+  
 
   return (
     <div className="flex py-4 px-6 overflow-auto gap-y-5 flex-col flex-grow">
@@ -98,6 +99,21 @@ const SideBar: FC<{
           )}
 
           {isSheet && setMobileMenuOpen && (
+            <ul>
+            <li onClick={()=>router.push('/')} className="mt-4">
+              <div className="text-gray-700 bg-gray-300 p-2 rounded text-xs leading-6 font-semibold ">
+                {t("Home")}
+              </div>
+              
+            </li>
+            <li onClick={()=>router.push('/pricing')} className="mt-4">
+              <div className="text-gray-700 p-2 text-xs leading-6 font-semibold ">
+                {t("Pricing")}
+              </div>
+              
+            </li>
+  
+            
             <li className="mt-8">
               <div className="text-gray-400 text-xs leading-6 font-semibold">
                 {t("language")}
@@ -108,6 +124,7 @@ const SideBar: FC<{
                 asDialog
               />
             </li>
+            </ul>
           )}
 
           {isAppMounted && affiliateUser && (

@@ -15,6 +15,7 @@ import { Link } from "@/i18n/navigation";
 import { useLogout } from "@/hooks/use-logout";
 import { LogOut } from "lucide-react";
 import BillingIcon from "@/icons/BillingIcon";
+import Image from "next/image";
 
 const AvatarProfile: FC = () => {
   const t = useTranslations();
@@ -48,6 +49,34 @@ const AvatarProfile: FC = () => {
           <Link href={PRICING_PAGE_PATH}>
             <BillingIcon />
             {t("billing")}
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href={PRICING_PAGE_PATH}>
+          <Image
+             src={"/dollor2.svg"}
+             width={20}
+             height={20}
+             alt="dolor Img"
+             
+             >
+
+             </Image>
+            {t("manage_subscription")}
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href={PRICING_PAGE_PATH}>
+          <Image
+             src={"/dollor3.svg"}
+             width={20}
+             height={20}
+             alt="dolor Img"
+             
+             >
+
+             </Image>
+            {t("manage_affiliate")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />

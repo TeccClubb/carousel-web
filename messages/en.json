@@ -404,5 +404,7 @@
   "subscription_cancellation": "Subscription Cancellation",
   "subscription_cancellation_paragraph": "You may cancel your subscription at any time directly through your account. Canceling a subscription stops future charges but *does not guarantee a refund* of previous payments, unless within the 7-day refund period.",
   "questions": "Questions?",
-  "questions_description": "If you have any questions about this refund policy, please contact us at:"
+  "questions_description": "If you have any questions about this refund policy, please contact us at:",
+  "manage_subscription": "Manage Subscription",
+  "manage_affiliate":"Manage Affiliate"
 }

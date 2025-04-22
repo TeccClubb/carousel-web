@@ -41,10 +41,10 @@ const Navbar: FC = () => {
       name: t("pricing"),
       href: PRICING_PAGE_PATH,
     },
-    {
-      name: t("blog"),
-      href: BLOGS_PAGE_PATH,
-    },
+    // {
+    //   name: t("blog"),
+    //   href: BLOGS_PAGE_PATH,
+    // },
   ];
 
   return (
