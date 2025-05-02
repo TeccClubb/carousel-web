@@ -4,7 +4,6 @@ import { CarouselBuilderLogo, LongRightArrow } from "@/icons";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Button, LinkButton } from "./ui/button";
 import {
-  BLOGS_PAGE_PATH,
   CAROUSEL_GENERATOR_PAGE_PATH,
   HOME_PAGE_PATH,
   LOGIN_PAGE_PATH,
