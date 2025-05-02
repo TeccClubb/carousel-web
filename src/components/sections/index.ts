@@ -9,6 +9,7 @@ import TemplatesSection from "./TemplatesSection";
 import PaymentSection from "./PaymentSection";
 import BillingDetailsSection from "./BillingDetailsSection";
 import ArticleSection from "./ArticleSection";
+import BlogSliderSection from "./BlogSliderSection";
 
 export {
   HomeSection,
@@ -22,4 +23,5 @@ export {
   PaymentSection,
   BillingDetailsSection,
   ArticleSection,
+  BlogSliderSection,
 };

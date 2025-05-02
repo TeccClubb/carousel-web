@@ -8,7 +8,7 @@ import {
   CarouselBuilderLogo,
   PinterestIcon,
 } from "@/icons";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { Button, LinkButton } from "../ui/button";
 import {
   Dialog,
@@ -31,6 +31,7 @@ import {
 } from "../ui/select";
 import { Separator } from "../ui/separator";
 import {
+  BLOGS_PAGE_PATH,
   HOME_PAGE_PATH,
   LOGIN_PAGE_PATH,
   PRICING_PAGE_PATH,
@@ -66,6 +67,7 @@ import {
 
 const AiNavbar: FC = () => {
   const dispatch = useDispatch();
+  const pathname = usePathname();
   const router = useRouter();
   const toast = useToast();
   const t = useTranslations();
@@ -239,6 +241,17 @@ const AiNavbar: FC = () => {
     dispatch(setSlideRatio({ ratioId, width, height }));
   };
 
+  const navItems = [
+    {
+      name: t("pricing"),
+      href: PRICING_PAGE_PATH,
+    },
+    {
+      name: t("blog"),
+      href: BLOGS_PAGE_PATH,
+    },
+  ];
+
   return (
     <nav className="bg-slate-50 dark:bg-gray-800">
       <div className="pr-2 pl-2 lg:pl-[4.25rem] md:pr-6">
@@ -267,35 +280,32 @@ const AiNavbar: FC = () => {
                   </li>
 
                   <li>
-                    <Button onClick={handleSave} className="w-full">
-                      {isAppMounted && !activePlan && (
-                        <LockKeyhole className="size-4" />
-                      )}
-                      {isAppMounted && activePlan && <Save />}
-                      {t("save")}
-                    </Button>
-                  </li>
-
-                  <li>
-                    <Button
-                      onClick={handleDownload}
-                      disabled={isPDFGenerating}
-                      className="w-full"
-                    >
-                      {isPDFGenerating && (
-                        <>
-                          <Loader2 className="animate-spin" />
-                          {t("generating")}
-                        </>
-                      )}
-
-                      {!isPDFGenerating && (
-                        <>
-                          <DownloadIcon />
-                          {t("download")}
-                        </>
-                      )}
-                    </Button>
+                    <ul role="list" className="-mx-2">
+                      {[
+                        { name: t("home"), href: HOME_PAGE_PATH },
+                        ...navItems,
+                      ].map((item) => (
+                        <li key={item.href}>
+                          <LinkButton
+                            href={item.href}
+                            onClick={() => {
+                              setMobileMenuOpen(false);
+                            }}
+                            variant="ghost"
+                            className={`w-full justify-start ${
+                              pathname === item.href
+                                ? "text-indigo-500 hover:text-indigo-500 bg-accent"
+                                : "hover:bg-zinc-100 hover:text-zinc-500"
+                            }`}
+                            aria-current={
+                              pathname === item.href ? "page" : undefined
+                            }
+                          >
+                            {item.name}
+                          </LinkButton>
+                        </li>
+                      ))}
+                    </ul>
                   </li>
 
                   <li>
@@ -330,16 +340,12 @@ const AiNavbar: FC = () => {
 
           <div className="flex flex-1 items-center justify-end pr-2 sm:inset-auto sm:pr-0 gap-1 md:gap-2 lg:gap-4">
             <LanguageChanger className="hidden md:inline-flex" />
-            <Button
-              size="sm"
-              onClick={handleSave}
-              className="hidden md:inline-flex"
-            >
+            <Button size="sm" onClick={handleSave} className="">
               {isAppMounted && !activePlan && (
                 <LockKeyhole className="size-4" />
               )}
               {isAppMounted && activePlan && <Save />}
-              {t("save")}
+              <span className="hidden sm:inline">{t("save")}</span>
             </Button>
 
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -428,7 +434,8 @@ const AiNavbar: FC = () => {
                         {ratio.ratioId.includes("pinterest") && (
                           <PinterestIcon className="text-[#E60023] aspect-square h-4 w-4" />
                         )}
-                        {ratio.name} ({ratio.width}:{ratio.height})
+                        <span className="hidden sm:inline">{ratio.name}</span>(
+                        {ratio.width}:{ratio.height})
                       </span>
                     </SelectItem>
                   ))}
@@ -440,19 +447,18 @@ const AiNavbar: FC = () => {
               size="sm"
               onClick={handleDownload}
               disabled={isPDFGenerating}
-              className="hidden md:inline-flex"
             >
               {isPDFGenerating && (
                 <>
                   <Loader2 className="animate-spin" />
-                  {t("generating")}
+                  <span className="hidden sm:inline">{t("generating")}</span>
                 </>
               )}
 
               {!isPDFGenerating && (
                 <>
                   <DownloadIcon />
-                  {t("download")}
+                  <span className="hidden sm:inline">{t("download")}</span>
                 </>
               )}
             </Button>

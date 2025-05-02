@@ -4,6 +4,7 @@ import { CarouselBuilderLogo, LongRightArrow } from "@/icons";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Button, LinkButton } from "./ui/button";
 import {
+  BLOGS_PAGE_PATH,
   CAROUSEL_GENERATOR_PAGE_PATH,
   HOME_PAGE_PATH,
   LOGIN_PAGE_PATH,
@@ -31,8 +32,6 @@ const Navbar: FC = () => {
   const pathname = usePathname();
   const { user } = useUserCookie();
 
-  const [activePath, setActivePath] = useState<string>(HOME_PAGE_PATH);
-
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   const navItems = [
@@ -40,10 +39,10 @@ const Navbar: FC = () => {
       name: t("pricing"),
       href: PRICING_PAGE_PATH,
     },
-    // {
-    //   name: t("blog"),
-    //   href: BLOGS_PAGE_PATH,
-    // },
+    {
+      name: t("blog"),
+      href: BLOGS_PAGE_PATH,
+    },
   ];
 
   return (
@@ -82,17 +81,16 @@ const Navbar: FC = () => {
                             <LinkButton
                               href={item.href}
                               onClick={() => {
-                                setActivePath(item.href);
                                 setMobileMenuOpen(false);
                               }}
                               variant="ghost"
-                              className={`w-full justify-start hover:text-indigo-500 ${
-                                activePath === item.href
-                                  ? "text-indigo-500 bg-accent"
-                                  : ""
+                              className={`w-full justify-start ${
+                                pathname === item.href
+                                  ? "text-indigo-500 hover:text-indigo-500 bg-accent"
+                                  : "hover:bg-zinc-100 hover:text-zinc-500"
                               }`}
                               aria-current={
-                                activePath === item.href ? "page" : undefined
+                                pathname === item.href ? "page" : undefined
                               }
                             >
                               {item.name}
@@ -145,7 +143,6 @@ const Navbar: FC = () => {
               <div className="flex items-center justify-center space-x-4">
                 <Link
                   href={HOME_PAGE_PATH}
-                  onClick={() => setActivePath(HOME_PAGE_PATH)}
                   className="pr-3"
                   aria-current="page"
                 >
@@ -155,13 +152,12 @@ const Navbar: FC = () => {
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => setActivePath(item.href)}
                     className={`${
-                      activePath === item.href
+                      pathname === item.href
                         ? "text-gray-900 dark:text-white dark:bg-gray-900 border-indigo-500"
                         : "border-transparent hover:border-gray-300 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
                     } border-b-2 border-solid dark:border-none px-3 py-2 text-sm font-medium dark:rounded-md`}
-                    aria-current={activePath === item.href ? "page" : undefined}
+                    aria-current={pathname === item.href ? "page" : undefined}
                   >
                     {item.name}
                   </Link>

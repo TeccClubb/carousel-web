@@ -10,12 +10,14 @@ import {
 import {
   AFFILIATE_DASHBOARD_EARNINGS_PAGE_PATH,
   AFFILIATE_DASHBOARD_PAGE_PATH,
+  BLOGS_PAGE_PATH,
   HOME_PAGE_PATH,
+  PRICING_PAGE_PATH,
 } from "@/pathNames";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { LogOut } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button, LinkButton } from "../ui/button";
 import { useLogout } from "@/hooks/use-logout";
 import AddPayPalAccountDialog from "./AddPayPalAccountDialog";
 import { LanguageChanger } from "../elements";
@@ -48,7 +50,17 @@ const SideBar: FC<{
       href: AFFILIATE_DASHBOARD_EARNINGS_PAGE_PATH,
     },
   ];
-  
+
+  const navItems = [
+    {
+      name: t("pricing"),
+      href: PRICING_PAGE_PATH,
+    },
+    {
+      name: t("blog"),
+      href: BLOGS_PAGE_PATH,
+    },
+  ];
 
   return (
     <div className="flex py-4 px-6 overflow-auto gap-y-5 flex-col flex-grow">
@@ -100,30 +112,46 @@ const SideBar: FC<{
 
           {isSheet && setMobileMenuOpen && (
             <ul>
-            <li onClick={()=>router.push('/')} className="mt-4">
-              <div className="text-gray-700 bg-gray-300 p-2 rounded text-xs leading-6 font-semibold ">
-                {t("Home")}
-              </div>
-              
-            </li>
-            <li onClick={()=>router.push('/pricing')} className="mt-4">
-              <div className="text-gray-700 p-2 text-xs leading-6 font-semibold ">
-                {t("Pricing")}
-              </div>
-              
-            </li>
-  
-            
-            <li className="mt-8">
-              <div className="text-gray-400 text-xs leading-6 font-semibold">
-                {t("language")}
-              </div>
-              <LanguageChanger
-                onLanguageChange={() => setMobileMenuOpen(false)}
-                className="w-full mt-2 h-10"
-                asDialog
-              />
-            </li>
+              {!pathname.includes(AFFILIATE_DASHBOARD_PAGE_PATH) && (
+                <li>
+                  <ul role="list" className="-mx-2">
+                    {[
+                      { name: t("home"), href: HOME_PAGE_PATH },
+                      ...navItems,
+                    ].map((item) => (
+                      <li key={item.href}>
+                        <LinkButton
+                          href={item.href}
+                          onClick={() => {
+                            setMobileMenuOpen(false);
+                          }}
+                          variant="ghost"
+                          className={`w-full justify-start ${
+                            pathname === item.href
+                              ? "text-indigo-500 hover:text-indigo-500 bg-accent"
+                              : "hover:bg-zinc-100 hover:text-zinc-500"
+                          }`}
+                          aria-current={
+                            pathname === item.href ? "page" : undefined
+                          }
+                        >
+                          {item.name}
+                        </LinkButton>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              )}
+              <li className="mt-8">
+                <div className="text-gray-400 text-xs leading-6 font-semibold">
+                  {t("language")}
+                </div>
+                <LanguageChanger
+                  onLanguageChange={() => setMobileMenuOpen(false)}
+                  className="w-full mt-2 h-10"
+                  asDialog
+                />
+              </li>
             </ul>
           )}
 

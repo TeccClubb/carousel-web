@@ -1,23 +1,35 @@
 "use client";
-import React, { FC, memo, useEffect, useState } from "react";
-import BlogCard from "./BlogCard";
+
+import React, { FC, useEffect, useRef, useState } from "react";
 import Section from "./Section";
 import { useTranslations } from "next-intl";
+import { useToast } from "@/hooks/use-sonner-toast";
 import axios, { AxiosError } from "axios";
+import { Blog } from "@/types";
 import { GET_BLOGS_ROUTE } from "@/constant";
+import Autoplay from "embla-carousel-autoplay";
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+} from "../ui/carousel";
+import BlogCard from "./BlogCard";
+import { BLOGS_PAGE_PATH } from "@/pathNames";
 import { getFormattedDate } from "@/lib/utils";
 import { SkeletonCard } from "../elements";
-import { useToast } from "@/hooks/use-sonner-toast";
-import { BLOGS_PAGE_PATH } from "@/pathNames";
-import { Blog } from "@/types";
 
-const BlogSection: FC<{
+const BlogSliderSection: FC<{
   isHeroSection?: boolean;
   showGradient?: boolean;
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
+  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
   const t = useTranslations();
   const toast = useToast();
+
+  const [api, setApi] = useState<CarouselApi>();
+  const [currentBlogIndex, setCurrentBlogIndex] = useState<number>(0);
 
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [isLoading, setLoading] = useState<boolean>(true);
@@ -70,13 +82,27 @@ const BlogSection: FC<{
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (!api) return;
+    const handleSelect = () => {
+      setCurrentBlogIndex(api.selectedScrollSnap());
+    };
+
+    api.on("select", handleSelect);
+
+    return () => {
+      api.off("select", handleSelect);
+    };
+  }, [api]);
+
   return (
     <Section
       isHeroSection={isHeroSection}
       showGradient={showGradient}
       cornerGradient={cornerGradient}
+      containerClassName="flex-col gap-y-6"
     >
-      <div className="w-full flex flex-col gap-y-8">
+      <div className="flex flex-col gap-y-8">
         <div className="text-center">
           <span className="text-[#0F73F6] text-base font-medium">
             {t("blog")}
@@ -85,36 +111,61 @@ const BlogSection: FC<{
             {t("blog_section_description")}
           </h1>
         </div>
+      </div>
 
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 relative">
-          <div className="absolute left-1/2 top-[6%] right-1/2 transform -translate-x-1/2 w-full h-[25em] bg-[#0F73F6] opacity-10 blur-3xl rounded-full pointer-events-none"></div>
+      {!isLoading && blogs.length === 0 && (
+        <div className="text-center text-muted-foreground">
+          {t("no_data_found")}
+        </div>
+      )}
+
+      <Carousel
+        plugins={[plugin.current]}
+        onMouseEnter={plugin.current.stop}
+        onMouseLeave={plugin.current.reset}
+        setApi={setApi}
+        opts={{ align: "start", loop: true }}
+        className="w-full max-w-7xl px-4 overflow-hidden"
+      >
+        <CarouselContent className="w-[20em] sm:w-[25em] -ml-2">
           {isLoading &&
             Array.from({ length: 3 }).map((_, index) => (
-              <SkeletonCard key={index} />
+              <CarouselItem key={index}>
+                <SkeletonCard />
+              </CarouselItem>
             ))}
-
-          {!isLoading && blogs.length === 0 && (
-            <div className="text-center text-muted-foreground">
-              {t("no_data_found")}
-            </div>
-          )}
 
           {!isLoading &&
             blogs.length !== 0 &&
             blogs.map((blog) => (
-              <BlogCard
-                key={blog.slug}
-                link={BLOGS_PAGE_PATH + "/" + blog.slug}
-                imageSrc={blog.image}
-                category={blog.category}
-                title={blog.title}
-                date={getFormattedDate(blog.published_at)}
-              />
+              <CarouselItem key={blog.slug} className="pl-0">
+                <BlogCard
+                  link={BLOGS_PAGE_PATH + "/" + blog.slug}
+                  imageSrc={blog.image}
+                  category={blog.category}
+                  title={blog.title}
+                  date={getFormattedDate(blog.published_at)}
+                />
+              </CarouselItem>
             ))}
-        </div>
-      </div>
+        </CarouselContent>
+      </Carousel>
+
+      <ul className="flex flex-wrap gap-2.5">
+        {!isLoading &&
+          blogs.length !== 0 &&
+          blogs.map((_, index) => (
+            <li
+              key={index}
+              onClick={() => api?.scrollTo(index)}
+              className={`size-[0.75rem] cursor-pointer rounded-[50%] duration-300 ${
+                currentBlogIndex === index ? "bg-primary" : "bg-indigo-200"
+              }`}
+            ></li>
+          ))}
+      </ul>
     </Section>
   );
 };
 
-export default memo(BlogSection);
+export default BlogSliderSection;

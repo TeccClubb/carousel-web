@@ -2,7 +2,7 @@
 import React, { FC } from "react";
 
 import {
-  BlogSection,
+  BlogSliderSection,
   BrandSection,
   DesignToolsSection,
   FAQSection,
@@ -20,7 +20,7 @@ const HomePage: FC = () => (
     <BrandSection cornerGradient="left" />
     <DesignToolsSection />
     <PriceSection showGradient />
-    <BlogSection />
+    <BlogSliderSection />
     <FAQSection showGradient />
   </>
 );
