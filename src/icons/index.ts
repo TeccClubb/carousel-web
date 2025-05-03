@@ -50,6 +50,8 @@ import VerticalReverseIcon from "./VerticalReverseIcon";
 import InfoIcon from "./InfoIcon";
 import CheckedCircleIcon from "./CheckedCircleIcon";
 import PayPalIcon from "./PayPalIcon";
+import DollarIcon from "./DollarIcon";
+import DollarFilledIcon from "./DollarFilledIcon";
 
 export {
   CarouselBuilderLogo,
@@ -104,4 +106,6 @@ export {
   InfoIcon,
   CheckedCircleIcon,
   PayPalIcon,
+  DollarIcon,
+  DollarFilledIcon,
 };

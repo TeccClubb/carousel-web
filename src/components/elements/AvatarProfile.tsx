@@ -10,12 +10,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { PRICING_PAGE_PATH } from "@/pathNames";
+import { BILLING_DETAILS_PAGE_PATH, PRICING_PAGE_PATH } from "@/pathNames";
 import { Link } from "@/i18n/navigation";
 import { useLogout } from "@/hooks/use-logout";
 import { LogOut } from "lucide-react";
 import BillingIcon from "@/icons/BillingIcon";
-import Image from "next/image";
+import { DollarFilledIcon, DollarIcon } from "@/icons";
 
 const AvatarProfile: FC = () => {
   const t = useTranslations();
@@ -52,30 +52,14 @@ const AvatarProfile: FC = () => {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={PRICING_PAGE_PATH}>
-          <Image
-             src={"/dollor2.svg"}
-             width={20}
-             height={20}
-             alt="dolor Img"
-             
-             >
-
-             </Image>
+          <Link href={BILLING_DETAILS_PAGE_PATH}>
+            <DollarIcon />
             {t("manage_subscription")}
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href={PRICING_PAGE_PATH}>
-          <Image
-             src={"/dollor3.svg"}
-             width={20}
-             height={20}
-             alt="dolor Img"
-             
-             >
-
-             </Image>
+        <DropdownMenuItem asChild className="[&_svg]:size-5">
+          <Link href={BILLING_DETAILS_PAGE_PATH}>
+            <DollarFilledIcon />
             {t("manage_affiliate")}
           </Link>
         </DropdownMenuItem>
