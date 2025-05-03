@@ -8,7 +8,6 @@ import axios, { AxiosError } from "axios";
 import { Blog } from "@/types";
 import { GET_BLOGS_ROUTE } from "@/constant";
 import Autoplay from "embla-carousel-autoplay";
-import type { EmblaPluginType } from 'embla-carousel'
 
 import {
   Carousel,
@@ -26,11 +25,8 @@ const BlogSliderSection: FC<{
   showGradient?: boolean;
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
-  type AutoplayPlugin = EmblaPluginType & {
-    stop: () => void
-    reset: () => void
-  }
-  const plugin = useRef<AutoplayPlugin>(Autoplay({ delay: 2000, stopOnInteraction: true }));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const plugin = useRef<any>(Autoplay({ delay: 2000, stopOnInteraction: true }));
   const t = useTranslations();
   const toast = useToast();
 
