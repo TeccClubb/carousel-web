@@ -7,7 +7,7 @@ import { useToast } from "@/hooks/use-sonner-toast";
 import axios, { AxiosError } from "axios";
 import { Blog } from "@/types";
 import { GET_BLOGS_ROUTE } from "@/constant";
-import Autoplay from "embla-carousel-autoplay";
+import Autoplay, { AutoplayType } from "embla-carousel-autoplay";
 import {
   Carousel,
   CarouselApi,
@@ -24,7 +24,7 @@ const BlogSliderSection: FC<{
   showGradient?: boolean;
   cornerGradient?: "left" | "right";
 }> = ({ isHeroSection, showGradient, cornerGradient }) => {
-  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
+  const plugin = useRef<AutoplayType>(Autoplay({ delay: 2000, stopOnInteraction: true }));
   const t = useTranslations();
   const toast = useToast();
 
